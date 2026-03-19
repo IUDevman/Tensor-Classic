@@ -48,27 +48,6 @@ public abstract class Hack implements Globals {
 
     private boolean ENABLED = this.getInfo().enabled();
 
-    public boolean isEnabled() {
-        return this.ENABLED;
-    }
-
-    public void setEnabled(boolean ENABLED) {
-        if (ENABLED) {
-            this.enable();
-            return;
-        }
-
-        this.disable();
-    }
-
-    public void toggle() {
-        this.setEnabled(!this.isEnabled());
-    }
-
-    public void launchStartUp() {
-        this.setEnabled(this.ENABLED);
-    }
-
     private final ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
 
     public Hack() {
@@ -95,6 +74,27 @@ public abstract class Hack implements Globals {
         return this.SETTINGS;
     }
 
+    public boolean isEnabled() {
+        return this.ENABLED;
+    }
+
+    public void setEnabled(boolean ENABLED) {
+        if (ENABLED) {
+            this.enable();
+            return;
+        }
+
+        this.disable();
+    }
+
+    public void toggle() {
+        this.setEnabled(!this.isEnabled());
+    }
+
+    public void launchStartUp() {
+        this.setEnabled(this.ENABLED);
+    }
+
     public void reset() {
         this.BIND = this.getInfo().bind();
 
@@ -119,7 +119,7 @@ public abstract class Hack implements Globals {
     private void disable() {
         this.ENABLED = false;
 
-        this.getEventManager().register(this);
+        this.getEventManager().unregister(this);
 
         this.onDisable(this.failsNullCheck());
         this.sendToggleMessage(false);

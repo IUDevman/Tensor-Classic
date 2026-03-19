@@ -1,0 +1,26 @@
+package dev.tensor.feature.hacks;
+
+import dev.tensor.backend.events.FOVModifierEvent;
+import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import org.lwjgl.input.Keyboard;
+
+/**
+ * @author Hoosiers
+ * @since 03-18-2026
+ */
+
+@Hack.Info(name = "FOV", category = Category.Render, bind = Keyboard.KEY_G)
+public final class FOV extends Hack {
+
+    public final IntegerSetting value = new IntegerSetting("Value", 90, 30, 120);
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onFovModifierEvent(FOVModifierEvent event) {
+        event.FOV = value.getValue();
+        event.cancel();
+    }
+}

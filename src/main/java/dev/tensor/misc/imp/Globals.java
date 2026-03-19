@@ -5,8 +5,8 @@ import dev.tensor.feature.managers.EventManager;
 import dev.tensor.feature.managers.HackManager;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.ClientPlayerEntity;
-import net.minecraft.world.World;
+import net.minecraft.src.EntityPlayerSP;
+import net.minecraft.src.World;
 import org.slf4j.Logger;
 
 /**
@@ -20,12 +20,12 @@ public interface Globals {
         return (Minecraft) FabricLoaderImpl.INSTANCE.getGameInstance();
     }
 
-    default ClientPlayerEntity getPlayer() {
-        return this.getMinecraft().player;
+    default EntityPlayerSP getPlayer() {
+        return this.getMinecraft().thePlayer;
     }
 
     default World getWorld() {
-        return this.getMinecraft().world;
+        return this.getMinecraft().theWorld;
     }
 
     default boolean failsNullCheck() {

@@ -1,8 +1,10 @@
 package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.ClientTickEvent;
+import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.feature.hacks.ClientMessages;
 import dev.tensor.feature.hacks.Commands;
+import dev.tensor.feature.hacks.FOV;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -33,8 +35,14 @@ public final class HackManager implements Manager {
 
         this.addHack(new ClientMessages());
         this.addHack(new Commands());
+        this.addHack(new FOV());
 
         this.postSortHacks();
+    }
+
+    @Override
+    public void save(Logger LOGGER) {
+        LOGGER.info("Saved: " + this.getName());
     }
 
     public void addHack(Hack HACK) {
@@ -68,6 +76,10 @@ public final class HackManager implements Manager {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
     }
 
+    public boolean shouldSendMessagesGlobal() {
+        return this.getHack(ClientMessages.class).isEnabled();
+    }
+
     @SuppressWarnings("unused")
     @EventTarget
     public void onClientTickEvent(ClientTickEvent event) {
@@ -78,12 +90,13 @@ public final class HackManager implements Manager {
         this.getEnabledHacks().forEach(Hack::onClientTick);
     }
 
-    @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
-    }
-
-    public boolean shouldSendMessagesGlobal() {
-        return this.getHack(ClientMessages.class).isEnabled();
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onKeyPressedEvent(KeyPressedEvent event) {
+        this.getHacks().forEach(hack -> {
+            if (hack.BIND == event.KEY_CODE) {
+                hack.toggle();
+            }
+        });
     }
 }
