@@ -6,5 +6,11 @@ package dev.tensor.misc.imp.hack;
  */
 
 public enum Category {
+    Combat,
+    Movement,
+    Player,
+    Render,
+    Misc,
+    HUD,
     Client
 }

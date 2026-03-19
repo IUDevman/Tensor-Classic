@@ -6,6 +6,7 @@ import dev.tensor.feature.managers.HackManager;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.ClientPlayerEntity;
+import net.minecraft.world.World;
 import org.slf4j.Logger;
 
 /**
@@ -21,6 +22,14 @@ public interface Globals {
 
     default ClientPlayerEntity getPlayer() {
         return this.getMinecraft().player;
+    }
+
+    default World getWorld() {
+        return this.getMinecraft().world;
+    }
+
+    default boolean failsNullCheck() {
+        return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
     }
 
     default TensorClassic getTensor() {
@@ -104,7 +113,9 @@ public interface Globals {
     }
 
     default void sendClientMessageWithPrefix(String message) {
-        //todo: add prefix
+        if (this.failsNullCheck()) {
+            return;
+        }
 
         String prefixMessage = this.getPrefix() + message;
 

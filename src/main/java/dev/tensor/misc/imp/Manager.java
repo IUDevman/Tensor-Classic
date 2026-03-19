@@ -7,7 +7,7 @@ import org.slf4j.Logger;
  * @since 03-18-2026
  */
 
-public interface Manager {
+public interface Manager extends Globals {
 
     String getName();
 

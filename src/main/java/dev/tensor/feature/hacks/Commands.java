@@ -4,6 +4,11 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 
+/**
+ * @author Hoosiers
+ * @since 03-18-2026
+ */
+
 @Hack.Info(name = "Commands", category = Category.Client, drawn = false, enabled = true)
 public final class Commands extends Hack {
 

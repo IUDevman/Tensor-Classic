@@ -1,6 +1,9 @@
 package dev.tensor.feature.managers;
 
+import dev.tensor.backend.events.ClientTickEvent;
+import dev.tensor.feature.hacks.ClientMessages;
 import dev.tensor.feature.hacks.Commands;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -28,6 +31,7 @@ public final class HackManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.addHack(new ClientMessages());
         this.addHack(new Commands());
 
         this.postSortHacks();
@@ -35,6 +39,8 @@ public final class HackManager implements Manager {
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
+
+        HACK.launchStartUp();
     }
 
     public ArrayList<Hack> getHacks() {
@@ -62,18 +68,22 @@ public final class HackManager implements Manager {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
     }
 
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onClientTickEvent(ClientTickEvent event) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        this.getEnabledHacks().forEach(Hack::onClientTick);
+    }
+
     @Override
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
     }
 
-    private boolean MESSAGES_GLOBAL = true;
-
     public boolean shouldSendMessagesGlobal() {
-        return this.MESSAGES_GLOBAL;
-    }
-
-    public void setSendMessagesGlobal(boolean MESSAGES_GLOBAL) {
-        this.MESSAGES_GLOBAL = MESSAGES_GLOBAL;
+        return this.getHack(ClientMessages.class).isEnabled();
     }
 }

@@ -65,6 +65,10 @@ public abstract class Hack implements Globals {
         this.setEnabled(!this.isEnabled());
     }
 
+    public void launchStartUp() {
+        this.setEnabled(this.ENABLED);
+    }
+
     private final ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
 
     public Hack() {
@@ -108,7 +112,7 @@ public abstract class Hack implements Globals {
 
         this.getEventManager().register(this);
 
-        this.onEnable();
+        this.onEnable(this.failsNullCheck());
         this.sendToggleMessage(true);
     }
 
@@ -117,11 +121,15 @@ public abstract class Hack implements Globals {
 
         this.getEventManager().register(this);
 
-        this.onDisable();
+        this.onDisable(this.failsNullCheck());
         this.sendToggleMessage(false);
     }
 
     private void sendToggleMessage(boolean ENABLED) {
+
+        if (this.failsNullCheck()) {
+            return;
+        }
 
         if (!this.getHackManager().shouldSendMessagesGlobal() || !this.MESSAGES) {
             return;
@@ -138,11 +146,11 @@ public abstract class Hack implements Globals {
         this.sendClientMessageWithPrefix(MESSAGE);
     }
 
-    protected void onEnable() {
+    protected void onEnable(boolean isNull) {
 
     }
 
-    protected void onDisable() {
+    protected void onDisable(boolean isNull) {
 
     }
 
