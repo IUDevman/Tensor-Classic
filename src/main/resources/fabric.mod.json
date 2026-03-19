@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "tensorclassic",
+  "version": "${version}",
+
+  "name": "Tensor Classic",
+  "description": "Hacked Client for b1.7.3 using Babric.",
+  "authors": [
+    "Hoosiers/IUDevman"
+  ],
+  "contact": {
+    "homepage": "https://github.com/IUDevman",
+    "sources": "https://github.com/IUDevman/Tensor-Classic"
+  },
+
+  "license": "MIT",
+  "icon": "assets/tensorclassic/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.tensor.TensorClassic"
+    ]
+  },
+  "mixins": [
+    "tensorclassic.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}
