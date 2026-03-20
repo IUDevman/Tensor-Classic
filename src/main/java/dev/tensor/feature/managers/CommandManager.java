@@ -1,11 +1,9 @@
 package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.ChatSentEvent;
-import dev.tensor.feature.commands.HackList;
-import dev.tensor.feature.commands.Prefix;
-import dev.tensor.feature.commands.Reset;
+import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.command.Command;
+import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
@@ -33,7 +31,10 @@ public final class CommandManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.addCommand(new ClearChat());
+        this.addCommand(new Config());
         this.addCommand(new HackList());
+        this.addCommand(new Help());
         this.addCommand(new Prefix());
         this.addCommand(new Reset());
 

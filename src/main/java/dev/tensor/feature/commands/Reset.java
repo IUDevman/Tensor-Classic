@@ -1,6 +1,6 @@
 package dev.tensor.feature.commands;
 
-import dev.tensor.misc.command.Command;
+import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.Setting;
 

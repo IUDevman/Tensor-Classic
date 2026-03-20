@@ -1,7 +1,7 @@
 package dev.tensor.feature.commands;
 
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.command.Command;
+import dev.tensor.misc.imp.command.Command;
 
 /**
  * @author Hoosiers

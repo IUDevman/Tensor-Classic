@@ -1,6 +1,6 @@
 package dev.tensor.feature.commands;
 
-import dev.tensor.misc.command.SimpleCallableCommand;
+import dev.tensor.misc.imp.command.SimpleCallableCommand;
 
 import java.util.ArrayList;
 
@@ -26,11 +26,6 @@ public final class HackList extends SimpleCallableCommand {
                 "Modules",
                 "ModuleList"
         };
-    }
-
-    @Override
-    public String getRegex() {
-        return "{name}";
     }
 
     @Override

@@ -1,4 +1,4 @@
-package dev.tensor.misc.command;
+package dev.tensor.misc.imp.command;
 
 /**
  * @author Hoosiers
@@ -6,6 +6,11 @@ package dev.tensor.misc.command;
  */
 
 public abstract class SimpleCallableCommand implements Command {
+
+    @Override
+    public String getRegex() {
+        return "{name}";
+    }
 
     @Override
     public void onCommand(String[] ARGS) {

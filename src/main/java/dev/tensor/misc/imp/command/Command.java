@@ -1,4 +1,4 @@
-package dev.tensor.misc.command;
+package dev.tensor.misc.imp.command;
 
 import dev.tensor.misc.imp.Globals;
 
