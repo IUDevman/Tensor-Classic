@@ -6,6 +6,7 @@ import dev.tensor.feature.managers.HackManager;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayerSP;
+import net.minecraft.src.FontRenderer;
 import net.minecraft.src.World;
 import org.slf4j.Logger;
 
@@ -26,6 +27,10 @@ public interface Globals {
 
     default World getWorld() {
         return this.getMinecraft().theWorld;
+    }
+
+    default FontRenderer getFontRenderer() {
+        return this.getMinecraft().fontRenderer;
     }
 
     default boolean failsNullCheck() {
@@ -123,6 +128,34 @@ public interface Globals {
 
         String prefixMessage = this.getPrefix() + message;
 
-        this.getPlayer().addChatMessage(prefixMessage);
+        this.sendMessageWithLinesColor(prefixMessage);
+    }
+
+    default void sendMessageWithLinesColor(String message) {
+
+        while (this.getFontRenderer().getStringWidth(message) > 320) {
+
+            int firstEnd = 1;
+
+            while (firstEnd < message.length() && this.getFontRenderer().getStringWidth(message.substring(0, firstEnd + 1)) <= 320) {
+                firstEnd++;
+            }
+
+            String firstMessage = message.substring(0, firstEnd);
+
+            this.sendMessageWithLinesColor(firstMessage);
+
+            int firstMessageColor = firstMessage.lastIndexOf('§') + 1;
+
+            String previousMessageColor = "";
+
+            if (firstMessageColor != 0 && firstMessageColor != firstMessage.length()) {
+                previousMessageColor = "§" + firstMessage.charAt(firstMessageColor);
+            }
+
+            message = previousMessageColor + message.substring(firstEnd);
+        }
+
+        this.getPlayer().addChatMessage(message);
     }
 }
