@@ -18,7 +18,7 @@ public final class Commands extends Hack {
         public void setValue(String VALUE) {
             if (VALUE.length() > 1) {
 
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "Failed to set prefix (" + ChatColor.AQUA + VALUE + ChatColor.RED + "; Length > 1)!");
+                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "Prefix: Failed to set prefix '" + this.getColor(ChatColor.AQUA) + VALUE + this.getColor(ChatColor.RED) + "' (Length > 1)!");
                 return;
             }
 

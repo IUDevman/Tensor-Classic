@@ -17,7 +17,7 @@ public interface Command extends Globals {
 
     String getDescription();
 
-    void onCommand(String[] ARGS) throws TensorCommandException;
+    void onCommand(String[] ARGS);
 
     default String[] getRegexInArray() {
         return this.getRegex().split(" ");

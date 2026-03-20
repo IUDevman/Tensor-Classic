@@ -2,9 +2,10 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.ChatSentEvent;
 import dev.tensor.feature.commands.HackList;
+import dev.tensor.feature.commands.Prefix;
+import dev.tensor.feature.commands.Reset;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.command.Command;
-import dev.tensor.misc.command.TensorCommandException;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
@@ -33,6 +34,8 @@ public final class CommandManager implements Manager {
         LOGGER.info("Loaded: " + this.getName());
 
         this.addCommand(new HackList());
+        this.addCommand(new Prefix());
+        //this.addCommand(new Reset());
 
         this.postSortHacks();
     }
@@ -93,16 +96,13 @@ public final class CommandManager implements Manager {
 
                     if (acceptedName.equalsIgnoreCase(ARGS_1[0])) {
 
-                        try {
-                            String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1,  1, ARGS_1.length);
 
-                            command.onCommand(COMMAND_ARGS);
+                        String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1,  1, ARGS_1.length);
 
-                            HAS_DISPATCHED.set(true);
+                        command.onCommand(COMMAND_ARGS);
 
-                        } catch (TensorCommandException exception) {
-                            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command '" + this.getColor(ChatColor.AQUA) + exception.className() + this.getColor(ChatColor.RED) + "' (command had an unknown error)!");
-                        }
+                        HAS_DISPATCHED.set(true);
+
                     }
                 });
             });
