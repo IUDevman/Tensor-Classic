@@ -29,6 +29,10 @@ public final class FriendManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.loadFriends(LOGGER);
+    }
+
+    private void loadFriends(Logger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
 
@@ -73,6 +77,10 @@ public final class FriendManager implements Manager {
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
 
+        this.saveFriends(LOGGER);
+    }
+
+    private void saveFriends(Logger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
             this.getConfigManager().registerFile(path);

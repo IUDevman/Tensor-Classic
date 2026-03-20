@@ -29,7 +29,12 @@ public final class ConfigManager implements Manager {
 
     @Override
     public void load(Logger LOGGER) {
+        LOGGER.info("Loaded: " + this.getName());
 
+        this.setUpClientPath(LOGGER);
+    }
+
+    private void setUpClientPath(Logger LOGGER) {
         try {
             if (!Files.exists(Paths.get(this.getConfigPath()))) {
                 Files.createDirectories(Paths.get(this.getConfigPath()));
@@ -38,8 +43,6 @@ public final class ConfigManager implements Manager {
         } catch (IOException ignored) {
             LOGGER.info("Failed to load: " + this.getName());
         }
-
-        LOGGER.info("Loaded: " + this.getName());
     }
 
     @Override

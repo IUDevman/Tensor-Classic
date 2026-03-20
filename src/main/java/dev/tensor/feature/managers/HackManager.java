@@ -45,6 +45,10 @@ public final class HackManager implements Manager {
 
         this.postSortHacks();
 
+        this.loadHacks(LOGGER);
+    }
+
+    private void loadHacks(Logger LOGGER) {
         try {
             if (!Files.exists(Paths.get(this.hackPath))) {
                 Files.createDirectories(Paths.get(this.hackPath));
@@ -67,6 +71,10 @@ public final class HackManager implements Manager {
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
 
+        this.saveHacks(LOGGER);
+    }
+
+    private void saveHacks(Logger LOGGER) {
         this.getHacks().forEach(hack -> {
             try {
                 hack.save(this.hackPath);
@@ -74,7 +82,6 @@ public final class HackManager implements Manager {
                 LOGGER.info("Failed to save hack: " + hack.NAME);
             }
         });
-
     }
 
     public void addHack(Hack HACK) {
