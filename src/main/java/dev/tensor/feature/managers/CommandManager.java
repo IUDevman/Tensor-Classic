@@ -34,6 +34,7 @@ public final class CommandManager implements Manager {
         this.addCommand(new ClearChat());
         this.addCommand(new dev.tensor.feature.commands.Commands());
         this.addCommand(new Config());
+        this.addCommand(new Friends());
         this.addCommand(new Hacks());
         this.addCommand(new Help());
         this.addCommand(new Prefix());

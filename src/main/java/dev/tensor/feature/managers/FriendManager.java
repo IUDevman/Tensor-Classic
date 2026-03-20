@@ -65,6 +65,14 @@ public final class FriendManager implements Manager {
         this.getFriends().add(name.toLowerCase());
     }
 
+    public void removeFriend(EntityOtherPlayerMP entity) {
+        this.removeFriend(entity.username);
+    }
+
+    public void removeFriend(String name) {
+        this.getFriends().remove(name.toLowerCase());
+    }
+
     public boolean isFriend(EntityOtherPlayerMP entity) {
         return this.isFriend(entity.username);
     }
