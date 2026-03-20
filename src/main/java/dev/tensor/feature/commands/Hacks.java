@@ -9,18 +9,18 @@ import java.util.ArrayList;
  * @since 03-19-2026
  */
 
-public final class HackList extends SimpleCallableCommand {
+public final class Hacks extends SimpleCallableCommand {
 
     @Override
     public String getName() {
-        return "HackList";
+        return "Hacks";
     }
 
     @Override
     public String[] getAcceptedNames() {
         return new String[] {
                 this.getName(),
-                "Hacks",
+                "HackList",
                 "Hack",
                 "Module",
                 "Modules",

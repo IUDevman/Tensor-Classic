@@ -32,8 +32,9 @@ public final class CommandManager implements Manager {
         LOGGER.info("Loaded: " + this.getName());
 
         this.addCommand(new ClearChat());
+        this.addCommand(new dev.tensor.feature.commands.Commands());
         this.addCommand(new Config());
-        this.addCommand(new HackList());
+        this.addCommand(new Hacks());
         this.addCommand(new Help());
         this.addCommand(new Prefix());
         this.addCommand(new Reset());
