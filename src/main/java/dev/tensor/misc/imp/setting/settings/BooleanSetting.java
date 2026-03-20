@@ -1,5 +1,8 @@
 package dev.tensor.misc.imp.setting.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.setting.Setting;
 
 /**
@@ -39,5 +42,15 @@ public class BooleanSetting implements Setting<Boolean> {
     @Override
     public void setValue(Boolean VALUE) {
         this.VALUE = VALUE;
+    }
+
+    @Override
+    public void load(JsonElement jsonElement) {
+        this.setValue(jsonElement.getAsBoolean());
+    }
+
+    @Override
+    public void save(JsonObject jsonObject) {
+        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
     }
 }

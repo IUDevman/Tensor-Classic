@@ -1,9 +1,14 @@
 package dev.tensor.feature.managers;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
 import org.slf4j.Logger;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
@@ -23,10 +28,29 @@ public final class FriendManager implements Manager {
     @Override
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
+
+        try {
+            Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
+
+            if (!Files.exists(path)) return;
+
+            JsonObject jsonObject = this.getConfigManager().getJsonObjectFromPath(path);
+            JsonArray jsonArray = jsonObject.get("Friends").getAsJsonArray();
+
+            this.clearFriends();
+            jsonArray.forEach(jsonElement -> this.addFriend(jsonElement.getAsString()));
+
+        } catch (Exception ignored) {
+            LOGGER.info("Failed to load: " + this.getName());
+        }
     }
 
     public ArrayList<String> getFriends() {
         return this.FRIENDS;
+    }
+
+    public void clearFriends() {
+        this.getFriends().clear();
     }
 
     public void addFriend(EntityOtherPlayerMP entity) {
@@ -48,5 +72,20 @@ public final class FriendManager implements Manager {
     @Override
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
+
+        try {
+            Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
+            this.getConfigManager().registerFile(path);
+
+            JsonObject jsonObject = new JsonObject();
+            JsonArray jsonArray = new JsonArray();
+
+            this.getFriends().forEach(jsonArray::add);
+            jsonObject.add("Friends", jsonArray);
+
+            this.getConfigManager().createAndWrite(path, jsonObject);
+        } catch (Exception ignored) {
+            LOGGER.info("Failed to load: " + this.getName());
+        }
     }
 }

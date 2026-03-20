@@ -1,10 +1,16 @@
 package dev.tensor.misc.imp.hack;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.setting.Setting;
 import org.lwjgl.input.Keyboard;
 
 import java.lang.annotation.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -48,9 +54,9 @@ public abstract class Hack implements Globals {
 
     private boolean ENABLED = this.getInfo().enabled();
 
-    private final ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
+    public ArrayList<Setting<?>> getSettings() {
+        ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
 
-    public Hack() {
         Arrays.stream(this.getClass().getDeclaredFields()).forEach(field -> {
 
             if (Setting.class.isAssignableFrom(field.getType())) {
@@ -61,17 +67,15 @@ public abstract class Hack implements Globals {
 
                 try {
 
-                    this.SETTINGS.add((Setting<?>) field.get(this));
+                    SETTINGS.add((Setting<?>) field.get(this));
 
                 } catch (Exception ignored) {
                     this.getTensorLogger().info("Failed to get setting for hack " + this.NAME + "!");
                 }
             }
         });
-    }
 
-    public ArrayList<Setting<?>> getSettings() {
-        return this.SETTINGS;
+        return SETTINGS;
     }
 
     public boolean isEnabled() {
@@ -89,10 +93,6 @@ public abstract class Hack implements Globals {
 
     public void toggle() {
         this.setEnabled(!this.isEnabled());
-    }
-
-    public void launchStartUp() {
-        this.setEnabled(this.ENABLED);
     }
 
     public void reset() {
@@ -164,5 +164,56 @@ public abstract class Hack implements Globals {
 
     public void onRender3D() {
 
+    }
+
+    public void load(String modulePath) throws Exception {
+        Path path = Paths.get(modulePath + this.NAME + ".json");
+
+        if (!Files.exists(path)) {
+
+            if (this.ENABLED) {
+                this.setEnabled(true);
+            }
+
+            return;
+        }
+
+        JsonObject jsonObject = this.getConfigManager().getJsonObjectFromPath(path);
+
+        this.MESSAGES = jsonObject.get("Messages").getAsBoolean();
+        this.DRAWN = jsonObject.get("Drawn").getAsBoolean();
+        this.BIND = jsonObject.get("Bind").getAsInt();
+
+        JsonObject settingObject = jsonObject.getAsJsonObject("Settings");
+
+        this.getSettings().forEach(objectSetting -> {
+            JsonElement jsonElement = settingObject.get(objectSetting.getName());
+
+            if (jsonElement == null) return;
+
+            objectSetting.load(jsonElement);
+        });
+
+        this.setEnabled(jsonObject.get("Enabled").getAsBoolean());
+    }
+
+    public void save(String modulePath) throws Exception {
+        Path path = Paths.get(modulePath + this.NAME + ".json");
+        this.getConfigManager().registerFile(path);
+
+        JsonObject jsonObject = new JsonObject();
+
+        jsonObject.add("Enabled", new JsonPrimitive(this.isEnabled()));
+        jsonObject.add("Messages", new JsonPrimitive(this.MESSAGES));
+        jsonObject.add("Drawn", new JsonPrimitive(this.DRAWN));
+        jsonObject.add("Bind", new JsonPrimitive(this.BIND));
+
+        JsonObject settingObject = new JsonObject();
+
+        this.getSettings().forEach(objectSetting -> objectSetting.save(settingObject));
+
+        jsonObject.add("Settings", settingObject);
+
+        this.getConfigManager().createAndWrite(path, jsonObject);
     }
 }

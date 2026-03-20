@@ -1,6 +1,11 @@
 package dev.tensor.misc.imp.setting.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.setting.Setting;
+
+import java.util.Arrays;
 
 /**
  * @author Hoosiers
@@ -52,5 +57,21 @@ public class EnumSetting implements Setting<Enum<?>> {
         if (index >= array.length) index = 0;
 
         this.setValue(array[index]);
+    }
+
+    @Override
+    public void load(JsonElement jsonElement) {
+        Enum<?>[] array = this.getValue().getDeclaringClass().getEnumConstants();
+
+        Arrays.stream(array).forEach(anEnum -> {
+            if (anEnum.name().equalsIgnoreCase(jsonElement.getAsString())) {
+                this.setValue(anEnum);
+            }
+        });
+    }
+
+    @Override
+    public void save(JsonObject jsonObject) {
+        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
     }
 }

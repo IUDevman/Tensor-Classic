@@ -43,10 +43,4 @@ public final class MinecraftMixin implements Globals {
             this.getEventManager().call(event);
         }
     }
-
-    @Inject(method = "shutdown", at = @At("HEAD"))
-    public void onShutdown(CallbackInfo ci) {
-
-        this.getTensor().saveManagers();
-    }
 }

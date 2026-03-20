@@ -1,9 +1,6 @@
 package dev.tensor;
 
-import dev.tensor.feature.managers.CommandManager;
-import dev.tensor.feature.managers.EventManager;
-import dev.tensor.feature.managers.FriendManager;
-import dev.tensor.feature.managers.HackManager;
+import dev.tensor.feature.managers.*;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.Manager;
 import net.fabricmc.api.ModInitializer;
@@ -59,6 +56,8 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         this.loadManagers();
 
+        Runtime.getRuntime().addShutdownHook(new Thread(this::saveManagers));
+
         long bootEndTime = System.currentTimeMillis();
 
         LOGGER.info("Initialized " + MOD_NAME + " Version " + MOD_VERSION + " in " + (bootEndTime - bootStartTime) + " ms!");
@@ -67,6 +66,7 @@ public final class TensorClassic implements ModInitializer, Globals {
     private void loadManagers() {
 
         this.MANAGERS.add(this.returnLoadedManager(new EventManager()));
+        this.MANAGERS.add(this.returnLoadedManager(new ConfigManager()));
         this.MANAGERS.add(this.returnLoadedManager(new FriendManager()));
         this.MANAGERS.add(this.returnLoadedManager(new HackManager()));
         this.MANAGERS.add(this.returnLoadedManager(new CommandManager()));

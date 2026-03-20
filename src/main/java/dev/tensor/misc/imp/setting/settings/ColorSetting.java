@@ -1,5 +1,8 @@
 package dev.tensor.misc.imp.setting.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.setting.Setting;
 
 import java.awt.*;
@@ -55,5 +58,15 @@ public class ColorSetting implements Setting<Color> {
         }
 
         this.setValue(new Color(RED_INT, GREEN_INT, BLUE_INT, ALPHA_INT));
+    }
+
+    @Override
+    public void load(JsonElement jsonElement) {
+        this.setValue(new Color(jsonElement.getAsInt()));
+    }
+
+    @Override
+    public void save(JsonObject jsonObject) {
+        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().getRGB()));
     }
 }

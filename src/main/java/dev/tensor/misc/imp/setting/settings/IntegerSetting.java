@@ -1,5 +1,8 @@
 package dev.tensor.misc.imp.setting.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.setting.NumberSetting;
 import dev.tensor.misc.imp.setting.Setting;
 
@@ -61,5 +64,15 @@ public class IntegerSetting implements Setting<Integer>, NumberSetting<Integer> 
     @Override
     public Integer getMax() {
         return this.MAX_VALUE;
+    }
+
+    @Override
+    public void load(JsonElement jsonElement) {
+        this.setValue(jsonElement.getAsInt());
+    }
+
+    @Override
+    public void save(JsonObject jsonObject) {
+        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
     }
 }

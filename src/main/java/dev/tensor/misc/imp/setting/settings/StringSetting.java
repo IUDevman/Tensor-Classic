@@ -1,5 +1,8 @@
 package dev.tensor.misc.imp.setting.settings;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.imp.setting.Setting;
 
 /**
@@ -39,5 +42,15 @@ public class StringSetting implements Setting<String> {
     @Override
     public void setValue(String VALUE) {
         this.VALUE = VALUE;
+    }
+
+    @Override
+    public void load(JsonElement jsonElement) {
+        this.setValue(jsonElement.getAsString());
+    }
+
+    @Override
+    public void save(JsonObject jsonObject) {
+        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue()));
     }
 }

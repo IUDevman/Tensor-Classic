@@ -1,10 +1,7 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
-import dev.tensor.feature.managers.CommandManager;
-import dev.tensor.feature.managers.EventManager;
-import dev.tensor.feature.managers.FriendManager;
-import dev.tensor.feature.managers.HackManager;
+import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayerSP;
@@ -53,6 +50,10 @@ public interface Globals {
 
     default EventManager getEventManager() {
         return (EventManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof EventManager).findFirst().orElse(null);
+    }
+
+    default ConfigManager getConfigManager() {
+        return (ConfigManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof ConfigManager).findFirst().orElse(null);
     }
 
     default FriendManager getFriendManager() {

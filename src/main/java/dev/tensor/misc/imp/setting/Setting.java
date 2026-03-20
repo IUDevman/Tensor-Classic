@@ -1,5 +1,7 @@
 package dev.tensor.misc.imp.setting;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import dev.tensor.misc.imp.Globals;
 
 /**
@@ -16,6 +18,10 @@ public interface Setting<T> extends Globals {
     T getValue();
 
     void setValue(T VALUE);
+
+    void load(JsonElement jsonElement);
+
+    void save(JsonObject jsonObject);
 
     default void reset() {
         this.setValue(this.getDefaultValue());

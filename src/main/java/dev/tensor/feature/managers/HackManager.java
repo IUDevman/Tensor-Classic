@@ -12,6 +12,8 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import org.slf4j.Logger;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
@@ -30,6 +32,8 @@ public final class HackManager implements Manager {
 
     private final ArrayList<Hack> HACKS = new ArrayList<>();
 
+    private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
+
     @Override
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
@@ -40,17 +44,41 @@ public final class HackManager implements Manager {
         this.addHack(new KillAura());
 
         this.postSortHacks();
+
+        try {
+            if (!Files.exists(Paths.get(this.hackPath))) {
+                Files.createDirectories(Paths.get(this.hackPath));
+            }
+
+            this.getHacks().forEach(hack -> {
+                try {
+                    hack.load(this.hackPath);
+                } catch (Exception ignored) {
+                    LOGGER.info("Failed to load hack: " + hack.NAME);
+                }
+            });
+
+        } catch (Exception ignored) {
+            LOGGER.info("Failed to load: " + this.getName());
+        }
     }
 
     @Override
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
+
+        this.getHacks().forEach(hack -> {
+            try {
+                hack.save(this.hackPath);
+            } catch (Exception ingored) {
+                LOGGER.info("Failed to save hack: " + hack.NAME);
+            }
+        });
+
     }
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
-
-        HACK.launchStartUp();
     }
 
     public ArrayList<Hack> getHacks() {
