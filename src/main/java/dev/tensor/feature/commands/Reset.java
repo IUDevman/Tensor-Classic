@@ -38,9 +38,14 @@ public final class Reset implements Command {
     @Override
     public void onCommand(String[] ARGS) {
 
+        if (ARGS == null || ARGS.length == 0) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to reset hack or setting (no name inputted)!");
+            return;
+        }
+
         String firstEntry = ARGS[0];
 
-        if (firstEntry == null) {
+        if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to reset hack or setting (no name inputted)!");
             return;
         }
@@ -52,9 +57,16 @@ public final class Reset implements Command {
             return;
         }
 
+        if (ARGS.length == 1) {
+
+            hack.reset();
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Reset hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+            return;
+        }
+
         String secondEntry = ARGS[1];
 
-        if (secondEntry == null) {
+        if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
 
             hack.reset();
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Reset hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");

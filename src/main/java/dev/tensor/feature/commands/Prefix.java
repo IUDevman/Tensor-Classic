@@ -37,6 +37,11 @@ public final class Prefix implements Command {
     @Override
     public void onCommand(String[] ARGS) {
 
+        if (ARGS == null || ARGS.length == 0) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set prefix (no new prefix inputted)!");
+            return;
+        }
+
         String newPrefix = ARGS[0];
 
         if (newPrefix == null || newPrefix.equalsIgnoreCase(" ")) {
