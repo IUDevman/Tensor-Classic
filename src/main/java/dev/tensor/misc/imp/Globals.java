@@ -1,7 +1,9 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
+import dev.tensor.feature.managers.CommandManager;
 import dev.tensor.feature.managers.EventManager;
+import dev.tensor.feature.managers.FriendManager;
 import dev.tensor.feature.managers.HackManager;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
@@ -53,8 +55,16 @@ public interface Globals {
         return (EventManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof EventManager).findFirst().orElse(null);
     }
 
+    default FriendManager getFriendManager() {
+        return (FriendManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof FriendManager).findFirst().orElse(null);
+    }
+
     default HackManager getHackManager() {
         return (HackManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof HackManager).findFirst().orElse(null);
+    }
+
+    default CommandManager getCommandManager() {
+        return (CommandManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof CommandManager).findFirst().orElse(null);
     }
 
     default String getColor(ChatColor COLOR) {

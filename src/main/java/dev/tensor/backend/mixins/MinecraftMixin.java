@@ -25,7 +25,7 @@ public final class MinecraftMixin implements Globals {
         }
 
         ClientTickEvent clientTickEvent = new ClientTickEvent();
-        this.getEventManager().register(clientTickEvent);
+        this.getEventManager().call(clientTickEvent);
     }
 
     /**

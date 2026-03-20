@@ -7,7 +7,6 @@ import dev.tensor.misc.command.Command;
 import dev.tensor.misc.command.TensorCommandException;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
-import dev.tensor.misc.imp.hack.Hack;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public final class CommandManager implements Manager {
         return "CommandManager";
     }
 
-    public final ArrayList<Command> COMMANDS = new ArrayList<>();
+    private final ArrayList<Command> COMMANDS = new ArrayList<>();
 
     @Override
     public void load(Logger LOGGER) {

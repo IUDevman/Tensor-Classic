@@ -5,6 +5,7 @@ import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.feature.hacks.ClientMessages;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.feature.hacks.FOV;
+import dev.tensor.feature.hacks.KillAura;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -27,7 +28,7 @@ public final class HackManager implements Manager {
         return "HackManager";
     }
 
-    public final ArrayList<Hack> HACKS = new ArrayList<>();
+    private final ArrayList<Hack> HACKS = new ArrayList<>();
 
     @Override
     public void load(Logger LOGGER) {
@@ -36,6 +37,7 @@ public final class HackManager implements Manager {
         this.addHack(new ClientMessages());
         this.addHack(new Commands());
         this.addHack(new FOV());
+        this.addHack(new KillAura());
 
         this.postSortHacks();
     }
