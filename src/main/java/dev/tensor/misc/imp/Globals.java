@@ -32,6 +32,10 @@ public interface Globals {
         return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
     }
 
+    default boolean isMultiplayer() {
+        return this.getWorld().multiplayerWorld;
+    }
+
     default TensorClassic getTensor() {
         return TensorClassic.getInstance();
     }
@@ -109,7 +113,7 @@ public interface Globals {
     }
 
     default String getPrefix() {
-        return this.getColor(ChatColor.DARK_GRAY) + "[" + this.getColor(ChatColor.DARK_RED) + TensorClassic.MOD_NAME.replace(" ", " " + this.getColor(ChatColor.RED)) + this.getColor(ChatColor.DARK_GRAY) + "]" + this.getColor(ChatColor.DEFAULT);
+        return this.getColor(ChatColor.DARK_GRAY) + "[" + this.getColor(ChatColor.DARK_RED) + TensorClassic.MOD_NAME.replace(" ", " " + this.getColor(ChatColor.RED)) + this.getColor(ChatColor.DARK_GRAY) + "] " + this.getColor(ChatColor.DEFAULT);
     }
 
     default void sendClientMessageWithPrefix(String message) {
@@ -119,6 +123,6 @@ public interface Globals {
 
         String prefixMessage = this.getPrefix() + message;
 
-        this.getPlayer().sendChatMessage(prefixMessage);
+        this.getPlayer().addChatMessage(prefixMessage);
     }
 }

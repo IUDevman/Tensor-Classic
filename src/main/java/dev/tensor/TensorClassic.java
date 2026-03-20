@@ -1,5 +1,6 @@
 package dev.tensor;
 
+import dev.tensor.feature.managers.CommandManager;
 import dev.tensor.feature.managers.EventManager;
 import dev.tensor.feature.managers.HackManager;
 import dev.tensor.misc.imp.Globals;
@@ -66,6 +67,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         this.MANAGERS.add(this.returnLoadedManager(new EventManager()));
         this.MANAGERS.add(this.returnLoadedManager(new HackManager()));
+        this.MANAGERS.add(this.returnLoadedManager(new CommandManager()));
     }
 
     private <T extends Manager> T returnLoadedManager(T manager) {
