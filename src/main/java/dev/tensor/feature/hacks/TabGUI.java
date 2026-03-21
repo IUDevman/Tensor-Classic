@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @since 03-15-2026
  */
 
-@Hack.Info(name = "TabGUI", category = Category.Client, enabled = true, bind = Keyboard.KEY_P)
+@Hack.Info(name = "TabGUI", category = Category.Client, enabled = true)
 public final class TabGUI extends Hack {
 
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
