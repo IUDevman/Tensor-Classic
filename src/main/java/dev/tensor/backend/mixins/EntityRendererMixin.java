@@ -1,11 +1,13 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.FOVModifierEvent;
+import dev.tensor.backend.events.HurtCameraEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -27,6 +29,20 @@ public final class EntityRendererMixin implements Globals {
 
         if (event.isCancelled()) {
             cir.setReturnValue(event.FOV);
+        }
+    }
+
+    @Inject(method = "hurtCameraEffect", at = @At("HEAD"), cancellable = true)
+    public void onHurtCameraEffect(float par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        HurtCameraEvent event = new HurtCameraEvent();
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            ci.cancel();
         }
     }
 }

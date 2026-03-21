@@ -4,6 +4,9 @@
   "package": "dev.tensor.backend.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "ChunkMixin",
+    "WorldInfoMixin",
+    "WorldMixin"
   ],
   "client": [
     "EntityRendererMixin",

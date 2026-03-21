@@ -7,7 +7,7 @@ import dev.tensor.misc.event.imp.EventCancellable;
  * @since 03-18-2026
  */
 
-public class FOVModifierEvent extends EventCancellable {
+public final class FOVModifierEvent extends EventCancellable {
 
     public float FOV;
 }

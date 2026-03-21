@@ -36,6 +36,14 @@ public interface Globals {
         return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
     }
 
+    default void resetWorld() {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        this.getMinecraft().renderGlobal.loadRenderers();
+    }
+
     default boolean isMultiplayer() {
         return this.getWorld().multiplayerWorld;
     }

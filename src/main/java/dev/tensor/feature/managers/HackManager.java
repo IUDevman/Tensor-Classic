@@ -2,10 +2,7 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
-import dev.tensor.feature.hacks.ClientMessages;
-import dev.tensor.feature.hacks.Commands;
-import dev.tensor.feature.hacks.FOV;
-import dev.tensor.feature.hacks.KillAura;
+import dev.tensor.feature.hacks.*;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -41,7 +38,10 @@ public final class HackManager implements Manager {
         this.addHack(new ClientMessages());
         this.addHack(new Commands());
         this.addHack(new FOV());
+        this.addHack(new Fullbright());
         this.addHack(new KillAura());
+        this.addHack(new NoHurtCam());
+        this.addHack(new NoWeather());
 
         this.postSortHacks();
 
