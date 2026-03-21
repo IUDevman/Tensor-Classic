@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.events.ChatReceivedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.GuiIngame;
@@ -23,6 +24,16 @@ public final class GuiIngameMixin implements Globals {
         }
 
         Render2DEvent event = new Render2DEvent();
+        this.getEventManager().call(event);
+    }
+
+    @Inject(method = "addChatMessage", at = @At("HEAD"))
+    public void onAddChatMessage(String par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        ChatReceivedEvent event = new ChatReceivedEvent(par1);
         this.getEventManager().call(event);
     }
 }
