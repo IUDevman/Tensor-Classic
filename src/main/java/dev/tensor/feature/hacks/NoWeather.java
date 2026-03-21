@@ -4,7 +4,6 @@ import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import org.lwjgl.input.Keyboard;
 
 /**
  * @author Hoosiers
