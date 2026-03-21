@@ -46,6 +46,11 @@ public class IntegerSetting implements Setting<Integer>, NumberSetting<Integer> 
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue().toString();
+    }
+
+    @Override
     public void setValue(Integer VALUE) {
         if (VALUE < this.getMin()) {
             VALUE = this.getMin();
@@ -54,6 +59,13 @@ public class IntegerSetting implements Setting<Integer>, NumberSetting<Integer> 
         }
 
         this.VALUE = VALUE;
+    }
+
+    @Override
+    public void setValueFromString(String string) throws Exception {
+        int VALUE = Integer.parseInt(string);
+
+        this.setValue(VALUE);
     }
 
     @Override
@@ -68,7 +80,11 @@ public class IntegerSetting implements Setting<Integer>, NumberSetting<Integer> 
 
     @Override
     public void load(JsonElement jsonElement) {
-        this.setValue(jsonElement.getAsInt());
+        try {
+            this.setValueFromString(jsonElement.getAsString());
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load IntegerSetting: " + this.getName() + "!");
+        }
     }
 
     @Override

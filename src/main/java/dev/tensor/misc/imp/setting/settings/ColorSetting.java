@@ -40,11 +40,27 @@ public class ColorSetting implements Setting<Color> {
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? this.getColor(ChatColor.AQUA) : "") + "[" + this.getValue().getRed() + ", " + this.getValue().getGreen() + ", " + this.getValue().getBlue() + ", " + this.getValue().getAlpha() + "]";
+    }
+
+    @Override
     public void setValue(Color value) {
         this.value = value;
     }
 
-    public void setValueFromString(String RED, String GREEN, String BLUE, String ALPHA) throws NumberFormatException {
+    @Override
+    public void setValueFromString(String string) throws Exception {
+        String[] values = string.split("_");
+
+        if (values.length < 4) {
+            throw new Exception();
+        }
+
+        this.setValuesFromString(values[0], values[1], values[2], values[3]);
+    }
+
+    private void setValuesFromString(String RED, String GREEN, String BLUE, String ALPHA) throws NumberFormatException {
         int RED_INT = Integer.parseInt(RED);
         int GREEN_INT = Integer.parseInt(GREEN);
         int BLUE_INT = Integer.parseInt(BLUE);
@@ -55,19 +71,10 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public void load(JsonElement jsonElement) {
-        String value = jsonElement.getAsString();
-
-        String[] values = value.split("_");
-
-        if (values.length < 4) {
-            this.getTensorLogger().info("Failed to load ColorSetting '" + this.getName() + "' (value length < 4)!");
-        }
-
         try {
-            this.setValueFromString(values[0], values[1], values[2], values[3]);
-
-        }catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load ColorSetting '" + this.getName() + "' (Exception)!");
+            this.setValueFromString(jsonElement.getAsString());
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load ColorSetting: " + this.getName() + "!");
         }
     }
 

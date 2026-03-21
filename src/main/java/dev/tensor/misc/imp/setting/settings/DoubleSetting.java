@@ -49,6 +49,11 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue().toString();
+    }
+
+    @Override
     public void setValue(Double VALUE) throws NumberFormatException {
         if (VALUE < this.getMin()) {
             VALUE = this.getMin();
@@ -60,6 +65,13 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
 
         this.VALUE = Double.parseDouble(FORMATTED_VALUE);
 
+    }
+
+    @Override
+    public void setValueFromString(String string) throws Exception {
+        double VALUE = Double.parseDouble(string);
+
+        this.setValue(VALUE);
     }
 
     @Override
@@ -76,10 +88,6 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
         return this.DECIMAL;
     }
 
-    public String getFormattedValue() {
-        return this.getFormattedFromValue(this.getValue());
-    }
-
     @SuppressWarnings("MalformedFormatString")
     private String getFormattedFromValue(double VALUE) {
         return String.format("%." + this.getDecimal() + "f", VALUE);
@@ -87,7 +95,11 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
 
     @Override
     public void load(JsonElement jsonElement) {
-        this.setValue(jsonElement.getAsDouble());
+        try {
+            this.setValueFromString(jsonElement.getAsString());
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load DoubleSetting: " + this.getName() + "!");
+        }
     }
 
     @Override

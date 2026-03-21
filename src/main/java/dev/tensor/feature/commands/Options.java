@@ -12,22 +12,21 @@ import java.util.ArrayList;
  * @since 03-20-2026
  */
 
-public final class SetHack implements Command {
+public final class Options implements Command {
 
     @Override
     public String getName() {
-        return "SetHack";
+        return "Options";
     }
 
     @Override
     public String[] getAcceptedNames() {
         return new String[] {
-                this.getName(),
-                "SetHacks",
-                "HackSet",
-                "HacksSet",
-                "SettingHack",
-                "SettingsHack"
+                "HackOption",
+                "HackOptions",
+                "HacksOption",
+                "HacksOptions",
+                "Option"
         };
     }
 
@@ -38,7 +37,7 @@ public final class SetHack implements Command {
 
     @Override
     public String getDescription() {
-        return "Sets hack options (enabled/drawn/messages/bind). Use " + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Setting to change hack settings.";
+        return "Sets hack options (enabled/drawn/messages/bind) for specified hack. Use " + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Setting to change hack settings.";
     }
 
     @Override
@@ -72,6 +71,18 @@ public final class SetHack implements Command {
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (no option name inputted)!");
+            return;
+        }
+
+        if (secondEntry.equalsIgnoreCase("list")) {
+            ArrayList<String> options = new ArrayList<>();
+
+            options.add((hack.isEnabled() ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Enabled" + this.getColor(ChatColor.DEFAULT));
+            options.add((hack.DRAWN ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Drawn" + this.getColor(ChatColor.DEFAULT));
+            options.add((hack.MESSAGES ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Messages" + this.getColor(ChatColor.DEFAULT));
+            options.add("Bind = [" + this.getColor(ChatColor.AQUA) + Keyboard.getKeyName(hack.BIND) + this.getColor(ChatColor.DEFAULT) + "]");
+
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "' options list: " + options);
             return;
         }
 
@@ -113,7 +124,7 @@ public final class SetHack implements Command {
             }
 
         } catch (Exception ignored) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (invalid option value inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "' (invalid option value inputted)!");
         }
     }
 

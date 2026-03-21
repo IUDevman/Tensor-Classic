@@ -40,13 +40,27 @@ public class StringSetting implements Setting<String> {
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue();
+    }
+
+    @Override
     public void setValue(String VALUE) {
         this.VALUE = VALUE;
     }
 
     @Override
+    public void setValueFromString(String string) throws Exception {
+        this.setValue(string);
+    }
+
+    @Override
     public void load(JsonElement jsonElement) {
-        this.setValue(jsonElement.getAsString());
+        try {
+            this.setValueFromString(jsonElement.getAsString());
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load StringSetting: " + this.getName() + "!");
+        }
     }
 
     @Override

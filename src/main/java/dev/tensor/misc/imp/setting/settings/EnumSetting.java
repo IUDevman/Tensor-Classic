@@ -42,8 +42,24 @@ public class EnumSetting implements Setting<Enum<?>> {
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue().name();
+    }
+
+    @Override
     public void setValue(Enum<?> VALUE) {
         this.VALUE = VALUE;
+    }
+
+    @Override
+    public void setValueFromString(String string) throws Exception {
+        Enum<?>[] array = this.getValue().getDeclaringClass().getEnumConstants();
+
+        Arrays.stream(array).forEach(anEnum -> {
+            if (anEnum.name().equalsIgnoreCase(string)) {
+                this.setValue(anEnum);
+            }
+        });
     }
 
     public Enum<?>[] getEnumConstants() {
@@ -61,13 +77,11 @@ public class EnumSetting implements Setting<Enum<?>> {
 
     @Override
     public void load(JsonElement jsonElement) {
-        Enum<?>[] array = this.getValue().getDeclaringClass().getEnumConstants();
-
-        Arrays.stream(array).forEach(anEnum -> {
-            if (anEnum.name().equalsIgnoreCase(jsonElement.getAsString())) {
-                this.setValue(anEnum);
-            }
-        });
+        try {
+            this.setValueFromString(jsonElement.getAsString());
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load EnumSetting: " + this.getName() + "!");
+        }
     }
 
     @Override

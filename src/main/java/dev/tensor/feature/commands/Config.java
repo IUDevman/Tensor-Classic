@@ -37,14 +37,14 @@ public final class Config implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to load or reset config (no value inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (no value inputted)!");
             return;
         }
 
         String firstEntry = ARGS[0];
 
         if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to load or reset config (no value inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (no value inputted)!");
             return;
         }
 
@@ -57,7 +57,7 @@ public final class Config implements Command {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Reloaded config!");
 
         } else {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to load or reset config (unknown value inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (unknown value inputted)!");
         }
     }
 }

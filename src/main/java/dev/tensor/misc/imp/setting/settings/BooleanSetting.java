@@ -40,8 +40,20 @@ public class BooleanSetting implements Setting<Boolean> {
     }
 
     @Override
+    public String getValueString(boolean color) {
+        return (color ? (this.getValue() ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) : "") + this.getValue().toString();
+    }
+
+    @Override
     public void setValue(Boolean VALUE) {
         this.VALUE = VALUE;
+    }
+
+    @Override
+    public void setValueFromString(String string) throws Exception {
+        boolean VALUE = Boolean.parseBoolean(string);
+
+        this.setValue(VALUE);
     }
 
     @Override

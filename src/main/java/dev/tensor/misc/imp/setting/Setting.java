@@ -17,7 +17,11 @@ public interface Setting<T> extends Globals {
 
     T getValue();
 
+    String getValueString(boolean color);
+
     void setValue(T VALUE);
+
+    void setValueFromString(String string) throws Exception;
 
     void load(JsonElement jsonElement);
 

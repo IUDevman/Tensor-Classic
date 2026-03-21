@@ -37,9 +37,10 @@ public final class CommandManager implements Manager {
         this.addCommand(new Friends());
         this.addCommand(new Hacks());
         this.addCommand(new Help());
+        this.addCommand(new Options());
         this.addCommand(new Prefix());
         this.addCommand(new Reset());
-        this.addCommand(new SetHack());
+        this.addCommand(new Setting());
         this.addCommand(new Toggle());
 
         this.postSortHacks();
