@@ -31,8 +31,6 @@ public final class TabGUI extends Hack {
     private final int minPage = 1;
     private int maxPage = 1;
 
-    private final String clientMessage = TensorClassic.MOD_NAME + " " + TensorClassic.MOD_VERSION +  " >>> By Hoosiers :)";
-
     private int getPage() {
         int page = this.page.getValue();
 
@@ -54,6 +52,8 @@ public final class TabGUI extends Hack {
 
         this.page.setValue(page);
     }
+
+    private final String clientMessage = TensorClassic.MOD_NAME + " " + TensorClassic.MOD_VERSION +  " >>> By Hoosiers :)";
 
     private final ArrayList<TabGuiEntry> tabGUIEntries = new ArrayList<>();
 
