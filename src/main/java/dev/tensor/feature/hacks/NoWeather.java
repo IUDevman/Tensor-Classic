@@ -11,7 +11,7 @@ import org.lwjgl.input.Keyboard;
  * @since 03-20-2026
  */
 
-@Hack.Info(name = "NoWeather", category = Category.Render, bind = Keyboard.KEY_H)
+@Hack.Info(name = "NoWeather", category = Category.Render)
 public final class NoWeather extends Hack {
 
     @SuppressWarnings("unused")
