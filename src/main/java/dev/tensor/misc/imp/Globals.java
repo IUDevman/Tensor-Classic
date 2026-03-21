@@ -47,6 +47,10 @@ public interface Globals {
         this.getMinecraft().renderGlobal.loadRenderers();
     }
 
+    default void sendPacket(Packet packet) {
+        this.getMinecraft().getSendQueue().addToSendQueue(packet);
+    }
+
     default boolean isMultiplayer() {
         return this.getWorld().multiplayerWorld;
     }
