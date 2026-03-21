@@ -51,6 +51,11 @@ public class StringSetting implements Setting<String> {
 
     @Override
     public void setValueFromString(String string) throws Exception {
+
+        if (!string.contains(" ")) {
+            string = string.replace("_", " ");
+        }
+
         this.setValue(string);
     }
 
