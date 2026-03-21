@@ -18,12 +18,12 @@ import java.util.ArrayList;
  * @since 03-15-2026
  */
 
-@Hack.Info(name = "TabGUI", category = Category.Client, enabled = true)
+@Hack.Info(name = "TabGUI", category = Category.Client, enabled = true, bind = Keyboard.KEY_P)
 public final class TabGUI extends Hack {
 
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMinecraft().displayWidth);
-    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMinecraft().displayHeight);
+    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMinecraft().displayWidth);
+    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMinecraft().displayHeight);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
     public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 255, 255));
@@ -55,6 +55,8 @@ public final class TabGUI extends Hack {
         this.page.setValue(page);
     }
 
+    private final ArrayList<TabGuiEntry> tabGUIEntries = new ArrayList<>();
+
     @Override
     public void onRender2D() {
 
@@ -69,18 +71,11 @@ public final class TabGUI extends Hack {
 
         this.getInGameGUI().drawString(this.getFontRenderer(), clientMessage, this.x.getValue() + 2, this.y.getValue() + 2, this.textColor.getValue().getRGB());
 
-        ArrayList<TabGuiEntry> tabGUIEntries = new ArrayList<>();
+        if (tabGUIEntries.isEmpty()) {
+            this.setUpTabGUI();
+        }
 
-        tabGUIEntries.add(new TabGuiEntry("[" + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Commands] List", Color.CYAN));
-
-        this.getHackManager().getHacks().forEach(hack -> {
-
-            if (!this.shouldIgnoreHack(hack.NAME)) {
-                tabGUIEntries.add(new TabGuiEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.BIND) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
-            }
-        });
-
-        double maxPage = tabGUIEntries.size() / 5d;
+        double maxPage = this.tabGUIEntries.size() / 5d;
 
         this.maxPage = (int) Math.ceil(maxPage);
 
@@ -102,10 +97,21 @@ public final class TabGUI extends Hack {
 
             int pageI = i + ((this.getPage() - 1) * 5);
 
-            if (tabGUIEntries.size() - 1 >= pageI) {
-                this.getInGameGUI().drawString(this.getFontRenderer(), dumbassWayOfDoingThis + tabGUIEntries.get(pageI).entry, this.x.getValue() +  2,  this.y.getValue() + 4 + (10 * (i + 1)), tabGUIEntries.get(pageI).color.getRGB());
+            if (this.tabGUIEntries.size() - 1 >= pageI) {
+                this.getInGameGUI().drawString(this.getFontRenderer(), dumbassWayOfDoingThis + this.tabGUIEntries.get(pageI).entry, this.x.getValue() +  2,  this.y.getValue() + 4 + (10 * (i + 1)), this.tabGUIEntries.get(pageI).color.getRGB());
             }
         }
+    }
+
+    private void setUpTabGUI() {
+        this.tabGUIEntries.add(new TabGuiEntry("[" + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Commands] List", Color.CYAN));
+
+        this.getHackManager().getHacks().forEach(hack -> {
+
+            if (!this.shouldIgnoreHack(hack.NAME)) {
+                this.tabGUIEntries.add(new TabGuiEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.BIND) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
+            }
+        });
     }
 
     private boolean shouldIgnoreHack(String name) {
