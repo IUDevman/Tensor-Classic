@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public final class TabGUI extends Hack {
 
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
-    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMinecraft().displayWidth);
-    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMinecraft().displayHeight);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMinecraft().displayWidth);
+    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMinecraft().displayHeight);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
     public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 255, 255));
