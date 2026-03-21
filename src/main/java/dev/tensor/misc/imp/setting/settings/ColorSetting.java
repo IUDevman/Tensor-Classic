@@ -26,7 +26,7 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public String getName() {
-        return name;
+        return this.name;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public Color getValue() {
-        return value;
+        return this.value;
     }
 
     @Override
@@ -48,25 +48,33 @@ public class ColorSetting implements Setting<Color> {
         int RED_INT = Integer.parseInt(RED);
         int GREEN_INT = Integer.parseInt(GREEN);
         int BLUE_INT = Integer.parseInt(BLUE);
-
-        int ALPHA_INT;
-
-        if (ALPHA.equalsIgnoreCase("NONE")) {
-            ALPHA_INT = 255;
-        } else {
-            ALPHA_INT = Integer.parseInt(ALPHA);
-        }
+        int ALPHA_INT = Integer.parseInt(ALPHA);
 
         this.setValue(new Color(RED_INT, GREEN_INT, BLUE_INT, ALPHA_INT));
     }
 
     @Override
     public void load(JsonElement jsonElement) {
-        this.setValue(new Color(jsonElement.getAsInt()));
+        String value = jsonElement.getAsString();
+
+        String[] values = value.split("_");
+
+        if (values.length < 4) {
+            this.getTensorLogger().info("Failed to load ColorSetting '" + this.getName() + "' (value length < 4)!");
+        }
+
+        try {
+            this.setValueFromString(values[0], values[1], values[2], values[3]);
+
+        }catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load ColorSetting '" + this.getName() + "' (Exception)!");
+        }
     }
 
     @Override
     public void save(JsonObject jsonObject) {
-        jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().getRGB()));
+        String value = this.getValue().getRed() + "_" + this.getValue().getGreen() + "_" + this.getValue().getBlue() + "_" + this.getValue().getAlpha();
+
+        jsonObject.add(this.getName(), new JsonPrimitive(value));
     }
 }

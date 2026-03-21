@@ -2,6 +2,7 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
+import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
@@ -42,6 +43,7 @@ public final class HackManager implements Manager {
         this.addHack(new KillAura());
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
+        this.addHack(new TabGUI());
 
         this.postSortHacks();
 
@@ -125,6 +127,16 @@ public final class HackManager implements Manager {
         }
 
         this.getEnabledHacks().forEach(Hack::onClientTick);
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onRender2DEvent(Render2DEvent event) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        this.getEnabledHacks().forEach(Hack::onRender2D);
     }
 
     @SuppressWarnings("unused")
