@@ -25,11 +25,27 @@ public final class WorldInfoMixin implements Globals {
         }
     }
 
+    @Inject(method = "getRainTime", at =  @At("HEAD"), cancellable = true)
+    public void onGetRainTime(CallbackInfoReturnable<Integer> cir) {
+
+        if ($tensor_HandleWeatherEvent()) {
+            cir.setReturnValue(0);
+        }
+    }
+
     @Inject(method = "getThundering", at = @At("HEAD"), cancellable = true)
     public void onGetThundering(CallbackInfoReturnable<Boolean> cir) {
 
         if ($tensor_HandleWeatherEvent()) {
             cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(method = "getThunderTime", at =  @At("HEAD"), cancellable = true)
+    public void onGetThunderTime(CallbackInfoReturnable<Integer> cir) {
+
+        if ($tensor_HandleWeatherEvent()) {
+            cir.setReturnValue(0);
         }
     }
 
