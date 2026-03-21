@@ -96,19 +96,19 @@ public final class SetHack implements Command {
             switch (secondEntry.toLowerCase()) {
                 case "enabled":
                     hack.setEnabled(Boolean.parseBoolean(thirdEntry));
-                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Enabled" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.isEnabled() ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Enabled" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.isEnabled() ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
                     break;
                 case "drawn":
                     hack.DRAWN = Boolean.parseBoolean(thirdEntry);
-                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Drawn" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.DRAWN ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Drawn" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.DRAWN ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
                     break;
                 case "messages":
                     hack.MESSAGES = Boolean.parseBoolean(thirdEntry);
-                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Messages" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.MESSAGES ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Messages" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.MESSAGES ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED)  + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
                     break;
                 case "bind":
                     hack.BIND = Integer.parseInt(thirdEntry);
-                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Bind" + this.getColor(ChatColor.DEFAULT) + "' to '[" + this.getColor(ChatColor.AQUA) + Keyboard.getKeyName(hack.BIND) + "]' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Bind" + this.getColor(ChatColor.DEFAULT) + "' to '[" + this.getColor(ChatColor.AQUA) + Keyboard.getKeyName(hack.BIND) + this.getColor(ChatColor.DEFAULT) + "]' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
                     break;
             }
 
