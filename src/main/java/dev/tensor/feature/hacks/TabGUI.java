@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.gui.TabGuiEntry;
+import dev.tensor.misc.gui.TabGUIEntry;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
@@ -53,9 +53,9 @@ public final class TabGUI extends Hack {
         this.page.setValue(page);
     }
 
-    private final String clientMessage = TensorClassic.MOD_NAME + " " + TensorClassic.MOD_VERSION +  " >>> By Hoosiers :)";
+    private final String clientMessage = TensorClassic.MOD_NAME + " " + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + " >>> By Hoosiers :)";
 
-    private final ArrayList<TabGuiEntry> tabGUIEntries = new ArrayList<>();
+    private final ArrayList<TabGUIEntry> tabGUIEntries = new ArrayList<>();
 
     @Override
     public void onRender2D() {
@@ -104,15 +104,16 @@ public final class TabGUI extends Hack {
     }
 
     private void setUpTabGUI() {
-        this.tabGUIEntries.add(new TabGuiEntry("[" + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Commands] List", Color.CYAN));
+        this.tabGUIEntries.add(new TabGUIEntry("[" + this.getHackManager().getHack(Commands.class).prefix.getValue() + "Commands] List", Color.CYAN));
 
         this.getHackManager().getHacks().forEach(hack -> {
 
             if (!this.shouldIgnoreHack(hack.NAME)) {
-                this.tabGUIEntries.add(new TabGuiEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.BIND) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
+                this.tabGUIEntries.add(new TabGUIEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.BIND) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
             }
         });
     }
+
 
     private boolean shouldIgnoreHack(String name) {
         if (name.equalsIgnoreCase("ClientMessages")) {

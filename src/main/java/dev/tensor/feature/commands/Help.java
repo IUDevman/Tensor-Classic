@@ -35,7 +35,7 @@ public final class Help extends SimpleCallableCommand {
 
         String clientPrefix = this.getHackManager().getHack(Commands.class).prefix.getValue();
 
-        //todo: include ClickGui bind once we make it
+        //todo: include ClickGUI bind once we make it
         String helpString = this.getName() + ": Welcome to " + TensorClassic.MOD_NAME +
                 " " +  TensorClassic.MOD_VERSION +"! The default command prefix is '" +
                 this.getColor(ChatColor.AQUA) + clientPrefix +

@@ -36,6 +36,7 @@ public final class HackManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());
         this.addHack(new Commands());
         this.addHack(new FOV());
