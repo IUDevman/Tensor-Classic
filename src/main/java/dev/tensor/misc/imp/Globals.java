@@ -140,7 +140,7 @@ public interface Globals {
     }
 
     default String getPrefix() {
-        return this.getColor(ChatColor.LIGHT_GRAY) + "[" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_NAME.replace(" ", " " + this.getColor(ChatColor.RED)) + this.getColor(ChatColor.LIGHT_GRAY) + "] " + this.getColor(ChatColor.DEFAULT);
+        return this.getColor(ChatColor.LIGHT_GRAY) + "[" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_NAME + this.getColor(ChatColor.LIGHT_GRAY) + "] " + this.getColor(ChatColor.DEFAULT);
     }
 
     default void sendClientMessageWithPrefix(String message) {
