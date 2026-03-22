@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements;
 
+import dev.tensor.feature.hacks.KillAura;
 import dev.tensor.misc.gui.Element;
+import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -15,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class CategoryElement implements Element {
 
-    public static int width = 60;
+    public static final int width = 60;
 
     private final Category category;
     private final IntegerSetting x;
@@ -44,24 +46,17 @@ public final class CategoryElement implements Element {
 
         AtomicInteger offsetY = new AtomicInteger(22);
 
-        this.getHackManager().getHacksInCategory(this.getCategory()).forEach(hack -> {
+        this.getHackManager().getHacksInCategory(this.category).forEach(hack -> {
 
             HackElement hackElement = new HackElement(hack, this.x, this.y, this.mScrollY, this.getWidth() + 2, offsetY.get());
             this.hackElements.add(hackElement);
             offsetY.getAndAdd(hackElement.getHeight());
 
-            if (this.hackElements.size() == 1) {
+            //todo: change this back
+            if (hack instanceof KillAura) {
                 hackElement.setViewed(true);
             }
         });
-    }
-
-    public Category getCategory() {
-        return this.category;
-    }
-
-    public String getName() {
-        return this.getCategory().name();
     }
 
     public boolean isSelected() {
@@ -93,18 +88,39 @@ public final class CategoryElement implements Element {
     }
 
     @Override
-    public void render(Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color selectedTextColor) {
-        this.draw2DRectangle(this.getPosX()+ 1, this.getPosY() + 1, this.getPosX() + this.getWidth() - 1, this.getPosY() + this.getHeight() - 1, this.isSelected() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 1, outLineColor.getRGB());
-        this.draw2DRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 1, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
-        this.draw2DRectangle(this.getPosX(), this.getPosY() + 1, this.getPosX() + 1, this.getPosY() + this.getHeight() - 1, outLineColor.getRGB());
-        this.draw2DRectangle(this.getPosX() + this.getWidth() - 1, this.getPosY() + 1, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 1, outLineColor.getRGB());
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+        int minX = this.getPosX();
+        int minY = this.getPosY();
+        int maxX = this.getPosX() + this.getWidth();
+        int maxY = this.getPosY() + this.getHeight() - 1;
+        int midX = this.getPosX() + (this.getWidth() / 2);
+        int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.getName(), this.getPosX() + (this.getWidth() / 2), this.getPosY() + ((this.getHeight() - 10) / 2), this.isSelected() ? selectedTextColor.getRGB() : textColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, fillColor.getRGB());
+        this.draw2DRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
+        this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
+        this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.category.name(), midX, midY, this.isSelected() ? enabledTextColor.getRGB() : textColor.getRGB());
 
         if (this.isSelected()) {
-            this.hackElements.forEach(hackElement -> hackElement.render(fillColor, selectedFillColor, outLineColor, textColor, selectedTextColor));
-            //render clear box (y - hackelements height)
+            this.hackElements.forEach(hackElement -> hackElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor, textColor, enabledTextColor));
+
+            int barMinX = this.getPosX() + this.getWidth() + 2;
+            int barMinY = this.getPosY() + (this.hackElements.size() * HackElement.height) + tensorGUI.titleHeight + 2;
+            int barMaxX = this.getPosX() + this.getWidth() + HackElement.width + 2;
+            int barMaxY = this.getPosY() + tensorGUI.guiHeight.get() - 1;
+
+            if (barMinY >= barMaxY) {
+                return;
+            }
+
+            this.draw2DRectangle(barMinX + 1, barMinY + 1, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
+            this.draw2DRectangle(barMinX, barMinY + 1, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
+            this.draw2DRectangle(barMaxX - 1, barMinY + 1, barMaxX, barMaxY - 1, outLineColor.getRGB());
+            this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 1, outLineColor.getRGB());
+            this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
         }
     }
 

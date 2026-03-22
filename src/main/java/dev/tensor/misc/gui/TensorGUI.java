@@ -23,7 +23,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     private final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
 
-    AtomicInteger guiHeight = new AtomicInteger(0);
+    public final AtomicInteger guiHeight = new AtomicInteger(0);
 
     public TensorGUI(ClickGUI clickGUI) {
         this.clickGUI = clickGUI;
@@ -42,8 +42,8 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
     }
 
-    private final int guiWidth = 388;
-    private final int titleHeight = 20;
+    public final int guiWidth = 388;
+    public final int titleHeight = 20;
 
     @Override
     public void drawScreen(int i, int j, float f) {
@@ -60,7 +60,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
         String name = TensorClassic.MOD_NAME + " (" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + ")";
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), clickGUI.textColor.getValue().getRGB());
 
-        this.categoryElements.forEach(categoryElement -> categoryElement.render(this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.selectedTextColor.getValue()));
+        this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.enabledTextColor.getValue()));
     }
 
     @Override

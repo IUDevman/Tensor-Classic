@@ -19,7 +19,7 @@ public interface Element extends Globals {
 
     int getPosY();
 
-    void render(Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color selectedTextColor);
+    void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor);
 
     void onClick(double mouseX, double mouseY);
 }
