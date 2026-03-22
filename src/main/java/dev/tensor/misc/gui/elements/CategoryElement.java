@@ -112,7 +112,7 @@ public final class CategoryElement implements Element {
             int posX = this.getPosX();
             int posY = this.getPosY() + tensorGUI.titleHeight + 2;
             int width1 = tensorGUI.guiWidth + 1;
-            int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleHeight - 3;
+            int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleHeight - 4;
 
             int windowHeight = this.getMinecraft().displayHeight;
             double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
