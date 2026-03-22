@@ -71,6 +71,12 @@ public final class PropertyElement implements Element {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-
+        if (mouseY > this.getPosY() && mouseY < this.getPosY() + 15) {
+            hack.toggle();
+        } else if (mouseY > this.getPosY() + 15 && mouseY < this.getPosY() + 30) {
+            hack.DRAWN = !hack.DRAWN;
+        } else if (mouseY > this.getPosY() + 30 && mouseY < this.getPosY() + 45) {
+            hack.MESSAGES = !hack.MESSAGES;
+        }
     }
 }

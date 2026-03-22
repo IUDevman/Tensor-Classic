@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -16,8 +18,8 @@ public final class EnumSettingElement extends SettingElement {
 
     private final EnumSetting enumSetting;
 
-    public EnumSettingElement(EnumSetting enumSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
-        super(x, y, scrollY, posX, posY);
+    public EnumSettingElement(HackElement hackElement, EnumSetting enumSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        super(hackElement, x, y, scrollY, posX, posY);
         this.enumSetting = enumSetting;
     }
 
@@ -59,6 +61,18 @@ public final class EnumSettingElement extends SettingElement {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.getHackElement().settingElements.forEach(settingElement -> {
+
+            if (settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         this.enumSetting.increment();
     }
 }

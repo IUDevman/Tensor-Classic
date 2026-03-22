@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -14,7 +16,7 @@ import java.util.Arrays;
  * @since 05-04-2021
  */
 
-public final class ColorSettingElement extends SettingElement {
+public final class ColorSettingElement extends SettingElement implements KeyPressElement {
 
     private final ColorSetting colorSetting;
     private boolean searchingR = false;
@@ -22,9 +24,27 @@ public final class ColorSettingElement extends SettingElement {
     private boolean searchingB = false;
     private String value = "";
 
-    public ColorSettingElement(ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
-        super(x, y, scrollY, posX, posY);
+    public ColorSettingElement(HackElement hackElement, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        super(hackElement, x, y, scrollY, posX, posY);
         this.colorSetting = colorSetting;
+    }
+
+    @Override
+    public boolean isSearching() {
+        if (this.searchingR) {
+            return true;
+        } else if (this.searchingB) {
+            return true;
+        } else {
+            return this.searchingG;
+        }
+    }
+
+    @Override
+    public void setSearching(boolean searching) {
+        if (!searching) {
+            this.clearSearching();
+        }
     }
 
     public void clearSearching() {
@@ -83,23 +103,39 @@ public final class ColorSettingElement extends SettingElement {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.getHackElement().settingElements.forEach(settingElement -> {
+
+            if (settingElement != this && settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         if (mouseY > getPosY() + 15 && mouseY <= getPosY() + 30) {
             this.searchingR = !this.searchingR;
             this.searchingG = false;
             this.searchingB = false;
+            this.value = "";
         } else if (mouseY > getPosY() + 30 && mouseY <= getPosY() + 45) {
             this.searchingR = false;
             this.searchingG = !this.searchingG;
             this.searchingB = false;
+            this.value = "";
         } else if (mouseY > getPosY() + 45 && mouseY <= getPosY() + 60) {
             this.searchingR = false;
             this.searchingG = false;
             this.searchingB = !this.searchingB;
+            this.value = "";
         } else {
             clearSearching();
         }
     }
 
+    @Override
     public void onKeyPressed(int key) {
         if (!this.searchingR && !this.searchingG && !this.searchingB) return;
 
@@ -108,7 +144,7 @@ public final class ColorSettingElement extends SettingElement {
             return;
         }
 
-        if (key == Keyboard.KEY_END) {
+        if (key == Keyboard.KEY_RETURN) {
 
             if (this.value.equals("")) {
                 clearSearching();

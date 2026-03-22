@@ -20,6 +20,7 @@ public final class CategoryElement implements Element {
 
     public static final int width = 60;
 
+    private final TensorGUI tensorGUI;
     private final Category category;
     private final IntegerSetting x;
     private final IntegerSetting y;
@@ -28,9 +29,10 @@ public final class CategoryElement implements Element {
 
     private boolean selected = false;
 
-    private final ArrayList<HackElement> hackElements = new ArrayList<>();
+    public final ArrayList<HackElement> hackElements = new ArrayList<>();
 
-    public CategoryElement(Category category, IntegerSetting x, IntegerSetting y, int posX, int posY) {
+    public CategoryElement(TensorGUI tensorGUI, Category category, IntegerSetting x, IntegerSetting y, int posX, int posY) {
+        this.tensorGUI = tensorGUI;
         this.category = category;
         this.x = x;
         this.y = y;
@@ -49,12 +51,11 @@ public final class CategoryElement implements Element {
 
         this.getHackManager().getHacksInCategory(this.category).forEach(hack -> {
 
-            HackElement hackElement = new HackElement(hack, this.x, this.y, this.mScrollY, this.getWidth() + 2, offsetY.get());
+            HackElement hackElement = new HackElement(this, hack, this.x, this.y, this.mScrollY, this.getWidth() + 2, offsetY.get());
             this.hackElements.add(hackElement);
             offsetY.getAndAdd(hackElement.getHeight());
 
-            //todo: change this back
-            if (hack instanceof KillAura) {
+            if (this.hackElements.size() == 1) {
                 hackElement.setViewed(true);
             }
         });
@@ -109,8 +110,8 @@ public final class CategoryElement implements Element {
 
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
-            int posX = this.getPosX();
-            int posY = this.getPosY() + tensorGUI.titleHeight + 2;
+            int posX = this.x.getValue();
+            int posY = this.y.getValue() + tensorGUI.titleHeight + 2;
             int width1 = tensorGUI.guiWidth + 1;
             int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleHeight - 4;
 
@@ -126,10 +127,27 @@ public final class CategoryElement implements Element {
 
             this.hackElements.forEach(hackElement -> hackElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor, textColor, enabledTextColor));
 
-            int barMinX = this.getPosX() + this.getWidth() + 2;
-            int barMinY = this.getPosY() + (this.hackElements.size() * HackElement.height) + tensorGUI.titleHeight + 2;
-            int barMaxX = this.getPosX() + this.getWidth() + HackElement.width + 2;
-            int barMaxY = this.getPosY() + tensorGUI.guiHeight.get() - 1;
+            if (this.hackElements.isEmpty()) {
+                int barMinXX = this.x.getValue() + this.getWidth() + HackElement.width + 4;
+                int barMinYY = this.y.getValue() + tensorGUI.titleHeight;
+                int barMaxXX = this.x.getValue() + this.getWidth() + HackElement.width + 4 + SettingElement.width;
+                int barMaxYY = this.y.getValue() + tensorGUI.guiHeight.get();
+
+                if (barMinYY >= barMaxYY) {
+                    return;
+                }
+
+                this.draw2DRectangle(barMinXX + 1, barMinYY + 3, barMaxXX - 1, barMaxYY - 1, fillColor.getRGB());
+                this.draw2DRectangle(barMinXX, barMinYY + 3, barMinXX + 1, barMaxYY - 1, outLineColor.getRGB());
+                this.draw2DRectangle(barMaxXX - 1, barMinYY + 3, barMaxXX, barMaxYY - 1, outLineColor.getRGB());
+                this.draw2DRectangle(barMinXX, barMinYY, barMaxXX, barMinYY + 3, outLineColor.getRGB());
+                this.draw2DRectangle(barMinXX, barMaxYY - 1, barMaxXX, barMaxYY + 1, outLineColor.getRGB());
+            }
+
+            int barMinX = this.x.getValue() + this.getWidth() + 2;
+            int barMinY = this.y.getValue() + (this.hackElements.size() * HackElement.height) + tensorGUI.titleHeight + 2;
+            int barMaxX = this.x.getValue() + this.getWidth() + HackElement.width + 2;
+            int barMaxY = this.y.getValue() + tensorGUI.guiHeight.get() - 1;
 
             if (barMinY >= barMaxY) {
                 return;
@@ -148,5 +166,21 @@ public final class CategoryElement implements Element {
     @Override
     public void onClick(double mouseX, double mouseY) {
         this.setSelected(true);
+        this.tensorGUI.categoryElements.forEach(categoryElement -> {
+
+            if (categoryElement != this && categoryElement.isSelected()) {
+                categoryElement.setSelected(false);
+
+                categoryElement.hackElements.forEach(hackElement -> {
+                    hackElement.settingElements.forEach(settingElement -> {
+
+                        if (settingElement instanceof KeyPressElement) {
+                            KeyPressElement element = (KeyPressElement) settingElement;
+                            element.setSearching(false);
+                        }
+                    });
+                });
+            }
+        });
     }
 }

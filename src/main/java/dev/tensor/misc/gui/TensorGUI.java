@@ -4,9 +4,11 @@ import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.elements.CategoryElement;
 import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
 import net.minecraft.src.GuiScreen;
+import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +23,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     private final ClickGUI clickGUI;
 
-    private final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
+    public final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
 
     public final AtomicInteger guiHeight = new AtomicInteger(0);
 
@@ -31,7 +33,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
         AtomicInteger offsetY = new AtomicInteger(0);
 
         Arrays.stream(Category.values()).forEach(category -> {
-            CategoryElement categoryElement = new CategoryElement(category, this.clickGUI.x, this.clickGUI.y, 0, offsetY.get());
+            CategoryElement categoryElement = new CategoryElement(this, category, this.clickGUI.x, this.clickGUI.y, 0, offsetY.get());
             this.categoryElements.add(categoryElement);
             offsetY.getAndAdd(categoryElement.getHeight());
             guiHeight.getAndAdd(categoryElement.getHeight());
@@ -65,12 +67,121 @@ public final class TensorGUI extends GuiScreen implements Globals {
     }
 
     @Override
+    public void keyTyped(char c, int i) {
+        if (i == Keyboard.KEY_ESCAPE) {
+            super.keyTyped(c, i);
+            return;
+        }
+
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (categoryElement.isSelected()) {
+
+                categoryElement.hackElements.forEach(hackElement -> {
+
+                    if (hackElement.isViewed()) {
+
+                        hackElement.settingElements.forEach(settingElement -> {
+
+                            if (settingElement instanceof KeyPressElement) {
+
+                                KeyPressElement element = (KeyPressElement) settingElement;
+
+                                if (element.isSearching()) {
+                                    element.onKeyPressed(i);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public void mouseClicked(int i, int j, int k) {
+        if (k != 0) {
+            return;
+        }
+
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (this.isHovered(categoryElement, i, j) && !categoryElement.isSelected()) {
+                categoryElement.onClick(i, j);
+                return;
+            }
+
+            if (!categoryElement.isSelected()) {
+                return;
+            }
+
+            categoryElement.hackElements.forEach(hackElement -> {
+
+                if (this.isHovered(hackElement, i, j)) {
+                    hackElement.onClick(i, j);
+                    return;
+                }
+
+                if (!hackElement.isViewed()) {
+                    return;
+                }
+
+                if (this.isHovered(hackElement.propertyElement, i, j)) {
+                    hackElement.propertyElement.onClick(i, j);
+                    return;
+                }
+
+                hackElement.settingElements.forEach(settingElement -> {
+
+                    if (this.isHovered(settingElement, i, j)) {
+                        settingElement.onClick(i, j);
+                        return;
+                    }
+                });
+
+            });
+
+        });
+    }
+
+    @Override
     public boolean doesGuiPauseGame() {
         return false;
     }
 
     @Override
     public void onGuiClosed() {
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (categoryElement.isSelected())  {
+                categoryElement.hackElements.forEach(hackElement -> {
+                    
+                    if (hackElement.isViewed()) {
+                        hackElement.settingElements.forEach(settingElement -> {
+
+                            if (settingElement instanceof KeyPressElement) {
+                                KeyPressElement element = (KeyPressElement) settingElement;
+
+                                element.setSearching(false);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         this.clickGUI.setEnabled(false);
+    }
+
+    private boolean isHovered(Element element, double mouseX, double mouseY) {
+        return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
+    }
+
+    private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
+        if (mouseX < minX || mouseX > maxX) {
+            return false;
+        }
+
+        else return !(mouseY < minY) && !(mouseY > maxY);
     }
 }

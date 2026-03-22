@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -16,8 +18,8 @@ public final class BooleanSettingElement extends SettingElement {
 
     private final BooleanSetting booleanSetting;
 
-    public BooleanSettingElement(BooleanSetting booleanSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
-        super(x, y, scrollY, posX, posY);
+    public BooleanSettingElement(HackElement hackElement, BooleanSetting booleanSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        super(hackElement, x, y, scrollY, posX, posY);
         this.booleanSetting = booleanSetting;
     }
 
@@ -59,6 +61,18 @@ public final class BooleanSettingElement extends SettingElement {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.getHackElement().settingElements.forEach(settingElement -> {
+
+            if (settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         this.booleanSetting.setValue(!this.booleanSetting.getValue());
     }
 }

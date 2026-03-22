@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
@@ -13,14 +15,14 @@ import java.util.Arrays;
  * @since 05-04-2021
  */
 
-public final class IntegerSettingElement extends SettingElement {
+public final class IntegerSettingElement extends SettingElement implements KeyPressElement {
 
     private final IntegerSetting integerSetting;
     private boolean searching = false;
     private String value = "";
 
-    public IntegerSettingElement(IntegerSetting integerSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
-        super(x, y, scrollY, posX, posY);
+    public IntegerSettingElement(HackElement hackElement, IntegerSetting integerSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        super(hackElement, x, y, scrollY, posX, posY);
         this.integerSetting = integerSetting;
     }
 
@@ -71,9 +73,22 @@ public final class IntegerSettingElement extends SettingElement {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.getHackElement().settingElements.forEach(settingElement -> {
+
+            if (settingElement != this && settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         setSearching(!isSearching());
     }
 
+    @Override
     public void onKeyPressed(int key) {
         if (!isSearching()) return;
 
@@ -82,7 +97,7 @@ public final class IntegerSettingElement extends SettingElement {
             return;
         }
 
-        if (key == Keyboard.KEY_END) {
+        if (key == Keyboard.KEY_RETURN) {
 
             if (this.value.equals("")) {
                 setSearching(false);
@@ -112,7 +127,15 @@ public final class IntegerSettingElement extends SettingElement {
             return;
         }
 
-        this.value += Keyboard.getKeyName(key);
+        String name = Keyboard.getKeyName(key);
+
+        if (name.equalsIgnoreCase("PERIOD")) {
+            name = ".";
+        } else if (name.equalsIgnoreCase("MINUS")) {
+            name = "-";
+        }
+
+        this.value += name;
     }
 
     private int[] acceptedKeys() {

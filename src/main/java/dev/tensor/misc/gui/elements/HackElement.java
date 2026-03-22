@@ -20,6 +20,7 @@ public final class HackElement implements Element {
     public static final int width = 120;
     public static final int height = 20;
 
+    private final CategoryElement categoryElement;
     private final Hack hack;
     private final IntegerSetting x;
     private final IntegerSetting y;
@@ -29,7 +30,8 @@ public final class HackElement implements Element {
 
     private boolean viewed = false;
 
-    public HackElement(Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+    public HackElement(CategoryElement categoryElement, Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        this.categoryElement = categoryElement;
         this.hack = hack;
         this.x = x;
         this.y = y;
@@ -42,9 +44,9 @@ public final class HackElement implements Element {
 
     private final IntegerSetting sScrollY = new IntegerSetting("Setting Scroll Y", 0, -1000, 1000);
 
-    private PropertyElement propertyElement;
+    public PropertyElement propertyElement;
 
-    private ArrayList<SettingElement> settingElements = new ArrayList<>();
+    public ArrayList<SettingElement> settingElements = new ArrayList<>();
 
     private void setupSettingElements() {
 
@@ -53,7 +55,7 @@ public final class HackElement implements Element {
         this.propertyElement = new PropertyElement(this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
         settingY.getAndAdd(this.propertyElement.getHeight());
 
-        BindResetSettingElement bindResetSettingElement = new BindResetSettingElement(this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+        BindResetSettingElement bindResetSettingElement = new BindResetSettingElement(this, this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
         this.settingElements.add(bindResetSettingElement);
         settingY.getAndAdd(bindResetSettingElement.getHeight());
 
@@ -61,31 +63,31 @@ public final class HackElement implements Element {
 
             if (setting instanceof BooleanSetting) {
 
-                BooleanSettingElement element = new BooleanSettingElement((BooleanSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                BooleanSettingElement element = new BooleanSettingElement(this, (BooleanSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof IntegerSetting) {
 
-                IntegerSettingElement element = new IntegerSettingElement((IntegerSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                IntegerSettingElement element = new IntegerSettingElement(this, (IntegerSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof DoubleSetting) {
 
-                DoubleSettingElement element = new DoubleSettingElement((DoubleSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                DoubleSettingElement element = new DoubleSettingElement(this, (DoubleSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof EnumSetting) {
 
-                EnumSettingElement element = new EnumSettingElement((EnumSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                EnumSettingElement element = new EnumSettingElement(this, (EnumSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof ColorSetting) {
 
-                ColorSettingElement element = new ColorSettingElement((ColorSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                ColorSettingElement element = new ColorSettingElement(this, (ColorSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
@@ -93,7 +95,7 @@ public final class HackElement implements Element {
                 //TODO: Will likely make the setting element for string a button where a new window appears
                 //Will allow for easier writing and no scissor
             }*/ else {
-                DummySettingElement element = new DummySettingElement(setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                DummySettingElement element = new DummySettingElement(this, setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
             }
@@ -175,6 +177,21 @@ public final class HackElement implements Element {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.setViewed(true);
 
+        this.categoryElement.hackElements.forEach(hackElement -> {
+
+            if (hackElement != this && hackElement.isViewed()) {
+                hackElement.setViewed(false);
+
+                hackElement.settingElements.forEach(settingElement -> {
+
+                    if (settingElement instanceof KeyPressElement) {
+                        KeyPressElement element = (KeyPressElement) settingElement;
+                        element.setSearching(false);
+                    }
+                });
+            }
+        });
     }
 }

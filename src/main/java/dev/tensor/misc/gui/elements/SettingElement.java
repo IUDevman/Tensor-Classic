@@ -12,18 +12,24 @@ public abstract class SettingElement implements Element {
 
     public static final int width = 204;
 
+    private final HackElement hackElement;
     private final IntegerSetting x;
     private final IntegerSetting y;
     private final IntegerSetting scrollY;
     private final int posX;
     private final int posY;
 
-    public SettingElement(IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+    public SettingElement(HackElement hackElement, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        this.hackElement = hackElement;
         this.x = x;
         this.y = y;
         this.scrollY = scrollY;
         this.posX = posX;
         this.posY = posY;
+    }
+
+    public HackElement getHackElement() {
+        return this.hackElement;
     }
 
     public IntegerSetting getX() {

@@ -1,6 +1,8 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.Setting;
@@ -14,21 +16,23 @@ import java.awt.*;
  * @since 05-11-2021
  */
 
-public final class BindResetSettingElement extends SettingElement {
+public final class BindResetSettingElement extends SettingElement implements KeyPressElement {
 
     private final Hack hack;
     private boolean searching = false;
 
-    public BindResetSettingElement(Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
-        super(x, y, scrollY, posX, posY);
+    public BindResetSettingElement(HackElement hackElement, Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        super(hackElement, x, y, scrollY, posX, posY);
 
         this.hack = hack;
     }
 
+    @Override
     public boolean isSearching() {
         return this.searching;
     }
 
+    @Override
     public void setSearching(boolean searching) {
         this.searching = searching;
     }
@@ -74,6 +78,18 @@ public final class BindResetSettingElement extends SettingElement {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.getHackElement().settingElements.forEach(settingElement -> {
+
+            if (settingElement != this && settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         if (mouseY > this.getPosY() + 15) {
             if (isSearching()) setSearching(false);
 
@@ -86,6 +102,7 @@ public final class BindResetSettingElement extends SettingElement {
         setSearching(!isSearching());
     }
 
+    @Override
     public void onKeyPressed(int key) {
         if (!isSearching()) return;
 
@@ -94,7 +111,7 @@ public final class BindResetSettingElement extends SettingElement {
             return;
         }
 
-        if (key != Keyboard.KEY_ESCAPE && key != Keyboard.KEY_END) {
+        if (key != Keyboard.KEY_ESCAPE && key != Keyboard.KEY_RETURN) {
             this.hack.BIND = key;
         }
 

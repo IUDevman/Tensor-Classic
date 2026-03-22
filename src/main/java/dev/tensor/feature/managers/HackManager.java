@@ -47,12 +47,6 @@ public final class HackManager implements Manager {
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
         this.addHack(new TabGUI());
-        this.addHack(new DummyHack());
-        this.addHack(new DummyHack());
-        this.addHack(new DummyHack());
-        this.addHack(new DummyHack());
-        this.addHack(new DummyHack());
-        this.addHack(new DummyHack());
 
         this.postSortHacks();
 
@@ -81,6 +75,12 @@ public final class HackManager implements Manager {
     @Override
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
+
+        ClickGUI clickGUI = this.getHack(ClickGUI.class);
+
+        if (clickGUI.isEnabled()) {
+            clickGUI.toggle();
+        }
 
         this.saveHacks(LOGGER);
     }
