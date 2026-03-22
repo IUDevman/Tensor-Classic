@@ -12,8 +12,8 @@ import java.awt.*;
 @Hack.Info(name = "ClickGUI", category = Category.Client, bind = Keyboard.KEY_RSHIFT)
 public final class ClickGUI extends Hack {
 
-    public final IntegerSetting x = new IntegerSetting("X", 265, 0, this.getMinecraft().displayWidth);
-    public final IntegerSetting y = new IntegerSetting("Y", 135, 0, this.getMinecraft().displayHeight);
+    public final IntegerSetting x = new IntegerSetting("X", 265, 2, this.getMinecraft().displayWidth + 36);
+    public final IntegerSetting y = new IntegerSetting("Y", 135, 2, this.getMinecraft().displayHeight - 42);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));

@@ -1,6 +1,5 @@
 package dev.tensor.misc.gui.elements;
 
-import dev.tensor.feature.hacks.KillAura;
 import dev.tensor.misc.gui.Element;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.imp.hack.Category;
@@ -42,7 +41,7 @@ public final class CategoryElement implements Element {
         this.setupHackElements();
     }
 
-    private final IntegerSetting mScrollY = new IntegerSetting("Module Scroll Y", 0, -1000, 1000);
+    public final IntegerSetting mScrollY = new IntegerSetting("Module Scroll Y", 0, -1000, 1000);
 
     private void setupHackElements() {
         this.hackElements.clear();

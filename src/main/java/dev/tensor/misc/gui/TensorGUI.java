@@ -7,8 +7,10 @@ import dev.tensor.misc.gui.elements.HackElement;
 import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -144,6 +146,90 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
     }
 
+    private int scroll = 0;
+
+    @Override
+    public void handleMouseInput() {
+
+        if (!Mouse.getEventButtonState()) {
+
+            int dWheel = Mouse.getDWheel();
+
+            //pan up
+            if (dWheel > 0) {
+                scroll = -10;
+                //pan down
+            } else if (dWheel < 0) {
+                scroll = 10;
+            } else {
+                scroll = 0;
+            }
+        }
+
+        super.handleMouseInput();
+    }
+
+    @Override
+    protected void mouseMovedOrUp(int i, int j, int k) {
+
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue()+ this.titleHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+            this.handleScroll(Scroll.Setting);
+        }
+    }
+
+    private void handleScroll(Scroll scroll) {
+        if (this.scroll == 0) {
+            return;
+        }
+
+        if (scroll == Scroll.Hack) {
+
+            this.categoryElements.forEach(categoryElement -> {
+
+                if (categoryElement.isSelected()) {
+
+                    IntegerSetting hackScrollY = categoryElement.mScrollY;
+                }
+            });
+
+        } else if (scroll == Scroll.Setting) {
+
+            this.categoryElements.forEach(categoryElement -> {
+
+                if (categoryElement.isSelected()) {
+
+                    categoryElement.hackElements.forEach(hackElement -> {
+
+                        if (hackElement.isViewed()) {
+
+                            IntegerSetting settingScrollY = hackElement.sScrollY;
+
+                            AtomicInteger settingHeight = new AtomicInteger(22);
+
+                            settingHeight.getAndAdd(hackElement.propertyElement.getHeight());
+
+                            hackElement.settingElements.forEach(settingElement -> settingHeight.getAndAdd(settingElement.getHeight()));
+
+                            if (settingScrollY.getValue() > -10 && this.scroll > 0) {
+                                return;
+                            }
+
+                            //todo: add cap for bottom
+
+                            settingScrollY.setValue(settingScrollY.getValue() + this.scroll);
+                        }
+                    });
+                }
+            });
+
+        }
+    }
+
+    private enum Scroll {
+        Hack,
+        Setting
+    }
+
     @Override
     public boolean doesGuiPauseGame() {
         return false;
@@ -152,10 +238,14 @@ public final class TensorGUI extends GuiScreen implements Globals {
     @Override
     public void onGuiClosed() {
         this.categoryElements.forEach(categoryElement -> {
+            this.scroll = 0;
+
+            categoryElement.mScrollY.reset();
+            categoryElement.hackElements.forEach(hackElement -> hackElement.sScrollY.reset());
 
             if (categoryElement.isSelected())  {
                 categoryElement.hackElements.forEach(hackElement -> {
-                    
+
                     if (hackElement.isViewed()) {
                         hackElement.settingElements.forEach(settingElement -> {
 

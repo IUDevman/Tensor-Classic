@@ -42,7 +42,7 @@ public final class HackElement implements Element {
         this.setupSettingElements();
     }
 
-    private final IntegerSetting sScrollY = new IntegerSetting("Setting Scroll Y", 0, -1000, 1000);
+    public final IntegerSetting sScrollY = new IntegerSetting("Setting Scroll Y", 0, -1000, 1000);
 
     public PropertyElement propertyElement;
 
