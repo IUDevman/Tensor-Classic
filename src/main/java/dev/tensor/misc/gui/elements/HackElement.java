@@ -152,10 +152,10 @@ public final class HackElement implements Element {
                 return;
             }
 
-            this.draw2DRectangle(barMinX + 1, barMinY + 2, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY + 2, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMaxX - 1, barMinY + 2, barMaxX, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 2, outLineColor.getRGB());
+            this.draw2DRectangle(barMinX + 1, barMinY + 4, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
+            this.draw2DRectangle(barMinX, barMinY + 4, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
+            this.draw2DRectangle(barMaxX - 1, barMinY + 4, barMaxX, barMaxY - 1, outLineColor.getRGB());
+            this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 4, outLineColor.getRGB());
             this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
         }
     }

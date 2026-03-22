@@ -96,7 +96,7 @@ public final class CategoryElement implements Element {
         int midX = this.getPosX() + (this.getWidth() / 2);
         int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, fillColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isSelected() ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.draw2DRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
         this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
         this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
