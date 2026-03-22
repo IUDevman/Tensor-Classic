@@ -172,7 +172,9 @@ public final class TensorGUI extends GuiScreen implements Globals {
     @Override
     protected void mouseMovedOrUp(int i, int j, int k) {
 
-        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue()+ this.titleHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+            this.handleScroll(Scroll.Hack);
+        } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
             this.handleScroll(Scroll.Setting);
         }
     }
@@ -189,6 +191,18 @@ public final class TensorGUI extends GuiScreen implements Globals {
                 if (categoryElement.isSelected()) {
 
                     IntegerSetting hackScrollY = categoryElement.mScrollY;
+
+                    AtomicInteger settingHeight = new AtomicInteger(22);
+
+                    categoryElement.hackElements.forEach(hackElement -> settingHeight.getAndAdd(hackElement.getHeight()));
+
+                    if (hackScrollY.getValue() > -10 && this.scroll > 0) {
+                        return;
+                    }
+
+                    //todo: add cap for bottom
+
+                    hackScrollY.setValue(hackScrollY.getValue() + this.scroll);
                 }
             });
 

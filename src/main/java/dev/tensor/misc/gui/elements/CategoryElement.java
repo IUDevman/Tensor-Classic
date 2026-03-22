@@ -148,15 +148,13 @@ public final class CategoryElement implements Element {
             int barMaxX = this.x.getValue() + this.getWidth() + HackElement.width + 2;
             int barMaxY = this.y.getValue() + tensorGUI.guiHeight.get() - 1;
 
-            if (barMinY >= barMaxY) {
-                return;
+            if (barMinY < barMaxY) {
+                this.draw2DRectangle(barMinX + 1, barMinY + 1, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
+                this.draw2DRectangle(barMinX, barMinY + 1, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
+                this.draw2DRectangle(barMaxX - 1, barMinY + 1, barMaxX, barMaxY - 1, outLineColor.getRGB());
+                this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 1, outLineColor.getRGB());
+                this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
             }
-
-            this.draw2DRectangle(barMinX + 1, barMinY + 1, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY + 1, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMaxX - 1, barMinY + 1, barMaxX, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
 
             GL11.glDisable(GL11.GL_SCISSOR_TEST);
         }

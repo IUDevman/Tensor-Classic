@@ -47,6 +47,25 @@ public final class HackManager implements Manager {
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
         this.addHack(new TabGUI());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
+        this.addHack(new DummyHack());
 
         this.postSortHacks();
 
