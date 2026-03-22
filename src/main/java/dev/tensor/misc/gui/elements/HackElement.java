@@ -2,9 +2,7 @@ package dev.tensor.misc.gui.elements;
 
 import dev.tensor.misc.gui.Element;
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.settings.BindResetSettingElement;
-import dev.tensor.misc.gui.elements.settings.BooleanSettingElement;
-import dev.tensor.misc.gui.elements.settings.IntegerSettingElement;
+import dev.tensor.misc.gui.elements.settings.*;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.*;
 
@@ -52,10 +50,10 @@ public final class HackElement implements Element {
 
         AtomicInteger settingY = new AtomicInteger(22);
 
-        this.propertyElement = new PropertyElement(this.hack, this.x, this.y, this.sScrollY, this.posX + width + 2, settingY.get());
+        this.propertyElement = new PropertyElement(this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
         settingY.getAndAdd(this.propertyElement.getHeight());
 
-        BindResetSettingElement bindResetSettingElement = new BindResetSettingElement(this.hack, this.x, this.y, this.sScrollY, this.posX + width + 2, settingY.get());
+        BindResetSettingElement bindResetSettingElement = new BindResetSettingElement(this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
         this.settingElements.add(bindResetSettingElement);
         settingY.getAndAdd(bindResetSettingElement.getHeight());
 
@@ -63,26 +61,41 @@ public final class HackElement implements Element {
 
             if (setting instanceof BooleanSetting) {
 
-                BooleanSettingElement element = new BooleanSettingElement((BooleanSetting) setting, this.x, this.y, this.sScrollY, this.posX + width + 2, settingY.get());
+                BooleanSettingElement element = new BooleanSettingElement((BooleanSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof IntegerSetting) {
 
-                IntegerSettingElement element = new IntegerSettingElement((IntegerSetting) setting, this.x, this.y, this.sScrollY, this.posX + width + 2, settingY.get());
+                IntegerSettingElement element = new IntegerSettingElement((IntegerSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof DoubleSetting) {
 
+                DoubleSettingElement element = new DoubleSettingElement((DoubleSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                this.settingElements.add(element);
+                settingY.getAndAdd(element.getHeight());
+
             } else if (setting instanceof EnumSetting) {
+
+                EnumSettingElement element = new EnumSettingElement((EnumSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                this.settingElements.add(element);
+                settingY.getAndAdd(element.getHeight());
 
             } else if (setting instanceof ColorSetting) {
 
-            } else if (setting instanceof StringSetting) {
+                ColorSettingElement element = new ColorSettingElement((ColorSetting) setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                this.settingElements.add(element);
+                settingY.getAndAdd(element.getHeight());
 
-            } else {
-                //dummy error element
+            } /*else if (setting instanceof StringSetting) {
+                //TODO: Will likely make the setting element for string a button where a new window appears
+                //Will allow for easier writing and no scissor
+            }*/ else {
+                DummySettingElement element = new DummySettingElement(setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                this.settingElements.add(element);
+                settingY.getAndAdd(element.getHeight());
             }
         });
     }
