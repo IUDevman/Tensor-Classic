@@ -22,6 +22,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     private boolean searchingR = false;
     private boolean searchingG = false;
     private boolean searchingB = false;
+    private boolean searchingA = false;
     private String value = "";
 
     public ColorSettingElement(HackElement hackElement, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
@@ -35,8 +36,10 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             return true;
         } else if (this.searchingB) {
             return true;
+        } else if (this.searchingG) {
+            return true;
         } else {
-            return this.searchingG;
+            return this.searchingA;
         }
     }
 
@@ -51,6 +54,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         this.searchingR = false;
         this.searchingG = false;
         this.searchingB = false;
+        this.searchingA = false;
         this.value = "";
     }
 
@@ -61,7 +65,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
 
     @Override
     public int getHeight() {
-        return 60;
+        return 75;
     }
 
     @Override
@@ -82,23 +86,23 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY, maxX - 1, maxY - 45, fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 15, maxX - 1, maxY - 30, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 30, maxX - 1, maxY - 15, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 45, maxX - 1, maxY, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValue().getRGB());
+        this.draw2DRectangle(minX + 1, minY + 15, maxX - 1, maxY - 45, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY + 30, maxX - 1, maxY - 30, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY + 45, maxX - 1, maxY - 15, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.draw2DRectangle(minX + 1, minY + 60, maxX - 1, maxY, this.searchingA ? selectedFillColor.getRGB() : fillColor.getRGB());
 
         this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String name = this.colorSetting.getName() + " : ";
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, midX + 3 - (this.getFontRenderer().getStringWidth(name) / 2), minY + 3, textColor.getRGB());
+        String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ")";
 
-        String rgb = "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ")";
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), rgb, midX + 3 + (this.getFontRenderer().getStringWidth(name) / 2), minY + 3, this.colorSetting.getValue().getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (textColor.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : textColor.getRGB()) : textColor.getRGB());
 
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, textColor.getRGB());
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, textColor.getRGB());
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, textColor.getRGB());
     }
 
     @Override
@@ -119,16 +123,25 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             this.searchingR = !this.searchingR;
             this.searchingG = false;
             this.searchingB = false;
+            this.searchingA = false;
             this.value = "";
         } else if (mouseY > getPosY() + 30 && mouseY <= getPosY() + 45) {
             this.searchingR = false;
             this.searchingG = !this.searchingG;
             this.searchingB = false;
+            this.searchingA = false;
             this.value = "";
         } else if (mouseY > getPosY() + 45 && mouseY <= getPosY() + 60) {
             this.searchingR = false;
             this.searchingG = false;
             this.searchingB = !this.searchingB;
+            this.searchingA = false;
+            this.value = "";
+        } else if (mouseY > getPosY() + 60 && mouseY <= getPosY() + 75) {
+            this.searchingR = false;
+            this.searchingG = false;
+            this.searchingB = false;
+            this.searchingA = !this.searchingA;
             this.value = "";
         } else {
             clearSearching();
@@ -137,7 +150,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
 
     @Override
     public void onKeyPressed(int key) {
-        if (!this.searchingR && !this.searchingG && !this.searchingB) return;
+        if (!this.searchingR && !this.searchingG && !this.searchingB && !this.searchingA) return;
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {
             clearSearching();
@@ -184,6 +197,8 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             this.colorSetting.setValue(new Color(oldColor.getRed(), value, oldColor.getBlue(), oldColor.getAlpha()));
         } else if (this.searchingB) {
             this.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), value, oldColor.getAlpha()));
+        } else if (this.searchingA) {
+            this.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), value));
         }
     }
 

@@ -19,6 +19,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author IUDevman
  * @since 05-03-2021
+ *
+ * todo:
+ * 1. Add max limiter for hack and setting scroll Y.
+ * 2. Add mouse dragging.
+ * 3. Add ButtonElement for StringSetting (and future Xray)
  */
 
 public final class TensorGUI extends GuiScreen implements Globals {
@@ -155,10 +160,8 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
             int dWheel = Mouse.getDWheel();
 
-            //pan up
             if (dWheel > 0) {
                 scroll = -10;
-                //pan down
             } else if (dWheel < 0) {
                 scroll = 10;
             } else {
