@@ -55,8 +55,7 @@ public final class DummySettingElement extends SettingElement {
         this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        //String text = this.booleanSetting.getName() + " (" + (this.booleanSetting.getValue() ? this.getColor(ChatColor.GREEN) + "True" : this.getColor(ChatColor.RED) + "False") + this.getColor(ChatColor.DEFAULT) + ")";
-        String text = "Dummy:  " + this.getColor(ChatColor.YELLOW) + setting.getClass().getSimpleName();
+        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r: Use command!";
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
     }
 
