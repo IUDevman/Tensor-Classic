@@ -168,7 +168,12 @@ public final class CategoryElement implements Element {
             if (categoryElement != this && categoryElement.isSelected()) {
                 categoryElement.setSelected(false);
 
+                categoryElement.mScrollY.setValue(0);
+
                 categoryElement.hackElements.forEach(hackElement -> {
+
+                    hackElement.sScrollY.setValue(0);
+
                     hackElement.settingElements.forEach(settingElement -> {
 
                         if (settingElement instanceof KeyPressElement) {

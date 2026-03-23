@@ -199,17 +199,27 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                     IntegerSetting hackScrollY = categoryElement.mScrollY;
 
-                    AtomicInteger settingHeight = new AtomicInteger(22);
+                    AtomicInteger hackHeight = new AtomicInteger();
 
-                    categoryElement.hackElements.forEach(hackElement -> settingHeight.getAndAdd(hackElement.getHeight()));
+                    categoryElement.hackElements.forEach(hackElement -> hackHeight.getAndAdd(hackElement.getHeight()));
 
                     if (hackScrollY.getValue() > -10 && this.scroll > 0) {
                         return;
                     }
 
-                    //todo: add cap for bottom
+                    int scrollAdjust = this.scroll;
 
-                    hackScrollY.setValue(hackScrollY.getValue() + this.scroll);
+                    if (hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
+                        int test = ((hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
+
+                        if (test >= scrollAdjust) {
+                            scrollAdjust = -test;
+                        } else {
+                            return;
+                        }
+                    }
+
+                    hackScrollY.setValue(hackScrollY.getValue() + scrollAdjust);
                 }
             });
 
@@ -225,7 +235,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                             IntegerSetting settingScrollY = hackElement.sScrollY;
 
-                            AtomicInteger settingHeight = new AtomicInteger(22);
+                            AtomicInteger settingHeight = new AtomicInteger();
 
                             settingHeight.getAndAdd(hackElement.propertyElement.getHeight());
 
@@ -235,9 +245,19 @@ public final class TensorGUI extends GuiScreen implements Globals {
                                 return;
                             }
 
-                            //todo: add cap for bottom
+                            int scrollAdjust = this.scroll;
 
-                            settingScrollY.setValue(settingScrollY.getValue() + this.scroll);
+                            if (settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
+                                int test = ((settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
+
+                                if (test >= scrollAdjust) {
+                                    scrollAdjust = -test;
+                                } else {
+                                    return;
+                                }
+                            }
+
+                            settingScrollY.setValue(settingScrollY.getValue() + scrollAdjust);
                         }
                     });
                 }

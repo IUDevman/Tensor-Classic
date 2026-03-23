@@ -185,6 +185,8 @@ public final class HackElement implements Element {
             if (hackElement != this && hackElement.isViewed()) {
                 hackElement.setViewed(false);
 
+                hackElement.sScrollY.setValue(0);
+
                 hackElement.settingElements.forEach(settingElement -> {
 
                     if (settingElement instanceof KeyPressElement) {
