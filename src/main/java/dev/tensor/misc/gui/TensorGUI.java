@@ -2,9 +2,7 @@ package dev.tensor.misc.gui;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
-import dev.tensor.misc.gui.elements.CategoryElement;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.KeyPressElement;
+import dev.tensor.misc.gui.elements.*;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -217,6 +215,17 @@ public final class TensorGUI extends GuiScreen implements Globals {
     }
 
     private boolean isHovered(Element element, double mouseX, double mouseY) {
+
+        if (!(element instanceof CategoryElement)) {
+            if (mouseY < this.clickGUI.y.getValue() + this.titleHeight + 2) {
+                return false;
+            }
+
+            if (mouseY > this.clickGUI.y.getValue() + this.guiHeight.get() - 4) {
+                return false;
+            }
+        }
+        
         return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
     }
 
