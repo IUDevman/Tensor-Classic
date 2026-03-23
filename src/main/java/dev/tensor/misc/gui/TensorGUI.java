@@ -64,6 +64,8 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     private final AtomicBoolean buttonActive = new AtomicBoolean(false);
 
+    private ButtonSetting buttonSetting = null;
+
     @Override
     public void drawScreen(int i, int j, float f) {
 
@@ -82,6 +84,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                                 if (element.button.isActive()) {
                                     element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.enabledTextColor.getValue());
+                                    this.buttonSetting = element.button;
                                     this.buttonActive.set(true);
                                 }
                             }
@@ -130,6 +133,11 @@ public final class TensorGUI extends GuiScreen implements Globals {
         }
 
         if (this.buttonActive.get()) {
+
+            if (this.buttonSetting != null) {
+                buttonSetting.onKeyPressed(i);
+            }
+
             return;
         }
 
@@ -162,6 +170,11 @@ public final class TensorGUI extends GuiScreen implements Globals {
     public void mouseClicked(int i, int j, int k) {
 
         if (this.buttonActive.get()) {
+
+            if (this.buttonSetting != null && k == 0) {
+                this.buttonSetting.onClick(i, j);
+            }
+
             return;
         }
 
@@ -220,10 +233,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
     @Override
     public void handleMouseInput() {
 
-        if (this.buttonActive.get()) {
-            return;
-        }
-
         if (Mouse.getEventButton() == 0) {
             this.dragging = false;
         }
@@ -248,6 +257,11 @@ public final class TensorGUI extends GuiScreen implements Globals {
     protected void mouseMovedOrUp(int i, int j, int k) {
 
         if (this.buttonActive.get()) {
+
+            if (this.buttonSetting != null) {
+                this.buttonSetting.onHovered(i, j);
+            }
+
             return;
         }
 
@@ -284,8 +298,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
                             } else if (settingElement instanceof ButtonSettingElement) {
                                 ButtonSettingElement element = (ButtonSettingElement) settingElement;
 
-                                element.button.setActive(false);
-                                this.buttonActive.set(false);
+                                element.button.close();
                             }
                         });
                     }
@@ -294,6 +307,11 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
 
         this.clickGUI.setEnabled(false);
+    }
+
+    public void closeButton() {
+        this.buttonActive.set(false);
+        this.buttonSetting = null;
     }
 
     private boolean isHovered(Element element, double mouseX, double mouseY) {
