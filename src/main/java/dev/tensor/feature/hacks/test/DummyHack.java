@@ -1,4 +1,4 @@
-package dev.tensor.feature.hacks;
+package dev.tensor.feature.hacks.test;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
