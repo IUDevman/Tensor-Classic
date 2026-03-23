@@ -24,6 +24,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 1. Add max limiter for hack and setting scroll Y.
  * 2. Add mouse dragging.
  * 3. Add ButtonElement for StringSetting (and future Xray)
+ * 4. Reset scroll on category/hack change
  */
 
 public final class TensorGUI extends GuiScreen implements Globals {
@@ -65,7 +66,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
         this.draw2DRectangle(clickGUI.x.getValue() - 2, clickGUI.y.getValue(), clickGUI.x.getValue(), clickGUI.y.getValue() + guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
         this.draw2DRectangle(clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() - 2, clickGUI.x.getValue() + this.guiWidth + 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
         this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.guiHeight.get() - 2, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
-        this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleHeight, clickGUI.fillColor.getValue().getRGB());
+        this.draw2DRectangle(clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleHeight, clickGUI.outlineColor.getValue().getRGB());
+        this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + this.titleHeight, clickGUI.outlineColor.getValue().getRGB());
+        this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + 1, clickGUI.outlineColor.getValue().getRGB());
+        this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + 1, clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + this.titleHeight, clickGUI.fillColor.getValue().getRGB());
 
         String name = TensorClassic.MOD_NAME + " (" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + ")";
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), clickGUI.textColor.getValue().getRGB());
