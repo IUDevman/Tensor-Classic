@@ -18,9 +18,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author IUDevman
  * @since 05-03-2021
  *
- * todo:
- * 1. Add mouse dragging.
- * 2. Add ButtonElement for StringSetting (and future Xray)
+ * A big thanks to qe7 for Hephastus-Babric. The source really helped troubleshoot parts that didn't port over well.
+ * https://github.com/qe7/Hephaestus-Babric
  */
 
 public final class TensorGUI extends GuiScreen implements Globals {
@@ -31,7 +30,16 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     public final int guiWidth = 388;
     public final int titleHeight = 20;
+
     private int scroll = 0;
+
+    private boolean dragging = false;
+
+    private int clickX;
+    private int clickY;
+
+    private int newX;
+    private int newY;
 
     public final AtomicInteger guiHeight = new AtomicInteger(0);
 
@@ -54,6 +62,14 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     @Override
     public void drawScreen(int i, int j, float f) {
+
+        if (this.dragging) {
+            this.newX = i + clickX;
+            this.newY = j + clickY;
+
+            this.clickGUI.x.setValue(newX);
+            this.clickGUI.y.setValue(newY);
+        }
 
         this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
         this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, clickGUI.y.getValue() + this.titleHeight + 2, clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, clickGUI.y.getValue() + this.guiHeight.get() - 2, clickGUI.outlineColor.getValue().getRGB());
@@ -108,6 +124,15 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     @Override
     public void mouseClicked(int i, int j, int k) {
+
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleHeight + 2, i, j) && k == 0) {
+            this.dragging = true;
+            this.clickX = this.newX - i;
+            this.clickY = this.newY - j;
+        } else {
+            this.dragging = false;
+        }
+
         if (k != 0) {
             return;
         }
@@ -154,6 +179,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     @Override
     public void handleMouseInput() {
+
+        if (Mouse.getEventButton() == 0) {
+            this.dragging = false;
+        }
 
         if (!Mouse.getEventButtonState()) {
 
@@ -225,7 +254,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
                 return false;
             }
         }
-        
+
         return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
     }
 
