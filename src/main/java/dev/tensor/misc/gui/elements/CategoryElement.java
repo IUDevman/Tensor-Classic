@@ -30,6 +30,8 @@ public final class CategoryElement implements Element {
 
     public final ArrayList<HackElement> hackElements = new ArrayList<>();
 
+    public final IntegerSetting mScrollY = new IntegerSetting("Module Scroll Y", 0, -1000, 1000);
+
     public CategoryElement(TensorGUI tensorGUI, Category category, IntegerSetting x, IntegerSetting y, int posX, int posY) {
         this.tensorGUI = tensorGUI;
         this.category = category;
@@ -40,8 +42,6 @@ public final class CategoryElement implements Element {
 
         this.setupHackElements();
     }
-
-    public final IntegerSetting mScrollY = new IntegerSetting("Module Scroll Y", 0, -1000, 1000);
 
     private void setupHackElements() {
         this.hackElements.clear();

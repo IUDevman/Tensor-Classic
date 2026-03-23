@@ -21,10 +21,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 05-03-2021
  *
  * todo:
- * 1. Add max limiter for hack and setting scroll Y.
- * 2. Add mouse dragging.
- * 3. Add ButtonElement for StringSetting (and future Xray)
- * 4. Reset scroll on category/hack change
+ * 1. Add mouse dragging.
+ * 2. Add ButtonElement for StringSetting (and future Xray)
  */
 
 public final class TensorGUI extends GuiScreen implements Globals {
@@ -32,6 +30,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
     private final ClickGUI clickGUI;
 
     public final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
+
+    public final int guiWidth = 388;
+    public final int titleHeight = 20;
+    private int scroll = 0;
 
     public final AtomicInteger guiHeight = new AtomicInteger(0);
 
@@ -51,9 +53,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
             }
         });
     }
-
-    public final int guiWidth = 388;
-    public final int titleHeight = 20;
 
     @Override
     public void drawScreen(int i, int j, float f) {
@@ -155,8 +154,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
     }
 
-    private int scroll = 0;
-
     @Override
     public void handleMouseInput() {
 
@@ -184,6 +181,51 @@ public final class TensorGUI extends GuiScreen implements Globals {
         } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
             this.handleScroll(Scroll.Setting);
         }
+    }
+
+    @Override
+    public boolean doesGuiPauseGame() {
+        return false;
+    }
+
+    @Override
+    public void onGuiClosed() {
+        this.categoryElements.forEach(categoryElement -> {
+            this.scroll = 0;
+
+            categoryElement.mScrollY.reset();
+            categoryElement.hackElements.forEach(hackElement -> hackElement.sScrollY.reset());
+
+            if (categoryElement.isSelected())  {
+                categoryElement.hackElements.forEach(hackElement -> {
+
+                    if (hackElement.isViewed()) {
+                        hackElement.settingElements.forEach(settingElement -> {
+
+                            if (settingElement instanceof KeyPressElement) {
+                                KeyPressElement element = (KeyPressElement) settingElement;
+
+                                element.setSearching(false);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        this.clickGUI.setEnabled(false);
+    }
+
+    private boolean isHovered(Element element, double mouseX, double mouseY) {
+        return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
+    }
+
+    private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
+        if (mouseX < minX || mouseX > maxX) {
+            return false;
+        }
+
+        else return !(mouseY < minY) && !(mouseY > maxY);
     }
 
     private void handleScroll(Scroll scroll) {
@@ -269,50 +311,5 @@ public final class TensorGUI extends GuiScreen implements Globals {
     private enum Scroll {
         Hack,
         Setting
-    }
-
-    @Override
-    public boolean doesGuiPauseGame() {
-        return false;
-    }
-
-    @Override
-    public void onGuiClosed() {
-        this.categoryElements.forEach(categoryElement -> {
-            this.scroll = 0;
-
-            categoryElement.mScrollY.reset();
-            categoryElement.hackElements.forEach(hackElement -> hackElement.sScrollY.reset());
-
-            if (categoryElement.isSelected())  {
-                categoryElement.hackElements.forEach(hackElement -> {
-
-                    if (hackElement.isViewed()) {
-                        hackElement.settingElements.forEach(settingElement -> {
-
-                            if (settingElement instanceof KeyPressElement) {
-                                KeyPressElement element = (KeyPressElement) settingElement;
-
-                                element.setSearching(false);
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        this.clickGUI.setEnabled(false);
-    }
-
-    private boolean isHovered(Element element, double mouseX, double mouseY) {
-        return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
-    }
-
-    private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
-        if (mouseX < minX || mouseX > maxX) {
-            return false;
-        }
-
-        else return !(mouseY < minY) && !(mouseY > maxY);
     }
 }

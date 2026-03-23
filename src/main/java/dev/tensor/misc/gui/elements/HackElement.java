@@ -30,6 +30,12 @@ public final class HackElement implements Element {
 
     private boolean viewed = false;
 
+    public final IntegerSetting sScrollY = new IntegerSetting("Setting Scroll Y", 0, -1000, 1000);
+
+    public PropertyElement propertyElement;
+
+    public ArrayList<SettingElement> settingElements = new ArrayList<>();
+
     public HackElement(CategoryElement categoryElement, Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         this.categoryElement = categoryElement;
         this.hack = hack;
@@ -41,12 +47,6 @@ public final class HackElement implements Element {
 
         this.setupSettingElements();
     }
-
-    public final IntegerSetting sScrollY = new IntegerSetting("Setting Scroll Y", 0, -1000, 1000);
-
-    public PropertyElement propertyElement;
-
-    public ArrayList<SettingElement> settingElements = new ArrayList<>();
 
     private void setupSettingElements() {
 
