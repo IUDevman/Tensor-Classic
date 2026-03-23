@@ -20,7 +20,7 @@ public final class HackElement implements Element {
     public static final int width = 120;
     public static final int height = 20;
 
-    private final CategoryElement categoryElement;
+    public final CategoryElement categoryElement;
     private final Hack hack;
     private final IntegerSetting x;
     private final IntegerSetting y;
@@ -95,7 +95,7 @@ public final class HackElement implements Element {
                 //TODO: Will likely make the setting element for string a button where a new window appears
                 //Will allow for easier writing and no scissor
             }*/ else {
-                DummySettingElement element = new DummySettingElement(this, setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+                ButtonSettingElement element = new ButtonSettingElement(this, setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
             }

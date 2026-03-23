@@ -1,11 +1,14 @@
 package dev.tensor.misc.gui.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.elements.ButtonSetting;
 import dev.tensor.misc.gui.elements.HackElement;
 import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
+import dev.tensor.misc.gui.elements.settings.buttons.StringSettingButton;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import dev.tensor.misc.imp.setting.settings.StringSetting;
 
 import java.awt.*;
 
@@ -14,13 +17,21 @@ import java.awt.*;
  * @since 05-04-2021
  */
 
-public final class DummySettingElement extends SettingElement {
+public final class ButtonSettingElement extends SettingElement {
 
     private final Setting<?> setting;
 
-    public DummySettingElement(HackElement hackElement, Setting<?> setting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+    public final ButtonSetting button;
+
+    public ButtonSettingElement(HackElement hackElement, Setting<?> setting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.setting = setting;
+
+        if (this.setting instanceof StringSetting) {
+            this.button = new StringSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (StringSetting) setting);
+        } else {
+            button = null;
+        }
     }
 
     @Override
@@ -55,12 +66,17 @@ public final class DummySettingElement extends SettingElement {
         this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r: Use command!";
+        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (Click)";
         this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
     }
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+
+        if (this.button != null) {
+            this.button.setActive(true);
+        }
+
         this.getHackElement().settingElements.forEach(settingElement -> {
 
             if (settingElement instanceof KeyPressElement) {

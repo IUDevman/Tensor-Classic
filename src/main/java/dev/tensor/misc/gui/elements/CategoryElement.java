@@ -19,7 +19,7 @@ public final class CategoryElement implements Element {
 
     public static final int width = 60;
 
-    private final TensorGUI tensorGUI;
+    public final TensorGUI tensorGUI;
     private final Category category;
     private final IntegerSetting x;
     private final IntegerSetting y;

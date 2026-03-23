@@ -3,6 +3,7 @@ package dev.tensor.misc.gui;
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.elements.*;
+import dev.tensor.misc.gui.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -12,6 +13,7 @@ import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -24,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class TensorGUI extends GuiScreen implements Globals {
 
-    private final ClickGUI clickGUI;
+    public final ClickGUI clickGUI;
 
     public final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
 
@@ -60,8 +62,38 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
     }
 
+    private final AtomicBoolean buttonActive = new AtomicBoolean(false);
+
     @Override
     public void drawScreen(int i, int j, float f) {
+
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (categoryElement.isSelected()) {
+
+                categoryElement.hackElements.forEach(hackElement -> {
+
+                    if (hackElement.isViewed()) {
+                        hackElement.settingElements.forEach(settingElement -> {
+
+                            if (settingElement instanceof ButtonSettingElement) {
+
+                                ButtonSettingElement element = (ButtonSettingElement) settingElement;
+
+                                if (element.button.isActive()) {
+                                    element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.enabledTextColor.getValue());
+                                    this.buttonActive.set(true);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        if (this.buttonActive.get()) {
+            return;
+        }
 
         if (this.dragging) {
             this.newX = i + clickX;
@@ -97,6 +129,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
             return;
         }
 
+        if (this.buttonActive.get()) {
+            return;
+        }
+
         this.categoryElements.forEach(categoryElement -> {
 
             if (categoryElement.isSelected()) {
@@ -124,6 +160,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     @Override
     public void mouseClicked(int i, int j, int k) {
+
+        if (this.buttonActive.get()) {
+            return;
+        }
 
         if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleHeight + 2, i, j) && k == 0) {
             this.dragging = true;
@@ -180,6 +220,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
     @Override
     public void handleMouseInput() {
 
+        if (this.buttonActive.get()) {
+            return;
+        }
+
         if (Mouse.getEventButton() == 0) {
             this.dragging = false;
         }
@@ -202,6 +246,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
     @Override
     protected void mouseMovedOrUp(int i, int j, int k) {
+
+        if (this.buttonActive.get()) {
+            return;
+        }
 
         if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
             this.handleScroll(Scroll.Hack);
@@ -233,6 +281,11 @@ public final class TensorGUI extends GuiScreen implements Globals {
                                 KeyPressElement element = (KeyPressElement) settingElement;
 
                                 element.setSearching(false);
+                            } else if (settingElement instanceof ButtonSettingElement) {
+                                ButtonSettingElement element = (ButtonSettingElement) settingElement;
+
+                                element.button.setActive(false);
+                                this.buttonActive.set(false);
                             }
                         });
                     }
