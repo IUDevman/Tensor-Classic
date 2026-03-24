@@ -91,10 +91,7 @@ public final class HackElement implements Element {
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
 
-            } /*else if (setting instanceof StringSetting) {
-                //TODO: Will likely make the setting element for string a button where a new window appears
-                //Will allow for easier writing and no scissor
-            }*/ else {
+            } else {
                 ButtonSettingElement element = new ButtonSettingElement(this, setting, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
                 this.settingElements.add(element);
                 settingY.getAndAdd(element.getHeight());
@@ -131,7 +128,7 @@ public final class HackElement implements Element {
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -145,16 +142,16 @@ public final class HackElement implements Element {
         this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
         this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.hack.NAME, midX, midY, hack.isEnabled() ? enabledTextColor.getRGB() : textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.hack.NAME, midX, midY, hack.isEnabled() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
         if (this.isViewed()) {
             AtomicInteger settingheight = new AtomicInteger(0);
 
-            this.propertyElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor, textColor, enabledTextColor);
+            this.propertyElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor);
             settingheight.getAndAdd(this.propertyElement.getHeight());
 
             this.settingElements.forEach(settingElement -> {
-                settingElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor, textColor, enabledTextColor);
+                settingElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor);
                 settingheight.getAndAdd(settingElement.getHeight());
             });
 

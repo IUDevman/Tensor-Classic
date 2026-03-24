@@ -89,7 +89,7 @@ public final class CategoryElement implements Element {
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -103,7 +103,7 @@ public final class CategoryElement implements Element {
         this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
         this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.category.name(), midX, midY, this.isSelected() ? enabledTextColor.getRGB() : textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.category.name(), midX, midY, this.isSelected() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
         if (this.isSelected()) {
 
@@ -124,7 +124,7 @@ public final class CategoryElement implements Element {
 
             GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
 
-            this.hackElements.forEach(hackElement -> hackElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor, textColor, enabledTextColor));
+            this.hackElements.forEach(hackElement -> hackElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 
             if (this.hackElements.isEmpty()) {
                 int barMinXX = this.x.getValue() + this.getWidth() + HackElement.width + 4;

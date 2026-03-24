@@ -58,7 +58,7 @@ public final class BindResetSettingElement extends SettingElement implements Key
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -71,9 +71,9 @@ public final class BindResetSettingElement extends SettingElement implements Key
         this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
 
         String text = "Keybind : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.YELLOW.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.getColor(ChatColor.LIGHT_GRAY) + "Reset", midX, minY + 18, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.getColor(ChatColor.LIGHT_GRAY) + "Reset", midX, minY + 18, Color.WHITE.getRGB());
     }
 
     @Override
@@ -103,7 +103,7 @@ public final class BindResetSettingElement extends SettingElement implements Key
     }
 
     @Override
-    public void onKeyPressed(int key) {
+    public void onKeyPressed(char letter, int key) {
         if (!isSearching()) return;
 
         if (key == Keyboard.KEY_DELETE) {

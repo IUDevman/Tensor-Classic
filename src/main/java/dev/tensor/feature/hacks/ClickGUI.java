@@ -17,8 +17,6 @@ public final class ClickGUI extends Hack {
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
-    public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 255, 255));
-    public final ColorSetting enabledTextColor = new ColorSetting("Enabled Text Color", Color.YELLOW);
 
     TensorGUI tensorGUI = null;
 

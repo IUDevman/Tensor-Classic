@@ -26,7 +26,6 @@ public final class TabGUI extends Hack {
     public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMinecraft().displayHeight);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
-    public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 255, 255));
 
     private final int minPage = 1;
     private int maxPage = 1;
@@ -69,7 +68,7 @@ public final class TabGUI extends Hack {
         this.draw2DRectangle(this.x.getValue(), maxY, maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
         this.draw2DRectangle(maxX, this.y.getValue(), maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
 
-        this.getInGameGUI().drawString(this.getFontRenderer(), clientMessage, this.x.getValue() + 2, this.y.getValue() + 2, this.textColor.getValue().getRGB());
+        this.getInGameGUI().drawString(this.getFontRenderer(), clientMessage, this.x.getValue() + 2, this.y.getValue() + 2, Color.WHITE.getRGB());
 
         if (tabGUIEntries.isEmpty()) {
             this.setUpTabGUI();
@@ -83,7 +82,7 @@ public final class TabGUI extends Hack {
 
         int pageX = this.getFontRenderer().getStringWidth(this.clientMessage) - this.getFontRenderer().getStringWidth(pageString);
 
-        this.getInGameGUI().drawString(this.getFontRenderer(), pageString, this.x.getValue() + pageX + 2, maxY - 9, this.textColor.getValue().getRGB());
+        this.getInGameGUI().drawString(this.getFontRenderer(), pageString, this.x.getValue() + pageX + 2, maxY - 9, Color.WHITE.getRGB());
 
         for (int i = 0; i <= 4; i++) {
 

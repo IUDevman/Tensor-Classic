@@ -57,7 +57,7 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -69,7 +69,7 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
         String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getMin() + " -> " + this.doubleSetting.getMax() + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValue());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
     @Override
@@ -90,7 +90,7 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
     }
 
     @Override
-    public void onKeyPressed(int key) {
+    public void onKeyPressed(char letter, int key) {
         if (!isSearching()) return;
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {

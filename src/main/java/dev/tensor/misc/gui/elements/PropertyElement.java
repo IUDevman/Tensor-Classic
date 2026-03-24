@@ -51,7 +51,7 @@ public final class PropertyElement implements Element {
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();

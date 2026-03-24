@@ -44,7 +44,7 @@ public final class EnumSettingElement extends SettingElement {
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -56,7 +56,7 @@ public final class EnumSettingElement extends SettingElement {
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
         String text = this.enumSetting.getName() + " : " + this.getColor(ChatColor.LIGHT_GRAY) + this.enumSetting.getValue().name();
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
     @Override

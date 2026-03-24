@@ -79,7 +79,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -97,12 +97,12 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
 
         String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ")";
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (textColor.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : textColor.getRGB()) : textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : Color.WHITE.getRGB()) : Color.WHITE.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, textColor.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, textColor.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, textColor.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, Color.WHITE.getRGB());
     }
 
     @Override
@@ -149,7 +149,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     }
 
     @Override
-    public void onKeyPressed(int key) {
+    public void onKeyPressed(char letter, int key) {
         if (!this.searchingR && !this.searchingG && !this.searchingB && !this.searchingA) return;
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {

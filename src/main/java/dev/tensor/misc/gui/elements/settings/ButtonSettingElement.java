@@ -55,7 +55,7 @@ public final class ButtonSettingElement extends SettingElement {
     }
 
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         int minX = this.getPosX();
         int minY = this.getPosY();
         int maxX = this.getPosX() + this.getWidth();
@@ -66,8 +66,8 @@ public final class ButtonSettingElement extends SettingElement {
         this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (Click)";
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, textColor.getRGB());
+        String text = this.button == null ? "Unknown Setting" : this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (Click)";
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
     @Override

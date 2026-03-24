@@ -7,6 +7,7 @@ import dev.tensor.misc.imp.setting.settings.StringSetting;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * @author Hoosiers
@@ -59,10 +60,9 @@ public final class StringSettingButton implements ButtonSetting {
     /*
     TODO:
     1. Subscript string other direction
-    2. Draw string from left not center
      */
     @Override
-    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor, Color textColor, Color enabledTextColor) {
+    public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
 
         //temp:
         this.draw2DRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
@@ -70,11 +70,11 @@ public final class StringSettingButton implements ButtonSetting {
         this.draw2DRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
         this.draw2DRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
         this.draw2DRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "Setting (String) : " + this.stringSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), textColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "Setting (String) : " + this.stringSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.draw2DRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.draw2DRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), ">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), enabledTextColor.getRGB());
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), ">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
 
         this.draw2DRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 4 + this.tensorGUI.titleHeight, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.draw2DRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 6 + this.tensorGUI.titleHeight, outLineColor.getRGB());
@@ -83,35 +83,29 @@ public final class StringSettingButton implements ButtonSetting {
         this.draw2DRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 4 + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 6 + this.tensorGUI.titleHeight, outLineColor.getRGB());
 
         int maxWidth = this.getWidth() - 20;
-        int firstEnd = 1;
 
-        int dotDotDot;
-        boolean shouldDot = false;
+        String toWrite = "";
 
-        if (this.getFontRenderer().getStringWidth(this.value) >= maxWidth) {
-            shouldDot = true;
-            dotDotDot = this.getFontRenderer().getStringWidth("...");
-        } else {
-            dotDotDot = 0;
-        }
-
-        boolean strobe = (System.currentTimeMillis() - this.prevStrobe) >= 500;
+        boolean strobe = this.isSearching() && (System.currentTimeMillis() - this.prevStrobe) >= 500;
 
         if (strobe && (System.currentTimeMillis() - this.prevStrobe >= 1000)) {
             this.prevStrobe = System.currentTimeMillis();
         }
 
-        int searching = this.isSearching() ? (strobe ? this.getFontRenderer().getStringWidth("|") : 0) : 0;
+        if (this.getFontRenderer().getStringWidth(this.value + (strobe ? "|" : "")) > maxWidth) {
+            int split1 = this.value.length() - 1;
 
-        while (firstEnd < this.value.length() && (this.getFontRenderer().getStringWidth(this.value.substring(0, firstEnd + 1)) + dotDotDot + searching < maxWidth)) {
-            firstEnd++;
+            while (split1 >= 1 && (this.getFontRenderer().getStringWidth("..." + this.value.substring(split1 - 1, this.value.length() - 1) + (strobe ? "|" : "")) <= maxWidth)) {
+                split1--;
+            }
+
+            toWrite = "..." + this.getColor(ChatColor.LIGHT_GRAY) + this.value.substring(split1, this.value.length() - 1);
+
+        } else {
+            toWrite = this.getColor(ChatColor.LIGHT_GRAY) + this.value;
         }
 
-        //substring the other way!
-        String croppedValue = (shouldDot ? "..." :  "") + this.value.substring(0, firstEnd) + (this.isSearching() ? (strobe ? "|" : "") : "");
-
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "'" + this.getColor(ChatColor.LIGHT_GRAY) + croppedValue + "§r'", this.getPosX() + (this.getWidth() / 2), this.getPosY() + this.tensorGUI.titleHeight + 4 + ((this.tensorGUI.titleHeight - 12) / 2), textColor.getRGB());
-
+        this.getInGameGUI().drawString(this.getFontRenderer(), "'" + toWrite + this.getColor(ChatColor.YELLOW) + (strobe ? "|" : "") + "'", this.getPosX() + 10, this.getPosY() + this.tensorGUI.titleHeight + 4 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
     }
 
     @Override
@@ -121,7 +115,14 @@ public final class StringSettingButton implements ButtonSetting {
         }
 
         if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + (2 * this.tensorGUI.titleHeight) + 4, mouseX, mouseY)) {
-            this.setSearching(!this.isSearching());
+
+            if (this.isSearching()) {
+                this.stringSetting.setValue(this.value);
+                this.setSearching(false);
+                return;
+            }
+
+            this.setSearching(true);
         } else {
             this.setSearching(false);
         }
@@ -133,22 +134,46 @@ public final class StringSettingButton implements ButtonSetting {
     }
 
     @Override
-    public void onKeyPressed(int key) {
+    public void onKeyPressed(char letter, int key) {
         if (!isSearching()) return;
 
-        if (key == Keyboard.KEY_DELETE) {
-            //remove value
+        if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_BACK) {
+
+            if (!this.value.isEmpty()) {
+                this.value = this.value.substring(0, this.value.length() - 1);
+                this.getTensorLogger().info(this.value);
+            }
+
             return;
         }
 
-        if (key != Keyboard.KEY_ESCAPE && key != Keyboard.KEY_RETURN) {
-            //set value
+        if (key == Keyboard.KEY_ESCAPE || key == Keyboard.KEY_RETURN) {
             this.stringSetting.setValue(this.value);
+            this.setSearching(false);
             return;
         }
 
-        this.value += Keyboard.getKeyName(key);
+        if (!this.isKeyBlackListed(key)) {
+            this.getTensorLogger().info(String.valueOf(letter));  //temp
+
+            this.value = this.value + letter;
+        }
     }
+
+    private boolean isKeyBlackListed(int key) {
+        return Arrays.asList(this.badKeys).contains(key);
+    }
+
+    private final int[] badKeys = new int[] {
+            0x00, 0x01, 0x0E, 0x0F, 0x1C, 0x1D, 0x2A, 0x36,
+            0x37, 0x38, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40,
+            0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x53, 0x57, 0x58,
+            0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x70, 0x71, 0x79,
+            0x7B, 0x7D, 0x8D, 0x90, 0x91, 0x93, 0x94, 0x95, 0x96,
+            0x97, 0x9C, 0x9D, 0xA7, 0xB7, 0xB8, 0xC4, 0xC5, 0xC7,
+            0xC9, 0xCF, 0xD1, 0xD2, 0xD3, 0xDA, 0xDB, 0xDC, 0xDD,
+            0xDE, 0xDF
+    };
 
     @Override
     public boolean isSearching() {
@@ -157,6 +182,17 @@ public final class StringSettingButton implements ButtonSetting {
 
     @Override
     public void setSearching(boolean searching) {
+
+        if (searching) {
+            this.prevStrobe = System.currentTimeMillis();
+        }
+
+        if (!searching) {
+            this.stringSetting.setValue(this.value);
+        }
+
+        this.value = this.stringSetting.getValue();
+
         this.searching = searching;
     }
 
@@ -173,6 +209,7 @@ public final class StringSettingButton implements ButtonSetting {
     @Override
     public void close() {
         this.setActive(false);
+        this.setSearching(false);
         this.hoveredOnBack = false;
         this.tensorGUI.closeButton();
     }

@@ -11,6 +11,7 @@ import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -43,6 +44,9 @@ public final class TensorGUI extends GuiScreen implements Globals {
     private int newX;
     private int newY;
 
+    private final AtomicBoolean buttonActive = new AtomicBoolean(false);
+    private ButtonSetting buttonSetting = null;
+
     public final AtomicInteger guiHeight = new AtomicInteger(0);
 
     public TensorGUI(ClickGUI clickGUI) {
@@ -62,10 +66,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
         });
     }
 
-    private final AtomicBoolean buttonActive = new AtomicBoolean(false);
-
-    private ButtonSetting buttonSetting = null;
-
     @Override
     public void drawScreen(int i, int j, float f) {
 
@@ -83,7 +83,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
                                 ButtonSettingElement element = (ButtonSettingElement) settingElement;
 
                                 if (element.button.isActive()) {
-                                    element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.enabledTextColor.getValue());
+                                    element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue());
                                     this.buttonSetting = element.button;
                                     this.buttonActive.set(true);
                                 }
@@ -119,10 +119,10 @@ public final class TensorGUI extends GuiScreen implements Globals {
         this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + 1, clickGUI.outlineColor.getValue().getRGB());
         this.draw2DRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + 1, clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + this.titleHeight, clickGUI.fillColor.getValue().getRGB());
 
-        String name = TensorClassic.MOD_NAME + " (" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + ")";
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), clickGUI.textColor.getValue().getRGB());
+        String name = TensorClassic.MOD_NAME + this.getColor(ChatColor.YELLOW) + " (" + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + ")";
+        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), Color.WHITE.getRGB());
 
-        this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue(),  this.clickGUI.textColor.getValue(), this.clickGUI.enabledTextColor.getValue()));
+        this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue()));
     }
 
     @Override
@@ -135,7 +135,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
         if (this.buttonActive.get()) {
 
             if (this.buttonSetting != null) {
-                buttonSetting.onKeyPressed(i);
+                buttonSetting.onKeyPressed(c, i);
             }
 
             return;
@@ -156,7 +156,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
                                 KeyPressElement element = (KeyPressElement) settingElement;
 
                                 if (element.isSearching()) {
-                                    element.onKeyPressed(i);
+                                    element.onKeyPressed(c, i);
                                 }
                             }
                         });

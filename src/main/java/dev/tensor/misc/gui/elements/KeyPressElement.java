@@ -6,5 +6,5 @@ public interface KeyPressElement {
 
     void setSearching(boolean searching);
 
-    void onKeyPressed(int key);
+    void onKeyPressed(char letter, int key);
 }
