@@ -10,16 +10,19 @@ import net.minecraft.src.Packet3Chat;
 @Hack.Info(name = "AutoLogin", category = Category.Misc)
 public final class AutoLogin extends Hack {
 
-    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "TEST");
+    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!");
 
     @SuppressWarnings("unused")
     @EventTarget
     public void onChatReceivedEvent(ChatReceivedEvent event) {
 
+        if (this.password.getValue().equals(this.password.getDefaultValue())) {
+            return;
+        }
+
         String message = event.message;
 
         if (message.toLowerCase().contains("/login (your password)"))  {
-            this.getTensorLogger().info("/login " + this.password.getValue());
             this.sendPacket(new Packet3Chat("/login " + this.password.getValue()));
         }
     }
