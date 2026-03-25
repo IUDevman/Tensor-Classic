@@ -103,6 +103,11 @@ public final class TensorHUDEditor extends GuiScreen implements Globals {
     }
 
     @Override
+    public boolean doesGuiPauseGame() {
+        return false;
+    }
+
+    @Override
     public void onGuiClosed() {
         this.hudEditor.setEnabled(false);
     }
