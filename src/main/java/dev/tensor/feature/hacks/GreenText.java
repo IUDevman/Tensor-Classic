@@ -16,9 +16,7 @@ public final class GreenText extends Hack {
         String message = event.ARGS;
 
         if (!message.startsWith(">") && !message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
-            message = ">" + message;
-            this.sendPacket(new Packet3Chat(message));
-            event.cancel();
+            event.ARGS = ">" + event.ARGS;
         }
     }
 }

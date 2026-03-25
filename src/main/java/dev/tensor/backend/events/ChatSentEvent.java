@@ -9,7 +9,7 @@ import dev.tensor.misc.event.imp.EventCancellable;
 
 public final class ChatSentEvent extends EventCancellable {
 
-    public final String ARGS;
+    public String ARGS;
 
     public ChatSentEvent(String ARGS) {
         this.ARGS = ARGS;

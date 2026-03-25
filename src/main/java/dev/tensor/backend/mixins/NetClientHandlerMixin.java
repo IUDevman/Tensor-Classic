@@ -36,6 +36,8 @@ public final class NetClientHandlerMixin implements Globals {
 
             if (event.isCancelled())  {
                 ci.cancel();
+            } else if (!event.ARGS.equals(packet.message)) {
+                packet.message = event.ARGS;
             }
         }
     }
