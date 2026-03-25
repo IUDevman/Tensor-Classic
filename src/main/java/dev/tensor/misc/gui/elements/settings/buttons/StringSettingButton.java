@@ -4,6 +4,7 @@ import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.elements.ButtonSetting;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
+import net.minecraft.src.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -141,7 +142,6 @@ public final class StringSettingButton implements ButtonSetting {
 
             if (!this.value.isEmpty()) {
                 this.value = this.value.substring(0, this.value.length() - 1);
-                this.getTensorLogger().info(this.value);
             }
 
             return;
@@ -153,9 +153,7 @@ public final class StringSettingButton implements ButtonSetting {
             return;
         }
 
-        if (!this.isKeyBlackListed(key)) {
-            this.getTensorLogger().info(String.valueOf(letter));  //temp
-
+        if (!this.isKeyBlackListed(key) && ChatAllowedCharacters.allowedCharacters.contains(String.valueOf(letter))) {
             this.value = this.value + letter;
         }
     }
