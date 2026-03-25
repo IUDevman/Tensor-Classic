@@ -64,12 +64,12 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY, maxX - 1, maxY, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY, maxX - 1, maxY, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
         String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getMin() + " -> " + this.doubleSetting.getMax() + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValue());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.WHITE.getRGB());
+        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
     @Override

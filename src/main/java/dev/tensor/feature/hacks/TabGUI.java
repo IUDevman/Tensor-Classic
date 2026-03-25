@@ -62,13 +62,13 @@ public final class TabGUI extends Hack {
         int maxX = this.x.getValue() + this.getFontRenderer().getStringWidth(clientMessage) + 3;
         int maxY = this.y.getValue() + 65;
 
-        this.draw2DRectangle(this.x.getValue() + 1, this.y.getValue(), maxX, maxY, this.fillColor.getValue().getRGB());
-        this.draw2DRectangle(this.x.getValue(), this.y.getValue(), maxX + 1, this.y.getValue() + 1, this.outlineColor.getValue().getRGB());
-        this.draw2DRectangle(this.x.getValue(), this.y.getValue(), this.x.getValue() + 1, maxY + 1, this.outlineColor.getValue().getRGB());
-        this.draw2DRectangle(this.x.getValue(), maxY, maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
-        this.draw2DRectangle(maxX, this.y.getValue(), maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.x.getValue() + 1, this.y.getValue(), maxX, maxY, this.fillColor.getValue().getRGB());
+        this.drawRectangle(this.x.getValue(), this.y.getValue(), maxX + 1, this.y.getValue() + 1, this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.x.getValue(), this.y.getValue(), this.x.getValue() + 1, maxY + 1, this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.x.getValue(), maxY, maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
+        this.drawRectangle(maxX, this.y.getValue(), maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
 
-        this.getInGameGUI().drawString(this.getFontRenderer(), clientMessage, this.x.getValue() + 2, this.y.getValue() + 2, Color.WHITE.getRGB());
+        this.drawString(clientMessage, this.x.getValue() + 2, this.y.getValue() + 2, Color.WHITE.getRGB());
 
         if (tabGUIEntries.isEmpty()) {
             this.setUpTabGUI();
@@ -82,7 +82,7 @@ public final class TabGUI extends Hack {
 
         int pageX = this.getFontRenderer().getStringWidth(this.clientMessage) - this.getFontRenderer().getStringWidth(pageString);
 
-        this.getInGameGUI().drawString(this.getFontRenderer(), pageString, this.x.getValue() + pageX + 2, maxY - 9, Color.WHITE.getRGB());
+        this.drawString(pageString, this.x.getValue() + pageX + 2, maxY - 9, Color.WHITE.getRGB());
 
         for (int i = 0; i <= 4; i++) {
 
@@ -97,7 +97,7 @@ public final class TabGUI extends Hack {
             int pageI = i + ((this.getPage() - 1) * 5);
 
             if (this.tabGUIEntries.size() - 1 >= pageI) {
-                this.getInGameGUI().drawString(this.getFontRenderer(), dumbassWayOfDoingThis + this.tabGUIEntries.get(pageI).entry, this.x.getValue() +  2,  this.y.getValue() + 4 + (10 * (i + 1)), this.tabGUIEntries.get(pageI).color.getRGB());
+                this.drawString(dumbassWayOfDoingThis + this.tabGUIEntries.get(pageI).entry, this.x.getValue() +  2,  this.y.getValue() + 4 + (10 * (i + 1)), this.tabGUIEntries.get(pageI).color.getRGB());
             }
         }
     }

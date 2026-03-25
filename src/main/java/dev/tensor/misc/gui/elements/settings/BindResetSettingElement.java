@@ -65,15 +65,15 @@ public final class BindResetSettingElement extends SettingElement implements Key
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY, fillColor.getRGB());
-        this.draw2DRectangle(minX, minY + 1, minX + 1, maxY, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY, outLineColor.getRGB());
-        this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY, fillColor.getRGB());
+        this.drawRectangle(minX, minY + 1, minX + 1, maxY, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY, outLineColor.getRGB());
+        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
 
         String text = "Keybind : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.YELLOW.getRGB());
+        this.drawCenteredString(text, midX, minY + 3, Color.YELLOW.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.getColor(ChatColor.LIGHT_GRAY) + "Reset", midX, minY + 18, Color.WHITE.getRGB());
+        this.drawCenteredString(this.getColor(ChatColor.LIGHT_GRAY) + "Reset", midX, minY + 18, Color.WHITE.getRGB());
     }
 
     @Override

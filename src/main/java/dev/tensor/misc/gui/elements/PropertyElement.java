@@ -58,15 +58,15 @@ public final class PropertyElement implements Element {
         int maxY = this.getPosY() + this.getHeight() - 1;
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, fillColor.getRGB());
-        this.draw2DRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, fillColor.getRGB());
+        this.drawRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "Enabled", midX, minY + 3, this.hack.isEnabled() ? Color.GREEN.getRGB() : Color.RED.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "Drawn", midX, minY + 18, this.hack.DRAWN ? Color.GREEN.getRGB() : Color.RED.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "Messages", midX, minY + 33, this.hack.MESSAGES ? Color.GREEN.getRGB() : Color.RED.getRGB());
+        this.drawCenteredString("Enabled", midX, minY + 3, this.hack.isEnabled() ? Color.GREEN.getRGB() : Color.RED.getRGB());
+        this.drawCenteredString("Drawn", midX, minY + 18, this.hack.DRAWN ? Color.GREEN.getRGB() : Color.RED.getRGB());
+        this.drawCenteredString("Messages", midX, minY + 33, this.hack.MESSAGES ? Color.GREEN.getRGB() : Color.RED.getRGB());
     }
 
     @Override

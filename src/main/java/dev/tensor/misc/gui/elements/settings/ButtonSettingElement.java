@@ -62,12 +62,12 @@ public final class ButtonSettingElement extends SettingElement {
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY, maxX - 1, maxY, fillColor.getRGB());
-        this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY, maxX - 1, maxY, fillColor.getRGB());
+        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
         String text = this.button == null ? "Unknown Setting" : this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (Click)";
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), text, midX, minY + 3, Color.WHITE.getRGB());
+        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
     @Override

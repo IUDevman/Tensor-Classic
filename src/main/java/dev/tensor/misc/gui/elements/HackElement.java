@@ -136,13 +136,13 @@ public final class HackElement implements Element {
         int midX = this.getPosX() + (this.getWidth() / 2);
         int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isViewed() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isViewed() ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.hack.NAME, midX, midY, hack.isEnabled() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
+        this.drawCenteredString(this.hack.NAME, midX, midY, hack.isEnabled() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
         if (this.isViewed()) {
             AtomicInteger settingheight = new AtomicInteger(0);
@@ -164,12 +164,12 @@ public final class HackElement implements Element {
                 return;
             }
 
-            this.draw2DRectangle(barMinX + 1, barMinY, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY + 4, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMaxX - 1, barMinY + 4, barMaxX, barMaxY - 1, outLineColor.getRGB());
-            this.draw2DRectangle(barMinX, barMinY, barMinX + 1, barMinY + 4, outLineColor.getRGB());
-            this.draw2DRectangle(barMaxX - 1, barMinY, barMaxX, barMinY + 4, outLineColor.getRGB());
-            this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
+            this.drawRectangle(barMinX + 1, barMinY, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
+            this.drawRectangle(barMinX, barMinY + 4, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
+            this.drawRectangle(barMaxX - 1, barMinY + 4, barMaxX, barMaxY - 1, outLineColor.getRGB());
+            this.drawRectangle(barMinX, barMinY, barMinX + 1, barMinY + 4, outLineColor.getRGB());
+            this.drawRectangle(barMaxX - 1, barMinY, barMaxX, barMinY + 4, outLineColor.getRGB());
+            this.drawRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
         }
     }
 

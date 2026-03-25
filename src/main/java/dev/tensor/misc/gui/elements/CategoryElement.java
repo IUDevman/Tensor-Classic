@@ -97,13 +97,13 @@ public final class CategoryElement implements Element {
         int midX = this.getPosX() + (this.getWidth() / 2);
         int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.draw2DRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isSelected() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
-        this.draw2DRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isSelected() ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
+        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.drawRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), this.category.name(), midX, midY, this.isSelected() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
+        this.drawCenteredString(this.category.name(), midX, midY, this.isSelected() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
         if (this.isSelected()) {
 
@@ -136,11 +136,11 @@ public final class CategoryElement implements Element {
                     return;
                 }
 
-                this.draw2DRectangle(barMinXX + 1, barMinYY + 3, barMaxXX - 1, barMaxYY - 1, fillColor.getRGB());
-                this.draw2DRectangle(barMinXX, barMinYY + 3, barMinXX + 1, barMaxYY - 1, outLineColor.getRGB());
-                this.draw2DRectangle(barMaxXX - 1, barMinYY + 3, barMaxXX, barMaxYY - 1, outLineColor.getRGB());
-                this.draw2DRectangle(barMinXX, barMinYY, barMaxXX, barMinYY + 3, outLineColor.getRGB());
-                this.draw2DRectangle(barMinXX, barMaxYY - 1, barMaxXX, barMaxYY + 1, outLineColor.getRGB());
+                this.drawRectangle(barMinXX + 1, barMinYY + 3, barMaxXX - 1, barMaxYY - 1, fillColor.getRGB());
+                this.drawRectangle(barMinXX, barMinYY + 3, barMinXX + 1, barMaxYY - 1, outLineColor.getRGB());
+                this.drawRectangle(barMaxXX - 1, barMinYY + 3, barMaxXX, barMaxYY - 1, outLineColor.getRGB());
+                this.drawRectangle(barMinXX, barMinYY, barMaxXX, barMinYY + 3, outLineColor.getRGB());
+                this.drawRectangle(barMinXX, barMaxYY - 1, barMaxXX, barMaxYY + 1, outLineColor.getRGB());
             }
 
             int barMinX = this.x.getValue() + this.getWidth() + 2;
@@ -149,11 +149,11 @@ public final class CategoryElement implements Element {
             int barMaxY = this.y.getValue() + tensorGUI.guiHeight.get() - 1;
 
             if (barMinY < barMaxY) {
-                this.draw2DRectangle(barMinX + 1, barMinY + 1, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
-                this.draw2DRectangle(barMinX, barMinY + 1, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
-                this.draw2DRectangle(barMaxX - 1, barMinY + 1, barMaxX, barMaxY - 1, outLineColor.getRGB());
-                this.draw2DRectangle(barMinX, barMinY, barMaxX, barMinY + 1, outLineColor.getRGB());
-                this.draw2DRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
+                this.drawRectangle(barMinX + 1, barMinY + 1, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
+                this.drawRectangle(barMinX, barMinY + 1, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
+                this.drawRectangle(barMaxX - 1, barMinY + 1, barMaxX, barMaxY - 1, outLineColor.getRGB());
+                this.drawRectangle(barMinX, barMinY, barMaxX, barMinY + 1, outLineColor.getRGB());
+                this.drawRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
             }
 
             GL11.glDisable(GL11.GL_SCISSOR_TEST);

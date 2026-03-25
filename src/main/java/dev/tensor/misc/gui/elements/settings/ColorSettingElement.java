@@ -86,23 +86,23 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.draw2DRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValue().getRGB());
-        this.draw2DRectangle(minX + 1, minY + 15, maxX - 1, maxY - 45, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 30, maxX - 1, maxY - 30, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 45, maxX - 1, maxY - 15, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.draw2DRectangle(minX + 1, minY + 60, maxX - 1, maxY, this.searchingA ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValue().getRGB());
+        this.drawRectangle(minX + 1, minY + 15, maxX - 1, maxY - 45, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 30, maxX - 1, maxY - 30, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 45, maxX - 1, maxY - 15, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(minX + 1, minY + 60, maxX - 1, maxY, this.searchingA ? selectedFillColor.getRGB() : fillColor.getRGB());
 
-        this.draw2DRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.draw2DRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
+        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
         String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ")";
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : Color.WHITE.getRGB()) : Color.WHITE.getRGB());
+        this.drawCenteredString(name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : Color.WHITE.getRGB()) : Color.WHITE.getRGB());
 
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
-        this.getInGameGUI().drawCenteredString(this.getFontRenderer(), "  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, Color.WHITE.getRGB());
     }
 
     @Override
