@@ -5,7 +5,6 @@ import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
-import org.lwjgl.opengl.GL11;
 import org.slf4j.Logger;
 
 /**

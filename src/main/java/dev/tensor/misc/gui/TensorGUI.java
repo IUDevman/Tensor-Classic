@@ -2,7 +2,10 @@ package dev.tensor.misc.gui;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
-import dev.tensor.misc.gui.elements.*;
+import dev.tensor.misc.gui.elements.ButtonSetting;
+import dev.tensor.misc.gui.elements.CategoryElement;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
