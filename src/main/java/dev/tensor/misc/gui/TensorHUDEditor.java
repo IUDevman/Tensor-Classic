@@ -55,7 +55,19 @@ public final class TensorHUDEditor extends GuiScreen implements Globals {
             }
         }
 
-        this.hudObjects.forEach(HUDObject::render);
+        this.hudObjects.forEach(hudObject -> {
+
+            if (this.hudEditor.renderObject.getValue()) {
+                hudObject.render();
+            }
+
+            if (this.hudEditor.drawOutline.getValue()) {
+                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + 2, this.hudEditor.outlineColor.getValue().getRGB());
+                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + hudObject.getHeight() - 2, hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + hudObject.getHeight(), this.hudEditor.outlineColor.getValue().getRGB());
+                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + 2, hudObject.getMinY().getValue() + hudObject.getHeight() - 2, this.hudEditor.outlineColor.getValue().getRGB());
+                this.drawRectangle(hudObject.getMinX().getValue() + hudObject.getWidth() - 2, hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + hudObject.getHeight() - 2, this.hudEditor.outlineColor.getValue().getRGB());
+            }
+        });
     }
 
     @Override
@@ -69,13 +81,15 @@ public final class TensorHUDEditor extends GuiScreen implements Globals {
 
             boolean isHovered = this.isHovered(hudObject, i, j);
 
-            if (isHovered && hudObject != this.draggedObject) {
-                this.draggedObject = hudObject;
-                this.clickX = this.newX - i;
-                this.clickY = this.newY - j;
+            if (isHovered) {
 
-            } else {
-                this.draggedObject = null;
+                if (this.draggedObject == hudObject) {
+                    this.draggedObject = null;
+                } else {
+                    this.draggedObject = hudObject;
+                    this.clickX = this.newX - i;
+                    this.clickY = this.newY - j;
+                }
             }
         });
     }

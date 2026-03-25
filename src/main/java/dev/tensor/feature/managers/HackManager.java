@@ -4,7 +4,10 @@ import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.feature.hacks.*;
+import dev.tensor.feature.hacks.HUD.HackList;
+import dev.tensor.feature.hacks.HUD.ModInfo;
 import dev.tensor.feature.hacks.HUD.TabGUI;
+import dev.tensor.feature.hacks.HUD.Welcomer;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -48,12 +51,15 @@ public final class HackManager implements Manager {
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
         this.addHack(new Greeter());
+        this.addHack(new HackList());
         this.addHack(new HUDEditor());
         this.addHack(new KillAura());
+        this.addHack(new ModInfo());
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
+        this.addHack(new Welcomer());
 
         this.postSortHacks();
 
