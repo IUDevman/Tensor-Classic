@@ -48,6 +48,7 @@ public final class HackManager implements Manager {
         this.addHack(new KillAura());
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
+        this.addHack(new Suffix());
         this.addHack(new TabGUI());
 
         this.postSortHacks();
