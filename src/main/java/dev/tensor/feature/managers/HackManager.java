@@ -4,9 +4,11 @@ import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.feature.hacks.*;
+import dev.tensor.feature.hacks.HUD.TabGUI;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
 import org.slf4j.Logger;
 
@@ -46,6 +48,7 @@ public final class HackManager implements Manager {
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
         this.addHack(new Greeter());
+        this.addHack(new HUDEditor());
         this.addHack(new KillAura());
         this.addHack(new NoHurtCam());
         this.addHack(new NoWeather());
@@ -84,6 +87,12 @@ public final class HackManager implements Manager {
 
         if (clickGUI.isEnabled()) {
             clickGUI.toggle();
+        }
+
+        HUDEditor hudEditor = this.getHack(HUDEditor.class);
+
+        if (hudEditor.isEnabled()) {
+            hudEditor.toggle();
         }
 
         this.saveHacks(LOGGER);
@@ -149,7 +158,17 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.getEnabledHacks().forEach(Hack::onRender2D);
+        ClickGUI clickGUI = this.getHack(ClickGUI.class);
+
+        if (clickGUI.isEnabled() && !clickGUI.renderHUD.getValue()) {
+            return;
+        }
+
+        this.getEnabledHacks().forEach(hack -> {
+            if (hack instanceof HUDObject) {
+                ((HUDObject) hack).render();
+            }
+        });
     }
 
     @SuppressWarnings("unused")

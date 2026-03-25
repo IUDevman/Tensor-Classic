@@ -158,10 +158,6 @@ public abstract class Hack implements Globals {
 
     }
 
-    public void onRender2D() {
-
-    }
-
     public void onRender3D() {
 
     }

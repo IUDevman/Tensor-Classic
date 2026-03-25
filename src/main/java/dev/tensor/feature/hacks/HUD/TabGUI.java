@@ -1,10 +1,12 @@
-package dev.tensor.feature.hacks;
+package dev.tensor.feature.hacks.HUD;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.KeyPressedEvent;
+import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.gui.TabGUIEntry;
 import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -18,12 +20,12 @@ import java.util.ArrayList;
  * @since 03-15-2026
  */
 
-@Hack.Info(name = "TabGUI", category = Category.Client, enabled = true)
-public final class TabGUI extends Hack {
+@Hack.Info(name = "TabGUI", category = Category.HUD, enabled = true)
+public final class TabGUI extends Hack implements HUDObject {
 
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMinecraft().displayWidth);
-    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMinecraft().displayHeight);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 
@@ -56,9 +58,29 @@ public final class TabGUI extends Hack {
 
     private final ArrayList<TabGUIEntry> tabGUIEntries = new ArrayList<>();
 
-    @Override
-    public void onRender2D() {
 
+    @Override
+    public IntegerSetting getMinX() {
+        return this.x;
+    }
+
+    @Override
+    public IntegerSetting getMinY() {
+        return this.y;
+    }
+
+    @Override
+    public int getWidth() {
+        return this.getFontRenderer().getStringWidth(clientMessage) + 4;
+    }
+
+    @Override
+    public int getHeight() {
+        return 66;
+    }
+
+    @Override
+    public void render() {
         int maxX = this.x.getValue() + this.getFontRenderer().getStringWidth(clientMessage) + 3;
         int maxY = this.y.getValue() + 65;
 

@@ -4,7 +4,11 @@ import dev.tensor.backend.events.ChatSentEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import net.minecraft.src.Packet3Chat;
+
+/**
+ * @author Hoosiers
+ * @since 03-20-2026
+ */
 
 @Hack.Info(name = "GreenText", category = Category.Misc)
 public final class GreenText extends Hack {

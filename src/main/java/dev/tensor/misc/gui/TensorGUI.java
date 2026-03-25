@@ -105,8 +105,13 @@ public final class TensorGUI extends GuiScreen implements Globals {
             this.newX = i + clickX;
             this.newY = j + clickY;
 
-            this.clickGUI.x.setValue(newX);
-            this.clickGUI.y.setValue(newY);
+            if (this.newX + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width) {
+                this.clickGUI.x.setValue(newX);
+            }
+
+            if (this.newY + this.guiHeight.get() + 2 <= this.getMinecraft().currentScreen.height) {
+                this.clickGUI.y.setValue(newY);
+            }
         }
 
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
