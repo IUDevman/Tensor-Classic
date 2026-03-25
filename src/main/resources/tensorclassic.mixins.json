@@ -10,6 +10,7 @@
   ],
   "client": [
     "EntityRendererMixin",
+    "GuiChatMixin",
     "GuiIngameMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin"

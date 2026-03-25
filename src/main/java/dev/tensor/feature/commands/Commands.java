@@ -41,7 +41,7 @@ public final class Commands extends SimpleCallableCommand {
 
             String commandString = this.getColor(ChatColor.YELLOW) + command.getName() +
                     this.getColor(ChatColor.DEFAULT) + ": " + command.getDescription() + this.getColor(ChatColor.RED) + " Regex: " +
-                    command.getRegex().replace("{name}", this.getHackManager().getHack(dev.tensor.feature.hacks.Commands.class).prefix.getValue() + command.getName()) +
+                    command.getRegex().replace("$", " ").replace("{name}", this.getHackManager().getHack(dev.tensor.feature.hacks.Commands.class).prefix.getValue() + command.getName()) +
                     this.getColor(ChatColor.DEFAULT);
 
             COMMANDS.add(commandString);

@@ -26,7 +26,7 @@ public final class Friends implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {list/add/remove} {player name}";
+        return "{name} {list/add/remove} {player$name}";
     }
 
     @Override

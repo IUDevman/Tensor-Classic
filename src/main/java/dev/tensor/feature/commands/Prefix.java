@@ -26,7 +26,7 @@ public final class Prefix implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {prefix char}";
+        return "{name} {prefix$char}";
     }
 
     @Override

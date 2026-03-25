@@ -34,7 +34,7 @@ public final class Setting implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {hack} {list/setting_name} {value; use _ for spaces and r_g_b_a for colors}";
+        return "{name} {hack} {list/setting_name} {value;$use$_$for$spaces$and$r_g_b_a$for$colors}";
     }
 
     @Override

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Hoosiers
@@ -54,6 +55,48 @@ public final class CommandManager implements Manager {
         return this.COMMANDS;
     }
 
+    public ArrayList<Command> getCommandsThatStartWith(String text) {
+        ArrayList<Command> commands = new ArrayList<>();
+
+        this.getCommands().forEach(command -> {
+
+            if (command.getName().toLowerCase().startsWith(text.toLowerCase())) {
+                commands.add(command);
+            }
+        });
+
+        return commands;
+    }
+
+    public ArrayList<Command> getListCommandsThatStartWith(String text) {
+        ArrayList<Command> commands = new ArrayList<>();
+
+        this.getCommands().forEach(command -> Arrays.stream(command.getAcceptedNames()).forEach(string -> {
+
+            if (string.toLowerCase().startsWith(text.toLowerCase())) {
+                commands.add(command);
+            }
+        }));
+
+        return commands;
+    }
+
+    public Command getCommand(String name) {
+        return this.getCommands().stream().filter(command -> command.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
+    public Command getListCommand(String name) {
+        AtomicReference<Command> command = new AtomicReference<>(null);
+
+        this.getCommands().forEach(command1 -> Arrays.stream(command1.getAcceptedNames()).forEach(string -> {
+            if (string.equalsIgnoreCase(name)) {
+                command.set(command1);
+            }
+        }));
+
+        return command.get();
+    }
+
     private void postSortHacks() {
         this.COMMANDS.sort(Comparator.comparing(Command::getName));
     }
@@ -92,7 +135,22 @@ public final class CommandManager implements Manager {
                 return true;
             }
 
-            String[] ARGS_1 = ARGS.substring(1).split(" ");
+            String[] ARGS_X = ARGS.substring(1).split(" ");
+
+            ArrayList<String> PARSED_ARGS_1 = new ArrayList<>();
+
+            for (int i = 0; i < ARGS_X.length; i++) {
+
+                String value = ARGS_X[i];
+
+                value = value.replace(" ", "");
+
+                if (!value.equalsIgnoreCase("")) {
+                    PARSED_ARGS_1.add(value);
+                }
+            }
+
+            String[] ARGS_1 = PARSED_ARGS_1.toArray(new String[0]);
 
             AtomicBoolean HAS_DISPATCHED = new AtomicBoolean(false);
 

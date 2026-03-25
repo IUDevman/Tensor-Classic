@@ -27,7 +27,7 @@ public final class Reset implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {hack name} {setting name}";
+        return "{name} {hack$name} {setting$name}";
     }
 
     @Override

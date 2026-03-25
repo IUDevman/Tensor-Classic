@@ -38,6 +38,7 @@ public final class HackManager implements Manager {
 
         this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());
+        this.addHack(new CommandPreview());
         this.addHack(new Commands());
         this.addHack(new FOV());
         this.addHack(new Fullbright());

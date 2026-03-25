@@ -32,7 +32,7 @@ public final class Options implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {hack name} {enabled/drawn/messages/bind} {value}";
+        return "{name} {hack$name} {enabled/drawn/messages/bind} {value}";
     }
 
     @Override
