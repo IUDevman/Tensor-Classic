@@ -121,6 +121,8 @@ public final class TabGUI extends Hack {
             return true;
         } else if (name.equalsIgnoreCase("TabGUI")) {
             return true;
+        } else if (name.equalsIgnoreCase("CommandPreview")) {
+            return true;
         }
 
         return false;
