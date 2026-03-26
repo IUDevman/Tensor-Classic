@@ -4,10 +4,10 @@ import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.feature.hacks.*;
-import dev.tensor.feature.hacks.HUD.HackList;
-import dev.tensor.feature.hacks.HUD.ModInfo;
-import dev.tensor.feature.hacks.HUD.TabGUI;
-import dev.tensor.feature.hacks.HUD.Welcomer;
+import dev.tensor.feature.hacks.hud.HackList;
+import dev.tensor.feature.hacks.hud.ModInfo;
+import dev.tensor.feature.hacks.hud.TabGUI;
+import dev.tensor.feature.hacks.hud.Welcomer;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -42,6 +42,7 @@ public final class HackManager implements Manager {
         LOGGER.info("Loaded: " + this.getName());
 
         this.addHack(new AutoLogin());
+        this.addHack(new AutoTool());
         this.addHack(new BackwardsChat());
         this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());

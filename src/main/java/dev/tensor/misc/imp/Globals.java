@@ -30,9 +30,12 @@ public interface Globals {
         return this.getMinecraft().fontRenderer;
     }
 
-
     default GuiIngame getInGameGUI() {
         return this.getMinecraft().ingameGUI;
+    }
+
+    default InventoryPlayer getInventory() {
+        return this.getPlayer().inventory;
     }
 
     default boolean failsNullCheck() {

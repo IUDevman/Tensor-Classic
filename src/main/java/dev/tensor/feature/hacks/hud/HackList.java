@@ -1,4 +1,4 @@
-package dev.tensor.feature.hacks.HUD;
+package dev.tensor.feature.hacks.hud;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.HUDObject;

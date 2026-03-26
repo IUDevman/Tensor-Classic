@@ -1,0 +1,125 @@
+package dev.tensor.feature.hacks;
+
+import dev.tensor.backend.events.BlockBreakEvent;
+import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import net.minecraft.src.Block;
+import net.minecraft.src.ItemStack;
+import net.minecraft.src.Packet14BlockDig;
+
+/**
+ * @author Hoosiers
+ * @since 03-25-2026
+ */
+
+@Hack.Info(name = "AutoTool", category = Category.Player)
+public final class AutoTool extends Hack {
+
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false);
+
+    private boolean swapped = false;
+    private int prevItem = -1;
+    private int status = 0;
+
+    private int ticksSince = 0;
+
+    @Override
+    public void onEnable(boolean isNull) {
+        this.resetPrevSlot();
+    }
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.resetPrevSlot();
+    }
+
+    @Override
+    public void onClientTick() {
+
+        if (this.status != 2) {
+            this.ticksSince++;
+            return;
+        }
+
+        if (this.ticksSince < 1) {
+            this.ticksSince++;
+            return;
+        }
+
+        this.ticksSince = 0;
+
+        if (!this.swapBack.getValue()) {
+            return;
+        }
+
+        if (this.swapped && this.prevItem != -1 && this.getInventory().currentItem != this.prevItem) {
+
+            this.getInventory().currentItem = this.prevItem;
+            this.resetPrevSlot();
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onBlockBreakEvent(BlockBreakEvent event) {
+        Packet14BlockDig packet = event.packet;
+
+        if (packet == null) {
+            return;
+        }
+
+        if (packet.status == 2) {
+            this.status = 2;
+            return;
+        }
+
+        int blockId = this.getWorld().getBlockId(packet.xPosition, packet.yPosition, packet.zPosition);
+
+        if (blockId == 0) {
+            return;
+        }
+
+        Block block = Block.blocksList[blockId];
+
+        if (block == Block.bedrock) {
+            return;
+        }
+
+        float currentStrength = this.getInventory().getCurrentItem().getStrVsBlock(block);
+        int swapSlot = this.getInventory().currentItem;
+
+        int oldSlot = swapSlot;
+
+        for (int i = 0; i < 9; i++) {
+
+            ItemStack itemStack = this.getInventory().getStackInSlot(i);
+
+            if (itemStack == null) {
+                continue;
+            }
+
+            float strength = itemStack.getStrVsBlock(block);
+
+            if (strength > currentStrength) {
+                currentStrength = strength;
+                swapSlot = i;
+            }
+        }
+
+        if (swapSlot != oldSlot) {
+            this.ticksSince = 0;
+            this.swapped = true;
+            this.prevItem = oldSlot;
+            this.getInventory().currentItem = swapSlot;
+        }
+    }
+
+    private void resetPrevSlot() {
+        this.status = 0;
+        this.ticksSince = 0;
+        this.swapped = false;
+        this.prevItem = -1;
+    }
+}
