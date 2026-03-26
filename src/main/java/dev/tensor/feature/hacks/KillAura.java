@@ -22,7 +22,8 @@ public final class KillAura extends Hack {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false);
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
-    public final BooleanSetting onlySeen = new BooleanSetting("Only Seen", true);
+    public final BooleanSetting offScreen = new BooleanSetting("Off Screen", false);
+    public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -66,6 +67,14 @@ public final class KillAura extends Hack {
             }
 
             if (this.shouldAttackEntity(entity)) {
+
+                if (!this.offScreen.getValue() && !this.isEntityBehindWalls(entity)) {
+                    continue;
+                }
+
+                if (!this.behindWalls.getValue() && !this.isEntityBehindWalls(entity)) {
+                    continue;
+                }
 
                 double distance = this.getPlayer().getDistanceToEntity(entity);
 
@@ -152,6 +161,17 @@ public final class KillAura extends Hack {
         }
 
         this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
+    }
+
+    private boolean isEntityOnScreen(Entity entity) {
+        return true;
+    }
+
+    private boolean isEntityBehindWalls(Entity entity) {
+
+        if (this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY + this.getPlayer().getEyeHeight(), this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null) {
+            return true;
+        } else return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
     }
 
     public enum Sort {
