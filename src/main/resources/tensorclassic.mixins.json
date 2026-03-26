@@ -6,7 +6,8 @@
   "mixins": [
     "ChunkMixin",
     "WorldInfoMixin",
-    "WorldMixin"
+    "WorldMixin",
+    "accessors.EntityAccessor"
   ],
   "client": [
     "EntityRendererMixin",

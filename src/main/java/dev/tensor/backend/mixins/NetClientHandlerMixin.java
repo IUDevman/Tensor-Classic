@@ -2,11 +2,9 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.BlockBreakEvent;
 import dev.tensor.backend.events.ChatSentEvent;
+import dev.tensor.backend.events.Packet10FlyingEvent;
 import dev.tensor.misc.imp.Globals;
-import net.minecraft.src.NetClientHandler;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet14BlockDig;
-import net.minecraft.src.Packet3Chat;
+import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -49,6 +47,16 @@ public final class NetClientHandlerMixin implements Globals {
 
             BlockBreakEvent event = new BlockBreakEvent(packet);
             this.getEventManager().call(event);
+        }
+
+        if (arg instanceof Packet10Flying) {
+
+            Packet10Flying packet = (Packet10Flying) arg;
+
+            Packet10FlyingEvent event = new Packet10FlyingEvent(packet);
+            this.getEventManager().call(event);
+
+            arg = event.packet;
         }
     }
 }

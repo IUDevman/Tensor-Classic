@@ -8,7 +8,7 @@ import net.minecraft.src.Packet14BlockDig;
  * @since 03-25-2026
  */
 
-public class BlockBreakEvent implements Event {
+public final class BlockBreakEvent implements Event {
 
     public final Packet14BlockDig packet;
 
