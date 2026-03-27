@@ -45,7 +45,7 @@ public final class BlockRendererMixin implements Globals {
         if (this.getXray().isOnXrayList(i.blockID)) {
             this.renderAllFaces = true;
             this.getXray().setShouldOpacity(false);
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
+            GL11.glEnable(GL11.GL_DEPTH_TEST);
             GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
         } else {
             this.getXray().setShouldOpacity(true);
@@ -71,7 +71,7 @@ public final class BlockRendererMixin implements Globals {
             this.getXray().setShouldOpacity(false);
             this.pre = false;
         } else {
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
+            GL11.glDisable(GL11.GL_DEPTH_TEST);
         }
     }
 }

@@ -16,7 +16,8 @@
     "GuiIngameMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
-    "TessellatorMixin",
+    "RenderGlobalMixin",
+    "TessellatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1
