@@ -21,6 +21,6 @@ public class EventCancellable implements Event, Cancellable {
 
     @Override
     public void cancel() {
-        setCancelled(!this.cancelled);
+        setCancelled(true);
     }
 }

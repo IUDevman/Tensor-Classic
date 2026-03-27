@@ -11,14 +11,14 @@ public final class Fullbright extends Hack {
 
     @Override
     public void onEnable(boolean isNull) {
-        if (!isNull) {
+        if (!isNull && !this.isXrayEnabled()) {
             this.resetWorld();
         }
     }
 
     @Override
     public void onDisable(boolean isNull) {
-        if (!isNull) {
+        if (!isNull && !this.isXrayEnabled()) {
             this.resetWorld();
         }
     }

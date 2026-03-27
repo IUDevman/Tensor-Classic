@@ -1,6 +1,7 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
+import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
@@ -40,6 +41,16 @@ public interface Globals {
 
     default boolean failsNullCheck() {
         return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
+    }
+
+    default boolean isXrayEnabled() {
+        Xray xray = this.getXray();
+
+        if (xray == null) {
+            return false;
+        }
+
+        return xray.isEnabled();
     }
 
     default void resetWorld() {
@@ -88,6 +99,10 @@ public interface Globals {
 
     default CommandManager getCommandManager() {
         return (CommandManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof CommandManager).findFirst().orElse(null);
+    }
+
+    default Xray getXray() {
+        return this.getHackManager().getHack(Xray.class);
     }
 
     default String getColor(ChatColor COLOR) {
