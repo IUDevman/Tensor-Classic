@@ -11,6 +11,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Hoosiers
@@ -153,9 +154,13 @@ public final class BlockListSettingButton implements ButtonSetting {
         }
 
         if (this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
+
+            AtomicBoolean hasDispatched = new AtomicBoolean(false);
+
             this.xrayIDObjects.forEach(xrayIDObject -> {
 
-                if (this.isHovered(xrayIDObject.getPosX(), xrayIDObject.getPosY(), xrayIDObject.getPosX() + xrayIDObject.getWidth(), xrayIDObject.getPosY() + xrayIDObject.getHeight(), mouseX, mouseY)) {
+                if (!hasDispatched.get() && this.isHovered(xrayIDObject.getPosX(), xrayIDObject.getPosY(), xrayIDObject.getPosX() + xrayIDObject.getWidth(), xrayIDObject.getPosY() + xrayIDObject.getHeight(), mouseX, mouseY)) {
+                    hasDispatched.set(true);
                     xrayIDObject.onClick(mouseX, mouseY);
                 }
             });
