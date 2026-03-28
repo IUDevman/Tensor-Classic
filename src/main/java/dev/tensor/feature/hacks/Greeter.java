@@ -25,15 +25,23 @@ public final class Greeter extends Hack {
     public final StringSetting leaveMessage = new StringSetting("Leave Message", "Goodbye {name} from the server! Sorry to see you go! ;C");
 
     private int messageDelay = 0;
+    private String delayed = " ";
 
     @Override
     public void onDisable(boolean nullCheck) {
         this.messageDelay = 0;
+        this.delayed = "";
     }
 
     @Override
     public void onClientTick() {
-        messageDelay++;
+        if (this.messageDelay > this.delay.getValue() && !this.delayed.isEmpty()) {
+            this.sendPacket(new Packet3Chat(this.delayed));
+            this.delayed = "";
+            this.messageDelay = 0;
+        } else {
+            this.messageDelay++;
+        }
     }
 
     @SuppressWarnings("unused")
@@ -77,17 +85,20 @@ public final class Greeter extends Hack {
         String greeter = (this.greenText.getValue() ? ">" : "");
 
         if (messageType == Type.Join && this.join.getValue()) {
-
             greeter += this.joinMessage.getValue().replace("{name}", playerName);
 
-            this.sendPacket(new Packet3Chat(greeter));
-
         } else if (messageType == Type.Leave && this.leave.getValue()) {
-
             greeter += this.leaveMessage.getValue().replace("{name}", playerName);
-
-            this.sendPacket(new Packet3Chat(greeter));
         }
+
+        if (this.messageDelay < this.delay.getValue()) {
+            this.delayed = greeter;
+            return;
+        }
+
+        this.messageDelay = 0;
+
+        this.sendPacket(new Packet3Chat(greeter));
     }
 
     private Type getType(String message) {
