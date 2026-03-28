@@ -35,9 +35,13 @@ public final class Greeter extends Hack {
 
     @Override
     public void onClientTick() {
-        if (this.messageDelay > this.delay.getValue() && !this.delayed.isEmpty()) {
-            this.sendPacket(new Packet3Chat(this.delayed));
-            this.delayed = "";
+        if (this.messageDelay > this.delay.getValue()) {
+
+            if (!this.delayed.isEmpty()) {
+                this.sendPacket(new Packet3Chat(this.delayed));
+                this.delayed = "";
+            }
+
             this.messageDelay = 0;
         } else {
             this.messageDelay++;
