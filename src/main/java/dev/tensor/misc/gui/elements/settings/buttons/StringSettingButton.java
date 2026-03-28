@@ -58,14 +58,9 @@ public final class StringSettingButton implements ButtonSetting {
 
     private long prevStrobe = System.currentTimeMillis();
 
-    /*
-    TODO:
-    1. Subscript string other direction
-     */
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-
-        //temp:
+        
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
         this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
