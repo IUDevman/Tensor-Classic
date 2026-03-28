@@ -31,6 +31,10 @@ public interface Globals {
         return this.getMinecraft().fontRenderer;
     }
 
+    default RenderEngine getRenderEngine() {
+        return this.getMinecraft().renderEngine;
+    }
+
     default GuiIngame getInGameGUI() {
         return this.getMinecraft().ingameGUI;
     }

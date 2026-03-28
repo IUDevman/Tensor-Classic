@@ -6,7 +6,6 @@ import dev.tensor.misc.gui.elements.ButtonSetting;
 import dev.tensor.misc.gui.elements.settings.buttons.xray.XrayIDObject;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.Block;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -36,16 +35,15 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.blockListSetting = blockListSetting;
 
         int numberWidth = 9;
-        int blockSideAdjust = (Block.blocksList.length / numberWidth) - 1;
+        int blockSideAdjust = 11;
 
         for (int i = 1; i < numberWidth + 1; i++) {
-            for (int ix = 0; ix < blockSideAdjust + 1; ix++) {
+            for (int ix = 0; ix < blockSideAdjust; ix++) {
 
                 int number = i + (ix * 9);
                 this.xrayIDObjects.add(new XrayIDObject(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, i, ix));
             }
         }
-
     }
 
     @Override
@@ -134,8 +132,8 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 2;
 
-        if (420 + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
-            int test = ((420 + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
+        if (462 + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
+            int test = ((462 + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
 
             if (test >= scrollAdjust) {
                 scrollAdjust = -test;
