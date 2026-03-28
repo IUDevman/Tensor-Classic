@@ -25,27 +25,15 @@ public final class Greeter extends Hack {
     public final StringSetting leaveMessage = new StringSetting("Leave Message", "Goodbye {name} from the server! Sorry to see you go! ;C");
 
     private int messageDelay = 0;
-    private String delayed = " ";
 
     @Override
     public void onDisable(boolean nullCheck) {
         this.messageDelay = 0;
-        this.delayed = "";
     }
 
     @Override
     public void onClientTick() {
-        if (this.messageDelay > this.delay.getValue()) {
-
-            if (!this.delayed.isEmpty()) {
-                this.sendPacket(new Packet3Chat(this.delayed));
-                this.delayed = "";
-            }
-
-            this.messageDelay = 0;
-        } else {
-            this.messageDelay++;
-        }
+        this.messageDelay++;
     }
 
     @SuppressWarnings("unused")
@@ -96,7 +84,6 @@ public final class Greeter extends Hack {
         }
 
         if (this.messageDelay < this.delay.getValue()) {
-            this.delayed = greeter;
             return;
         }
 
