@@ -72,8 +72,6 @@ public final class Greeter extends Hack {
             return;
         }
 
-        this.messageDelay = 0;
-
         String greeter = (this.greenText.getValue() ? ">" : "");
 
         if (messageType == Type.Join && this.join.getValue()) {
