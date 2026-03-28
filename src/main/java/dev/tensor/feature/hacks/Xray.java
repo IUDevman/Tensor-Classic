@@ -28,6 +28,10 @@ public final class Xray extends Hack {
 
             if (!this.failsNullCheck() && this.isXrayEnabled()) {
                 this.resetWorld();
+
+                if (this.getMinecraft().gameSettings.advancedOpengl && value)  {
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+                }
             }
         }
     };
@@ -74,6 +78,10 @@ public final class Xray extends Hack {
     public void onEnable(boolean isNull) {
         if (!isNull) {
             this.resetWorld();
+
+            if (this.getMinecraft().gameSettings.advancedOpengl && this.opacity.getValue())  {
+                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+            }
         }
     }
 
