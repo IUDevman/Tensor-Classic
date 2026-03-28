@@ -1,4 +1,4 @@
-package dev.tensor.misc.imp;
+package dev.tensor.misc.imp.xray;
 
 /**
  * @author Hoosiers
