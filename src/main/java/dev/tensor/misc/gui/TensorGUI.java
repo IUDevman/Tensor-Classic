@@ -363,11 +363,12 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                     categoryElement.hackElements.forEach(hackElement -> hackHeight.getAndAdd(hackElement.getHeight()));
 
-                    if (hackScrollY.getValue() > -10 && this.scroll > 0) {
-                        return;
-                    }
-
                     int scrollAdjust = this.scroll;
+
+                    if (hackScrollY.getValue() > -10 && this.scroll > 0) {
+
+                        scrollAdjust = -hackScrollY.getValue();
+                    }
 
                     if (hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
                         int test = ((hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
@@ -401,11 +402,12 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                             hackElement.settingElements.forEach(settingElement -> settingHeight.getAndAdd(settingElement.getHeight()));
 
-                            if (settingScrollY.getValue() > -10 && this.scroll > 0) {
-                                return;
-                            }
-
                             int scrollAdjust = this.scroll;
+
+                            if (settingScrollY.getValue() > -10 && this.scroll > 0) {
+
+                                scrollAdjust = -settingScrollY.getValue();
+                            }
 
                             if (settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
                                 int test = ((settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
