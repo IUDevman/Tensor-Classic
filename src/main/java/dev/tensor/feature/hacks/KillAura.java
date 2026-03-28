@@ -22,6 +22,7 @@ public final class KillAura extends Hack {
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false);
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
+    public final BooleanSetting ignoreOwnPet = new BooleanSetting("Ignore Pets", true);
     public final BooleanSetting offScreen = new BooleanSetting("Off Screen", false);
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
@@ -141,6 +142,34 @@ public final class KillAura extends Hack {
 
         if (this.hostiles.getValue() && (entity instanceof EntityMob || entity instanceof EntitySlime)) {
             return true;
+        }
+
+        if (entity instanceof EntityWolf) {
+            EntityWolf entityWolf = (EntityWolf) entity;
+
+            String owner = entityWolf.getWolfOwner();
+
+            if (owner.isEmpty()) {
+                return this.animals.getValue();
+
+            } else if (owner.equalsIgnoreCase(this.getPlayer().username)) {
+                if (this.ignoreOwnPet.getValue()) {
+                    return false;
+
+                } else {
+                    return this.animals.getValue();
+                }
+
+            } else {
+                boolean isFriend = this.getFriendManager().isFriend(owner);
+
+                if (this.ignoreFriends.getValue() && isFriend) {
+                    return false;
+
+                } else {
+                    return this.players.getValue();
+                }
+            }
         }
 
         if (this.animals.getValue() && entity instanceof EntityAnimal) {
