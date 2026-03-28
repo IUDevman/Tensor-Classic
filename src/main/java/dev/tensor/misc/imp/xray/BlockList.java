@@ -152,75 +152,74 @@ public final class BlockList implements Globals {
         return GLOWSTONE;
     }
 
+    private static final ArrayList<Integer> UTILITY = new ArrayList<>();
+
+    public static ArrayList<Integer> UTILITY() {
+        if (UTILITY.isEmpty()) {
+            UTILITY.add(Block.sapling.blockID);
+            UTILITY.add(Block.waterStill.blockID);
+            UTILITY.add(Block.waterMoving.blockID);
+            UTILITY.add(Block.lavaStill.blockID);
+            UTILITY.add(Block.lavaMoving.blockID);
+            UTILITY.add(Block.blockSteel.blockID);
+            UTILITY.add(Block.blockGold.blockID);
+            UTILITY.add(Block.blockDiamond.blockID);
+            UTILITY.add(Block.glowStone.blockID);
+            UTILITY.add(Block.sponge.blockID);
+            UTILITY.add(Block.glass.blockID);
+            UTILITY.add(Block.dispenser.blockID);
+            UTILITY.add(Block.musicBlock.blockID);
+            UTILITY.add(Block.blockBed.blockID);
+            UTILITY.add(Block.railPowered.blockID);
+            UTILITY.add(Block.railDetector.blockID);
+            UTILITY.add(Block.pistonStickyBase.blockID);
+            UTILITY.add(Block.web.blockID);
+            UTILITY.add(Block.pistonBase.blockID);
+            UTILITY.add(Block.pistonExtension.blockID);
+            UTILITY.add(Block.cloth.blockID);
+            UTILITY.add(Block.pistonMoving.blockID);
+            UTILITY.add(Block.tnt.blockID);
+            UTILITY.add(Block.obsidian.blockID);
+            UTILITY.add(Block.torchWood.blockID);
+            UTILITY.add(Block.fire.blockID);
+            UTILITY.add(Block.mobSpawner.blockID);
+            UTILITY.add(Block.chest.blockID);
+            UTILITY.add(Block.redstoneWire.blockID);
+            UTILITY.add(Block.workbench.blockID);
+            UTILITY.add(Block.crops.blockID);
+            UTILITY.add(Block.tilledField.blockID);
+            UTILITY.add(Block.stoneOvenIdle.blockID);
+            UTILITY.add(Block.stoneOvenActive.blockID);
+            UTILITY.add(Block.signPost.blockID);
+            UTILITY.add(Block.doorWood.blockID);
+            UTILITY.add(Block.ladder.blockID);
+            UTILITY.add(Block.rail.blockID);
+            UTILITY.add(Block.signWall.blockID);
+            UTILITY.add(Block.lever.blockID);
+            UTILITY.add(Block.pressurePlateStone.blockID);
+            UTILITY.add(Block.doorSteel.blockID);
+            UTILITY.add(Block.pressurePlatePlanks.blockID);
+            UTILITY.add(Block.torchRedstoneIdle.blockID);
+            UTILITY.add(Block.torchRedstoneActive.blockID);
+            UTILITY.add(Block.button.blockID);
+            UTILITY.add(Block.cactus.blockID);
+            UTILITY.add(Block.reed.blockID);
+            UTILITY.add(Block.jukebox.blockID);
+            UTILITY.add(Block.pumpkin.blockID);
+            UTILITY.add(Block.portal.blockID);
+            UTILITY.add(Block.pumpkinLantern.blockID);
+            UTILITY.add(Block.cake.blockID);
+            UTILITY.add(Block.redstoneRepeaterIdle.blockID);
+            UTILITY.add(Block.redstoneRepeaterActive.blockID);
+            UTILITY.add(Block.trapdoor.blockID);
+        }
+
+        return UTILITY;
+    }
+
     private static final ArrayList<Integer> CUSTOM = new ArrayList<>();
 
     public static ArrayList<Integer> CUSTOM() {
-        if (CUSTOM.isEmpty()) {
-            CUSTOM.add(Block.sapling.blockID);
-            CUSTOM.add(Block.waterStill.blockID);
-            CUSTOM.add(Block.waterMoving.blockID);
-            CUSTOM.add(Block.lavaStill.blockID);
-            CUSTOM.add(Block.lavaMoving.blockID);
-            CUSTOM.add(Block.oreCoal.blockID);
-            CUSTOM.add(Block.oreIron.blockID);
-            CUSTOM.add(Block.blockSteel.blockID);
-            CUSTOM.add(Block.oreGold.blockID);
-            CUSTOM.add(Block.blockGold.blockID);
-            CUSTOM.add(Block.oreDiamond.blockID);
-            CUSTOM.add(Block.blockDiamond.blockID);
-            CUSTOM.add(Block.oreRedstone.blockID);
-            CUSTOM.add(Block.oreRedstoneGlowing.blockID);
-            CUSTOM.add(Block.oreLapis.blockID);
-            CUSTOM.add(Block.glowStone.blockID);
-            CUSTOM.add(Block.sponge.blockID);
-            CUSTOM.add(Block.glass.blockID);
-            CUSTOM.add(Block.dispenser.blockID);
-            CUSTOM.add(Block.musicBlock.blockID);
-            CUSTOM.add(Block.blockBed.blockID);
-            CUSTOM.add(Block.railPowered.blockID);
-            CUSTOM.add(Block.railDetector.blockID);
-            CUSTOM.add(Block.pistonStickyBase.blockID);
-            CUSTOM.add(Block.web.blockID);
-            CUSTOM.add(Block.pistonBase.blockID);
-            CUSTOM.add(Block.pistonExtension.blockID);
-            CUSTOM.add(Block.cloth.blockID);
-            CUSTOM.add(Block.pistonMoving.blockID);
-            CUSTOM.add(Block.tnt.blockID);
-            CUSTOM.add(Block.obsidian.blockID);
-            CUSTOM.add(Block.torchWood.blockID);
-            CUSTOM.add(Block.fire.blockID);
-            CUSTOM.add(Block.mobSpawner.blockID);
-            CUSTOM.add(Block.chest.blockID);
-            CUSTOM.add(Block.redstoneWire.blockID);
-            CUSTOM.add(Block.workbench.blockID);
-            CUSTOM.add(Block.crops.blockID);
-            CUSTOM.add(Block.tilledField.blockID);
-            CUSTOM.add(Block.stoneOvenIdle.blockID);
-            CUSTOM.add(Block.stoneOvenActive.blockID);
-            CUSTOM.add(Block.signPost.blockID);
-            CUSTOM.add(Block.doorWood.blockID);
-            CUSTOM.add(Block.ladder.blockID);
-            CUSTOM.add(Block.rail.blockID);
-            CUSTOM.add(Block.signWall.blockID);
-            CUSTOM.add(Block.lever.blockID);
-            CUSTOM.add(Block.pressurePlateStone.blockID);
-            CUSTOM.add(Block.doorSteel.blockID);
-            CUSTOM.add(Block.pressurePlatePlanks.blockID);
-            CUSTOM.add(Block.torchRedstoneIdle.blockID);
-            CUSTOM.add(Block.torchRedstoneActive.blockID);
-            CUSTOM.add(Block.button.blockID);
-            CUSTOM.add(Block.cactus.blockID);
-            CUSTOM.add(Block.reed.blockID);
-            CUSTOM.add(Block.jukebox.blockID);
-            CUSTOM.add(Block.pumpkin.blockID);
-            CUSTOM.add(Block.portal.blockID);
-            CUSTOM.add(Block.pumpkinLantern.blockID);
-            CUSTOM.add(Block.cake.blockID);
-            CUSTOM.add(Block.redstoneRepeaterIdle.blockID);
-            CUSTOM.add(Block.redstoneRepeaterActive.blockID);
-            CUSTOM.add(Block.trapdoor.blockID);
-        }
-
         return CUSTOM;
     }
 }

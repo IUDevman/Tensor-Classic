@@ -71,6 +71,7 @@ public final class Xray extends Hack {
     private final BlockList ORES = new BlockList(BlockList.ORES());
     private final BlockList DIAMOND = new BlockList(BlockList.DIAMOND());
     private final BlockList GLOWSTONE = new BlockList(BlockList.GLOWSTONE());
+    private final BlockList UTILITY = new BlockList(BlockList.UTILITY());
 
     private boolean shouldOpacity = false;
 
@@ -107,6 +108,8 @@ public final class Xray extends Hack {
                 return this.DIAMOND.containsBlock(blockID, this.opacity.getValue());
             case Glowstone:
                 return this.GLOWSTONE.containsBlock(blockID, this.opacity.getValue());
+            case Utility:
+                return this.UTILITY.containsBlock(blockID, this.opacity.getValue());
             case Custom:
                 return this.custom.containsBlock(blockID, this.opacity.getValue());
             default:
@@ -130,6 +133,7 @@ public final class Xray extends Hack {
         Ores,
         Glowstone,
         Diamond,
+        Utility,
         Custom,
         None
     }
