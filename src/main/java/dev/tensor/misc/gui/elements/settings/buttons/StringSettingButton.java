@@ -125,6 +125,11 @@ public final class StringSettingButton implements ButtonSetting {
     }
 
     @Override
+    public void handleScroll(int scroll) {
+
+    }
+
+    @Override
     public void onHovered(int mouseX, int mouseY) {
         this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY);
     }

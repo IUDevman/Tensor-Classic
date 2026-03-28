@@ -268,6 +268,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
             if (this.buttonSetting != null) {
                 this.buttonSetting.onHovered(i, j);
+                buttonSetting.handleScroll(this.scroll);
             }
 
             return;

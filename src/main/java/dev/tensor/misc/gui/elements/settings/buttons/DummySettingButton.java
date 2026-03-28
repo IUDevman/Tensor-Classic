@@ -63,6 +63,11 @@ public final class DummySettingButton implements ButtonSetting {
     }
 
     @Override
+    public void handleScroll(int scroll) {
+
+    }
+
+    @Override
     public boolean isSearching() {
         return false;
     }

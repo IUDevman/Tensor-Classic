@@ -17,6 +17,8 @@ public interface ButtonSetting extends Element, KeyPressElement {
 
     void onHovered(int mouseX, int mouseY);
 
+    void handleScroll(int scroll);
+
     default boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
         if (mouseX < minX || mouseX > maxX) {
             return false;

@@ -5,9 +5,11 @@ import dev.tensor.misc.gui.elements.ButtonSetting;
 import dev.tensor.misc.gui.elements.HackElement;
 import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
+import dev.tensor.misc.gui.elements.settings.buttons.BlockListSettingButton;
 import dev.tensor.misc.gui.elements.settings.buttons.DummySettingButton;
 import dev.tensor.misc.gui.elements.settings.buttons.StringSettingButton;
 import dev.tensor.misc.imp.setting.Setting;
+import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 
@@ -30,6 +32,8 @@ public final class ButtonSettingElement extends SettingElement {
 
         if (this.setting instanceof StringSetting) {
             this.button = new StringSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (StringSetting) setting);
+        } else if (this.setting instanceof BlockListSetting) {
+            this.button = new BlockListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (BlockListSetting) setting);
         } else {
             button = new DummySettingButton();
         }
