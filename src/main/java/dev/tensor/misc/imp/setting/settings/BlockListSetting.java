@@ -82,12 +82,12 @@ public class BlockListSetting implements Setting<BlockList> {
 
     }
 
-    public boolean containsBlock(Block block, boolean opacity) {
-        return this.getValue().containsBlock(block, opacity);
+    public boolean containsBlock(Block block) {
+        return this.getValue().containsBlock(block);
     }
 
-    public boolean containsBlock(int blockID, boolean opacity) {
-        return this.getValue().containsBlock(blockID, opacity);
+    public boolean containsBlock(int blockID) {
+        return this.getValue().containsBlock(blockID);
     }
 
     @Override

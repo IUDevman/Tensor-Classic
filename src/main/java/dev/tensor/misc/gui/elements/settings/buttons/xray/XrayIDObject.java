@@ -79,6 +79,6 @@ public final class XrayIDObject implements Element {
     }
 
     private boolean isEnabled() {
-        return this.button.blockListSetting.containsBlock(blockID, false);
+        return this.button.blockListSetting.containsBlock(blockID);
     }
 }

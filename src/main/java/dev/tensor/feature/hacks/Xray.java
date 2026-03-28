@@ -45,6 +45,21 @@ public final class Xray extends Hack {
             }
         }
     };
+    public final BooleanSetting fluids = new BooleanSetting("Fluids", true) {
+
+        @Override
+        public void setValue(Boolean value) {
+            super.setValue(value);
+
+            if (!this.failsNullCheck() && this.isXrayEnabled()) {
+                this.resetWorld();
+
+                if (this.getMinecraft().gameSettings.advancedOpengl && value)  {
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+                }
+            }
+        }
+    };
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Ores) {
 
         @Override
@@ -101,17 +116,24 @@ public final class Xray extends Hack {
 
     public boolean isOnXrayList(int blockID) {
 
+        if (!fluids.getValue() || this.opacity.getValue()) {
+
+            if (blockID == Block.waterStill.blockID || blockID == Block.waterMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.lavaMoving.blockID) {
+                return false;
+            }
+        }
+
         switch ((Mode) mode.getValue()) {
             case Ores:
-                return this.ORES.containsBlock(blockID, this.opacity.getValue());
+                return this.ORES.containsBlock(blockID);
             case Diamond:
-                return this.DIAMOND.containsBlock(blockID, this.opacity.getValue());
+                return this.DIAMOND.containsBlock(blockID);
             case Glowstone:
-                return this.GLOWSTONE.containsBlock(blockID, this.opacity.getValue());
+                return this.GLOWSTONE.containsBlock(blockID);
             case Utility:
-                return this.UTILITY.containsBlock(blockID, this.opacity.getValue());
+                return this.UTILITY.containsBlock(blockID);
             case Custom:
-                return this.custom.containsBlock(blockID, this.opacity.getValue());
+                return this.custom.containsBlock(blockID);
             default:
                 return false;
         }

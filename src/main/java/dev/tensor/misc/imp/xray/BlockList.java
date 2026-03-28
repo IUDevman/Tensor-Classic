@@ -63,18 +63,11 @@ public final class BlockList implements Globals {
         this.blockList.addAll(this.blockListDefault);
     }
 
-    public boolean containsBlock(Block block, boolean opacity)  {
-        return this.containsBlock(block.blockID, opacity);
+    public boolean containsBlock(Block block)  {
+        return this.containsBlock(block.blockID);
     }
 
-    public boolean containsBlock(int blockID, boolean opacity) {
-
-        if (opacity) {
-
-            if (blockID == Block.waterStill.blockID || blockID == Block.waterMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.lavaMoving.blockID) {
-                return false;
-            }
-        }
+    public boolean containsBlock(int blockID) {
 
         return this.blockList.contains(String.valueOf(blockID));
     }
