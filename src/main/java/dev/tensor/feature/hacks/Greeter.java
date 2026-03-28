@@ -5,6 +5,7 @@ import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 import net.minecraft.src.Packet3Chat;
 
@@ -16,11 +17,24 @@ import net.minecraft.src.Packet3Chat;
 @Hack.Info(name = "Greeter", category = Category.Misc)
 public final class Greeter extends Hack {
 
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", true);
     public final BooleanSetting join = new BooleanSetting("Join", true);
     public final StringSetting joinMessage = new StringSetting("Join Message", "Welcome {name} to the server! Hope you have a good time! ;)");
     public final BooleanSetting leave = new BooleanSetting("Leave", true);
     public final StringSetting leaveMessage = new StringSetting("Leave Message", "Goodbye {name} from the server! Sorry to see you go! ;C");
+
+    private int messageDelay = 0;
+
+    @Override
+    public void onDisable(boolean nullCheck) {
+        this.messageDelay = 0;
+    }
+
+    @Override
+    public void onClientTick() {
+        messageDelay++;
+    }
 
     @SuppressWarnings("unused")
     @EventTarget
@@ -53,6 +67,12 @@ public final class Greeter extends Hack {
         if (playerName.equalsIgnoreCase(this.getPlayer().username)) {
             return;
         }
+
+        if (this.messageDelay < this.delay.getValue()) {
+            return;
+        }
+
+        this.messageDelay = 0;
 
         String greeter = (this.greenText.getValue() ? ">" : "");
 
