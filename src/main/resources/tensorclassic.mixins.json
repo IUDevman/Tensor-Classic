@@ -10,11 +10,14 @@
     "accessors.EntityAccessor"
   ],
   "client": [
+    "BlockRendererMixin",
     "EntityRendererMixin",
     "GuiChatMixin",
     "GuiIngameMixin",
     "MinecraftMixin",
-    "NetClientHandlerMixin"
+    "NetClientHandlerMixin",
+    "RenderGlobalMixin",
+    "TessellatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

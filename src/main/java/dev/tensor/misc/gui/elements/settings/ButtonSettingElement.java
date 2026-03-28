@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.elements.ButtonSetting;
 import dev.tensor.misc.gui.elements.HackElement;
 import dev.tensor.misc.gui.elements.KeyPressElement;
 import dev.tensor.misc.gui.elements.SettingElement;
+import dev.tensor.misc.gui.elements.settings.buttons.DummySettingButton;
 import dev.tensor.misc.gui.elements.settings.buttons.StringSettingButton;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -30,7 +31,7 @@ public final class ButtonSettingElement extends SettingElement {
         if (this.setting instanceof StringSetting) {
             this.button = new StringSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (StringSetting) setting);
         } else {
-            button = null;
+            button = new DummySettingButton();
         }
     }
 
@@ -66,7 +67,13 @@ public final class ButtonSettingElement extends SettingElement {
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.button == null ? "Unknown Setting" : this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (Click)";
+        String click = "Click";
+
+        if (this.button instanceof DummySettingButton) {
+            click = "N/A";
+        }
+
+        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (" + click + ")";
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 

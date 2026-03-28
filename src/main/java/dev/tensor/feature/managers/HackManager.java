@@ -62,6 +62,7 @@ public final class HackManager implements Manager {
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
         this.addHack(new Welcomer());
+        this.addHack(new Xray());
 
         this.postSortHacks();
 
