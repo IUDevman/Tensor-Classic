@@ -62,7 +62,7 @@ public final class Xray extends Hack {
         @Override
         public void hasChanged() {
 
-            if (!this.failsNullCheck() && this.isXrayEnabled()) {
+            if (!this.failsNullCheck() && this.isXrayEnabled() && this.getXray().mode.getValue().equals(Mode.Custom)) {
                 this.resetWorld();
             }
         }
