@@ -68,26 +68,24 @@ public final class Greeter extends Hack {
             return;
         }
 
-        if (this.messageDelay < this.delay.getValue()) {
-            return;
+        if (this.messageDelay >= this.delay.getValue()) {
+            String greeter = (this.greenText.getValue() ? ">" : "");
+
+            if (messageType == Type.Join && this.join.getValue()) {
+                greeter += this.joinMessage.getValue().replace("{name}", playerName);
+
+            } else if (messageType == Type.Leave && this.leave.getValue()) {
+                greeter += this.leaveMessage.getValue().replace("{name}", playerName);
+            }
+
+            if (this.messageDelay < this.delay.getValue()) {
+                return;
+            }
+
+            this.sendPacket(new Packet3Chat(greeter));
+
+            this.messageDelay = 0;
         }
-
-        String greeter = (this.greenText.getValue() ? ">" : "");
-
-        if (messageType == Type.Join && this.join.getValue()) {
-            greeter += this.joinMessage.getValue().replace("{name}", playerName);
-
-        } else if (messageType == Type.Leave && this.leave.getValue()) {
-            greeter += this.leaveMessage.getValue().replace("{name}", playerName);
-        }
-
-        if (this.messageDelay < this.delay.getValue()) {
-            return;
-        }
-
-        this.messageDelay = 0;
-
-        this.sendPacket(new Packet3Chat(greeter));
     }
 
     private Type getType(String message) {
