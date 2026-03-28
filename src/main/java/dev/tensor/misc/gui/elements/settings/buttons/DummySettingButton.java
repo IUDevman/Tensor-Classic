@@ -5,7 +5,12 @@ import dev.tensor.misc.gui.elements.ButtonSetting;
 
 import java.awt.*;
 
-public class DummySettingButton implements ButtonSetting {
+/**
+ * @author Hoosiers
+ * @since 03-27-2026
+ */
+
+public final class DummySettingButton implements ButtonSetting {
 
     @Override
     public boolean isActive() {
