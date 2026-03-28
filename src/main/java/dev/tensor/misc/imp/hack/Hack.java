@@ -102,7 +102,6 @@ public abstract class Hack implements Globals {
 
         this.MESSAGES = this.getInfo().messages();
 
-        //this.ENABLED = this.getInfo().enabled();
         this.setEnabled(this.getInfo().enabled());
 
         this.getSettings().forEach(Setting::reset);

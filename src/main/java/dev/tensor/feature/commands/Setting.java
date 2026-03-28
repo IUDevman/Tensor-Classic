@@ -3,6 +3,7 @@ package dev.tensor.feature.commands;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 
 import java.util.ArrayList;
 
@@ -94,6 +95,11 @@ public final class Setting implements Command {
 
         if (setting == null) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find setting '" + this.getColor(ChatColor.AQUA) + secondEntry + this.getColor(ChatColor.RED) + "' for hack'" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "' (setting not found for name)!");
+            return;
+        }
+
+        if (setting instanceof BlockListSetting) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify setting '" + this.getColor(ChatColor.AQUA) + setting.getName() + this.getColor(ChatColor.RED) + "' for hack'" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "' (can not modify BlockListSetting with command - use ClickGUI)!");
             return;
         }
 
