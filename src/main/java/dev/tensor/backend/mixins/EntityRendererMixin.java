@@ -2,6 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.FOVModifierEvent;
 import dev.tensor.backend.events.HurtCameraEvent;
+import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;

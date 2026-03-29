@@ -5,7 +5,6 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "ChunkMixin",
-    "WorldInfoMixin",
     "WorldMixin",
     "accessors.EntityAccessor"
   ],
