@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "TimerMine", category = Category.Player)
 public final class TimerMine extends Hack {
 
-    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 25, 20, 40);
+    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 35, 20, 40);
 
     public final IntegerSetting shutOffAfter = new IntegerSetting("Shutoff Ticks", 20, 1, 80);
 
