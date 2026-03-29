@@ -1,5 +1,7 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.Packet10FlyingEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.*;
@@ -36,10 +38,17 @@ public final class KillAura extends Hack {
     private ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
 
+    private boolean rotated = false;
+    private float pitch = 0;
+    private float yaw = 0;
+
     @Override
     public void onDisable(boolean nullCheck) {
         this.target_Entities.clear();
         this.attackDelay = 0;
+        this.rotated = false;
+        this.pitch = 0;
+        this.yaw = 0;
     }
 
     @Override
@@ -131,6 +140,18 @@ public final class KillAura extends Hack {
         });
     }
 
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
+        if (this.rotate.getValue() && this.rotated) {
+            event.packet.pitch = this.pitch;
+            event.packet.yaw = this.yaw;
+            this.pitch = 0;
+            this.yaw = 0;
+            this.rotated = false;
+        }
+    }
+
     private boolean shouldAttackEntity(Entity entity) {
         if (!entity.isEntityAlive()) {
             return false;
@@ -182,7 +203,11 @@ public final class KillAura extends Hack {
     private void attackEntity(Entity entity) {
 
         if (this.rotate.getValue()) {
-            //todo
+            float[] pitchAndYaw = this.pitchAndYawTo(entity);
+
+            this.pitch = pitchAndYaw[0];
+            this.yaw = pitchAndYaw[1];
+            this.rotated = true;
         }
 
         if (this.swing.getValue())  {

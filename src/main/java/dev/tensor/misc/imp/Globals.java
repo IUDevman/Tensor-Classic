@@ -6,6 +6,7 @@ import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
+import org.lwjgl.util.vector.Vector4f;
 import org.slf4j.Logger;
 
 /**
@@ -221,5 +222,29 @@ public interface Globals {
 
     default void drawCenteredString(String text, int x, int y, int color) {
         this.getCustomGUIManager().drawCenteredString(text, x, y, color);
+    }
+
+    default float[] pitchAndYawTo(Entity entity) {
+        Vector4f deltas = this.returnDeltas(entity);
+
+        double angle = 180 / Math.PI;
+
+        float pitch = (float) -(Math.atan2(deltas.y, deltas.w) * angle);
+        float yaw = (float) ((Math.atan2(deltas.z, deltas.x) * angle) - 90);
+
+        return new float[] {
+                pitch,
+                yaw
+        };
+    }
+
+    default Vector4f returnDeltas(Entity entity) {
+        double deltaX = entity.posX - this.getPlayer().posX;
+        double deltaY = entity.posY + entity.getEyeHeight() - this.getPlayer().posY - this.getPlayer().getEyeHeight();
+        double deltaZ = entity.posZ - this.getPlayer().posZ;
+
+        double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+
+        return new Vector4f((float) deltaX, (float) deltaY, (float) deltaZ, (float) distance);
     }
 }
