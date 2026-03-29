@@ -61,6 +61,8 @@ public final class HackManager implements Manager {
         this.addHack(new NoWeather());
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
+        this.addHack(new Timer());
+        this.addHack(new TimerMine());
         this.addHack(new Welcomer());
         this.addHack(new Xray());
 

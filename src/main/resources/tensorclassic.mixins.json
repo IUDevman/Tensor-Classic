@@ -16,7 +16,8 @@
     "MinecraftMixin",
     "NetClientHandlerMixin",
     "RenderGlobalMixin",
-    "TessellatorMixin"
+    "TessellatorMixin",
+    "accessors.MinecraftAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
