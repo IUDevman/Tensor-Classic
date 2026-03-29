@@ -25,7 +25,7 @@ public final class KillAura extends Hack {
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
     public final BooleanSetting ignoreOwnPet = new BooleanSetting("Ignore Pets", true);
-    public final BooleanSetting offScreen = new BooleanSetting("Off Screen", false);
+    public final BooleanSetting offScreen = new BooleanSetting("Off Screen", true);
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
