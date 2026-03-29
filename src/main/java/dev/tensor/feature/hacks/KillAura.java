@@ -78,6 +78,7 @@ public final class KillAura extends Hack {
 
             if (this.shouldAttackEntity(entity)) {
 
+                //todo:
                 if (!this.offScreen.getValue() && !this.isEntityBehindWalls(entity)) {
                     continue;
                 }
