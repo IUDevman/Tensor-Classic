@@ -17,6 +17,7 @@
     "MinecraftMixin",
     "NetClientHandlerMixin",
     "RenderGlobalMixin",
+    "RenderManagerMixin",
     "TessellatorMixin",
     "accessors.MinecraftAccessor"
   ],

@@ -58,6 +58,7 @@ public final class HackManager implements Manager {
         this.addHack(new ModInfo());
         this.addHack(new NoFall());
         this.addHack(new NoHurtCam());
+        this.addHack(new NoItemRender());
         this.addHack(new NoOverlay());
         this.addHack(new NoViewBob());
         this.addHack(new NoWeather());
