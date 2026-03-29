@@ -1,0 +1,68 @@
+package dev.tensor.feature.hacks;
+
+import dev.tensor.backend.events.RenderOverlayEvent;
+import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.EnumSetting;
+
+/**
+ * @author Hoosiers
+ * @since 03-28-2026
+ */
+
+@Hack.Info(name = "NoOverlay", category = Category.Render)
+public final class NoOverlay extends Hack {
+
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
+    public final BooleanSetting blocks = new BooleanSetting("Blocks", false);
+    public final BooleanSetting fire = new BooleanSetting("Fire", false);
+    public final BooleanSetting portals = new BooleanSetting("Portals", false);
+    public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", false);
+    public final BooleanSetting vignette = new BooleanSetting("Vignette", false);
+    public final BooleanSetting water = new BooleanSetting("Water", false);
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onRenderOverlayEvent(RenderOverlayEvent event) {
+
+        if (this.mode.getValue().equals(Mode.All)) {
+            event.cancel();
+            return;
+        }
+
+        if (blocks.getValue() && event.type.equals(RenderOverlayEvent.Type.blocks)) {
+            event.cancel();
+            return;
+        }
+
+        if (fire.getValue() && event.type.equals(RenderOverlayEvent.Type.fire)) {
+            event.cancel();
+            return;
+        }
+
+        if (portals.getValue() && event.type.equals(RenderOverlayEvent.Type.portals)) {
+            event.cancel();
+            return;
+        }
+
+        if (pumpkin.getValue() && event.type.equals(RenderOverlayEvent.Type.pumpkin)) {
+            event.cancel();
+            return;
+        }
+
+        if (vignette.getValue() && event.type.equals(RenderOverlayEvent.Type.vignette)) {
+            event.cancel();
+        }
+
+        if (water.getValue() && event.type.equals(RenderOverlayEvent.Type.water)) {
+            event.cancel();
+        }
+    }
+
+    private enum Mode {
+        All,
+        Custom
+    }
+}

@@ -2,6 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.FOVModifierEvent;
 import dev.tensor.backend.events.HurtCameraEvent;
+import dev.tensor.backend.events.ViewBobEvent;
 import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityRenderer;
@@ -40,6 +41,20 @@ public final class EntityRendererMixin implements Globals {
         }
 
         HurtCameraEvent event = new HurtCameraEvent();
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "setupViewBobbing", at = @At("HEAD"), cancellable = true)
+    public void onSetupViewBobbing(float par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        ViewBobEvent event = new ViewBobEvent();
         this.getEventManager().call(event);
 
         if (event.isCancelled()) {

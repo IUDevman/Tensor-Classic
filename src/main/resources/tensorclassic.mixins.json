@@ -13,6 +13,7 @@
     "EntityRendererMixin",
     "GuiChatMixin",
     "GuiIngameMixin",
+    "ItemRendererMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
     "RenderGlobalMixin",
