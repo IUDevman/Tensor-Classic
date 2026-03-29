@@ -43,9 +43,7 @@ public final class HackList extends Hack implements HUDObject {
     public int getWidth() {
         int width = 0;
 
-        this.loadHacksToRender();
-
-        Optional<Hack> longest = this.hacksToRender.stream().max(Comparator.comparing(hack -> hack.NAME.length()));
+        Optional<Hack> longest = this.getHackManager().getHacks().stream().max(Comparator.comparing(hack -> hack.NAME.length()));
 
         if (longest.isPresent()) {
             width = this.getFontRenderer().getStringWidth(longest.get().NAME);
