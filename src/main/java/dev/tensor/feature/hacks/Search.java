@@ -117,8 +117,9 @@ public final class Search extends Hack {
     @Override
     public void onClientTick() {
         this.blockCoords.forEach(blockCoords1 -> {
-
-            if (this.getPlayer().getDistanceSq(blockCoords1.x, blockCoords1.y, blockCoords1.z) >= 65536) {
+            if (this.getWorld().getBlockId(blockCoords1.x, blockCoords1.y, blockCoords1.z) != blockCoords1.block.blockID) {
+                this.blockCoords.remove(blockCoords1);
+            } else if (this.getPlayer().getDistanceSq(blockCoords1.x, blockCoords1.y, blockCoords1.z) >= 65536) {
                 this.blockCoords.remove(blockCoords1);
             }
         });
