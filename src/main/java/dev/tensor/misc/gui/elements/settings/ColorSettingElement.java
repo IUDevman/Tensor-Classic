@@ -95,7 +95,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ")";
+        String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ", " + this.colorSetting.getValue().getAlpha() + ")";
 
         this.drawCenteredString(name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : Color.WHITE.getRGB()) : Color.WHITE.getRGB());
 

@@ -2,13 +2,13 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.LightValueEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import dev.tensor.misc.imp.xray.BlockList;
 import net.minecraft.src.Block;
 import org.lwjgl.input.Keyboard;
 

@@ -3,6 +3,7 @@ package dev.tensor.feature.managers;
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
+import dev.tensor.backend.events.Render3DEvent;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.HackList;
 import dev.tensor.feature.hacks.hud.ModInfo;
@@ -62,6 +63,7 @@ public final class HackManager implements Manager {
         this.addHack(new NoOverlay());
         this.addHack(new NoViewBob());
         this.addHack(new NoWeather());
+        this.addHack(new Search());
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
         this.addHack(new Timer());
@@ -183,6 +185,16 @@ public final class HackManager implements Manager {
                 ((HUDObject) hack).render();
             }
         });
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onRender3DEvent(Render3DEvent event) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        this.getEnabledHacks().forEach(Hack::onRender3D);
     }
 
     @SuppressWarnings("unused")

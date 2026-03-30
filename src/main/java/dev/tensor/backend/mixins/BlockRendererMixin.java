@@ -1,6 +1,8 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.events.RenderBlockEvent;
 import dev.tensor.misc.imp.Globals;
+import dev.tensor.misc.block.BlockCoords;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;
 import org.lwjgl.opengl.GL11;
@@ -10,6 +12,11 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+/**
+ * @author Hoosiers
+ * @since 03-18-2026
+ */
 
 @Mixin(value = RenderBlocks.class, priority = Integer.MAX_VALUE)
 public final class BlockRendererMixin implements Globals {
@@ -23,6 +30,11 @@ public final class BlockRendererMixin implements Globals {
     public void onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
+        }
+
+        if (this.isSearchEnabled()) {
+            RenderBlockEvent event = new RenderBlockEvent(new BlockCoords(i, j, k, par4));
+            this.getEventManager().call(event);
         }
 
         if (!this.isXrayEnabled()) {

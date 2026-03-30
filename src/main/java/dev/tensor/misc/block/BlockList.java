@@ -1,4 +1,4 @@
-package dev.tensor.misc.imp.xray;
+package dev.tensor.misc.block;
 
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;

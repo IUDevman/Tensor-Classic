@@ -3,8 +3,8 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.block.BlockList;
 import dev.tensor.misc.imp.setting.Setting;
-import dev.tensor.misc.imp.xray.BlockList;
 import net.minecraft.src.Block;
 
 /**

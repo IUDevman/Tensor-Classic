@@ -1,6 +1,7 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
+import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
@@ -46,6 +47,16 @@ public interface Globals {
 
     default boolean failsNullCheck() {
         return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
+    }
+
+    default boolean isSearchEnabled() {
+        Search search = this.getHackManager().getHack(Search.class);
+
+        if (search == null) {
+            return false;
+        }
+
+        return search.isEnabled();
     }
 
     default boolean isXrayEnabled() {

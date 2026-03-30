@@ -2,8 +2,8 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.FOVModifierEvent;
 import dev.tensor.backend.events.HurtCameraEvent;
+import dev.tensor.backend.events.Render3DEvent;
 import dev.tensor.backend.events.ViewBobEvent;
-import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -60,5 +60,15 @@ public final class EntityRendererMixin implements Globals {
         if (event.isCancelled()) {
             ci.cancel();
         }
+    }
+
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityRenderer;renderRainSnow(F)V", shift = At.Shift.BEFORE))
+    public void onRenderWorld(float l, long par2, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        Render3DEvent event = new Render3DEvent();
+        this.getEventManager().call(event);
     }
 }
