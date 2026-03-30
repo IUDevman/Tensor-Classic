@@ -66,6 +66,7 @@ public final class ConfigManager implements Manager {
         InputStream inputStream = Files.newInputStream(path);
         return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonObject();
     }
+
     public void registerFile(Path path) throws IOException {
         if (Files.exists(path)) Files.delete(path);
 

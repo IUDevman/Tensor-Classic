@@ -17,7 +17,7 @@ public final class Commands extends SimpleCallableCommand {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "CommandsList",
                 "Command",

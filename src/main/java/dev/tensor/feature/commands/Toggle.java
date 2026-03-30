@@ -17,7 +17,7 @@ public final class Toggle implements Command {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "SetEnabled",
                 "Enable"
@@ -51,7 +51,7 @@ public final class Toggle implements Command {
 
         Hack hack = this.getHackManager().getHack(firstEntry);
 
-        if (hack == null)  {
+        if (hack == null) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find hack '" + this.getColor(ChatColor.AQUA) + firstEntry + this.getColor(ChatColor.RED) + "' to toggle!");
             return;
         }

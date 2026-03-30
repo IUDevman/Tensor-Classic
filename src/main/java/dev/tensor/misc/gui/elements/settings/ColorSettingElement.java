@@ -95,9 +95,9 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String name = this.colorSetting.getName() + " : "  + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ", " + this.colorSetting.getValue().getAlpha() + ")";
+        String name = this.colorSetting.getName() + " : " + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ", " + this.colorSetting.getValue().getAlpha() + ")";
 
-        this.drawCenteredString(name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB() == Color.BLACK.getRGB() ? Color.WHITE.getRGB() : Color.WHITE.getRGB()) : Color.WHITE.getRGB());
+        this.drawCenteredString(name, midX + 3, minY + 3, this.colorSetting.getValue().getRGB() == Color.BLACK.getRGB() ? (Color.WHITE.getRGB()) : Color.WHITE.getRGB());
 
         this.drawCenteredString("  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
         this.drawCenteredString("  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());

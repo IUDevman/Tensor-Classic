@@ -21,7 +21,7 @@ public final class Options implements Command {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 "HackOption",
                 "HackOptions",
                 "HacksOption",
@@ -115,7 +115,7 @@ public final class Options implements Command {
                     break;
                 case "messages":
                     hack.MESSAGES = Boolean.parseBoolean(thirdEntry);
-                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Messages" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.MESSAGES ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED)  + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Messages" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.MESSAGES ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
                     break;
                 case "bind":
                     hack.BIND = Integer.parseInt(thirdEntry);

@@ -162,7 +162,7 @@ public final class CommandManager implements Manager {
                     if (acceptedName.equalsIgnoreCase(ARGS_1[0])) {
 
 
-                        String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1,  1, ARGS_1.length);
+                        String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1, 1, ARGS_1.length);
 
                         command.onCommand(COMMAND_ARGS);
 

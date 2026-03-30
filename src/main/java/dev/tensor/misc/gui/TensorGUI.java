@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author IUDevman
  * @since 05-03-2021
- *
+ * <p>
  * A big thanks to qe7 for Hephastus-Babric. The source really helped troubleshoot parts that didn't port over well.
  * https://github.com/qe7/Hephaestus-Babric
  */
@@ -229,7 +229,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
 
                     if (this.isHovered(settingElement, i, j)) {
                         settingElement.onClick(i, j);
-                        return;
                     }
                 });
 
@@ -294,7 +293,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
             categoryElement.mScrollY.reset();
             categoryElement.hackElements.forEach(hackElement -> hackElement.sScrollY.reset());
 
-            if (categoryElement.isSelected())  {
+            if (categoryElement.isSelected()) {
                 categoryElement.hackElements.forEach(hackElement -> {
 
                     if (hackElement.isViewed()) {
@@ -341,9 +340,7 @@ public final class TensorGUI extends GuiScreen implements Globals {
     private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
         if (mouseX < minX || mouseX > maxX) {
             return false;
-        }
-
-        else return !(mouseY < minY) && !(mouseY > maxY);
+        } else return !(mouseY < minY) && !(mouseY > maxY);
     }
 
     private void handleScroll(Scroll scroll) {

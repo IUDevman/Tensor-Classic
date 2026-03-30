@@ -21,7 +21,7 @@ public final class Setting implements Command {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "HackSetting",
                 "HackSettings",

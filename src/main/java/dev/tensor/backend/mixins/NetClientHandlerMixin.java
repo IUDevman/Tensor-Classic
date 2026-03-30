@@ -34,7 +34,7 @@ public final class NetClientHandlerMixin implements Globals {
             ChatSentEvent event = new ChatSentEvent(packet.message);
             this.getEventManager().call(event);
 
-            if (event.isCancelled())  {
+            if (event.isCancelled()) {
                 ci.cancel();
             } else if (!event.ARGS.equals(packet.message)) {
                 packet.message = event.ARGS;

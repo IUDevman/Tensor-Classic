@@ -67,7 +67,7 @@ public final class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
-    public void onRenderPortalOverlay(float i, int j, int par3, CallbackInfo ci)  {
+    public void onRenderPortalOverlay(float i, int j, int par3, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

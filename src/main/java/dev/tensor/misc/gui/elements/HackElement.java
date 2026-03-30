@@ -157,7 +157,7 @@ public final class HackElement implements Element {
 
             int barMinX = this.getPosX() + this.getWidth() + 2;
             int barMinY = propertyElement.getPosY() + settingheight.get();
-            int barMaxX =  this.getPosX() + this.getWidth() + SettingElement.width + 2;
+            int barMaxX = this.getPosX() + this.getWidth() + SettingElement.width + 2;
             int barMaxY = propertyElement.getPosY() + tensorGUI.guiHeight.get() - tensorGUI.titleHeight - 3;
 
             if (barMinY >= barMaxY) {

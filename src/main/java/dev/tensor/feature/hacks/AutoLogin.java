@@ -22,7 +22,7 @@ public final class AutoLogin extends Hack {
 
         String message = event.message;
 
-        if (message.toLowerCase().contains("/login (your password)"))  {
+        if (message.toLowerCase().contains("/login (your password)")) {
             this.sendPacket(new Packet3Chat("/login " + this.password.getValue()));
         }
     }

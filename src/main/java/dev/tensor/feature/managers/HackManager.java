@@ -194,7 +194,11 @@ public final class HackManager implements Manager {
             return;
         }
 
+        this.startBlockGL();
+
         this.getEnabledHacks().forEach(Hack::onRender3D);
+
+        this.finishBlockGL();
     }
 
     @SuppressWarnings("unused")

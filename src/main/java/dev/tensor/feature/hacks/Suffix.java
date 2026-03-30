@@ -26,7 +26,7 @@ public final class Suffix extends Hack {
 
         if (!message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
 
-            String messageSuffix = message + " " + this.getSuffix(TensorClassic.MOD_NAME_SHORT);;
+            String messageSuffix = message + " " + this.getSuffix(TensorClassic.MOD_NAME_SHORT);
 
             if (messageSuffix.length() >= 256) {
                 return;

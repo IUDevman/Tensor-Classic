@@ -16,7 +16,7 @@ public class BlockListSetting implements Setting<BlockList> {
 
     private final String NAME;
 
-    private BlockList VALUE;
+    private final BlockList VALUE;
 
     public BlockListSetting(String NAME, BlockList VALUE) {
         this.NAME = NAME;

@@ -108,7 +108,7 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
 
-        this.blockIDObjectElements.forEach(blockIDObjectElement -> blockIDObjectElement.render(tensorGUI, fillColor, new Color(0, 255,0, fillColor.getAlpha()), outLineColor));
+        this.blockIDObjectElements.forEach(blockIDObjectElement -> blockIDObjectElement.render(tensorGUI, fillColor, new Color(0, 255, 0, fillColor.getAlpha()), outLineColor));
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 

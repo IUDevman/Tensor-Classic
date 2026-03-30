@@ -32,10 +32,10 @@ public final class KillAura extends Hack {
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
-    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0,  0, 255));
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
 
-    private ArrayList<Entity> target_Entities = new ArrayList<>();
+    private final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
 
     private boolean rotated = false;
@@ -159,7 +159,7 @@ public final class KillAura extends Hack {
         }
 
         if (this.players.getValue() && entity instanceof EntityOtherPlayerMP) {
-            return (this.ignoreFriends.getValue() ? !this.getFriendManager().isFriend((EntityOtherPlayerMP) entity) : true);
+            return (!this.ignoreFriends.getValue() || !this.getFriendManager().isFriend((EntityOtherPlayerMP) entity));
         }
 
         if (this.hostiles.getValue() && (entity instanceof EntityMob || entity instanceof EntitySlime)) {
@@ -194,11 +194,7 @@ public final class KillAura extends Hack {
             }
         }
 
-        if (this.animals.getValue() && entity instanceof EntityAnimal) {
-            return true;
-        }
-
-        return false;
+        return this.animals.getValue() && entity instanceof EntityAnimal;
     }
 
     private void attackEntity(Entity entity) {
@@ -211,7 +207,7 @@ public final class KillAura extends Hack {
             this.rotated = true;
         }
 
-        if (this.swing.getValue())  {
+        if (this.swing.getValue()) {
             this.getPlayer().swingItem();
         }
 
@@ -226,7 +222,8 @@ public final class KillAura extends Hack {
 
         if (this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY + this.getPlayer().getEyeHeight(), this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null) {
             return true;
-        } else return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
+        } else
+            return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
     }
 
     public enum Sort {

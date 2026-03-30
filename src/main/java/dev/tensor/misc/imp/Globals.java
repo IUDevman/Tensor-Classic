@@ -7,8 +7,11 @@ import dev.tensor.feature.managers.*;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector4f;
 import org.slf4j.Logger;
+
+import java.awt.*;
 
 /**
  * @author Hoosiers
@@ -243,7 +246,7 @@ public interface Globals {
         float pitch = (float) -(Math.atan2(deltas.y, deltas.w) * angle);
         float yaw = (float) ((Math.atan2(deltas.z, deltas.x) * angle) - 90);
 
-        return new float[] {
+        return new float[]{
                 pitch,
                 yaw
         };
@@ -257,5 +260,68 @@ public interface Globals {
         double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 
         return new Vector4f((float) deltaX, (float) deltaY, (float) deltaZ, (float) distance);
+    }
+
+    default void startBlockGL() {
+        GL11.glPushMatrix();
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_FOG);
+        GL11.glDepthMask(false);
+    }
+
+    default void finishBlockGL() {
+        GL11.glDisable(GL11.GL_LINE_SMOOTH);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glEnable(GL11.GL_FOG);
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+        GL11.glDepthMask(true);
+        GL11.glDisable(GL11.GL_BLEND);
+        GL11.glPopMatrix();
+    }
+
+    default void drawOutlineBox(double x, double y, double z, int width, int lineWidth, Color color) {
+        double wX = x + width;
+        double wY = y + width;
+        double wZ = z + width;
+
+        GL11.glLineWidth(lineWidth);
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+
+        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(wX, y, z);
+        Tessellator.instance.addVertex(wX, y, wZ);
+        Tessellator.instance.addVertex(x, y, wZ);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_LINES);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(wX, y, z);
+        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.addVertex(wX, y, wZ);
+        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.addVertex(x, y, wZ);
+        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.draw();
+    }
+
+    default void drawFillBox(double x, double y, double z, int width, Color color) {
+
     }
 }

@@ -18,7 +18,7 @@ public final class Reset implements Command {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "ResetHack",
                 "ResetSetting"
@@ -52,7 +52,7 @@ public final class Reset implements Command {
 
         Hack hack = this.getHackManager().getHack(firstEntry);
 
-        if (hack == null)  {
+        if (hack == null) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find hack '" + this.getColor(ChatColor.AQUA) + firstEntry + this.getColor(ChatColor.RED) + "' to reset!");
             return;
         }

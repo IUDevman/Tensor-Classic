@@ -21,7 +21,7 @@ public interface HUDObject extends Globals {
     void render();
 
     default int getMaxX() {
-       return 5000;
+        return 5000;
     }
 
     default int getMaxY() {

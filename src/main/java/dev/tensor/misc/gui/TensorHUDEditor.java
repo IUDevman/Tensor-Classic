@@ -111,9 +111,7 @@ public final class TensorHUDEditor extends GuiScreen implements Globals {
     private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
         if (mouseX < minX || mouseX > maxX) {
             return false;
-        }
-
-        else return !(mouseY < minY) && !(mouseY > maxY);
+        } else return !(mouseY < minY) && !(mouseY > maxY);
     }
 
     @Override

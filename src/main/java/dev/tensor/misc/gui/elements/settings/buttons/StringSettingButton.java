@@ -9,6 +9,7 @@ import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Hoosiers
@@ -60,7 +61,7 @@ public final class StringSettingButton implements ButtonSetting {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        
+
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
         this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
@@ -159,10 +160,10 @@ public final class StringSettingButton implements ButtonSetting {
     }
 
     private boolean isKeyBlackListed(int key) {
-        return Arrays.asList(this.badKeys).contains(key);
+        return Collections.singletonList(this.badKeys).contains(key);
     }
 
-    private final int[] badKeys = new int[] {
+    private final int[] badKeys = new int[]{
             0x00, 0x01, 0x0E, 0x0F, 0x1C, 0x1D, 0x2A, 0x36,
             0x37, 0x38, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x40,
             0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x53, 0x57, 0x58,

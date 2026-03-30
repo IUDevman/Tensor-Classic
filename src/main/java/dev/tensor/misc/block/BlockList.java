@@ -49,9 +49,7 @@ public final class BlockList implements Globals {
     public void removeFromBlockList(int blockID) {
         String blockID1 = String.valueOf(blockID);
 
-        if (this.blockList.contains(blockID1)) {
-            this.blockList.remove(blockID1);
-        }
+        this.blockList.remove(blockID1);
     }
 
     public void clearBlockList() {
@@ -63,7 +61,7 @@ public final class BlockList implements Globals {
         this.blockList.addAll(this.blockListDefault);
     }
 
-    public boolean containsBlock(Block block)  {
+    public boolean containsBlock(Block block) {
         return this.containsBlock(block.blockID);
     }
 
@@ -78,7 +76,7 @@ public final class BlockList implements Globals {
         String[] pooledString = string.split("_");
 
         for (int i = 0; i < pooledString.length; i++) {
-            int blockID  = Integer.parseInt(pooledString[i]);
+            int blockID = Integer.parseInt(pooledString[i]);
             this.addToBlockList(blockID, checkReal);
         }
     }

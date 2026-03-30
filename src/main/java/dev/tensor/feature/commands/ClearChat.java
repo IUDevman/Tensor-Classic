@@ -16,7 +16,7 @@ public final class ClearChat extends SimpleCallableCommand {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "Clear"
         };

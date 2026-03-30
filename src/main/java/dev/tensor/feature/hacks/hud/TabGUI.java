@@ -119,7 +119,7 @@ public final class TabGUI extends Hack implements HUDObject {
             int pageI = i + ((this.getPage() - 1) * 5);
 
             if (this.tabGUIEntries.size() - 1 >= pageI) {
-                this.drawString(dumbassWayOfDoingThis + this.tabGUIEntries.get(pageI).entry, this.x.getValue() +  2,  this.y.getValue() + 4 + (10 * (i + 1)), this.tabGUIEntries.get(pageI).color.getRGB());
+                this.drawString(dumbassWayOfDoingThis + this.tabGUIEntries.get(pageI).entry, this.x.getValue() + 2, this.y.getValue() + 4 + (10 * (i + 1)), this.tabGUIEntries.get(pageI).color.getRGB());
             }
         }
     }
@@ -143,11 +143,7 @@ public final class TabGUI extends Hack implements HUDObject {
             return true;
         } else if (name.equalsIgnoreCase("TabGUI")) {
             return true;
-        } else if (name.equalsIgnoreCase("CommandPreview")) {
-            return true;
-        }
-
-        return false;
+        } else return name.equalsIgnoreCase("CommandPreview");
     }
 
     @SuppressWarnings("unused")

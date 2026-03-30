@@ -16,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Tessellator.class)
 public abstract class TessellatorMixin implements Globals {
 
-    @Shadow public abstract void setColorRGBA(int i, int j, int k, int l);
+    @Shadow
+    public abstract void setColorRGBA(int i, int j, int k, int l);
 
     @Inject(method = "setColorOpaque", at = @At("HEAD"), cancellable = true)
     public void onSetColorOpaque(int j, int k, int par3, CallbackInfo ci) {

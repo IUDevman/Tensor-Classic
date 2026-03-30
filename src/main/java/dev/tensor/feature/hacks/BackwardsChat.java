@@ -31,7 +31,7 @@ public final class BackwardsChat extends Hack {
 
             StringBuilder builder = new StringBuilder(message);
 
-            event.ARGS = (greenText ? ">" : "") + builder.reverse().toString();
+            event.ARGS = (greenText ? ">" : "") + builder.reverse();
         }
     }
 }

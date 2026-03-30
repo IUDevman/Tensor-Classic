@@ -18,7 +18,7 @@ public final class Help extends SimpleCallableCommand {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "ClientHelp",
                 "ClientInfo"
@@ -37,11 +37,11 @@ public final class Help extends SimpleCallableCommand {
 
         //todo: include ClickGUI bind once we make it
         String helpString = this.getName() + ": Welcome to " + TensorClassic.MOD_NAME +
-                " " +  TensorClassic.MOD_VERSION +"! The default command prefix is '" +
+                " " + TensorClassic.MOD_VERSION + "! The default command prefix is '" +
                 this.getColor(ChatColor.AQUA) + clientPrefix +
                 this.getColor(ChatColor.DEFAULT) + "'. Type " + this.getColor(ChatColor.AQUA) +
                 clientPrefix + "Hacks" + this.getColor(ChatColor.DEFAULT) + " for the list of available hacks and " +
-                this.getColor(ChatColor.AQUA) + clientPrefix + "Commands"  + this.getColor(ChatColor.DEFAULT) +
+                this.getColor(ChatColor.AQUA) + clientPrefix + "Commands" + this.getColor(ChatColor.DEFAULT) +
                 " for the list of available commands!";
 
         this.sendClientMessageWithPrefix(helpString);

@@ -16,9 +16,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author DarkMagician6
- * @since 02-02-2014
- *
  * @author Hoosiers
+ * @since 02-02-2014
  * @since 03-18-2026
  */
 
@@ -64,7 +63,7 @@ public final class EventManager implements Manager {
         List<MethodData> dataList = this.REGISTRY_MAP.get(event.getClass());
 
         if (dataList != null) {
-            for (final MethodData data : dataList)  {
+            for (final MethodData data : dataList) {
                 this.invoke(data, event);
             }
         }
@@ -112,7 +111,7 @@ public final class EventManager implements Manager {
     private void invoke(MethodData data, Event argument) {
         try {
             data.getTarget().invoke(data.getSource(), argument);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored)  {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored) {
 
         }
     }

@@ -1,8 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.RenderBlockEvent;
-import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.block.BlockCoords;
+import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;
 import org.lwjgl.opengl.GL11;
@@ -21,7 +21,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = RenderBlocks.class, priority = Integer.MAX_VALUE)
 public final class BlockRendererMixin implements Globals {
 
-    @Shadow private boolean renderAllFaces;
+    @Shadow
+    private boolean renderAllFaces;
 
     @Unique
     public boolean pre = false;

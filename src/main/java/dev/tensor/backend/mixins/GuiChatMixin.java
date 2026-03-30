@@ -18,7 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GuiChat.class, priority = Integer.MAX_VALUE)
 public final class GuiChatMixin extends GuiScreen implements Globals {
 
-    @Shadow protected String message;
+    @Shadow
+    private String message;
 
     @Inject(method = "drawScreen", at = @At("HEAD"))
     public void onDrawScreen(int j, int f, float par3, CallbackInfo ci) {

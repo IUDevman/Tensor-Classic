@@ -87,10 +87,10 @@ public final class BlockIDObjectElement implements Element {
             GL11.glDepthMask(true);
             GL11.glDisable(GL11.GL_DEPTH_TEST);
 
-            try{
+            try {
                 this.renderItem(itemStack, this.getPosX() + 1, this.getPosY() + 11);
 
-            } catch(Exception ignored) {
+            } catch (Exception ignored) {
             }
 
             RenderHelper.disableStandardItemLighting();
@@ -115,7 +115,7 @@ public final class BlockIDObjectElement implements Element {
             this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/terrain.png"));
             Block var14 = Block.blocksList[itemID];
             GL11.glPushMatrix();
-            GL11.glTranslatef((float)(x), (float)(y), -3.0F);
+            GL11.glTranslatef((float) (x), (float) (y), -3.0F);
             GL11.glScalef(20.0F, 20.0F, 20.0F);
             GL11.glTranslatef(1.0F, 0.5F, 1.0F);
             GL11.glScalef(1.0F, 1.0F, -1.0F);
@@ -123,9 +123,9 @@ public final class BlockIDObjectElement implements Element {
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 
             int var15 = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float var16 = (float)(var15 >> 16 & 255) / 255.0F;
-            float var12 = (float)(var15 >> 8 & 255) / 255.0F;
-            float var13 = (float)(var15 & 255) / 255.0F;
+            float var16 = (float) (var15 >> 16 & 255) / 255.0F;
+            float var12 = (float) (var15 >> 8 & 255) / 255.0F;
+            float var13 = (float) (var15 & 255) / 255.0F;
             if (renderItem.field_27004_a) {
                 GL11.glColor4f(var16, var12, var13, 1.0F);
             }
@@ -138,7 +138,7 @@ public final class BlockIDObjectElement implements Element {
 
         } else if (itemIcon >= 0) {
 
-            GL11.glTranslatef((float)(x + 6), (float)(y - 4), -3.0F);
+            GL11.glTranslatef((float) (x + 6), (float) (y - 4), -3.0F);
             GL11.glScalef(1.75F, 1.75F, 0F);
             GL11.glDisable(GL11.GL_LIGHTING);
             if (itemID < 256) {
@@ -148,9 +148,9 @@ public final class BlockIDObjectElement implements Element {
             }
 
             int var8 = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float var9 = (float)(var8 >> 16 & 255) / 255.0F;
-            float var10 = (float)(var8 >> 8 & 255) / 255.0F;
-            float var11 = (float)(var8 & 255) / 255.0F;
+            float var9 = (float) (var8 >> 16 & 255) / 255.0F;
+            float var10 = (float) (var8 >> 8 & 255) / 255.0F;
+            float var11 = (float) (var8 & 255) / 255.0F;
             if (renderItem.field_27004_a) {
                 GL11.glColor4f(var9, var10, var11, 1.0F);
             }

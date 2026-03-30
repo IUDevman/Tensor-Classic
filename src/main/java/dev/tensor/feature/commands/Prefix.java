@@ -17,7 +17,7 @@ public final class Prefix implements Command {
 
     @Override
     public String[] getAcceptedNames() {
-        return new String[] {
+        return new String[]{
                 this.getName(),
                 "SetPrefix",
                 "CommandPrefix"
@@ -55,7 +55,7 @@ public final class Prefix implements Command {
 
         commands.prefix.setValue(newPrefix);
 
-        if (!oldPrefix.equalsIgnoreCase(commands.prefix.getValue()))  {
+        if (!oldPrefix.equalsIgnoreCase(commands.prefix.getValue())) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set prefix to '" + this.getColor(ChatColor.AQUA) + newPrefix + this.getColor(ChatColor.DEFAULT) + "'!");
         }
     }
