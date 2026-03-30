@@ -20,11 +20,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author Hoosiers
  * @since 03-29-2026
- * <p>
- * TODO:
- * 1. Fill setting
- * 2. Make tile entities work?
- * 3. Make colors work
  */
 
 @Hack.Info(name = "Search", category = Category.Render)

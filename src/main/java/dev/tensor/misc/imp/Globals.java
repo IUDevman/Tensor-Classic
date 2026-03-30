@@ -322,6 +322,52 @@ public interface Globals {
     }
 
     default void drawFillBox(double x, double y, double z, int width, Color color) {
+        double wX = x + width;
+        double wY = y + width;
+        double wZ = z + width;
 
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(wX, y, wZ);
+        Tessellator.instance.addVertex(wX, y, z);
+        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(x, y, wZ);
+        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(wX, y, z);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(x, y, wZ);
+        Tessellator.instance.addVertex(wX, y, wZ);
+        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.draw();
+
+        Tessellator.instance.startDrawing(GL11.GL_QUADS);
+        Tessellator.instance.addVertex(wX, y, z);
+        Tessellator.instance.addVertex(wX, y, wZ);
+        Tessellator.instance.addVertex(x, y, wZ);
+        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.draw();
     }
 }
