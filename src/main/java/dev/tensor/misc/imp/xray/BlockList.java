@@ -108,31 +108,43 @@ public final class BlockList implements Globals {
             DIAMOND.add(String.valueOf(Block.lavaMoving.blockID));
         }
 
-        return DIAMOND;
+        return new ArrayList<>(DIAMOND);
     }
+
+    private static final ArrayList<String> ORES_SEARCH = new ArrayList<>();
+
+    public static ArrayList<String> ORES_SEARCH() {
+        if (ORES_SEARCH.isEmpty()) {
+            ORES_SEARCH.add(String.valueOf(Block.oreCoal.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreIron.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.blockSteel.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreGold.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.blockGold.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreDiamond.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.blockDiamond.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreRedstone.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreRedstoneGlowing.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.oreLapis.blockID));
+            ORES_SEARCH.add(String.valueOf(Block.blockLapis.blockID));
+        }
+
+        return new ArrayList<>(ORES_SEARCH);
+    }
+
 
     private static final ArrayList<String> ORES = new ArrayList<>();
 
     public static ArrayList<String> ORES() {
         if (ORES.isEmpty()) {
-            ORES.add(String.valueOf(Block.oreCoal.blockID));
-            ORES.add(String.valueOf(Block.oreIron.blockID));
-            ORES.add(String.valueOf(Block.blockSteel.blockID));
-            ORES.add(String.valueOf(Block.oreGold.blockID));
-            ORES.add(String.valueOf(Block.blockGold.blockID));
-            ORES.add(String.valueOf(Block.oreDiamond.blockID));
-            ORES.add(String.valueOf(Block.blockDiamond.blockID));
-            ORES.add(String.valueOf(Block.oreRedstone.blockID));
-            ORES.add(String.valueOf(Block.oreRedstoneGlowing.blockID));
-            ORES.add(String.valueOf(Block.oreLapis.blockID));
-            ORES.add(String.valueOf(Block.blockLapis.blockID));
             ORES.add(String.valueOf(Block.waterStill.blockID));
             ORES.add(String.valueOf(Block.waterMoving.blockID));
             ORES.add(String.valueOf(Block.lavaStill.blockID));
             ORES.add(String.valueOf(Block.lavaMoving.blockID));
+
+            ORES.addAll(ORES_SEARCH());
         }
 
-        return ORES;
+        return new ArrayList<>(ORES);
     }
 
     private static final ArrayList<String> GLOWSTONE = new ArrayList<>();
@@ -142,7 +154,31 @@ public final class BlockList implements Globals {
             GLOWSTONE.add(String.valueOf(Block.glowStone.blockID));
         }
 
-        return GLOWSTONE;
+        return new ArrayList<>(GLOWSTONE);
+    }
+
+    private static final ArrayList<String> UTILITY_SEARCH = new ArrayList<>();
+
+    public static ArrayList<String> UTILITY_SEARCH() {
+        if (UTILITY_SEARCH.isEmpty()) {
+            UTILITY_SEARCH.add(String.valueOf(Block.blockSteel.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.blockGold.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.blockDiamond.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.blockLapis.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.dispenser.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.musicBlock.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.blockBed.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.tnt.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.mobSpawner.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.chest.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.workbench.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.stoneOvenIdle.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.stoneOvenActive.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.jukebox.blockID));
+            UTILITY_SEARCH.add(String.valueOf(Block.portal.blockID));
+        }
+
+        return new ArrayList<>(UTILITY_SEARCH);
     }
 
     private static final ArrayList<String> UTILITY = new ArrayList<>();
@@ -154,15 +190,9 @@ public final class BlockList implements Globals {
             UTILITY.add(String.valueOf(Block.waterMoving.blockID));
             UTILITY.add(String.valueOf(Block.lavaStill.blockID));
             UTILITY.add(String.valueOf(Block.lavaMoving.blockID));
-            UTILITY.add(String.valueOf(Block.blockSteel.blockID));
-            UTILITY.add(String.valueOf(Block.blockGold.blockID));
-            UTILITY.add(String.valueOf(Block.blockDiamond.blockID));
             UTILITY.add(String.valueOf(Block.glowStone.blockID));
             UTILITY.add(String.valueOf(Block.sponge.blockID));
             UTILITY.add(String.valueOf(Block.glass.blockID));
-            UTILITY.add(String.valueOf(Block.dispenser.blockID));
-            UTILITY.add(String.valueOf(Block.musicBlock.blockID));
-            UTILITY.add(String.valueOf(Block.blockBed.blockID));
             UTILITY.add(String.valueOf(Block.railPowered.blockID));
             UTILITY.add(String.valueOf(Block.railDetector.blockID));
             UTILITY.add(String.valueOf(Block.pistonStickyBase.blockID));
@@ -171,18 +201,12 @@ public final class BlockList implements Globals {
             UTILITY.add(String.valueOf(Block.pistonExtension.blockID));
             UTILITY.add(String.valueOf(Block.cloth.blockID));
             UTILITY.add(String.valueOf(Block.pistonMoving.blockID));
-            UTILITY.add(String.valueOf(Block.tnt.blockID));
             UTILITY.add(String.valueOf(Block.obsidian.blockID));
             UTILITY.add(String.valueOf(Block.torchWood.blockID));
             UTILITY.add(String.valueOf(Block.fire.blockID));
-            UTILITY.add(String.valueOf(Block.mobSpawner.blockID));
-            UTILITY.add(String.valueOf(Block.chest.blockID));
             UTILITY.add(String.valueOf(Block.redstoneWire.blockID));
-            UTILITY.add(String.valueOf(Block.workbench.blockID));
             UTILITY.add(String.valueOf(Block.crops.blockID));
             UTILITY.add(String.valueOf(Block.tilledField.blockID));
-            UTILITY.add(String.valueOf(Block.stoneOvenIdle.blockID));
-            UTILITY.add(String.valueOf(Block.stoneOvenActive.blockID));
             UTILITY.add(String.valueOf(Block.signPost.blockID));
             UTILITY.add(String.valueOf(Block.doorWood.blockID));
             UTILITY.add(String.valueOf(Block.ladder.blockID));
@@ -197,22 +221,22 @@ public final class BlockList implements Globals {
             UTILITY.add(String.valueOf(Block.button.blockID));
             UTILITY.add(String.valueOf(Block.cactus.blockID));
             UTILITY.add(String.valueOf(Block.reed.blockID));
-            UTILITY.add(String.valueOf(Block.jukebox.blockID));
             UTILITY.add(String.valueOf(Block.pumpkin.blockID));
-            UTILITY.add(String.valueOf(Block.portal.blockID));
             UTILITY.add(String.valueOf(Block.pumpkinLantern.blockID));
             UTILITY.add(String.valueOf(Block.cake.blockID));
             UTILITY.add(String.valueOf(Block.redstoneRepeaterIdle.blockID));
             UTILITY.add(String.valueOf(Block.redstoneRepeaterActive.blockID));
             UTILITY.add(String.valueOf(Block.trapdoor.blockID));
+
+            UTILITY.addAll(UTILITY_SEARCH());
         }
 
-        return UTILITY;
+        return new ArrayList<>(UTILITY);
     }
 
     private static final ArrayList<String> CUSTOM = new ArrayList<>();
 
     public static ArrayList<String> CUSTOM() {
-        return CUSTOM;
+        return new ArrayList<>(CUSTOM);
     }
 }

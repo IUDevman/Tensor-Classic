@@ -3,7 +3,8 @@ package dev.tensor.misc.gui.elements.settings.buttons;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.elements.ButtonSetting;
-import dev.tensor.misc.gui.elements.settings.buttons.xray.XrayIDObject;
+import dev.tensor.misc.gui.elements.HackElement;
+import dev.tensor.misc.gui.elements.settings.buttons.blocklist.BlockIDObjectElement;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.opengl.GL11;
@@ -21,17 +22,18 @@ public final class BlockListSettingButton implements ButtonSetting {
 
     private final TensorGUI tensorGUI;
     private final ClickGUI clickGUI;
+    private final HackElement hackElement;
     public final BlockListSetting blockListSetting;
 
-    private boolean searching;
     private boolean active;
 
-    private final ArrayList<XrayIDObject> xrayIDObjects = new ArrayList<>();
+    private final ArrayList<BlockIDObjectElement> blockIDObjectElements = new ArrayList<>();
     private final IntegerSetting scrollY = new IntegerSetting("Xray Scroll Y", 0, -1000, 1000);
 
-    public BlockListSettingButton(TensorGUI tensorGUI, ClickGUI clickGUI, BlockListSetting blockListSetting) {
+    public BlockListSettingButton(TensorGUI tensorGUI, ClickGUI clickGUI, HackElement hackElement, BlockListSetting blockListSetting) {
         this.tensorGUI = tensorGUI;
         this.clickGUI = clickGUI;
+        this.hackElement = hackElement;
         this.blockListSetting = blockListSetting;
 
         int numberWidth = 9;
@@ -41,7 +43,7 @@ public final class BlockListSettingButton implements ButtonSetting {
             for (int ix = 0; ix < blockSideAdjust; ix++) {
 
                 int number = i + (ix * 9);
-                this.xrayIDObjects.add(new XrayIDObject(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, i, ix));
+                this.blockIDObjectElements.add(new BlockIDObjectElement(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, i, ix));
             }
         }
     }
@@ -75,7 +77,7 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawCenteredString("Xray BlockList : Custom", this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawCenteredString(this.hackElement.hack.NAME + " BlockList : Custom", this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
@@ -106,7 +108,7 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
 
-        this.xrayIDObjects.forEach(xrayIDObject -> xrayIDObject.render(tensorGUI, fillColor, new Color(0, 255,0, fillColor.getAlpha()), outLineColor));
+        this.blockIDObjectElements.forEach(blockIDObjectElement -> blockIDObjectElement.render(tensorGUI, fillColor, new Color(0, 255,0, fillColor.getAlpha()), outLineColor));
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
@@ -155,11 +157,11 @@ public final class BlockListSettingButton implements ButtonSetting {
 
             AtomicBoolean hasDispatched = new AtomicBoolean(false);
 
-            this.xrayIDObjects.forEach(xrayIDObject -> {
+            this.blockIDObjectElements.forEach(blockIDObjectElement -> {
 
-                if (!hasDispatched.get() && this.isHovered(xrayIDObject.getPosX(), xrayIDObject.getPosY(), xrayIDObject.getPosX() + xrayIDObject.getWidth(), xrayIDObject.getPosY() + xrayIDObject.getHeight(), mouseX, mouseY)) {
+                if (!hasDispatched.get() && this.isHovered(blockIDObjectElement.getPosX(), blockIDObjectElement.getPosY(), blockIDObjectElement.getPosX() + blockIDObjectElement.getWidth(), blockIDObjectElement.getPosY() + blockIDObjectElement.getHeight(), mouseX, mouseY)) {
                     hasDispatched.set(true);
-                    xrayIDObject.onClick(mouseX, mouseY);
+                    blockIDObjectElement.onClick(mouseX, mouseY);
                 }
             });
         }

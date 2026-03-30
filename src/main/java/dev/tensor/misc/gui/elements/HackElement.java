@@ -21,7 +21,7 @@ public final class HackElement implements Element {
     public static final int height = 20;
 
     public final CategoryElement categoryElement;
-    private final Hack hack;
+    public final Hack hack;
     private final IntegerSetting x;
     private final IntegerSetting y;
     private final IntegerSetting scrollY;

@@ -1,4 +1,4 @@
-package dev.tensor.misc.gui.elements.settings.buttons.xray;
+package dev.tensor.misc.gui.elements.settings.buttons.blocklist;
 
 import dev.tensor.misc.gui.Element;
 import dev.tensor.misc.gui.TensorGUI;
@@ -14,7 +14,7 @@ import java.awt.*;
  * @since 03-28-2026
  */
 
-public final class XrayIDObject implements Element {
+public final class BlockIDObjectElement implements Element {
 
     private final int GL_WTF_IS_THIS = 32826;
 
@@ -26,7 +26,7 @@ public final class XrayIDObject implements Element {
     private final int offSetX;
     private final int offSetY;
 
-    public XrayIDObject(int tensorID, BlockListSettingButton button, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetX, int offsetY, int row, int column) {
+    public BlockIDObjectElement(int tensorID, BlockListSettingButton button, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetX, int offsetY, int row, int column) {
         this.blockID = tensorID;
         this.button = button;
         this.x = x;

@@ -33,7 +33,7 @@ public final class ButtonSettingElement extends SettingElement {
         if (this.setting instanceof StringSetting) {
             this.button = new StringSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (StringSetting) setting);
         } else if (this.setting instanceof BlockListSetting) {
-            this.button = new BlockListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (BlockListSetting) setting);
+            this.button = new BlockListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (BlockListSetting) setting);
         } else {
             button = new DummySettingButton();
         }
