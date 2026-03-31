@@ -31,10 +31,12 @@ public final class Search extends Hack {
         public void setValue(Enum<?> value) {
             super.setValue(value);
 
-            Search search = this.getHackManager().getHack(Search.class);
+            if (!this.failsNullCheck()) {
+                Search search = this.getHackManager().getHack(Search.class);
 
-            if (!this.failsNullCheck() && search.isEnabled()) {
-                search.resetSearch();
+                if (search.isEnabled()) {
+                    search.resetSearch();
+                }
             }
         }
     };
@@ -43,10 +45,12 @@ public final class Search extends Hack {
         @Override
         public void hasChanged() {
 
-            Search search = this.getHackManager().getHack(Search.class);
+            if (!this.failsNullCheck()) {
+                Search search = this.getHackManager().getHack(Search.class);
 
-            if (!this.failsNullCheck() && search.isEnabled() && search.mode.getValue().equals(Mode.Custom)) {
-                search.resetSearch();
+                if (search.isEnabled() && search.mode.getValue().equals(Mode.Custom)) {
+                    search.resetSearch();
+                }
             }
         }
     };

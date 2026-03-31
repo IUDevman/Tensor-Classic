@@ -21,7 +21,9 @@ public final class TimerMine extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
-        ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.getDefaultTPS();
+        if (!isNull) {
+            ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.getDefaultTPS();
+        }
     }
 
     private int ticksSinceBreakStart = 0;
