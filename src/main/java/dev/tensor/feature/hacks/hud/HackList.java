@@ -54,7 +54,7 @@ public final class HackList extends Hack implements HUDObject {
 
     @Override
     public int getHeight() {
-        return 300;
+        return 250;
     }
 
     @Override
