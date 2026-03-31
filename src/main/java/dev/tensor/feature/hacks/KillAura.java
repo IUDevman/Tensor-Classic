@@ -32,6 +32,9 @@ public final class KillAura extends Hack {
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
+    public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
 
@@ -77,9 +80,8 @@ public final class KillAura extends Hack {
             }
 
             if (this.shouldAttackEntity(entity)) {
-
-                //todo:
-                if (!this.offScreen.getValue() && !this.isEntityBehindWalls(entity)) {
+                
+                if (!this.offScreen.getValue() && !this.isEntityOnScreen(entity)) {
                     continue;
                 }
 
@@ -132,13 +134,15 @@ public final class KillAura extends Hack {
     @Override
     public void onRender3D() {
 
+        if (!this.esp.getValue()) {
+            return;
+        }
+
         if (this.target_Entities.isEmpty()) {
             return;
         }
 
-        this.target_Entities.forEach(entity -> {
-            //todo: render box
-        });
+        this.target_Entities.forEach(this::renderESP);
     }
 
     @SuppressWarnings("unused")
@@ -214,6 +218,7 @@ public final class KillAura extends Hack {
         this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
     }
 
+    //todo
     private boolean isEntityOnScreen(Entity entity) {
         return true;
     }
@@ -226,9 +231,40 @@ public final class KillAura extends Hack {
             return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
     }
 
+    private void renderESP(Entity entity) {
+        AxisAlignedBB bb = entity.boundingBox;
+
+        double x = bb.minX - RenderManager.renderPosX;
+        double y = bb.minY - RenderManager.renderPosY;
+        double z = bb.minZ - RenderManager.renderPosZ;
+
+        double wX = bb.maxX - RenderManager.renderPosX;
+        double wY = bb.maxY - RenderManager.renderPosY;
+        double wZ = bb.maxZ - RenderManager.renderPosZ;
+
+        switch ((RenderMode) this.renderMode.getValue()) {
+            case Outline:
+                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValue());
+                break;
+            case Fill:
+                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
+                break;
+            case Both:
+                this.drawFillBox(x, y, z, wX, wY, wZ, this.esp_color.getValue());
+                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
+                break;
+        }
+    }
+
     public enum Sort {
         Distance,
         Health,
         Multi
+    }
+
+    public enum RenderMode {
+        Outline,
+        Fill,
+        Both
     }
 }

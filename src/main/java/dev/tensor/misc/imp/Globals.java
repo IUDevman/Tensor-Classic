@@ -290,6 +290,10 @@ public interface Globals {
         double wY = y + width;
         double wZ = z + width;
 
+        this.drawOutlineBox(x, y, z, wX, wY, wZ, lineWidth, color);
+    }
+
+    default void drawOutlineBox(double x, double y, double z, double wX, double wY, double wZ, int lineWidth, Color color) {
         GL11.glLineWidth(lineWidth);
         GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
 
@@ -326,6 +330,10 @@ public interface Globals {
         double wY = y + width;
         double wZ = z + width;
 
+        this.drawFillBox(x, y, z, wX, wY, wZ, color);
+    }
+
+    default void drawFillBox(double x, double y, double z, double wX, double wY, double wZ, Color color) {
         GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);

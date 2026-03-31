@@ -8,8 +8,8 @@ import net.minecraft.src.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * @author Hoosiers
@@ -160,7 +160,7 @@ public final class StringSettingButton implements ButtonSetting {
     }
 
     private boolean isKeyBlackListed(int key) {
-        return Collections.singletonList(this.badKeys).contains(key);
+        return Objects.equals(this.badKeys, key);
     }
 
     private final int[] badKeys = new int[]{
