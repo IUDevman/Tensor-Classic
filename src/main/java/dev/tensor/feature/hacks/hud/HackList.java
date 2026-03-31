@@ -66,7 +66,7 @@ public final class HackList extends Hack implements HUDObject {
 
             Hack hack = this.hacksToRender.get(i);
 
-            this.drawString(hack.NAME, this.x.getValue() + this.getDirectionOffset(hack.NAME), this.y.getValue() + this.getAddOffset(i), this.getColor(hack).getRGB());
+            this.drawString(hack.NAME, this.x.getValue() + this.getDirectionOffset(hack.NAME), this.y.getValue() + this.getAddOffset(this.add.getValue().equals(Add.Up) ? this.hacksToRender.size() - 1 - i : i), this.getColor(hack).getRGB());
         }
     }
 
