@@ -5,10 +5,7 @@ import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.backend.events.Render3DEvent;
 import dev.tensor.feature.hacks.*;
-import dev.tensor.feature.hacks.hud.HackList;
-import dev.tensor.feature.hacks.hud.ModInfo;
-import dev.tensor.feature.hacks.hud.TabGUI;
-import dev.tensor.feature.hacks.hud.Welcomer;
+import dev.tensor.feature.hacks.hud.*;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
@@ -49,6 +46,7 @@ public final class HackManager implements Manager {
         this.addHack(new ClientMessages());
         this.addHack(new CommandPreview());
         this.addHack(new Commands());
+        this.addHack(new Coordinates());
         this.addHack(new FOV());
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
@@ -64,6 +62,7 @@ public final class HackManager implements Manager {
         this.addHack(new NoViewBob());
         this.addHack(new NoWeather());
         this.addHack(new Search());
+        this.addHack(new Speedometer());
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
         this.addHack(new Timer());

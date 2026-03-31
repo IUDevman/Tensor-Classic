@@ -1,0 +1,165 @@
+package dev.tensor.feature.hacks.hud;
+
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.HUDObject;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.EnumSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import net.minecraft.src.Vec3D;
+
+import java.awt.*;
+import java.text.DecimalFormat;
+
+/**
+ * @author Hoosiers
+ * @since 03-30-2026
+ */
+
+@Hack.Info(name = "Coordinates", category = Category.HUD)
+public final class Coordinates extends Hack implements HUDObject {
+
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMaxY());
+    public final BooleanSetting compass = new BooleanSetting("Compass", true);
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
+    public final EnumSetting type = new EnumSetting("Type", Type.Both);
+    public final ColorSetting overworldColor = new ColorSetting("Overworld Color", new Color(255, 255, 255, 255));
+    public final ColorSetting netherColor = new ColorSetting("Nether Color", new Color(255, 0, 0, 255));
+
+    private final String coordinatesString = "({X}, {Y}, {Z})";
+    private final String coordinatesStringWithDirection = this.coordinatesString + "{D}";
+    private final DecimalFormat coordinateFormat = new DecimalFormat("#.0");
+
+    @Override
+    public IntegerSetting getMinX() {
+        return this.x;
+    }
+
+    @Override
+    public IntegerSetting getMinY() {
+        return this.y;
+    }
+
+    @Override
+    public int getWidth() {
+        return 210;
+    }
+
+    @Override
+    public int getHeight() {
+        return 23;
+    }
+
+    @Override
+    public void render() {
+        Vec3D vec3D = this.getPlayerCoordsOverworld();
+
+        double posX = vec3D.xCoord;
+        double posY = vec3D.yCoord;
+        double posZ = vec3D.zCoord;
+
+        switch ((Type) this.type.getValue()) {
+            case Overworld:
+                String coordinatesOverworld = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
+                coordinatesOverworld = coordinatesOverworld.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
+
+                this.renderCoordinate(coordinatesOverworld, 1, this.overworldColor.getValue());
+                break;
+            case Nether:
+                posX /= 8;
+                posY /= 8;
+                posZ /= 8;
+
+                String coordinatesNether = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
+                coordinatesNether = coordinatesNether.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
+
+                this.renderCoordinate(coordinatesNether, 1, this.netherColor.getValue());
+                break;
+            case Both:
+                String coordinatesOverworld1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
+                coordinatesOverworld1 = coordinatesOverworld1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
+
+                this.renderCoordinate(coordinatesOverworld1, 1, this.overworldColor.getValue());
+
+                posX /= 8;
+                posY /= 8;
+                posZ /= 8;
+
+                String coordinatesNether1 = this.coordinatesString.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
+                this.renderCoordinate(coordinatesNether1, 12, this.netherColor.getValue());
+                break;
+        }
+    }
+
+    private Vec3D getPlayerCoordsOverworld() {
+
+        double posX = this.getPlayer().posX;
+        double posY = this.getPlayer().posY;
+        double posZ = this.getPlayer().posZ;
+
+        if (this.getWorld().worldProvider.isNether) {
+            posX *= 8;
+            posY *= 8;
+            posZ *= 8;
+        }
+
+        return Vec3D.createVectorHelper(posX, posY, posZ);
+    }
+
+    private String getDirection() {
+
+        float yaw = this.getPlayer().rotationYaw;
+
+        while (yaw <= 0) {
+            yaw += 360;
+        }
+
+        while (yaw > 360) {
+            yaw -= 360;
+        }
+
+        if (yaw >= 45 && yaw < 135) {
+            return "West";
+        } else if (yaw >= 135 && yaw < 225) {
+            return "North";
+        } else if (yaw >= 225 && yaw < 315) {
+            return "East";
+        } else {
+            return "South";
+        }
+    }
+
+    private void renderCoordinate(String coordinateString, int offY, Color color) {
+        int offX = this.getOffSetX(coordinateString);
+
+        this.drawString(coordinateString, this.getMinX().getValue() + offX, this.getMinY().getValue() + offY, color.getRGB());
+    }
+
+    private int getOffSetX(String coordinatesString) {
+
+        switch ((Direction) this.direction.getValue()) {
+            case Left:
+                return 1;
+            case Right:
+                return this.getWidth() - 1 - this.getFontRenderer().getStringWidth(coordinatesString);
+            case Center:
+                return (this.getWidth() / 2) - (this.getFontRenderer().getStringWidth(coordinatesString) / 2);
+        }
+
+        return 0;
+    }
+
+    public enum Direction {
+        Left,
+        Right,
+        Center
+    }
+
+    public enum Type {
+        Overworld,
+        Nether,
+        Both
+    }
+}
