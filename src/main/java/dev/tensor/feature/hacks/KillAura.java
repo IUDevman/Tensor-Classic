@@ -80,7 +80,7 @@ public final class KillAura extends Hack {
             }
 
             if (this.shouldAttackEntity(entity)) {
-                
+
                 if (!this.offScreen.getValue() && !this.isEntityOnScreen(entity)) {
                     continue;
                 }
@@ -250,8 +250,8 @@ public final class KillAura extends Hack {
                 this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
                 break;
             case Both:
-                this.drawFillBox(x, y, z, wX, wY, wZ, this.esp_color.getValue());
-                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
+                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
+                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValue());
                 break;
         }
     }
