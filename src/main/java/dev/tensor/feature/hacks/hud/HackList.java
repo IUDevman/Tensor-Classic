@@ -54,7 +54,7 @@ public final class HackList extends Hack implements HUDObject {
 
     @Override
     public int getHeight() {
-        return (this.hacksToRender.size() * 10) + 2;
+        return 300;
     }
 
     @Override
@@ -116,7 +116,7 @@ public final class HackList extends Hack implements HUDObject {
             case HUD:
                 return Color.LIGHT_GRAY;
             case Client:
-                return Color.WHITE; //
+                return Color.WHITE;
             case Combat:
                 return Color.RED.brighter();
             case Movement:
