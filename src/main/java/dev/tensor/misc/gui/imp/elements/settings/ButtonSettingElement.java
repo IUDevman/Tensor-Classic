@@ -1,15 +1,17 @@
-package dev.tensor.misc.gui.elements.settings;
+package dev.tensor.misc.gui.imp.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.ButtonSetting;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.KeyPressElement;
-import dev.tensor.misc.gui.elements.SettingElement;
-import dev.tensor.misc.gui.elements.settings.buttons.BlockListSettingButton;
-import dev.tensor.misc.gui.elements.settings.buttons.DummySettingButton;
-import dev.tensor.misc.gui.elements.settings.buttons.StringSettingButton;
+import dev.tensor.misc.gui.imp.elements.ButtonSetting;
+import dev.tensor.misc.gui.imp.elements.HackElement;
+import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.BlockListSettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.DummySettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.EntityTypeListSettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.StringSettingButton;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
+import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 
@@ -34,6 +36,8 @@ public final class ButtonSettingElement extends SettingElement {
             this.button = new StringSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, (StringSetting) setting);
         } else if (this.setting instanceof BlockListSetting) {
             this.button = new BlockListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (BlockListSetting) setting);
+        } else if (this.setting instanceof EntityTypeListSetting) {
+            this.button = new EntityTypeListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (EntityTypeListSetting) setting);
         } else {
             button = new DummySettingButton();
         }

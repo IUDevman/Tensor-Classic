@@ -17,7 +17,7 @@ import java.util.ArrayDeque;
  * @author Luna5ama (GameSense)
  * @author Hoosiers
  * @since 03-30-2026
- * 
+ *
  * https://github.com/IUDevman/gamesense-client/commit/0dd0e740a1e75f21de19f7306895fd51127853ad
  */
 

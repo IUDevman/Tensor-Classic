@@ -1,4 +1,4 @@
-package dev.tensor.misc.gui.elements;
+package dev.tensor.misc.gui.imp.elements;
 
 public interface KeyPressElement {
 

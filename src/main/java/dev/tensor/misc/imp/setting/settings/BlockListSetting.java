@@ -51,7 +51,6 @@ public class BlockListSetting implements Setting<BlockList> {
 
     }
 
-    @Deprecated
     @Override
     public void setValueFromString(String string) throws Exception {
         this.getValue().loadBlockListFromString(string, true);

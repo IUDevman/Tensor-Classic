@@ -1,8 +1,8 @@
-package dev.tensor.misc.gui.elements.settings.buttons.blocklist;
+package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects;
 
-import dev.tensor.misc.gui.Element;
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.settings.buttons.BlockListSettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.BlockListSettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
@@ -14,7 +14,7 @@ import java.awt.*;
  * @since 03-28-2026
  */
 
-public final class BlockIDObjectElement implements Element {
+public final class BlockIDSettingObject implements ButtonSettingObject {
 
     private final int GL_WTF_IS_THIS = 32826;
 
@@ -26,7 +26,9 @@ public final class BlockIDObjectElement implements Element {
     private final int offSetX;
     private final int offSetY;
 
-    public BlockIDObjectElement(int tensorID, BlockListSettingButton button, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetX, int offsetY, int row, int column) {
+    private boolean hovered = false;
+
+    public BlockIDSettingObject(int tensorID, BlockListSettingButton button, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetX, int offsetY, int row, int column) {
         this.blockID = tensorID;
         this.button = button;
         this.x = x;
@@ -59,7 +61,13 @@ public final class BlockIDObjectElement implements Element {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), this.isEnabled() ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        if (this.hovered) {
+            fillColor = selectedFillColor;
+            outLineColor = outLineColor.darker();
+        }
+
+        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), this.isEnabled() ? outLineColor.getRGB() : fillColor.getRGB());
 
         if (blockID >= Block.blocksList.length) {
             return;
@@ -169,6 +177,24 @@ public final class BlockIDObjectElement implements Element {
         } else {
             this.button.blockListSetting.addBlock(blockID);
         }
+    }
+
+    @Override
+    public void onHovered(int mouseX, int mouseY) {
+        if (this.isHovered(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY) && !this.hovered) {
+            this.hovered = true;
+            this.button.resetHover(this);
+        }
+    }
+
+    @Override
+    public boolean hovered() {
+        return this.hovered;
+    }
+
+    @Override
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
     }
 
     private boolean isEnabled() {

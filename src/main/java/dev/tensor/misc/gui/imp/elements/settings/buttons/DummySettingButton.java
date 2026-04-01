@@ -1,7 +1,7 @@
-package dev.tensor.misc.gui.elements.settings.buttons;
+package dev.tensor.misc.gui.imp.elements.settings.buttons;
 
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.ButtonSetting;
+import dev.tensor.misc.gui.imp.elements.ButtonSetting;
 
 import java.awt.*;
 

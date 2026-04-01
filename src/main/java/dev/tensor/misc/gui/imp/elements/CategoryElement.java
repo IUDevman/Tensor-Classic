@@ -1,7 +1,7 @@
-package dev.tensor.misc.gui.elements;
+package dev.tensor.misc.gui.imp.elements;
 
-import dev.tensor.misc.gui.Element;
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.opengl.GL11;

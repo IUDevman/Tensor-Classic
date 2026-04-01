@@ -1,51 +1,45 @@
-package dev.tensor.misc.gui.elements.settings.buttons;
+package dev.tensor.misc.gui.imp.elements.settings.buttons;
 
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.ButtonSetting;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.settings.buttons.blocklist.BlockIDObjectElement;
-import dev.tensor.misc.imp.setting.settings.BlockListSetting;
+import dev.tensor.misc.gui.imp.elements.ButtonSetting;
+import dev.tensor.misc.gui.imp.elements.HackElement;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.EntityTypeSettingObject;
+import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hoosiers
- * @since 03-27-2026
+ * @since 03-31-2026
  */
 
-public final class BlockListSettingButton implements ButtonSetting {
+public final class EntityTypeListSettingButton implements ButtonSetting {
 
-    private final TensorGUI tensorGUI;
+    public final TensorGUI tensorGUI;
     private final ClickGUI clickGUI;
     private final HackElement hackElement;
-    public final BlockListSetting blockListSetting;
+    public final EntityTypeListSetting entityTypeListSetting;
 
     private boolean active;
 
-    private final ArrayList<BlockIDObjectElement> blockIDObjectElements = new ArrayList<>();
-    private final IntegerSetting scrollY = new IntegerSetting("Xray Scroll Y", 0, -1000, 1000);
+    private final ArrayList<EntityTypeSettingObject> entityTypeObjects = new ArrayList<>();
+    private final IntegerSetting scrollY = new IntegerSetting("EntityType Scroll Y", 0, -1000, 1000);
 
-    public BlockListSettingButton(TensorGUI tensorGUI, ClickGUI clickGUI, HackElement hackElement, BlockListSetting blockListSetting) {
+    public EntityTypeListSettingButton(TensorGUI tensorGUI, ClickGUI clickGUI, HackElement hackElement, EntityTypeListSetting entityTypeListSetting) {
         this.tensorGUI = tensorGUI;
         this.clickGUI = clickGUI;
         this.hackElement = hackElement;
-        this.blockListSetting = blockListSetting;
+        this.entityTypeListSetting = entityTypeListSetting;
 
-        int numberWidth = 9;
-        int blockSideAdjust = 11;
+        AtomicInteger number = new AtomicInteger(0);
 
-        for (int i = 1; i < numberWidth + 1; i++) {
-            for (int ix = 0; ix < blockSideAdjust; ix++) {
-
-                int number = i + (ix * 9);
-                this.blockIDObjectElements.add(new BlockIDObjectElement(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, i, ix));
-            }
-        }
+        entityTypeListSetting.getFullValue().getEntityList().forEach(value -> this.entityTypeObjects.add(new EntityTypeSettingObject(value, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, number.getAndAdd(1))));
     }
 
     @Override
@@ -77,7 +71,7 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawCenteredString(this.hackElement.hack.NAME + " BlockList : Custom", this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawCenteredString(this.hackElement.hack.NAME + " : " + this.entityTypeListSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
@@ -90,8 +84,6 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 5, this.getPosY() + this.getHeight(), fillColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
-
-        GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
         int posX = this.getPosX() + 5;
         int posY = this.getPosY() + this.tensorGUI.titleHeight + 2;
@@ -108,15 +100,24 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
 
-        this.blockIDObjectElements.forEach(blockIDObjectElement -> blockIDObjectElement.render(tensorGUI, fillColor, new Color(0, 255, 0, fillColor.getAlpha()), outLineColor));
+        this.entityTypeObjects.forEach(entityTypeObject -> entityTypeObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
+
+        if ((this.entityTypeObjects.size() * 15) < this.getHeight() - this.tensorGUI.titleHeight - 2) {
+            this.drawRectangle(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleHeight + 2 + (this.entityTypeObjects.size() * 15), this.getPosX() + this.getWidth() - 5, this.getPosY() + this.getHeight(), fillColor.getRGB());
+        }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
-
     }
 
     @Override
     public void onHovered(int mouseX, int mouseY) {
         this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY);
+
+        if (!this.hoveredOnBack && this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.tensorGUI.titleHeight + (this.entityTypeObjects.size() * 15), mouseX, mouseY)) {
+            this.entityTypeObjects.forEach(object -> object.onHovered(mouseX, mouseY));
+        } else {
+            this.entityTypeObjects.forEach(object -> object.setHovered(false));
+        }
     }
 
     @Override
@@ -134,8 +135,8 @@ public final class BlockListSettingButton implements ButtonSetting {
 
         int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 2;
 
-        if (462 + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
-            int test = ((462 + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
+        if ((this.entityTypeObjects.size() * 15) + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
+            int test = (((this.entityTypeObjects.size() * 15) + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
 
             if (test >= scrollAdjust) {
                 scrollAdjust = -test;
@@ -157,11 +158,11 @@ public final class BlockListSettingButton implements ButtonSetting {
 
             AtomicBoolean hasDispatched = new AtomicBoolean(false);
 
-            this.blockIDObjectElements.forEach(blockIDObjectElement -> {
+            this.entityTypeObjects.forEach(entityTypeObject -> {
 
-                if (!hasDispatched.get() && this.isHovered(blockIDObjectElement.getPosX(), blockIDObjectElement.getPosY(), blockIDObjectElement.getPosX() + blockIDObjectElement.getWidth(), blockIDObjectElement.getPosY() + blockIDObjectElement.getHeight(), mouseX, mouseY)) {
+                if (!hasDispatched.get() && this.isHovered(entityTypeObject.getPosX(), entityTypeObject.getPosY(), entityTypeObject.getPosX() + entityTypeObject.getWidth(), entityTypeObject.getPosY() + entityTypeObject.getHeight(), mouseX, mouseY)) {
                     hasDispatched.set(true);
-                    blockIDObjectElement.onClick(mouseX, mouseY);
+                    entityTypeObject.onClick(mouseX, mouseY);
                 }
             });
         }
@@ -199,5 +200,17 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.scrollY.setValue(0);
         this.hoveredOnBack = false;
         this.tensorGUI.closeButton();
+    }
+
+    public void resetHover(EntityTypeSettingObject entityTypeObject) {
+
+        this.hoveredOnBack = false;
+
+        this.entityTypeObjects.forEach(entityTypeObject1 -> {
+
+            if (entityTypeObject1.hovered() && entityTypeObject1 != entityTypeObject) {
+                entityTypeObject1.setHovered(false);
+            }
+        });
     }
 }

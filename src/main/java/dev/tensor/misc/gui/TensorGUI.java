@@ -2,11 +2,13 @@ package dev.tensor.misc.gui;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
-import dev.tensor.misc.gui.elements.ButtonSetting;
-import dev.tensor.misc.gui.elements.CategoryElement;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.KeyPressElement;
-import dev.tensor.misc.gui.elements.settings.ButtonSettingElement;
+import dev.tensor.misc.gui.imp.Element;
+import dev.tensor.misc.gui.imp.Hoverable;
+import dev.tensor.misc.gui.imp.elements.ButtonSetting;
+import dev.tensor.misc.gui.imp.elements.CategoryElement;
+import dev.tensor.misc.gui.imp.elements.HackElement;
+import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -28,7 +30,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * https://github.com/qe7/Hephaestus-Babric
  */
 
-public final class TensorGUI extends GuiScreen implements Globals {
+public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
 
     public final ClickGUI clickGUI;
 
@@ -335,12 +337,6 @@ public final class TensorGUI extends GuiScreen implements Globals {
         }
 
         return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
-    }
-
-    private boolean isHovered(int minX, int minY, int maxX, int maxY, double mouseX, double mouseY) {
-        if (mouseX < minX || mouseX > maxX) {
-            return false;
-        } else return !(mouseY < minY) && !(mouseY > maxY);
     }
 
     private void handleScroll(Scroll scroll) {

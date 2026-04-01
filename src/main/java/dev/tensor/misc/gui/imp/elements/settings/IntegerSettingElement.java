@@ -1,9 +1,9 @@
-package dev.tensor.misc.gui.elements.settings;
+package dev.tensor.misc.gui.imp.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.KeyPressElement;
-import dev.tensor.misc.gui.elements.SettingElement;
+import dev.tensor.misc.gui.imp.elements.HackElement;
+import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
 

@@ -1,10 +1,10 @@
-package dev.tensor.misc.gui.elements.settings;
+package dev.tensor.misc.gui.imp.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.gui.elements.HackElement;
-import dev.tensor.misc.gui.elements.KeyPressElement;
-import dev.tensor.misc.gui.elements.SettingElement;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
+import dev.tensor.misc.gui.imp.elements.HackElement;
+import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
@@ -14,18 +14,18 @@ import java.awt.*;
  * @since 05-04-2021
  */
 
-public final class EnumSettingElement extends SettingElement {
+public final class BooleanSettingElement extends SettingElement {
 
-    private final EnumSetting enumSetting;
+    private final BooleanSetting booleanSetting;
 
-    public EnumSettingElement(HackElement hackElement, EnumSetting enumSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+    public BooleanSettingElement(HackElement hackElement, BooleanSetting booleanSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
-        this.enumSetting = enumSetting;
+        this.booleanSetting = booleanSetting;
     }
 
     @Override
     public int getWidth() {
-        return 204;
+        return SettingElement.width;
     }
 
     @Override
@@ -55,7 +55,7 @@ public final class EnumSettingElement extends SettingElement {
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.enumSetting.getName() + " : " + this.getColor(ChatColor.LIGHT_GRAY) + this.enumSetting.getValue().name().replace("_", " ");
+        String text = this.booleanSetting.getName() + " (" + (this.booleanSetting.getValue() ? this.getColor(ChatColor.GREEN) + "True" : this.getColor(ChatColor.RED) + "False") + this.getColor(ChatColor.DEFAULT) + ")";
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
@@ -73,6 +73,6 @@ public final class EnumSettingElement extends SettingElement {
             }
         });
 
-        this.enumSetting.increment();
+        this.booleanSetting.setValue(!this.booleanSetting.getValue());
     }
 }
