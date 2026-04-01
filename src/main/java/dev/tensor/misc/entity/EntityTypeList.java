@@ -69,11 +69,11 @@ public final class EntityTypeList implements Globals {
     }
 
     public String saveEntityListToString() {
-        AtomicReference<String> list = new AtomicReference<>("");
-
         if (this.entityList.isEmpty()) {
             return "null";
         }
+
+        AtomicReference<String> list = new AtomicReference<>("");
 
         this.entityList.forEach(entity -> list.set(list.get() + entity + "_"));
         list.set(list.get().substring(0, list.get().length() - 1));

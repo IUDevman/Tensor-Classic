@@ -73,6 +73,10 @@ public final class BlockList implements Globals {
     public void loadBlockListFromString(String string, boolean checkReal) throws Exception {
         this.clearBlockList();
 
+        if (string.equalsIgnoreCase("null")) {
+            return;
+        }
+
         String[] pooledString = string.split("_");
 
         for (int i = 0; i < pooledString.length; i++) {
@@ -82,11 +86,11 @@ public final class BlockList implements Globals {
     }
 
     public String saveBlockListToString() {
-        AtomicReference<String> list = new AtomicReference<>("");
-
         if (this.blockList.isEmpty()) {
             return "null";
         }
+
+        AtomicReference<String> list = new AtomicReference<>("");
 
         this.blockList.forEach(string -> list.set(list.get() + string + "_"));
         list.set(list.get().substring(0, list.get().length() - 1));
