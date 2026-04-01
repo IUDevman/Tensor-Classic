@@ -43,7 +43,7 @@ public final class KillAura extends Hack {
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
 
-    public final ArrayList<Entity> target_Entities = new ArrayList<>();
+    private final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
 
     private boolean rotated = false;
