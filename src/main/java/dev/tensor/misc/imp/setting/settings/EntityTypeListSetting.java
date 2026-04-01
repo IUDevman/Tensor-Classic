@@ -64,7 +64,7 @@ public final class EntityTypeListSetting implements Setting<EntityTypeList> {
     }
 
     public void addEntity(Entity entity) {
-        this.addEntity(entity.getClass().getSimpleName());
+        this.getValue().addToEntityList(entity);
         this.hasChanged();
     }
 
@@ -74,7 +74,7 @@ public final class EntityTypeListSetting implements Setting<EntityTypeList> {
     }
 
     public void removeEntity(Entity entity) {
-        this.removeEntity(entity.getClass().getSimpleName());
+        this.getValue().removeFromEntityList(entity);
         this.hasChanged();
     }
 
@@ -84,7 +84,7 @@ public final class EntityTypeListSetting implements Setting<EntityTypeList> {
     }
 
     public boolean containsEntity(Entity entity) {
-        return this.containsEntity(entity.getClass().getSimpleName());
+        return this.getValue().containsEntity(entity);
     }
 
     public boolean containsEntity(String entity) {

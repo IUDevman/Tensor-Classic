@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.Packet10FlyingEvent;
+import dev.tensor.misc.entity.EntityTypeList;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -20,11 +21,15 @@ import java.util.List;
 @Hack.Info(name = "KillAura", category = Category.Combat, bind = Keyboard.KEY_R)
 public final class KillAura extends Hack {
 
-    public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false);
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
+    public final EnumSetting animals = new EnumSetting("Animals", Attack.None);
+    public final EntityTypeListSetting animalsCustom = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
     public final BooleanSetting ignoreOwnPet = new BooleanSetting("Ignore Pets", true);
+    public final EnumSetting hostiles = new EnumSetting("Hostiles", Attack.All);
+    public final EntityTypeListSetting hostilesCustom = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
+    public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
     public final BooleanSetting offScreen = new BooleanSetting("Off Screen", true);
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
@@ -38,7 +43,7 @@ public final class KillAura extends Hack {
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
 
-    private final ArrayList<Entity> target_Entities = new ArrayList<>();
+    public final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
 
     private boolean rotated = false;
@@ -166,39 +171,69 @@ public final class KillAura extends Hack {
             return (!this.ignoreFriends.getValue() || !this.getFriendManager().isFriend((EntityOtherPlayerMP) entity));
         }
 
-        if (this.hostiles.getValue() && (entity instanceof EntityMob || entity instanceof EntitySlime)) {
-            return true;
-        }
+        if (this.hostilesCustom.getFullValue().containsEntity(entity)) {
 
-        if (entity instanceof EntityWolf) {
-            EntityWolf entityWolf = (EntityWolf) entity;
-
-            String owner = entityWolf.getWolfOwner();
-
-            if (owner.isEmpty()) {
-                return this.animals.getValue();
-
-            } else if (owner.equalsIgnoreCase(this.getPlayer().username)) {
-                if (this.ignoreOwnPet.getValue()) {
+            switch ((Attack) this.hostiles.getValue()) {
+                case All:
+                    return true;
+                case Custom:
+                    return this.hostilesCustom.containsEntity(entity);
+                case None:
                     return false;
-
-                } else {
-                    return this.animals.getValue();
-                }
-
-            } else {
-                boolean isFriend = this.getFriendManager().isFriend(owner);
-
-                if (this.ignoreFriends.getValue() && isFriend) {
-                    return false;
-
-                } else {
-                    return this.players.getValue();
-                }
             }
         }
 
-        return this.animals.getValue() && entity instanceof EntityAnimal;
+        if (this.animalsCustom.getFullValue().containsEntity(entity)) {
+
+            if (entity instanceof EntityWolf) {
+
+                String owner = ((EntityWolf) entity).getWolfOwner();
+
+                if (owner.isEmpty()) {
+                    return this.shouldAttackAnimal(entity);
+                }
+
+                if (owner.equalsIgnoreCase(this.getPlayer().username)) {
+                    return !this.ignoreOwnPet.getValue() && this.shouldAttackAnimal(entity);
+                }
+
+                if (this.getFriendManager().isFriend(owner)) {
+                    return !this.ignoreFriends.getValue() && this.players.getValue();
+                }
+
+                return this.players.getValue();
+
+            } else {
+                return this.shouldAttackAnimal(entity);
+            }
+        }
+
+        if (this.miscCustom.getFullValue().containsEntity(entity)) {
+
+            switch ((Attack) this.misc.getValue()) {
+                case All:
+                    return true;
+                case Custom:
+                    return this.miscCustom.getValue().containsEntity(entity);
+                case None:
+                    return false;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean shouldAttackAnimal(Entity entity) {
+        switch ((Attack) this.animals.getValue()) {
+            case All:
+                return true;
+            case Custom:
+                return this.animalsCustom.containsEntity(entity);
+            case None:
+                return false;
+        }
+
+        return false;
     }
 
     private void attackEntity(Entity entity) {
@@ -254,6 +289,12 @@ public final class KillAura extends Hack {
                 this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValue());
                 break;
         }
+    }
+
+    public enum Attack {
+        All,
+        None,
+        Custom
     }
 
     public enum Sort {

@@ -25,12 +25,20 @@ public final class EntityTypeList implements Globals {
         return this.entityList;
     }
 
+    public void addToEntityList(Entity entity) {
+        this.addToEntityList(entity.getClass().getSimpleName());
+    }
+
     public void addToEntityList(String entity) {
         entity = EntityName.convert(entity);
 
         if (!this.entityList.contains(entity)) {
             this.entityList.add(entity);
         }
+    }
+
+    public void removeFromEntityList(Entity entity) {
+        this.removeFromEntityList(entity.getClass().getSimpleName());
     }
 
     public void removeFromEntityList(String entity) {
@@ -46,6 +54,10 @@ public final class EntityTypeList implements Globals {
     public void resetEntityList() {
         this.clearEntityList();
         this.entityList.addAll(entityListDefault);
+    }
+
+    public boolean containsEntity(Entity entity) {
+        return this.containsEntity(entity.getClass().getSimpleName());
     }
 
     public boolean containsEntity(String entity) {
@@ -110,6 +122,19 @@ public final class EntityTypeList implements Globals {
         }
 
         return new ArrayList<>(HOSTILES);
+    }
+
+    private static final ArrayList<String> MISC_KA = new ArrayList<>();
+
+    public static ArrayList<String> MISC_KA() {
+        if (MISC_KA.isEmpty()) {
+            MISC_KA.add(EntityName.convert(EntityBoat.class.getSimpleName()));
+            MISC_KA.add(EntityName.convert(EntityFireball.class.getSimpleName()));
+            MISC_KA.add(EntityName.convert(EntityMinecart.class.getSimpleName()));
+            MISC_KA.add(EntityName.convert(EntityPainting.class.getSimpleName()));
+        }
+
+        return new ArrayList<>(MISC_KA);
     }
 
     private static final ArrayList<String> MISC = new ArrayList<>();
