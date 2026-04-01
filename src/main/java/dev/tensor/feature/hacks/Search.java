@@ -58,7 +58,7 @@ public final class Search extends Hack {
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
-    public final ColorSetting searchColor = new ColorSetting("Search Color", new Color(128, 0, 128, 255));
+    public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
 
