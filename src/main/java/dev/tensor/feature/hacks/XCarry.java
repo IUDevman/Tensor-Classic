@@ -10,7 +10,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-01-2026
  */
 
-@Hack.Info(name = "XCarry", category = Category.Misc)
+@Hack.Info(name = "XCarry", category = Category.Player)
 public final class XCarry extends Hack {
 
     @SuppressWarnings("unused")
