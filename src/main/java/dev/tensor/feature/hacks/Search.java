@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.RenderBlockEvent;
+import dev.tensor.backend.events.ViewBobEvent;
 import dev.tensor.misc.block.BlockCoords;
 import dev.tensor.misc.block.BlockList;
 import dev.tensor.misc.event.EventTarget;
@@ -57,6 +58,10 @@ public final class Search extends Hack {
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
+    public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None);
+    public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()));
+    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
+    public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
     public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
     public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);
 
@@ -118,6 +123,14 @@ public final class Search extends Hack {
         }
     }
 
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onViewBobEvent(ViewBobEvent event) {
+        if (!this.tracers.getValue().equals(TracerMode.None)) {
+            event.cancel();
+        }
+    }
+
     @Override
     public void onClientTick() {
         this.blockCoords.forEach(blockCoords1 -> {
@@ -139,6 +152,8 @@ public final class Search extends Hack {
         switch ((Mode) this.mode.getValue()) {
             case Glowstone:
                 return blockID == Block.glowStone.blockID;
+            case Portal:
+                return blockID == Block.portal.blockID;
             case Chest:
                 return blockID == Block.chest.blockID;
             case Diamond:
@@ -159,7 +174,18 @@ public final class Search extends Hack {
 
         Color color = blockCoords.block.blockID == Block.chest.blockID ? this.chestColor.getValue() : this.searchColor.getValue();
 
+        if (!this.tracers.getValue().equals(TracerMode.None)) {
+
+            if (this.tracers.getValue().equals(TracerMode.Custom) && this.customTracers.containsBlock(blockCoords.block)) {
+                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+            } else if (this.tracers.getValue().equals(TracerMode.All)) {
+                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+            }
+        }
+
         switch ((Render) this.render.getValue()) {
+            case None:
+                break;
             case Outline:
                 this.drawOutlineBox(rx, ry, rz, 1, this.lineWidth.getValue(), color);
                 break;
@@ -180,15 +206,23 @@ public final class Search extends Hack {
 
     private enum Mode {
         Glowstone,
+        Portal,
         Chest,
         Diamond,
         Utility,
         Custom
     }
 
+    private enum TracerMode {
+        None,
+        All,
+        Custom
+    }
+
     private enum Render {
         Outline,
         Fill,
-        Both
+        Both,
+        None
     }
 }

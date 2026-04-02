@@ -70,6 +70,7 @@ public final class HackManager implements Manager {
         this.addHack(new TabGUI());
         this.addHack(new Timer());
         this.addHack(new TimerMine());
+        this.addHack(new Tracers());
         this.addHack(new Welcomer());
         this.addHack(new XCarry());
         this.addHack(new Xray());

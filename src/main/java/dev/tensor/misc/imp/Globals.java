@@ -382,4 +382,14 @@ public interface Globals {
         Tessellator.instance.addVertex(x, y, z);
         Tessellator.instance.draw();
     }
+
+    default void drawTracer(double targetX, double targetY, double targetZ, int lineWidth, Color color, int alpha) {
+        GL11.glLineWidth(lineWidth);
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, alpha / 255F);
+
+        Tessellator.instance.startDrawing(GL11.GL_LINES);
+        Tessellator.instance.addVertex(0, 0, 0);
+        Tessellator.instance.addVertex(targetX, targetY, targetZ);
+        Tessellator.instance.draw();
+    }
 }
