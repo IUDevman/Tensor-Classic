@@ -187,6 +187,8 @@ public final class Search extends Hack {
                 this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             } else if (this.tracers.getValue().equals(TracerMode.All)) {
                 this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+            } else if (this.tracers.getValue().equals(TracerMode.Portal) && blockCoords.block.blockID == Block.portal.blockID) {
+                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             }
         }
 
@@ -223,7 +225,8 @@ public final class Search extends Hack {
     private enum TracerMode {
         None,
         All,
-        Custom
+        Portal,
+        Custom,
     }
 
     private enum Render {
