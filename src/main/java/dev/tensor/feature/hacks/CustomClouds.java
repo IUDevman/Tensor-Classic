@@ -14,7 +14,7 @@ import java.awt.*;
  * @since 04-01-2026
  */
 
-@Hack.Info(name = "Custom Clouds", category = Category.Render)
+@Hack.Info(name = "CustomClouds", category = Category.Render)
 public final class CustomClouds extends Hack {
 
     public final BooleanSetting renderClouds = new BooleanSetting("Render Clouds", true);
