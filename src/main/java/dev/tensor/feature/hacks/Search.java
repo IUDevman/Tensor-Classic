@@ -62,8 +62,9 @@ public final class Search extends Hack {
     public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()));
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
-    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
     public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);
+    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
+    public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255));
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
 
@@ -172,7 +173,13 @@ public final class Search extends Hack {
         double ry = blockCoords.y - RenderManager.renderPosY;
         double rz = blockCoords.z - RenderManager.renderPosZ;
 
-        Color color = blockCoords.block.blockID == Block.chest.blockID ? this.chestColor.getValue() : this.searchColor.getValue();
+        Color color = this.searchColor.getValue();
+
+        if (blockCoords.block.blockID == Block.chest.blockID) {
+            color = this.chestColor.getValue();
+        } else if (blockCoords.block.blockID == Block.portal.blockID) {
+            color = this.portalColor.getValue();
+        }
 
         if (!this.tracers.getValue().equals(TracerMode.None)) {
 
