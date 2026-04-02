@@ -71,6 +71,7 @@ public final class HackManager implements Manager {
         this.addHack(new Timer());
         this.addHack(new TimerMine());
         this.addHack(new Welcomer());
+        this.addHack(new XCarry());
         this.addHack(new Xray());
         this.addHack(new EntityESP());
 

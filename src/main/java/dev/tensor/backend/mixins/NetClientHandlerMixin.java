@@ -2,6 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.BlockBreakEvent;
 import dev.tensor.backend.events.ChatSentEvent;
+import dev.tensor.backend.events.CloseInventoryEvent;
 import dev.tensor.backend.events.Packet10FlyingEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
@@ -57,6 +58,21 @@ public final class NetClientHandlerMixin implements Globals {
             this.getEventManager().call(event);
 
             arg = event.packet;
+        }
+
+        if (arg instanceof Packet101CloseWindow) {
+
+            Packet101CloseWindow packet = (Packet101CloseWindow) arg;
+
+            if (packet.windowId == this.getPlayer().craftingInventory.windowId) {
+
+                CloseInventoryEvent event = new CloseInventoryEvent();
+                this.getEventManager().call(event);
+
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            }
         }
     }
 }

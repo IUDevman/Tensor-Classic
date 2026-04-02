@@ -31,8 +31,8 @@ public final class Sneak extends Hack {
         if (this.limitSpeed.getValue()) {
 
             //Vanilla multiplier is 0.3; Max multiplier on NoCheat servers is 0.5.
-           this.getPlayer().motionX *= this.speedLimiter.getValue();
-           this.getPlayer().motionZ *= this.speedLimiter.getValue();
+            this.getPlayer().motionX *= this.speedLimiter.getValue();
+            this.getPlayer().motionZ *= this.speedLimiter.getValue();
         }
 
         this.sendPacket(new Packet19EntityAction(this.getPlayer(), 1));
