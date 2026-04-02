@@ -200,10 +200,13 @@ public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
             return;
         }
 
+        AtomicBoolean hasClicked = new AtomicBoolean(false);
+
         this.categoryElements.forEach(categoryElement -> {
 
             if (this.isHovered(categoryElement, i, j) && !categoryElement.isSelected()) {
                 categoryElement.onClick(i, j);
+                hasClicked.set(true);
                 return;
             }
 
@@ -215,6 +218,7 @@ public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
 
                 if (this.isHovered(hackElement, i, j)) {
                     hackElement.onClick(i, j);
+                    hasClicked.set(true);
                     return;
                 }
 
@@ -224,6 +228,7 @@ public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
 
                 if (this.isHovered(hackElement.propertyElement, i, j)) {
                     hackElement.propertyElement.onClick(i, j);
+                    hasClicked.set(true);
                     return;
                 }
 
@@ -231,12 +236,32 @@ public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
 
                     if (this.isHovered(settingElement, i, j)) {
                         settingElement.onClick(i, j);
+                        hasClicked.set(true);
                     }
                 });
-
             });
-
         });
+
+        if (!hasClicked.get()) {
+            this.categoryElements.forEach(categoryElement -> {
+
+                if (categoryElement.isSelected()) {
+                    categoryElement.hackElements.forEach(hackElement -> {
+
+                        if (hackElement.isViewed()) {
+                            hackElement.settingElements.forEach(settingElement -> {
+
+                                if (settingElement instanceof KeyPressElement) {
+                                    KeyPressElement element = (KeyPressElement) settingElement;
+
+                                    element.setSearching(false);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        }
     }
 
     @Override

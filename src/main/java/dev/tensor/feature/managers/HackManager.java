@@ -47,6 +47,8 @@ public final class HackManager implements Manager {
         this.addHack(new CommandPreview());
         this.addHack(new Commands());
         this.addHack(new Coordinates());
+        this.addHack(new CustomClouds());
+        this.addHack(new CustomFog());
         this.addHack(new FOV());
         this.addHack(new Fullbright());
         this.addHack(new GreenText());

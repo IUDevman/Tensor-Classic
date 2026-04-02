@@ -12,7 +12,7 @@ import net.minecraft.src.Entity;
  * @since 03-31-2026
  */
 
-public final class EntityTypeListSetting implements Setting<EntityTypeList> {
+public class EntityTypeListSetting implements Setting<EntityTypeList> {
 
     private final String NAME;
 

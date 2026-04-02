@@ -1,0 +1,45 @@
+package dev.tensor.feature.hacks;
+
+import dev.tensor.backend.events.RenderSkyEvent;
+import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
+
+import java.awt.*;
+
+/**
+ * @author Hoosiers
+ * @since 04-01-2026
+ */
+
+@Hack.Info(name = "CustomFog", category = Category.Render)
+public final class CustomFog extends Hack {
+
+    public final BooleanSetting renderSkyFog = new BooleanSetting("Render Sky Fog", false);
+    public final BooleanSetting renderFluidFog = new BooleanSetting("Render Fluid Fog", true);
+    public final BooleanSetting fogColor = new BooleanSetting("Custom Color (Ugly)", true);
+    public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", new Color(255, 105, 180, 255));
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onRenderSkyEvent(RenderSkyEvent event) {
+
+        if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids) && !this.renderFluidFog.getValue()) {
+            event.cancel();
+            return;
+        }
+
+        if (event.type.equals(RenderSkyEvent.Type.Fog)) {
+            if (!this.renderSkyFog.getValue()) {
+                event.cancel();
+                return;
+            }
+
+            if (this.fogColor.getValue()) {
+                event.setNewColor(this.color.getValue());
+            }
+        }
+    }
+}

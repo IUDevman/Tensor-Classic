@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
 
@@ -23,11 +24,16 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     private boolean searchingG = false;
     private boolean searchingB = false;
     private boolean searchingA = false;
+    private boolean disabledAlpha = false;
     private String value = "";
 
     public ColorSettingElement(HackElement hackElement, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.colorSetting = colorSetting;
+
+        if (colorSetting instanceof ColorSettingNoAlpha) {
+            this.disabledAlpha = true;
+        }
     }
 
     @Override
@@ -102,7 +108,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         this.drawCenteredString("  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
         this.drawCenteredString("  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
         this.drawCenteredString("  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
-        this.drawCenteredString("  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]"), midX + 3, minY + 63, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.disabledAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]")), midX + 3, minY + 63, Color.WHITE.getRGB());
     }
 
     @Override
@@ -141,10 +147,14 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             this.searchingR = false;
             this.searchingG = false;
             this.searchingB = false;
-            this.searchingA = !this.searchingA;
+
+            if (!this.disabledAlpha) {
+                this.searchingA = !this.searchingA;
+            }
+
             this.value = "";
         } else {
-            clearSearching();
+            this.clearSearching();
         }
     }
 
@@ -197,7 +207,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             this.colorSetting.setValue(new Color(oldColor.getRed(), value, oldColor.getBlue(), oldColor.getAlpha()));
         } else if (this.searchingB) {
             this.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), value, oldColor.getAlpha()));
-        } else if (this.searchingA) {
+        } else if (this.searchingA && !this.disabledAlpha) {
             this.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), value));
         }
     }

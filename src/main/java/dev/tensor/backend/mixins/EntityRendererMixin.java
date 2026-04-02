@@ -1,16 +1,21 @@
 package dev.tensor.backend.mixins;
 
-import dev.tensor.backend.events.FOVModifierEvent;
-import dev.tensor.backend.events.HurtCameraEvent;
-import dev.tensor.backend.events.Render3DEvent;
-import dev.tensor.backend.events.ViewBobEvent;
+import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityRenderer;
+import net.minecraft.src.Material;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.awt.*;
+import java.nio.FloatBuffer;
 
 /**
  * @author Hoosiers
@@ -18,7 +23,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(value = EntityRenderer.class, priority = Integer.MAX_VALUE)
-public final class EntityRendererMixin implements Globals {
+public abstract class EntityRendererMixin implements Globals {
+
+    @Shadow
+    protected abstract FloatBuffer func_908_a(float f, float g, float h, float i);
 
     @Inject(method = "getFOVModifier", at = @At("HEAD"), cancellable = true)
     public void onGetFOVModifier(float par1, CallbackInfoReturnable<Float> cir) {
@@ -70,5 +78,40 @@ public final class EntityRendererMixin implements Globals {
 
         Render3DEvent event = new Render3DEvent();
         this.getEventManager().call(event);
+    }
+
+    @Inject(method = "setupFog", at = @At("TAIL"))
+    public void onSetupFogTail(int f, float par2, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog);
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
+        } else if (event.isUpdated()) {
+            Color color = event.getNewColor();
+
+            GL11.glFog(GL11.GL_FOG_COLOR, this.func_908_a(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue(), 1.0F));
+        }
+    }
+
+    //Slick redirect
+    @Redirect(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityLiving;isInsideOfMaterial(Lnet/minecraft/src/Material;)Z"))
+    public boolean onSetUpFogInvokeIsInsideOfMaterial(EntityLiving instance, Material material) {
+        if (this.failsNullCheck()) {
+            return false;
+        }
+
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog_Fluids);
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            return false;
+        }
+
+        return instance.isInsideOfMaterial(material);
     }
 }
