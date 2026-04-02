@@ -81,6 +81,10 @@ public interface Globals {
     }
 
     default void sendPacket(Packet packet) {
+        if (this.getMinecraft().getSendQueue() == null)  {
+            return;
+        }
+
         this.getMinecraft().getSendQueue().addToSendQueue(packet);
     }
 
