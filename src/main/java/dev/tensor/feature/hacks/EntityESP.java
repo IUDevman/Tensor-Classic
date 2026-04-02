@@ -26,10 +26,10 @@ public final class EntityESP extends Hack {
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
-    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.RED);
+    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);
     public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN);
     public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN);
-    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.ORANGE);
+    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED);
     public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
     public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
     public final EnumSetting mode = new EnumSetting("Render", Mode.Outline);
