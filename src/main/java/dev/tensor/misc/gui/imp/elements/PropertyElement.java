@@ -14,6 +14,7 @@ import java.awt.*;
 
 public final class PropertyElement implements Element {
 
+    private final HackElement hackElement;
     private final Hack hack;
     private final IntegerSetting x;
     private final IntegerSetting y;
@@ -21,7 +22,8 @@ public final class PropertyElement implements Element {
     private final int posX;
     private final int posY;
 
-    public PropertyElement(Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+    public PropertyElement(HackElement hackElement, Hack hack, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
+        this.hackElement = hackElement;
         this.hack = hack;
         this.x = x;
         this.y = y;
@@ -71,6 +73,18 @@ public final class PropertyElement implements Element {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.hackElement.settingElements.forEach(settingElement -> {
+
+            if (settingElement instanceof KeyPressElement) {
+
+                KeyPressElement element = (KeyPressElement) settingElement;
+
+                if (element.isSearching()) {
+                    element.setSearching(false);
+                }
+            }
+        });
+
         if (mouseY > this.getPosY() && mouseY < this.getPosY() + 15) {
             hack.toggle();
         } else if (mouseY > this.getPosY() + 15 && mouseY < this.getPosY() + 30) {

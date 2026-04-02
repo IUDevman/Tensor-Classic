@@ -52,7 +52,7 @@ public final class HackElement implements Element {
 
         AtomicInteger settingY = new AtomicInteger(22);
 
-        this.propertyElement = new PropertyElement(this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
+        this.propertyElement = new PropertyElement(this, this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
         settingY.getAndAdd(this.propertyElement.getHeight());
 
         BindResetSettingElement bindResetSettingElement = new BindResetSettingElement(this, this.hack, this.x, this.y, this.sScrollY, this.posX + this.getWidth() + 2, settingY.get());
