@@ -30,7 +30,6 @@ public final class KillAura extends Hack {
     public final EntityTypeListSetting hostilesCustom = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
     public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
     public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
-    public final BooleanSetting offScreen = new BooleanSetting("Off Screen", true);
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
@@ -85,10 +84,6 @@ public final class KillAura extends Hack {
             }
 
             if (this.shouldAttackEntity(entity)) {
-
-                if (!this.offScreen.getValue() && !this.isEntityOnScreen(entity)) {
-                    continue;
-                }
 
                 if (!this.behindWalls.getValue() && !this.isEntityBehindWalls(entity)) {
                     continue;
@@ -251,11 +246,6 @@ public final class KillAura extends Hack {
         }
 
         this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
-    }
-
-    //todo
-    private boolean isEntityOnScreen(Entity entity) {
-        return true;
     }
 
     private boolean isEntityBehindWalls(Entity entity) {
