@@ -41,6 +41,7 @@ public final class HackManager implements Manager {
 
         this.addHack(new AutoLogin());
         this.addHack(new AutoTool());
+        this.addHack(new AutoWalk());
         this.addHack(new BackwardsChat());
         this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());
