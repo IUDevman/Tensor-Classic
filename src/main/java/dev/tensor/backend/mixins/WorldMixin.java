@@ -1,12 +1,15 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.LightValueEvent;
+import dev.tensor.backend.events.VelocityEvent;
 import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.Vec3D;
 import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -45,7 +48,7 @@ public abstract class WorldMixin implements Globals {
             ci.cancel();
         }
     }
-    
+
     @Inject(method = "func_27166_f", at = @At("HEAD"), cancellable = true)
     public void thunderStrength(float par1, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
@@ -73,4 +76,21 @@ public abstract class WorldMixin implements Globals {
             cir.setReturnValue(0.0F);
         }
     }
+
+    @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
+    public double test(Vec3D instance) {
+        if (this.failsNullCheck()) {
+            return instance.lengthVector();
+        }
+
+        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.Fluid);
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            return 0;
+        }
+
+        return instance.lengthVector();
+    }
+
 }

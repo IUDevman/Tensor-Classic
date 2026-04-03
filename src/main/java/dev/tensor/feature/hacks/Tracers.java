@@ -5,7 +5,10 @@ import dev.tensor.misc.entity.EntityTypeList;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.setting.settings.*;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.*;
 
 import java.awt.*;

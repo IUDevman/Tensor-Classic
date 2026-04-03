@@ -4,12 +4,16 @@
   "package": "dev.tensor.backend.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BlockSoulSandMixin",
     "ChunkMixin",
+    "EntityMixin",
+    "NetworkManagerMixin",
     "WorldMixin",
     "accessors.EntityAccessor"
   ],
   "client": [
     "BlockRendererMixin",
+    "EntityPlayerSPMixin",
     "EntityRendererMixin",
     "GuiChatMixin",
     "GuiIngameMixin",

@@ -1,0 +1,32 @@
+package dev.tensor.backend.mixins;
+
+import dev.tensor.backend.events.VelocityEvent;
+import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.Entity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+/**
+ * @author Hoosiers
+ * @since 04-02-2026
+ */
+
+@Mixin(value = Entity.class, priority = Integer.MAX_VALUE)
+public final class EntityMixin implements Globals {
+
+    @Inject(method = "applyEntityCollision", at = @At("HEAD"), cancellable = true)
+    public void onApplyEntityCollision(Entity par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.Entity);
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            ci.cancel();
+        }
+    }
+}

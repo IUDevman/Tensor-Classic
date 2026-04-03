@@ -40,6 +40,8 @@ public final class NetClientHandlerMixin implements Globals {
             } else if (!event.ARGS.equals(packet.message)) {
                 packet.message = event.ARGS;
             }
+
+            return;
         }
 
         if (arg instanceof Packet14BlockDig) {
@@ -48,6 +50,7 @@ public final class NetClientHandlerMixin implements Globals {
 
             BlockBreakEvent event = new BlockBreakEvent(packet);
             this.getEventManager().call(event);
+            return;
         }
 
         if (arg instanceof Packet10Flying) {
@@ -58,6 +61,7 @@ public final class NetClientHandlerMixin implements Globals {
             this.getEventManager().call(event);
 
             arg = event.packet;
+            return;
         }
 
         if (arg instanceof Packet101CloseWindow) {
