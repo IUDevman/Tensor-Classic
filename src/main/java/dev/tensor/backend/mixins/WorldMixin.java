@@ -7,6 +7,7 @@ import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -31,6 +32,20 @@ public abstract class WorldMixin implements Globals {
         }
     }
 
+    @Inject(method = "func_27163_E", at = @At("HEAD"), cancellable = true)
+    public void onSetWeatherStrength(CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        WeatherEvent event = new WeatherEvent();
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            ci.cancel();
+        }
+    }
+    
     @Inject(method = "func_27166_f", at = @At("HEAD"), cancellable = true)
     public void thunderStrength(float par1, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
