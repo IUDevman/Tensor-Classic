@@ -52,13 +52,14 @@ public final class InventoryMove extends Hack {
 
         AutoWalk autoWalk = this.getHackManager().getHack(AutoWalk.class);
 
-        if (!autoWalk.isEnabled()) {
-            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindForward.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindForward.keyCode));
+        if (autoWalk.isEnabled()) {
+            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindForward.keyCode, stop || !Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindBack.keyCode));
+            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindBack.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindBack.keyCode));
         } else {
-            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindForward.keyCode, !Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindBack.keyCode));
+            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindForward.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindForward.keyCode));
+            this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindBack.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindBack.keyCode));
         }
 
-        this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindBack.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindBack.keyCode));
         this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindLeft.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindLeft.keyCode));
         this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindRight.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindRight.keyCode));
 
