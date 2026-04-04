@@ -68,7 +68,6 @@ public final class Inventory extends Hack implements HUDObject {
 
             this.finishItemGL();
         }
-
     }
 
     private int getScaledOutline() {
