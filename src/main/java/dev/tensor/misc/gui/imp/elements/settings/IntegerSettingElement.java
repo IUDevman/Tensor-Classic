@@ -90,17 +90,19 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
 
     @Override
     public void onKeyPressed(char letter, int key) {
-        if (!isSearching()) return;
+        if (!this.isSearching()) {
+            return;
+        }
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {
-            setSearching(false);
+            this.setSearching(false);
             return;
         }
 
         if (key == Keyboard.KEY_RETURN) {
 
             if (this.value.equals("")) {
-                setSearching(false);
+                this.setSearching(false);
                 return;
             }
 
@@ -108,11 +110,11 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
                 this.integerSetting.setValueFromString(this.value);
 
                 this.value = "";
-                setSearching(false);
+                this.setSearching(false);
 
             } catch (Exception ignored) {
                 this.value = "";
-                setSearching(false);
+                this.setSearching(false);
                 return;
             }
         }

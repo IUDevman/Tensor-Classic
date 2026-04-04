@@ -446,6 +446,38 @@ public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
         }
     }
 
+    public boolean isSearching() {
+
+        if (this.buttonActive.get() && this.buttonSetting != null && this.buttonSetting.isSearching()) {
+            return true;
+        }
+
+        AtomicBoolean isSearching = new AtomicBoolean(false);
+
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (categoryElement.isSelected()) {
+                categoryElement.hackElements.forEach(hackElement -> {
+
+                    if (hackElement.isViewed()) {
+                        hackElement.settingElements.forEach(settingElement -> {
+
+                            if (settingElement instanceof KeyPressElement) {
+                                KeyPressElement element = (KeyPressElement) settingElement;
+
+                                if (element.isSearching()) {
+                                    isSearching.set(true);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        return isSearching.get();
+    }
+
     private enum Scroll {
         Hack,
         Setting

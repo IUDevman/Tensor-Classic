@@ -163,14 +163,14 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         if (!this.searchingR && !this.searchingG && !this.searchingB && !this.searchingA) return;
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {
-            clearSearching();
+            this.clearSearching();
             return;
         }
 
         if (key == Keyboard.KEY_RETURN) {
 
             if (this.value.equals("")) {
-                clearSearching();
+                this.clearSearching();
                 return;
             }
 
@@ -182,7 +182,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             this.setValue(value1);
 
             this.value = "";
-            clearSearching();
+            this.clearSearching();
         }
 
         if (Arrays.stream(this.acceptedKeys()).noneMatch(value -> value == key)) {

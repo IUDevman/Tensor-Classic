@@ -86,15 +86,17 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
             }
         });
 
-        setSearching(!isSearching());
+        this.setSearching(!this.isSearching());
     }
 
     @Override
     public void onKeyPressed(char letter, int key) {
-        if (!isSearching()) return;
+        if (!this.isSearching()) {
+            return;
+        }
 
         if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {
-            setSearching(false);
+            this.setSearching(false);
             return;
         }
 
@@ -109,11 +111,11 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
                 this.doubleSetting.setValueFromString(this.value);
 
                 this.value = "";
-                setSearching(false);
+                this.setSearching(false);
 
             } catch (Exception ignored) {
                 this.value = "";
-                setSearching(false);
+                this.setSearching(false);
                 return;
             }
         }

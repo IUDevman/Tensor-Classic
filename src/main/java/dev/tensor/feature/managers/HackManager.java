@@ -59,6 +59,7 @@ public final class HackManager implements Manager {
         this.addHack(new HackList());
         this.addHack(new HUDEditor());
         this.addHack(new Inventory());
+        this.addHack(new InventoryMove());
         this.addHack(new KillAura());
         this.addHack(new ModInfo());
         this.addHack(new NoFall());

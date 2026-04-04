@@ -20,7 +20,7 @@ public final class ClickGUI extends Hack {
     public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 
-    private TensorGUI tensorGUI = null;
+    public TensorGUI tensorGUI = null;
 
     @Override
     public void onEnable(boolean isNull) {

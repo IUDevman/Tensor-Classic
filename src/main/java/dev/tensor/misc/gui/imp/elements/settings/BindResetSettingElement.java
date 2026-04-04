@@ -91,7 +91,9 @@ public final class BindResetSettingElement extends SettingElement implements Key
         });
 
         if (mouseY > this.getPosY() + 15) {
-            if (isSearching()) setSearching(false);
+            if (this.isSearching()) {
+                this.setSearching(false);
+            }
 
             this.hack.reset();
 
@@ -99,15 +101,18 @@ public final class BindResetSettingElement extends SettingElement implements Key
             return;
         }
 
-        setSearching(!isSearching());
+        this.setSearching(!this.isSearching());
     }
 
     @Override
     public void onKeyPressed(char letter, int key) {
-        if (!isSearching()) return;
+        if (!isSearching()) {
+            return;
+        }
 
         if (key == Keyboard.KEY_DELETE) {
             this.hack.BIND = Keyboard.KEY_NONE;
+            this.setSearching(false);
             return;
         }
 
@@ -115,6 +120,6 @@ public final class BindResetSettingElement extends SettingElement implements Key
             this.hack.BIND = key;
         }
 
-        setSearching(false);
+        this.setSearching(false);
     }
 }
