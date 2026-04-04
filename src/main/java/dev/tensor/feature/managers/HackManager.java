@@ -40,6 +40,7 @@ public final class HackManager implements Manager {
         LOGGER.info("Loaded: " + this.getName());
 
         this.addHack(new AntiKnockback());
+        this.addHack(new Armor());
         this.addHack(new AutoLogin());
         this.addHack(new AutoTool());
         this.addHack(new AutoWalk());

@@ -549,4 +549,27 @@ public interface Globals {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
     }
+
+    default void renderItemPercentage(ItemStack itemStack, int startX, int startY) {
+        if (itemStack == null) {
+            return;
+        }
+
+        GL11.glScalef(0.5F, 0.5F, 0.0F);
+
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+
+        int dColor = Math.round(255.0F - itemStack.getItemDamage() * 255.0F / itemStack.getMaxDamage());
+        int color = 255 - dColor << 16 | dColor << 8;
+
+        double dDamage = (double) itemStack.getItemDamage() / itemStack.getMaxDamage();
+        int percentage = (int) (100 - (dDamage * 100));
+
+        String string = percentage + "%";
+        this.drawString(string, startX + 19 - 2 - this.getFontRenderer().getStringWidth(string), startY + 6 + 3, new Color(color >> 16 & 255, color >> 8 & 255, color & 255).getRGB());
+
+        GL11.glEnable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_DEPTH_TEST);
+    }
 }
