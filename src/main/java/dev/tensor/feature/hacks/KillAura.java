@@ -35,12 +35,12 @@ public final class KillAura extends Hack {
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
+    public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
-    public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
 
     private final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
