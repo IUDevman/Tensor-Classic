@@ -52,24 +52,8 @@ public interface Globals {
         return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
     }
 
-    default boolean isSearchEnabled() {
-        Search search = this.getHackManager().getHack(Search.class);
-
-        if (search == null) {
-            return false;
-        }
-
-        return search.isEnabled();
-    }
-
-    default boolean isXrayEnabled() {
-        Xray xray = this.getXray();
-
-        if (xray == null) {
-            return false;
-        }
-
-        return xray.isEnabled();
+    default boolean isMultiplayer() {
+        return this.getWorld().multiplayerWorld;
     }
 
     default void resetWorld() {
@@ -86,10 +70,6 @@ public interface Globals {
         }
 
         this.getMinecraft().getSendQueue().addToSendQueue(packet);
-    }
-
-    default boolean isMultiplayer() {
-        return this.getWorld().multiplayerWorld;
     }
 
     default TensorClassic getTensor() {
@@ -126,6 +106,26 @@ public interface Globals {
 
     default Xray getXray() {
         return this.getHackManager().getHack(Xray.class);
+    }
+
+    default boolean isXrayEnabled() {
+        Xray xray = this.getXray();
+
+        if (xray == null) {
+            return false;
+        }
+
+        return xray.isEnabled();
+    }
+
+    default boolean isSearchEnabled() {
+        Search search = this.getHackManager().getHack(Search.class);
+
+        if (search == null) {
+            return false;
+        }
+
+        return search.isEnabled();
     }
 
     default String getColor(ChatColor COLOR) {

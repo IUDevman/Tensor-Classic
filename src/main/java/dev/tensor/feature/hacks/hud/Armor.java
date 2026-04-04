@@ -56,7 +56,7 @@ public final class Armor extends Hack implements HUDObject {
 
         int itemStartX = this.getMinX().getValue() + this.getScaledOutline();
 
-        ItemStack[] armor = this.getPlayer().inventory.armorInventory;
+        ItemStack[] armor = this.getInventory().armorInventory;
         for (int i = armor.length - 1; i >= 0; --i) {
             int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (this.getScaledItemWidth() * (3 - i));
 

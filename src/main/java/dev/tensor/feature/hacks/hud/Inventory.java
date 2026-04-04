@@ -52,7 +52,7 @@ public final class Inventory extends Hack implements HUDObject {
         this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
         this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
 
-        ItemStack[] items = this.getPlayer().inventory.mainInventory;
+        ItemStack[] items = this.getInventory().mainInventory;
         for (int size = items.length, item = 9; item < size; ++item) {
             int itemStartX = this.getMinX().getValue() + this.getScaledOutline() + item % 9 * this.getScaledItemWidth();
             int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (item / 9 - 1) * this.getScaledItemWidth();
