@@ -25,6 +25,10 @@ public final class EntityName {
                 return "Falling Sand";
             }
 
+            if (replace.equalsIgnoreCase("GiantZombie")) {
+                return "Giant";
+            }
+
             return replace;
 
         } else {
@@ -45,6 +49,8 @@ public final class EntityName {
                     return "Creeper";
                 case "class_364":
                     return "Ghast";
+                case "class_311":
+                    return "Giant";
                 case "class_535":
                     return "Zombie Pigman";
                 case "class_90":

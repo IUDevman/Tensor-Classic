@@ -114,6 +114,7 @@ public final class EntityTypeList implements Globals {
         if (HOSTILES.isEmpty()) {
             HOSTILES.add(EntityName.convert(EntityCreeper.class.getSimpleName()));
             HOSTILES.add(EntityName.convert(EntityGhast.class.getSimpleName()));
+            HOSTILES.add(EntityName.convert(EntityGiantZombie.class.getSimpleName()));
             HOSTILES.add(EntityName.convert(EntitySkeleton.class.getSimpleName()));
             HOSTILES.add(EntityName.convert(EntitySlime.class.getSimpleName()));
             HOSTILES.add(EntityName.convert(EntitySpider.class.getSimpleName()));
