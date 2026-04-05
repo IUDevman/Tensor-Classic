@@ -78,7 +78,7 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
-    public double test(Vec3D instance) {
+    public double onHandleMaterialAccelerationInvokeVector(Vec3D instance) {
         if (this.failsNullCheck()) {
             return instance.lengthVector();
         }
@@ -92,5 +92,4 @@ public abstract class WorldMixin implements Globals {
 
         return instance.lengthVector();
     }
-
 }
