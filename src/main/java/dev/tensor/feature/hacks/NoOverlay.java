@@ -18,8 +18,9 @@ public final class NoOverlay extends Hack {
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
     public final BooleanSetting blocks = new BooleanSetting("Blocks", false);
     public final BooleanSetting fire = new BooleanSetting("Fire", false);
-    public final BooleanSetting portals = new BooleanSetting("Portals", false);
-    public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", false);
+    public final BooleanSetting portals = new BooleanSetting("Portals", true);
+    public final BooleanSetting portalVomit = new BooleanSetting("Portal Spin", true);
+    public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", true);
     public final BooleanSetting vignette = new BooleanSetting("Vignette", false);
     public final BooleanSetting water = new BooleanSetting("Water", false);
 
@@ -43,6 +44,11 @@ public final class NoOverlay extends Hack {
         }
 
         if (portals.getValue() && event.type.equals(RenderOverlayEvent.Type.portals)) {
+            event.cancel();
+            return;
+        }
+
+        if (portalVomit.getValue() && event.type.equals(RenderOverlayEvent.Type.vomit)) {
             event.cancel();
             return;
         }

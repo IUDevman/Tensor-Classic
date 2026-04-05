@@ -3,6 +3,7 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityLiving;
+import net.minecraft.src.EntityPlayerSP;
 import net.minecraft.src.EntityRenderer;
 import net.minecraft.src.Material;
 import org.lwjgl.opengl.GL11;
@@ -113,5 +114,21 @@ public abstract class EntityRendererMixin implements Globals {
         }
 
         return instance.isInsideOfMaterial(material);
+    }
+
+    @Redirect(method = "setupCameraTransform", at = @At(value = "FIELD", target = "Lnet/minecraft/src/EntityPlayerSP;prevTimeInPortal:F"))
+    public float onSetupCameraTransformPortalVomit(EntityPlayerSP instance) {
+        if (this.failsNullCheck()) {
+            return -100;
+        }
+
+        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vomit);
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            return -100;
+        }
+
+        return instance.prevTimeInPortal;
     }
 }

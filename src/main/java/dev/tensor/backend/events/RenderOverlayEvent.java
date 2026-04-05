@@ -21,6 +21,7 @@ public final class RenderOverlayEvent extends EventCancellable {
         portals,
         pumpkin,
         vignette,
-        water
+        water,
+        vomit
     }
 }
