@@ -4,6 +4,7 @@ import dev.tensor.backend.events.LightValueEvent;
 import dev.tensor.backend.events.VelocityEvent;
 import dev.tensor.backend.events.WeatherEvent;
 import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.Entity;
 import net.minecraft.src.Vec3D;
 import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -91,5 +92,21 @@ public abstract class WorldMixin implements Globals {
         }
 
         return instance.lengthVector();
+    }
+
+    @Inject(method = "playSoundAtEntity", at = @At("HEAD"), cancellable = true)
+    public void onPlaySoundAtEntity(Entity string, String f, float g, float par4, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (f.equalsIgnoreCase("mob.wolf.shake")) {
+            WeatherEvent event = new WeatherEvent();
+            this.getEventManager().call(event);
+
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        }
     }
 }
