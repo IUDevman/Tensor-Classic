@@ -19,8 +19,8 @@ import java.awt.*;
 @Hack.Info(name = "Armor", category = Category.HUD)
 public final class Armor extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 200, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 200, 0, this.getMaxY());
+    public final IntegerSetting x = new IntegerSetting("X", 83, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 105, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 2.0, 0.5, 3.0, 1);
     public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
@@ -36,14 +36,31 @@ public final class Armor extends Hack implements HUDObject {
         return this.y;
     }
 
+    @Deprecated
+    @Override
+    public DoubleSetting getScale() {
+        return this.scale;
+    }
+
+
     @Override
     public int getWidth() {
         return (int) (18 * this.scale.getValue());
     }
 
     @Override
+    public int getWidthScaled() {
+        return this.getWidth();
+    }
+
+    @Override
     public int getHeight() {
         return (int) (74 * this.scale.getValue());
+    }
+
+    @Override
+    public int getHeightScaled() {
+        return this.getHeight();
     }
 
     @Override

@@ -5,6 +5,7 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
@@ -19,6 +20,7 @@ public final class Welcomer extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 500, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 0, 255));
 
     @Override
@@ -32,6 +34,12 @@ public final class Welcomer extends Hack implements HUDObject {
     }
 
     @Override
+    public DoubleSetting getScale() {
+        return this.scale;
+    }
+
+
+    @Override
     public int getWidth() {
         return this.getFontRenderer().getStringWidth(this.getWelcomer()) + 2;
     }
@@ -42,11 +50,23 @@ public final class Welcomer extends Hack implements HUDObject {
     }
 
     @Override
+    public int getWidthScaled() {
+        return (int) (this.getWidth() * this.scale.getValue());
+    }
+
+    @Override
+    public int getHeightScaled() {
+        return (int) (this.getHeight() * this.scale.getValue());
+    }
+
+    @Override
     public void render() {
+        this.prepareScale();
 
         String welcome = this.getWelcomer();
+        this.drawCenteredString(welcome, 1 + (this.getFontRenderer().getStringWidth(welcome) / 2), 1, this.textColor.getValue().getRGB());
 
-        this.drawCenteredString(welcome, this.x.getValue() + 1 + (this.getFontRenderer().getStringWidth(welcome) / 2), this.y.getValue() + 1, this.textColor.getValue().getRGB());
+        this.finishScale();
     }
 
     private String getWelcomer() {

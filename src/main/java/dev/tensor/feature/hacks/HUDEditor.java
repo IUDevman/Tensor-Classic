@@ -3,8 +3,8 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.gui.TensorHUDEditor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
@@ -17,8 +17,7 @@ import java.awt.*;
 @Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE)
 public final class HUDEditor extends Hack {
 
-    public final BooleanSetting renderObject = new BooleanSetting("Render Object", true);
-    public final BooleanSetting drawOutline = new BooleanSetting("Outline Overlay", false);
+    public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 
     private TensorHUDEditor tensorHUDEditor = null;
@@ -38,5 +37,11 @@ public final class HUDEditor extends Hack {
         }
 
         this.getMinecraft().displayGuiScreen(this.tensorHUDEditor);
+    }
+
+    public enum RenderType {
+        Outline,
+        Object,
+        Both
     }
 }

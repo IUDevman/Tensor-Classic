@@ -47,28 +47,37 @@ public final class TensorHUDEditor extends GuiScreen implements Globals, Hoverab
             this.newX = i + clickX;
             this.newY = j + clickY;
 
-            if (this.newX + this.draggedObject.getWidth() <= this.getMinecraft().currentScreen.width) {
+            if (this.newX + this.draggedObject.getWidthScaled() <= this.getMinecraft().currentScreen.width) {
                 this.draggedObject.getMinX().setValue(newX);
             }
 
-            if (this.newY + this.draggedObject.getHeight() <= this.getMinecraft().currentScreen.height) {
+            if (this.newY + this.draggedObject.getHeightScaled() <= this.getMinecraft().currentScreen.height) {
                 this.draggedObject.getMinY().setValue(newY);
             }
         }
 
         this.hudObjects.forEach(hudObject -> {
 
-            if (this.hudEditor.renderObject.getValue()) {
-                hudObject.render();
-            }
-
-            if (this.hudEditor.drawOutline.getValue()) {
-                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + 2, this.hudEditor.outlineColor.getValue().getRGB());
-                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + hudObject.getHeight() - 2, hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + hudObject.getHeight(), this.hudEditor.outlineColor.getValue().getRGB());
-                this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + 2, hudObject.getMinY().getValue() + hudObject.getHeight() - 2, this.hudEditor.outlineColor.getValue().getRGB());
-                this.drawRectangle(hudObject.getMinX().getValue() + hudObject.getWidth() - 2, hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + hudObject.getHeight() - 2, this.hudEditor.outlineColor.getValue().getRGB());
+            switch ((HUDEditor.RenderType) this.hudEditor.render.getValue()) {
+                case Outline:
+                    this.drawHudObjectOutline(hudObject);
+                    break;
+                case Object:
+                    hudObject.render();
+                    break;
+                case Both:
+                    hudObject.render();
+                    this.drawHudObjectOutline(hudObject);
+                    break;
             }
         });
+    }
+
+    private void drawHudObjectOutline(HUDObject hudObject) {
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + 2, this.hudEditor.outlineColor.getValue().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), this.hudEditor.outlineColor.getValue().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + 2, hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValue().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue() + hudObject.getWidthScaled() - 2, hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValue().getRGB());
     }
 
     @Override
@@ -106,7 +115,7 @@ public final class TensorHUDEditor extends GuiScreen implements Globals, Hoverab
     }
 
     private boolean isHovered(HUDObject hudObject, double mouseX, double mouseY) {
-        return this.isHovered(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidth(), hudObject.getMinY().getValue() + hudObject.getHeight(), mouseX, mouseY);
+        return this.isHovered(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), mouseX, mouseY);
     }
 
     @Override

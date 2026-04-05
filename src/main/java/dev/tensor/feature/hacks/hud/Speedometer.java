@@ -4,10 +4,7 @@ import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.setting.settings.BooleanSetting;
-import dev.tensor.misc.imp.setting.settings.ColorSetting;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import dev.tensor.misc.imp.setting.settings.*;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -17,7 +14,7 @@ import java.util.ArrayDeque;
  * @author Luna5ama (GameSense)
  * @author Hoosiers
  * @since 03-30-2026
- *
+ * <p>
  * https://github.com/IUDevman/gamesense-client/commit/0dd0e740a1e75f21de19f7306895fd51127853ad
  */
 
@@ -25,7 +22,8 @@ import java.util.ArrayDeque;
 public final class Speedometer extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 120, 0, this.getMaxY());
+    public final IntegerSetting y = new IntegerSetting("Y", 37, 0, this.getMaxY());
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting unit = new EnumSetting("Units", Units.BPS) {
         @Override
@@ -61,6 +59,12 @@ public final class Speedometer extends Hack implements HUDObject {
     }
 
     @Override
+    public DoubleSetting getScale() {
+        return this.scale;
+    }
+
+
+    @Override
     public int getWidth() {
         return 100;
     }
@@ -69,6 +73,17 @@ public final class Speedometer extends Hack implements HUDObject {
     public int getHeight() {
         return 12;
     }
+
+    @Override
+    public int getWidthScaled() {
+        return (int) (this.getWidth() * this.scale.getValue());
+    }
+
+    @Override
+    public int getHeightScaled() {
+        return (int) (this.getHeight() * this.scale.getValue());
+    }
+
 
     @Override
     public void onEnable(boolean isNull) {
@@ -105,10 +120,12 @@ public final class Speedometer extends Hack implements HUDObject {
 
     @Override
     public void render() {
+        this.prepareScale();
 
         String value = "Speed: " + this.coordinateFormat.format(this.currentSpeed) + " " + this.getUnits();
+        this.drawString(value, this.getOffSetX(value), 1, this.color.getValue().getRGB());
 
-        this.drawString(value, this.getMinX().getValue() + this.getOffSetX(value), this.getMinY().getValue() + 1, this.color.getValue().getRGB());
+        this.finishScale();
     }
 
     private double getCurrentSpeed() {

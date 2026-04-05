@@ -3,10 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.setting.settings.BooleanSetting;
-import dev.tensor.misc.imp.setting.settings.ColorSetting;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.Vec3D;
 
 import java.awt.*;
@@ -21,7 +18,8 @@ import java.text.DecimalFormat;
 public final class Coordinates extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMaxY());
+    public final IntegerSetting y = new IntegerSetting("Y", 13, 0, this.getMaxY());
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final BooleanSetting compass = new BooleanSetting("Compass", true);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting type = new EnumSetting("Type", Type.Both);
@@ -43,6 +41,11 @@ public final class Coordinates extends Hack implements HUDObject {
     }
 
     @Override
+    public DoubleSetting getScale() {
+        return this.scale;
+    }
+
+    @Override
     public int getWidth() {
         return 210;
     }
@@ -53,12 +56,25 @@ public final class Coordinates extends Hack implements HUDObject {
     }
 
     @Override
+    public int getWidthScaled() {
+        return (int) (this.getWidth() * this.scale.getValue());
+    }
+
+    @Override
+    public int getHeightScaled() {
+        return (int) (this.getHeight() * this.scale.getValue());
+    }
+
+
+    @Override
     public void render() {
         Vec3D vec3D = this.getPlayerCoordsOverworld();
 
         double posX = vec3D.xCoord;
         double posY = vec3D.yCoord;
         double posZ = vec3D.zCoord;
+
+        this.prepareScale();
 
         switch ((Type) this.type.getValue()) {
             case Overworld:
@@ -92,6 +108,8 @@ public final class Coordinates extends Hack implements HUDObject {
                     break;
                 }
         }
+
+        this.finishScale();
     }
 
     private Vec3D getPlayerCoordsOverworld() {
@@ -135,7 +153,7 @@ public final class Coordinates extends Hack implements HUDObject {
     private void renderCoordinate(String coordinateString, int offY, Color color) {
         int offX = this.getOffSetX(coordinateString);
 
-        this.drawString(coordinateString, this.getMinX().getValue() + offX, this.getMinY().getValue() + offY, color.getRGB());
+        this.drawString(coordinateString, offX, offY, color.getRGB());
     }
 
     private int getOffSetX(String coordinatesString) {

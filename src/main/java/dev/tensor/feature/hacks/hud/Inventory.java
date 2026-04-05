@@ -18,8 +18,8 @@ import java.awt.*;
 @Hack.Info(name = "Inventory", category = Category.HUD)
 public final class Inventory extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 200, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
@@ -34,14 +34,30 @@ public final class Inventory extends Hack implements HUDObject {
         return this.y;
     }
 
+    @Deprecated
+    @Override
+    public DoubleSetting getScale() {
+        return this.scale;
+    }
+
     @Override
     public int getWidth() {
         return (int) (162 * this.scale.getValue());
     }
 
     @Override
+    public int getWidthScaled() {
+        return this.getWidth();
+    }
+
+    @Override
     public int getHeight() {
         return (int) (54 * this.scale.getValue());
+    }
+
+    @Override
+    public int getHeightScaled() {
+        return this.getHeight();
     }
 
     @Override
