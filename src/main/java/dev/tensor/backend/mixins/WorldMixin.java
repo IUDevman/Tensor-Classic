@@ -96,7 +96,7 @@ public abstract class WorldMixin implements Globals {
 
     @Inject(method = "playSoundAtEntity", at = @At("HEAD"), cancellable = true)
     public void onPlaySoundAtEntity(Entity string, String f, float g, float par4, CallbackInfo ci) {
-        if (this.failsNullCheck()) {
+        if (this.failsNullCheck() || f == null) {
             return;
         }
 
