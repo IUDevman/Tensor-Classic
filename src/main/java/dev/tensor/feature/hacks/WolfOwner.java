@@ -40,7 +40,7 @@ public final class WolfOwner extends Hack {
 
                 String owner = entityWolf.getWolfOwner();
 
-                if (owner != null) {
+                if (owner != null && !owner.isEmpty()) {
                     Color color1 = owner.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValue() : this.getFriendManager().isFriend(owner) ? this.friendColor.getValue() : this.color.getValue();
 
                     this.renderNameTagForWolf(entityWolf, owner, color1);
