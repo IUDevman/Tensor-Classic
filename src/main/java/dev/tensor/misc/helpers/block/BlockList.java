@@ -1,4 +1,4 @@
-package dev.tensor.misc.block;
+package dev.tensor.misc.helpers.block;
 
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;

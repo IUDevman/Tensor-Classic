@@ -1,6 +1,6 @@
 package dev.tensor.backend.events;
 
-import dev.tensor.misc.block.BlockCoords;
+import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.event.imp.Event;
 
 /**

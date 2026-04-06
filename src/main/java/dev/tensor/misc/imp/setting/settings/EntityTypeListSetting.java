@@ -3,7 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import dev.tensor.misc.entity.EntityTypeList;
+import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.setting.Setting;
 import net.minecraft.src.Entity;
 

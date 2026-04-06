@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.misc.entity.EntityTypeList;
+import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.*;

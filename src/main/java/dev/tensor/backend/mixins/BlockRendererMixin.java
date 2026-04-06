@@ -1,7 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.events.RenderBlockEvent;
-import dev.tensor.misc.block.BlockCoords;
+import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;

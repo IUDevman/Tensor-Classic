@@ -1,4 +1,4 @@
-package dev.tensor.misc.entity;
+package dev.tensor.misc.helpers.entity;
 
 /**
  * @author Hoosiers

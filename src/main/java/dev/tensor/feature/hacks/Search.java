@@ -2,8 +2,8 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.RenderBlockEvent;
 import dev.tensor.backend.events.ViewBobEvent;
-import dev.tensor.misc.block.BlockCoords;
-import dev.tensor.misc.block.BlockList;
+import dev.tensor.misc.helpers.block.BlockCoords;
+import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;

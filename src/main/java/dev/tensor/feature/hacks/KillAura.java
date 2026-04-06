@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.Packet10FlyingEvent;
-import dev.tensor.misc.entity.EntityTypeList;
+import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
