@@ -1,11 +1,13 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.events.MovementClipEvent;
 import dev.tensor.backend.events.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
@@ -28,5 +30,21 @@ public final class EntityMixin implements Globals {
         if (event.isCancelled()) {
             ci.cancel();
         }
+    }
+
+    @Redirect(method = "moveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isSneaking()Z"))
+    public boolean onShit(Entity instance) {
+        if (this.failsNullCheck()) {
+            return instance.isSneaking();
+        }
+
+        MovementClipEvent event = new MovementClipEvent();
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            return true;
+        }
+
+        return instance.isSneaking();
     }
 }
