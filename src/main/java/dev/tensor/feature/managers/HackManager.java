@@ -76,6 +76,7 @@ public final class HackManager implements Manager {
         this.addHack(new PortalInventory());
         this.addHack(new SafeWalk());
         this.addHack(new Search());
+        this.addHack(new Slug());
         this.addHack(new Sneak());
         this.addHack(new Speedometer());
         this.addHack(new Step());
