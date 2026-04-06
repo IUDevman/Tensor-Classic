@@ -43,6 +43,7 @@ public final class HackManager implements Manager {
         this.addHack(new Armor());
         this.addHack(new AutoEat());
         this.addHack(new AutoLogin());
+        this.addHack(new AutoRespawn());
         this.addHack(new AutoTool());
         this.addHack(new AutoWalk());
         this.addHack(new BackwardsChat());
@@ -53,6 +54,7 @@ public final class HackManager implements Manager {
         this.addHack(new Coordinates());
         this.addHack(new CustomClouds());
         this.addHack(new CustomFog());
+        this.addHack(new DeathCoords());
         this.addHack(new FOV());
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
@@ -63,6 +65,7 @@ public final class HackManager implements Manager {
         this.addHack(new InventoryMove());
         this.addHack(new Jesus());
         this.addHack(new KillAura());
+        this.addHack(new LiquidInteract());
         this.addHack(new ModInfo());
         this.addHack(new NoFall());
         this.addHack(new NoHurtCam());

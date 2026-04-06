@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.events.FluidBlockEvent;
 import dev.tensor.backend.events.FluidCollisionEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.AxisAlignedBB;
@@ -29,6 +30,20 @@ public final class BlockFluidMixin implements Globals {
 
         if (event.isCancelled()) {
             cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
+        }
+    }
+
+    @Inject(method = "canCollideCheck", at = @At("HEAD"), cancellable = true)
+    public void onCanCollideCheck(int bl, boolean par2, CallbackInfoReturnable<Boolean> cir) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        FluidBlockEvent event = new FluidBlockEvent();
+        this.getEventManager().call(event);
+
+        if (event.isCancelled()) {
+            cir.setReturnValue(true);
         }
     }
 }
