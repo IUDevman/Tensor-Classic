@@ -7,10 +7,18 @@ import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.src.Tessellator;
 import org.lwjgl.opengl.GL11;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * @author Hoosiers
@@ -25,6 +33,8 @@ public final class Slug extends Hack implements HUDObject {
     public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2);
     public final EnumSetting mode = new EnumSetting("Mode", Mode.None);
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.WHITE);
+
+    private int texture = -1;
 
     @Override
     public IntegerSetting getMinX() {
@@ -75,9 +85,17 @@ public final class Slug extends Hack implements HUDObject {
     public void render() {
         this.prepareScale();
 
-        GL11.glColor4f(this.color.getValue().getRed() / 255F, this.color.getValue().getGreen() / 255F, this.color.getValue().getBlue() / 255F, 1F);
+        if (texture == -1) {
+            this.setupTexture();
+        }
 
-        this.getMinecraft().renderEngine.bindTexture(this.getMinecraft().renderEngine.getTexture("/assets/tensorclassic/slug.png"));
+        if (texture == -1) {
+            return;
+        }
+
+        this.getMinecraft().renderEngine.bindTexture(texture);
+
+        GL11.glColor4f(this.color.getValue().getRed() / 255F, this.color.getValue().getGreen() / 255F, this.color.getValue().getBlue() / 255F, 1F);
 
         if (this.mode.getValue().equals(Mode.VibeCoded)) {
             GL11.glTranslatef(128F, 128F, -0F);
@@ -97,6 +115,28 @@ public final class Slug extends Hack implements HUDObject {
         this.drawTexturedRectangle(0, 0, 0, 0, 256, 256);
 
         this.finishScale();
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setupTexture() {
+        try {
+            Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer("tensorclassic");
+
+            if (!modContainer.isPresent()) {
+                return;
+            }
+
+            Path imagePath = modContainer.get().getPath("assets/tensorclassic/Slug.png");
+
+            InputStream inputStream = Files.newInputStream(imagePath);
+
+            BufferedImage image = ImageIO.read(inputStream);
+
+            this.texture = this.getMinecraft().renderEngine.allocateAndSetupTexture(image);
+
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load slug texture!");
+        }
     }
 
     public void drawTexturedRectangle(int minX, int minY, int offsetX, int offsetY, int imageWidth, int imageHeight) {
