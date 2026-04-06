@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
  * @since 03-18-2026
  */
 
-@Hack.Info(name = "FOV", category = Category.Render, bind = Keyboard.KEY_G)
+@Hack.Info(name = "FOV", category = Category.Render)
 public final class FOV extends Hack {
 
     public final IntegerSetting value = new IntegerSetting("Value", 90, 30, 120);
