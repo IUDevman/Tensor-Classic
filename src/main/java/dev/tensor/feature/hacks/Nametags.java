@@ -54,7 +54,7 @@ public final class Nametags extends Hack implements Render3DObject {
             }
 
             if (entity instanceof EntityOtherPlayerMP || entity instanceof FakePlayer) {
-                this.renderNameTagTest((EntityPlayer) entity);
+                this.renderNameTagForPlayer((EntityPlayer) entity);
             }
         }
     }
@@ -65,7 +65,7 @@ public final class Nametags extends Hack implements Render3DObject {
         event.cancel();
     }
 
-    private void renderNameTagTest(EntityPlayer entity) {
+    private void renderNameTagForPlayer(EntityPlayer entity) {
         String username = entity.username;
 
         Color textColor = this.friends.getValue() && this.getFriendManager().isFriend(username) ? this.friendColor.getValue() : this.textColor.getValue();
@@ -175,11 +175,6 @@ public final class Nametags extends Hack implements Render3DObject {
 
         GL11.glPopMatrix();
     }
-
-    /*
-    CURRENT ISSUES:
-    1. Items render behind 3d
-     */
 
     private void renderOverlay(ItemStack itemStack, int startX, int startY, double scale) {
         switch ((Durability) this.durability.getValue()) {
