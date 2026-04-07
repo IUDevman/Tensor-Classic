@@ -1,5 +1,6 @@
-package dev.tensor.misc.imp;
+package dev.tensor.misc.imp.render;
 
+import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 

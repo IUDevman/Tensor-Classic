@@ -1,6 +1,6 @@
 package dev.tensor.misc.imp.hack.render;
 
-import dev.tensor.misc.imp.Render3D;
+import dev.tensor.misc.imp.render.Render3D;
 
 /**
  * @author Hoosiers
