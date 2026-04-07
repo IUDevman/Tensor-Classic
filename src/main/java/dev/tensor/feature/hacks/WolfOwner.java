@@ -35,7 +35,7 @@ public final class WolfOwner extends Hack implements Render3DObject {
     public final ColorSettingNoAlpha friendColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
 
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
         List entities = this.getWorld().loadedEntityList;
 
         for (int i = 0; i < entities.size(); i++) {
@@ -55,18 +55,18 @@ public final class WolfOwner extends Hack implements Render3DObject {
                 if (owner != null && !owner.isEmpty()) {
                     Color color1 = owner.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValue() : this.getFriendManager().isFriend(owner) ? this.friendColor.getValue() : this.color.getValue();
 
-                    this.renderNameTagForWolf(entityWolf, owner, color1);
+                    this.renderNameTagForWolf(entityWolf, owner, color1, renderPartialTicks);
                 }
             }
         }
     }
 
-    private void renderNameTagForWolf(EntityWolf entity, String owner, Color color) {
+    private void renderNameTagForWolf(EntityWolf entity, String owner, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;
 
-        double x = bb.minX + ((bb.maxX - bb.minX) / 2);
-        double y = bb.maxY + 0.5;
-        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2);
+        double x = bb.minX + ((bb.maxX - bb.minX) / 2) + this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
+        double y = bb.maxY + 0.5 + this.translateOffset(entity.lastTickPosY, entity.posY, renderPartialTicks);
+        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2) + this.translateOffset(entity.lastTickPosZ, entity.posZ, renderPartialTicks);
 
         double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
 

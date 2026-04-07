@@ -11,12 +11,12 @@ public interface Render3DObject extends Render3D {
 
     int getRenderOrder();
 
-    void onRender3D();
+    void onRender3D(float renderPartialTicks);
 
-    default void renderIn3D() {
+    default void renderIn3D(float renderPartialTicks) {
         this.startBlockGL();
 
-        this.onRender3D();
+        this.onRender3D(renderPartialTicks);
 
         this.finishBlockGL();
     }

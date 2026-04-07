@@ -45,7 +45,7 @@ public final class EntityESP extends Hack implements Render3DObject {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
 
         List entities = this.getWorld().loadedEntityList;
 
@@ -62,12 +62,12 @@ public final class EntityESP extends Hack implements Render3DObject {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.renderESPForEntity(otherPlayer, this.friendsColor.getValue());
+                    this.renderESPForEntity(otherPlayer, this.friendsColor.getValue(), renderPartialTicks);
                     continue;
                 }
 
                 if (this.players.getValue()) {
-                    this.renderESPForEntity(otherPlayer, this.playersColor.getValue());
+                    this.renderESPForEntity(otherPlayer, this.playersColor.getValue(), renderPartialTicks);
                     continue;
                 }
 
@@ -77,36 +77,40 @@ public final class EntityESP extends Hack implements Render3DObject {
             String entityName = entity.getClass().getSimpleName();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.animalsColor.getValue());
+                this.renderESPForEntity(entity, this.animalsColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.hostilesColor.getValue());
+                this.renderESPForEntity(entity, this.hostilesColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.renderESPForEntity(entity, this.itemColor.getValue());
+                this.renderESPForEntity(entity, this.itemColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.miscColor.getValue());
+                this.renderESPForEntity(entity, this.miscColor.getValue(), renderPartialTicks);
             }
         }
     }
 
-    private void renderESPForEntity(Entity entity, Color color) {
+    private void renderESPForEntity(Entity entity, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;
 
-        double x = bb.minX - RenderManager.renderPosX;
-        double y = bb.minY - RenderManager.renderPosY;
-        double z = bb.minZ - RenderManager.renderPosZ;
+        double dX = this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
+        double dY = this.translateOffset(entity.lastTickPosY, entity.posY, renderPartialTicks);
+        double dZ = this.translateOffset(entity.lastTickPosZ, entity.posZ, renderPartialTicks);
 
-        double wX = bb.maxX - RenderManager.renderPosX;
-        double wY = bb.maxY - RenderManager.renderPosY;
-        double wZ = bb.maxZ - RenderManager.renderPosZ;
+        double x = bb.minX - RenderManager.renderPosX + dX;
+        double y = bb.minY - RenderManager.renderPosY + dY;
+        double z = bb.minZ - RenderManager.renderPosZ + dZ;
+
+        double wX = bb.maxX - RenderManager.renderPosX + dX;
+        double wY = bb.maxY - RenderManager.renderPosY + dY;
+        double wZ = bb.maxZ - RenderManager.renderPosZ + dZ;
 
         switch ((Mode) this.mode.getValue()) {
             case Outline:

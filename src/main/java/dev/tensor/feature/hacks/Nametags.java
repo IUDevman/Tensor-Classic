@@ -42,7 +42,7 @@ public final class Nametags extends Hack implements Render3DObject {
     public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150));
 
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
         List entities = this.getWorld().playerEntities;
 
         for (int i = 0; i < entities.size(); i++) {
@@ -54,7 +54,7 @@ public final class Nametags extends Hack implements Render3DObject {
             }
 
             if (entity instanceof EntityOtherPlayerMP || entity instanceof FakePlayer) {
-                this.renderNameTagForPlayer((EntityPlayer) entity);
+                this.renderNameTagForPlayer((EntityPlayer) entity, renderPartialTicks);
             }
         }
     }
@@ -65,7 +65,7 @@ public final class Nametags extends Hack implements Render3DObject {
         event.cancel();
     }
 
-    private void renderNameTagForPlayer(EntityPlayer entity) {
+    private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks) {
         String username = entity.username;
 
         Color textColor = this.friends.getValue() && this.getFriendManager().isFriend(username) ? this.friendColor.getValue() : this.textColor.getValue();
@@ -105,9 +105,9 @@ public final class Nametags extends Hack implements Render3DObject {
 
         AxisAlignedBB bb = entity.boundingBox;
 
-        double x = bb.minX + ((bb.maxX - bb.minX) / 2);
-        double y = bb.maxY + 0.6;
-        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2);
+        double x = bb.minX + ((bb.maxX - bb.minX) / 2) + this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
+        double y = bb.maxY + 0.6 + this.translateOffset(entity.lastTickPosY, entity.posY, renderPartialTicks);
+        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2) + this.translateOffset(entity.lastTickPosZ, entity.posZ, renderPartialTicks);
 
         double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
 

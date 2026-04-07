@@ -54,7 +54,7 @@ public final class Tracers extends Hack implements Render3DObject {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
 
         List entities = this.getWorld().loadedEntityList;
 
@@ -71,12 +71,12 @@ public final class Tracers extends Hack implements Render3DObject {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.renderTracerForEntity(otherPlayer, this.friendsColor.getValue());
+                    this.renderTracerForEntity(otherPlayer, this.friendsColor.getValue(), renderPartialTicks);
                     continue;
                 }
 
                 if (this.players.getValue()) {
-                    this.renderTracerForEntity(otherPlayer, this.playersColor.getValue());
+                    this.renderTracerForEntity(otherPlayer, this.playersColor.getValue(), renderPartialTicks);
                     continue;
                 }
 
@@ -86,32 +86,32 @@ public final class Tracers extends Hack implements Render3DObject {
             String entityName = entity.getClass().getSimpleName();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.animalsColor.getValue());
+                this.renderTracerForEntity(entity, this.animalsColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.hostilesColor.getValue());
+                this.renderTracerForEntity(entity, this.hostilesColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.renderTracerForEntity(entity, this.itemColor.getValue());
+                this.renderTracerForEntity(entity, this.itemColor.getValue(), renderPartialTicks);
                 continue;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.miscColor.getValue());
+                this.renderTracerForEntity(entity, this.miscColor.getValue(), renderPartialTicks);
             }
         }
     }
 
-    private void renderTracerForEntity(Entity entity, Color color) {
+    private void renderTracerForEntity(Entity entity, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;
 
-        double x = bb.minX + ((bb.maxX - bb.minX) / 2) - RenderManager.renderPosX;
-        double y = bb.minY + ((bb.maxY - bb.minY) / 2) - RenderManager.renderPosY;
-        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2) - RenderManager.renderPosZ;
+        double x = bb.minX + ((bb.maxX - bb.minX) / 2) - RenderManager.renderPosX + this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
+        double y = bb.minY + ((bb.maxY - bb.minY) / 2) - RenderManager.renderPosY + this.translateOffset(entity.lastTickPosY, entity.posY, renderPartialTicks);
+        double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2) - RenderManager.renderPosZ + this.translateOffset(entity.lastTickPosZ, entity.posZ, renderPartialTicks);
 
         this.drawTracer(x, y, z, this.tracerWidth.getValue(), color, color.getAlpha());
     }

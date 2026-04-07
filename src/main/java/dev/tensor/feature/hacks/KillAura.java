@@ -139,7 +139,7 @@ public final class KillAura extends Hack implements Render3DObject {
     }
 
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
 
         if (!this.esp.getValue()) {
             return;
@@ -149,7 +149,7 @@ public final class KillAura extends Hack implements Render3DObject {
             return;
         }
 
-        this.target_Entities.forEach(this::renderESP);
+        this.target_Entities.forEach(entity -> this.renderESP(entity, renderPartialTicks));
     }
 
     @SuppressWarnings("unused")
@@ -263,16 +263,20 @@ public final class KillAura extends Hack implements Render3DObject {
             return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
     }
 
-    private void renderESP(Entity entity) {
+    private void renderESP(Entity entity, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;
 
-        double x = bb.minX - RenderManager.renderPosX;
-        double y = bb.minY - RenderManager.renderPosY;
-        double z = bb.minZ - RenderManager.renderPosZ;
+        double dX = this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
+        double dY = this.translateOffset(entity.lastTickPosY, entity.posY, renderPartialTicks);
+        double dZ = this.translateOffset(entity.lastTickPosZ, entity.posZ, renderPartialTicks);
 
-        double wX = bb.maxX - RenderManager.renderPosX;
-        double wY = bb.maxY - RenderManager.renderPosY;
-        double wZ = bb.maxZ - RenderManager.renderPosZ;
+        double x = bb.minX - RenderManager.renderPosX + dX;
+        double y = bb.minY - RenderManager.renderPosY + dY;
+        double z = bb.minZ - RenderManager.renderPosZ + dZ;
+
+        double wX = bb.maxX - RenderManager.renderPosX + dX;
+        double wY = bb.maxY - RenderManager.renderPosY + dY;
+        double wZ = bb.maxZ - RenderManager.renderPosZ + dZ;
 
         switch ((RenderMode) this.renderMode.getValue()) {
             case Outline:

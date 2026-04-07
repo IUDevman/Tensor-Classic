@@ -13,6 +13,10 @@ import java.awt.*;
 
 public interface Render3D extends Globals {
 
+    default double translateOffset(double previousPos, double currentPos, float renderPartialTicks) {
+        return (currentPos - previousPos) * renderPartialTicks;
+    }
+
     default void startBlockGL() {
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);

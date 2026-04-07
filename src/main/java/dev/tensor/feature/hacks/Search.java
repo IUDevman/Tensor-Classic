@@ -151,7 +151,7 @@ public final class Search extends Hack implements Render3DObject {
     }
 
     @Override
-    public void onRender3D() {
+    public void onRender3D(float renderPartialTicks) {
         this.blockCoords.forEach(this::renderForBlock);
     }
 

@@ -4,6 +4,7 @@ import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.backend.events.Render3DEvent;
+import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.*;
 import dev.tensor.misc.event.EventTarget;
@@ -228,7 +229,9 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.getEnabledRender3DObjectHacks().forEach(hack -> ((Render3DObject) hack).renderIn3D());
+        float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).getTimer().renderPartialTicks;
+
+        this.getEnabledRender3DObjectHacks().forEach(hack -> ((Render3DObject) hack).renderIn3D(renderPartialTicks));
     }
 
     @SuppressWarnings("unused")
