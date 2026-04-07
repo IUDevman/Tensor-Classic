@@ -9,8 +9,9 @@ import dev.tensor.feature.hacks.hud.*;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
-import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.Render3DObject;
 import org.slf4j.Logger;
 
 import java.nio.file.Files;
@@ -55,6 +56,8 @@ public final class HackManager implements Manager {
         this.addHack(new CustomClouds());
         this.addHack(new CustomFog());
         this.addHack(new DeathCoords());
+        this.addHack(new EntityESP());
+        this.addHack(new FakePlayer());
         this.addHack(new FOV());
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
@@ -91,7 +94,6 @@ public final class HackManager implements Manager {
         this.addHack(new WolfOwner());
         this.addHack(new XCarry());
         this.addHack(new Xray());
-        this.addHack(new EntityESP());
 
         this.postSortHacks();
 
@@ -133,6 +135,12 @@ public final class HackManager implements Manager {
             hudEditor.toggle();
         }
 
+        FakePlayer fakePlayer = this.getHack(FakePlayer.class);
+
+        if (fakePlayer.isEnabled()) {
+            fakePlayer.toggle();
+        }
+
         this.saveHacks(LOGGER);
     }
 
@@ -152,6 +160,10 @@ public final class HackManager implements Manager {
 
     public ArrayList<Hack> getHacks() {
         return this.HACKS;
+    }
+
+    public ArrayList<Hack> getEnabledRender3DObjectHacks() {
+        return this.HACKS.stream().filter(Hack::isEnabled).filter(hack -> hack instanceof Render3DObject).sorted(Comparator.comparing(hack -> ((Render3DObject) hack).getRenderOrder()).reversed()).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Hack> getHacksInCategory(Category CATEGORY) {
@@ -216,7 +228,7 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.getEnabledHacks().forEach(Hack::renderIn3D);
+        this.getEnabledRender3DObjectHacks().forEach(hack -> ((Render3DObject) hack).renderIn3D());
     }
 
     @SuppressWarnings("unused")

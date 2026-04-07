@@ -91,14 +91,6 @@ public abstract class Hack implements Globals {
         this.disable();
     }
 
-    public void renderIn3D() {
-        this.startBlockGL();
-
-        this.onRender3D();
-
-        this.finishBlockGL();
-    }
-
     public void toggle() {
         this.setEnabled(!this.isEnabled());
     }
@@ -163,10 +155,6 @@ public abstract class Hack implements Globals {
     }
 
     public void onClientTick() {
-
-    }
-
-    public void onRender3D() {
 
     }
 

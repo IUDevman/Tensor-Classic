@@ -3,7 +3,7 @@ package dev.tensor.misc.gui;
 import dev.tensor.feature.hacks.HUDEditor;
 import dev.tensor.misc.gui.imp.Hoverable;
 import dev.tensor.misc.imp.Globals;
-import dev.tensor.misc.imp.hack.HUDObject;
+import dev.tensor.misc.imp.hack.render.HUDObject;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Mouse;
 

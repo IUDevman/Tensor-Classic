@@ -1,8 +1,8 @@
 package dev.tensor.feature.hacks.hud;
 
 import dev.tensor.misc.imp.hack.Category;
-import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.Vec3D;
 

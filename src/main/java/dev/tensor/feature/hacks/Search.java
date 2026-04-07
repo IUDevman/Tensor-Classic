@@ -2,11 +2,13 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.RenderBlockEvent;
 import dev.tensor.backend.events.ViewBobEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
@@ -24,7 +26,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 @Hack.Info(name = "Search", category = Category.Render)
-public final class Search extends Hack {
+public final class Search extends Hack implements Render3DObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.SEARCH;
+    }
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Chest) {
 

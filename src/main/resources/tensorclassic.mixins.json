@@ -23,6 +23,7 @@
     "NetClientHandlerMixin",
     "RenderGlobalMixin",
     "RenderManagerMixin",
+    "RenderPlayerMixin",
     "TessellatorMixin",
     "accessors.MinecraftAccessor"
   ],

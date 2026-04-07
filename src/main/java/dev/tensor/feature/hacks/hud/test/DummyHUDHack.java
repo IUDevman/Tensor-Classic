@@ -1,8 +1,8 @@
 package dev.tensor.feature.hacks.hud.test;
 
 import dev.tensor.misc.imp.hack.Category;
-import dev.tensor.misc.imp.hack.HUDObject;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 

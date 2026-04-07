@@ -2,10 +2,15 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.*;
+import net.minecraft.src.AxisAlignedBB;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityWolf;
+import net.minecraft.src.RenderManager;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -17,7 +22,12 @@ import java.util.List;
  */
 
 @Hack.Info(name = "WolfOwner", category = Category.Render)
-public final class WolfOwner extends Hack {
+public final class WolfOwner extends Hack implements Render3DObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.WOLFOWNER;
+    }
 
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);

@@ -5,7 +5,6 @@ import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import org.lwjgl.input.Keyboard;
 
 /**
  * @author Hoosiers

@@ -3,6 +3,8 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
@@ -15,7 +17,12 @@ import java.util.List;
  */
 
 @Hack.Info(name = "EntityESP", category = Category.Render)
-public final class EntityESP extends Hack {
+public final class EntityESP extends Hack implements Render3DObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.ENTITY_ESP;
+    }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);

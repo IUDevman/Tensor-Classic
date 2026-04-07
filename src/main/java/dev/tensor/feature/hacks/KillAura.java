@@ -1,10 +1,12 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.Packet10FlyingEvent;
-import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 import org.lwjgl.input.Keyboard;
@@ -19,7 +21,12 @@ import java.util.List;
  */
 
 @Hack.Info(name = "KillAura", category = Category.Combat, bind = Keyboard.KEY_R)
-public final class KillAura extends Hack {
+public final class KillAura extends Hack implements Render3DObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.KILLAURA;
+    }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
