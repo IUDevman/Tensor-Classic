@@ -1,6 +1,6 @@
 package dev.tensor.misc.imp.hack.render;
 
-import dev.tensor.misc.imp.Render2D;
+import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.opengl.GL11;

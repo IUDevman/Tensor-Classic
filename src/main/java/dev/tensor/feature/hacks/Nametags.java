@@ -106,7 +106,7 @@ public final class Nametags extends Hack implements Render3DObject {
         AxisAlignedBB bb = entity.boundingBox;
 
         double x = bb.minX + ((bb.maxX - bb.minX) / 2);
-        double y = bb.maxY + 0.5;
+        double y = bb.maxY + 0.6;
         double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2);
 
         double distanceSq = this.getPlayer().getDistanceSq(x, y, z);

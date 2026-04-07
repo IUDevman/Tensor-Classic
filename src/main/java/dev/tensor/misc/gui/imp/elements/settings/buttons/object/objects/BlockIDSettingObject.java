@@ -3,7 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.BlockListSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
-import dev.tensor.misc.imp.Render2D;
+import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.Block;
 import net.minecraft.src.ItemStack;
