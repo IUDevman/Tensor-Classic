@@ -4,6 +4,7 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public final class WolfOwner extends Hack {
 
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
+    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.RED);
     public final ColorSettingNoAlpha friendColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
 
@@ -53,12 +55,12 @@ public final class WolfOwner extends Hack {
         AxisAlignedBB bb = entity.boundingBox;
 
         double x = bb.minX + ((bb.maxX - bb.minX) / 2);
-        double y = bb.maxY + 0.3;
+        double y = bb.maxY + 0.5;
         double z = bb.minZ + ((bb.maxZ - bb.minZ) / 2);
 
         double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
 
-        double scale = -Math.max(0.0416667D * this.scale.getValue(), 0.0416667D * this.scale.getValue() * Math.min(8, (distanceSq / 512)));
+        double scale = -Math.max(0.0416667D * this.scale.getValue(), 0.0416667D * this.scale.getValue() * Math.min(this.distanceMultiplier.getValue(), (distanceSq / 512)));
 
         GL11.glPushMatrix();
 

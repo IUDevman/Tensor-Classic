@@ -67,6 +67,7 @@ public final class HackManager implements Manager {
         this.addHack(new KillAura());
         this.addHack(new LiquidInteract());
         this.addHack(new ModInfo());
+        this.addHack(new Nametags());
         this.addHack(new NoFall());
         this.addHack(new NoHurtCam());
         this.addHack(new NoItemRender());
@@ -215,11 +216,7 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.startBlockGL();
-
-        this.getEnabledHacks().forEach(Hack::onRender3D);
-
-        this.finishBlockGL();
+        this.getEnabledHacks().forEach(Hack::renderIn3D);
     }
 
     @SuppressWarnings("unused")
