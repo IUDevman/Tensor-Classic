@@ -5,7 +5,7 @@ import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @Hack.Info(name = "KillAura", category = Category.Combat, bind = Keyboard.KEY_R)
-public final class KillAura extends Hack implements Render3DObject {
+public final class KillAura extends Render3DHack {
 
     @Override
     public int getRenderOrder() {

@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.KnockbackEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.NetworkManager;
@@ -16,11 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
  * @since 03-02-2026
  */
 
-@Mixin(value = NetworkManager.class, priority = Integer.MAX_VALUE)
+@Mixin(value = NetworkManager.class, priority = MixinPriority.VALUE)
 public final class NetworkManagerMixin implements Globals {
 
     @Inject(method = "readPacket", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-    public void onReadPacket(CallbackInfoReturnable<Boolean> cir, int var1, Packet var2) {
+    public void tensor_onReadPacket(CallbackInfoReturnable<Boolean> cir, int var1, Packet var2) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -32,8 +33,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            KnockbackEvent event = new KnockbackEvent();
-            this.getEventManager().call(event);
+            KnockbackEvent event = new KnockbackEvent().call();
 
             if (event.isCancelled()) {
                 cir.setReturnValue(false);

@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 
 @Hack.Info(name = "EntityESP", category = Category.Render)
-public final class EntityESP extends Hack implements Render3DObject {
+public final class EntityESP extends Render3DHack {
 
     @Override
     public int getRenderOrder() {

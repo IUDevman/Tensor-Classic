@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.misc.imp.Globals;
@@ -15,32 +16,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 03-18-2026
  */
 
-@Mixin(value = Minecraft.class, priority = Integer.MAX_VALUE)
+@Mixin(value = Minecraft.class, priority = MixinPriority.VALUE)
 public final class MinecraftMixin implements Globals {
 
     @Inject(method = "runTick", at = @At("TAIL"))
-    public void onRunTick(CallbackInfo ci) {
+    public void tensor_onRunTick(CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        ClientTickEvent clientTickEvent = new ClientTickEvent();
-        this.getEventManager().call(clientTickEvent);
+        @SuppressWarnings("unused")
+        ClientTickEvent clientTickEvent = new ClientTickEvent().call();
     }
 
-    /**
-     * @author qe7
-     * @skidded from https://github.com/qe7/Hephaestus-Babric/blob/main/src/main/java/io/github/qe7/mixins/MixinMinecraft.java#L6
-     */
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", shift = At.Shift.AFTER, ordinal = 1))
-    public void onGetEventKeyState(CallbackInfo ci) {
+    public void tensor_onGetEventKeyState(CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
         if (Keyboard.getEventKeyState()) {
-            KeyPressedEvent event = new KeyPressedEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey());
-            this.getEventManager().call(event);
+            @SuppressWarnings("unused")
+            KeyPressedEvent event = new KeyPressedEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
         }
     }
 }

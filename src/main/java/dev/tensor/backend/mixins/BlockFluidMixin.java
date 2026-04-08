@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.FluidBlockEvent;
 import dev.tensor.backend.events.FluidCollisionEvent;
 import dev.tensor.misc.imp.Globals;
@@ -16,17 +17,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @since 04-05-2026
  */
 
-@Mixin(value = BlockFluid.class, priority = Integer.MAX_VALUE)
+@Mixin(value = BlockFluid.class, priority = MixinPriority.VALUE)
 public final class BlockFluidMixin implements Globals {
 
     @Inject(method = "getCollisionBoundingBoxFromPool", at = @At("HEAD"), cancellable = true)
-    public void onGetCollisionBoundingBoxFromPool(World i, int j, int k, int par4, CallbackInfoReturnable<AxisAlignedBB> cir) {
+    public void tensor_onGetCollisionBoundingBoxFromPool(World i, int j, int k, int par4, CallbackInfoReturnable<AxisAlignedBB> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        FluidCollisionEvent event = new FluidCollisionEvent(j, k, par4);
-        this.getEventManager().call(event);
+        FluidCollisionEvent event = new FluidCollisionEvent(j, k, par4).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
@@ -34,13 +34,12 @@ public final class BlockFluidMixin implements Globals {
     }
 
     @Inject(method = "canCollideCheck", at = @At("HEAD"), cancellable = true)
-    public void onCanCollideCheck(int bl, boolean par2, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onCanCollideCheck(int bl, boolean par2, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        FluidBlockEvent event = new FluidBlockEvent();
-        this.getEventManager().call(event);
+        FluidBlockEvent event = new FluidBlockEvent().call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(true);

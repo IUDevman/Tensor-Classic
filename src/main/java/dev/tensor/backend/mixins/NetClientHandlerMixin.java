@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.BlockBreakEvent;
 import dev.tensor.backend.events.ChatSentEvent;
 import dev.tensor.backend.events.CloseInventoryEvent;
@@ -16,11 +17,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 03-19-2026
  */
 
-@Mixin(value = NetClientHandler.class, priority = Integer.MAX_VALUE)
+@Mixin(value = NetClientHandler.class, priority = MixinPriority.VALUE)
 public final class NetClientHandlerMixin implements Globals {
 
     @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
-    public void onAddToSendQueue(Packet arg, CallbackInfo ci) {
+    public void tensor_onAddToSendQueue(Packet arg, CallbackInfo ci) {
         if (arg == null || this.failsNullCheck() || !this.isMultiplayer()) {
             return;
         }
@@ -32,8 +33,7 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            ChatSentEvent event = new ChatSentEvent(packet.message);
-            this.getEventManager().call(event);
+            ChatSentEvent event = new ChatSentEvent(packet.message).call();
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -45,33 +45,28 @@ public final class NetClientHandlerMixin implements Globals {
         }
 
         if (arg instanceof Packet14BlockDig) {
-
             Packet14BlockDig packet = (Packet14BlockDig) arg;
 
-            BlockBreakEvent event = new BlockBreakEvent(packet);
-            this.getEventManager().call(event);
+            @SuppressWarnings("unused")
+            BlockBreakEvent event = new BlockBreakEvent(packet).call();
             return;
         }
 
         if (arg instanceof Packet10Flying) {
-
             Packet10Flying packet = (Packet10Flying) arg;
 
-            Packet10FlyingEvent event = new Packet10FlyingEvent(packet);
-            this.getEventManager().call(event);
+            Packet10FlyingEvent event = new Packet10FlyingEvent(packet).call();
 
             arg = event.packet;
             return;
         }
 
         if (arg instanceof Packet101CloseWindow) {
-
             Packet101CloseWindow packet = (Packet101CloseWindow) arg;
 
             if (packet.windowId == this.getPlayer().craftingInventory.windowId) {
 
-                CloseInventoryEvent event = new CloseInventoryEvent();
-                this.getEventManager().call(event);
+                CloseInventoryEvent event = new CloseInventoryEvent().call();
 
                 if (event.isCancelled()) {
                     ci.cancel();

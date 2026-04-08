@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.ChatReceivedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.backend.events.RenderOverlayEvent;
@@ -15,37 +16,36 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 03-20-2026
  */
 
-@Mixin(value = GuiIngame.class, priority = Integer.MAX_VALUE)
+@Mixin(value = GuiIngame.class, priority = MixinPriority.VALUE)
 public final class GuiIngameMixin implements Globals {
 
     @Inject(method = "renderGameOverlay", at = @At("TAIL"))
-    public void onRenderGameOverlay(float bl, boolean i, int j, int par4, CallbackInfo ci) {
+    public void tensor_onRenderGameOverlay(float bl, boolean i, int j, int par4, CallbackInfo ci) {
         if (this.failsNullCheck() || this.getInGameGUI() == null) {
             return;
         }
 
-        Render2DEvent event = new Render2DEvent();
-        this.getEventManager().call(event);
+        @SuppressWarnings("unused")
+        Render2DEvent event = new Render2DEvent().call();
     }
 
     @Inject(method = "addChatMessage", at = @At("HEAD"))
-    public void onAddChatMessage(String par1, CallbackInfo ci) {
+    public void tensor_onAddChatMessage(String par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        ChatReceivedEvent event = new ChatReceivedEvent(par1);
-        this.getEventManager().call(event);
+        @SuppressWarnings("unused")
+        ChatReceivedEvent event = new ChatReceivedEvent(par1).call();
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
-    public void onRenderVignette(float i, int j, int par3, CallbackInfo ci) {
+    public void tensor_onRenderVignette(float i, int j, int par3, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vignette);
-        this.getEventManager().call(event);
+        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vignette).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -53,13 +53,12 @@ public final class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderPumpkinBlur", at = @At("HEAD"), cancellable = true)
-    public void onRenderPumpkinBlur(int j, int par2, CallbackInfo ci) {
+    public void tensor_onRenderPumpkinBlur(int j, int par2, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.pumpkin);
-        this.getEventManager().call(event);
+        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.pumpkin).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -67,13 +66,12 @@ public final class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
-    public void onRenderPortalOverlay(float i, int j, int par3, CallbackInfo ci) {
+    public void tensor_onRenderPortalOverlay(float i, int j, int par3, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.portals);
-        this.getEventManager().call(event);
+        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.portals).call();
 
         if (event.isCancelled()) {
             ci.cancel();

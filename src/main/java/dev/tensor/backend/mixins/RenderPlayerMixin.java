@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.NameTagEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityPlayer;
@@ -14,17 +15,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 04-06-2026
  */
 
-@Mixin(value = RenderPlayer.class, priority = Integer.MAX_VALUE)
+@Mixin(value = RenderPlayer.class, priority = MixinPriority.VALUE)
 public final class RenderPlayerMixin implements Globals {
 
     @Inject(method = "passSpecialRender(Lnet/minecraft/src/EntityPlayer;DDD)V", at = @At("HEAD"), cancellable = true)
-    public void onPassSpecialRender(EntityPlayer d, double e, double f, double par4, CallbackInfo ci) {
+    public void tensor_onPassSpecialRender(EntityPlayer d, double e, double f, double par4, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        NameTagEvent event = new NameTagEvent();
-        this.getEventManager().call(event);
+        NameTagEvent event = new NameTagEvent().call();
 
         if (event.isCancelled()) {
             ci.cancel();

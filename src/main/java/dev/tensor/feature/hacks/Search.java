@@ -7,7 +7,7 @@ import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 
 @Hack.Info(name = "Search", category = Category.Render)
-public final class Search extends Hack implements Render3DObject {
+public final class Search extends Render3DHack {
 
     @Override
     public int getRenderOrder() {

@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.RenderItemEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
@@ -15,18 +16,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 03-29-2026
  */
 
-@Mixin(value = RenderManager.class, priority = Integer.MAX_VALUE)
+@Mixin(value = RenderManager.class, priority = MixinPriority.VALUE)
 public final class RenderManagerMixin implements Globals {
 
     @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
-    public void onRenderEntity(Entity f, float par2, CallbackInfo ci) {
+    public void tensor_onRenderEntity(Entity f, float par2, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
         if (f instanceof EntityItem) {
-            RenderItemEvent event = new RenderItemEvent();
-            this.getEventManager().call(event);
+            RenderItemEvent event = new RenderItemEvent().call();
 
             if (event.isCancelled()) {
                 ci.cancel();

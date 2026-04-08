@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.BlockSoulSand;
@@ -15,17 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 04-02-2026
  */
 
-@Mixin(value = BlockSoulSand.class, priority = Integer.MAX_VALUE)
+@Mixin(value = BlockSoulSand.class, priority = MixinPriority.VALUE)
 public final class BlockSoulSandMixin implements Globals {
 
     @Inject(method = "onEntityCollidedWithBlock", at = @At("HEAD"), cancellable = true)
-    public void onOnentityCollidedWithBlock(World i, int j, int k, int arg2, Entity par5, CallbackInfo ci) {
+    public void tensor_onOnentityCollidedWithBlock(World i, int j, int k, int arg2, Entity par5, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.SoulSand);
-        this.getEventManager().call(event);
+        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.SoulSand).call();
 
         if (event.isCancelled()) {
             ci.cancel();

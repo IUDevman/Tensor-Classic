@@ -12,7 +12,7 @@ import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import org.slf4j.Logger;
 
 import java.nio.file.Files;
@@ -34,6 +34,7 @@ public final class HackManager implements Manager {
     }
 
     private final ArrayList<Hack> HACKS = new ArrayList<>();
+    private final ArrayList<Render3DHack> RENDER_3D_HACKS = new ArrayList<>();
 
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
 
@@ -157,14 +158,22 @@ public final class HackManager implements Manager {
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
+
+        if (HACK instanceof Render3DHack) {
+            this.RENDER_3D_HACKS.add((Render3DHack) HACK);
+        }
     }
 
     public ArrayList<Hack> getHacks() {
         return this.HACKS;
     }
 
-    public ArrayList<Hack> getEnabledRender3DObjectHacks() {
-        return this.HACKS.stream().filter(Hack::isEnabled).filter(hack -> hack instanceof Render3DObject).sorted(Comparator.comparing(hack -> ((Render3DObject) hack).getRenderOrder()).reversed()).collect(Collectors.toCollection(ArrayList::new));
+    public ArrayList<Render3DHack> getRender3DObjects() {
+        return this.RENDER_3D_HACKS;
+    }
+
+    public ArrayList<Render3DHack> getEnabledRender3DObjectHacks() {
+        return this.getRender3DObjects().stream().filter(Hack::isEnabled).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Hack> getHacksInCategory(Category CATEGORY) {
@@ -186,6 +195,8 @@ public final class HackManager implements Manager {
 
     private void postSortHacks() {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
+
+        this.RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder()).reversed());
     }
 
     public boolean shouldSendMessagesGlobal() {
@@ -231,7 +242,7 @@ public final class HackManager implements Manager {
 
         float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).getTimer().renderPartialTicks;
 
-        this.getEnabledRender3DObjectHacks().forEach(hack -> ((Render3DObject) hack).renderIn3D(renderPartialTicks));
+        this.getEnabledRender3DObjectHacks().forEach(hack -> hack.renderIn3D(renderPartialTicks));
     }
 
     @SuppressWarnings("unused")

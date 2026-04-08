@@ -13,4 +13,6 @@ public final class RenderOrder {
     public static final int KILLAURA = 3;
     public static final int ENTITY_ESP = 4;
     public static final int SEARCH = 5;
+
+    public static final int DEFAULT = 6;
 }

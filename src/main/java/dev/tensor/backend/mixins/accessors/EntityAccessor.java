@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins.accessors;
 
+import dev.tensor.backend.MixinPriority;
 import net.minecraft.src.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
  * @since 03-25-2026
  */
 
-@Mixin(Entity.class)
+@Mixin(value = Entity.class, priority = MixinPriority.VALUE)
 public interface EntityAccessor {
 
     @Accessor(value = "fallDistance")

@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Hack.Info(name = "WolfOwner", category = Category.Render)
-public final class WolfOwner extends Hack implements Render3DObject {
+public final class WolfOwner extends Render3DHack {
 
     @Override
     public int getRenderOrder() {

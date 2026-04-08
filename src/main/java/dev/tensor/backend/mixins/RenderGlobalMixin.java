@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.RenderGlobal;
@@ -16,11 +17,11 @@ import java.awt.*;
  * @since 03-27-2026
  */
 
-@Mixin(value = RenderGlobal.class, priority = Integer.MAX_VALUE)
+@Mixin(value = RenderGlobal.class, priority = MixinPriority.VALUE)
 public final class RenderGlobalMixin implements Globals {
 
     @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
-    public void onRenderClouds(float par1, CallbackInfo ci) {
+    public void tensor_onRenderClouds(float par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -30,8 +31,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds);
-        this.getEventManager().call(event);
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -39,7 +39,7 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderClouds", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
-    public void onRenderCloudsInvoke(float par1, CallbackInfo ci) {
+    public void tensor_onRenderCloudsInvoke(float par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -52,8 +52,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds);
-        this.getEventManager().call(event);
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isUpdated()) {
             Color color = event.getNewColor();
@@ -63,7 +62,7 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderCloudsFancy", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
-    public void onRenderCloudsFancyInvoke(float par1, CallbackInfo ci) {
+    public void tensor_onRenderCloudsFancyInvoke(float par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -72,8 +71,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds);
-        this.getEventManager().call(event);
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isUpdated()) {
             Color color = event.getNewColor();

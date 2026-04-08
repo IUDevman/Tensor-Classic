@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.LightValueEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Chunk;
@@ -13,17 +14,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @since 03-20-2026
  */
 
-@Mixin(value = Chunk.class, priority = Integer.MAX_VALUE)
+@Mixin(value = Chunk.class, priority = MixinPriority.VALUE)
 public final class ChunkMixin implements Globals {
 
     @Inject(method = "getBlockLightValue", at = @At("HEAD"), cancellable = true)
-    public void onGetBlockLightValue(int j, int k, int l, int par4, CallbackInfoReturnable<Integer> cir) {
+    public void tensor_onGetBlockLightValue(int j, int k, int l, int par4, CallbackInfoReturnable<Integer> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        LightValueEvent event = new LightValueEvent();
-        this.getEventManager().call(event);
+        LightValueEvent event = new LightValueEvent().call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(15);

@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityLiving;
@@ -23,20 +24,19 @@ import java.nio.FloatBuffer;
  * @since 03-18-2026
  */
 
-@Mixin(value = EntityRenderer.class, priority = Integer.MAX_VALUE)
+@Mixin(value = EntityRenderer.class, priority = MixinPriority.VALUE)
 public abstract class EntityRendererMixin implements Globals {
 
     @Shadow
     protected abstract FloatBuffer func_908_a(float f, float g, float h, float i);
 
     @Inject(method = "getFOVModifier", at = @At("HEAD"), cancellable = true)
-    public void onGetFOVModifier(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetFOVModifier(float par1, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        FOVModifierEvent event = new FOVModifierEvent();
-        this.getEventManager().call(event);
+        FOVModifierEvent event = new FOVModifierEvent().call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(event.FOV);
@@ -44,13 +44,12 @@ public abstract class EntityRendererMixin implements Globals {
     }
 
     @Inject(method = "hurtCameraEffect", at = @At("HEAD"), cancellable = true)
-    public void onHurtCameraEffect(float par1, CallbackInfo ci) {
+    public void tensor_onHurtCameraEffect(float par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        HurtCameraEvent event = new HurtCameraEvent();
-        this.getEventManager().call(event);
+        HurtCameraEvent event = new HurtCameraEvent().call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -58,13 +57,12 @@ public abstract class EntityRendererMixin implements Globals {
     }
 
     @Inject(method = "setupViewBobbing", at = @At("HEAD"), cancellable = true)
-    public void onSetupViewBobbing(float par1, CallbackInfo ci) {
+    public void tensor_onSetupViewBobbing(float par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        ViewBobEvent event = new ViewBobEvent();
-        this.getEventManager().call(event);
+        ViewBobEvent event = new ViewBobEvent().call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -72,23 +70,22 @@ public abstract class EntityRendererMixin implements Globals {
     }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityRenderer;renderRainSnow(F)V", shift = At.Shift.BEFORE))
-    public void onRenderWorld(float l, long par2, CallbackInfo ci) {
+    public void tensor_onRenderWorld(float l, long par2, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        Render3DEvent event = new Render3DEvent();
-        this.getEventManager().call(event);
+        @SuppressWarnings("unused")
+        Render3DEvent event = new Render3DEvent().call();
     }
 
     @Inject(method = "setupFog", at = @At("TAIL"))
-    public void onSetupFogTail(int f, float par2, CallbackInfo ci) {
+    public void tensor_onSetupFogTail(int f, float par2, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog);
-        this.getEventManager().call(event);
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog).call();
 
         if (event.isCancelled()) {
             GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
@@ -101,13 +98,12 @@ public abstract class EntityRendererMixin implements Globals {
 
     //Slick redirect
     @Redirect(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityLiving;isInsideOfMaterial(Lnet/minecraft/src/Material;)Z"))
-    public boolean onSetUpFogInvokeIsInsideOfMaterial(EntityLiving instance, Material material) {
+    public boolean tensor_onSetUpFogInvokeIsInsideOfMaterial(EntityLiving instance, Material material) {
         if (this.failsNullCheck()) {
             return false;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog_Fluids);
-        this.getEventManager().call(event);
+        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog_Fluids).call();
 
         if (event.isCancelled()) {
             return false;
@@ -117,13 +113,12 @@ public abstract class EntityRendererMixin implements Globals {
     }
 
     @Redirect(method = "setupCameraTransform", at = @At(value = "FIELD", target = "Lnet/minecraft/src/EntityPlayerSP;prevTimeInPortal:F"))
-    public float onSetupCameraTransformPortalVomit(EntityPlayerSP instance) {
+    public float tensor_onSetupCameraTransformPortalVomit(EntityPlayerSP instance) {
         if (this.failsNullCheck()) {
             return -100;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vomit);
-        this.getEventManager().call(event);
+        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vomit).call();
 
         if (event.isCancelled()) {
             return -100;

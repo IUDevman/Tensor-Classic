@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.RenderBlockEvent;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.Globals;
@@ -18,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @since 03-18-2026
  */
 
-@Mixin(value = RenderBlocks.class, priority = Integer.MAX_VALUE)
+@Mixin(value = RenderBlocks.class, priority = MixinPriority.VALUE)
 public final class BlockRendererMixin implements Globals {
 
     @Shadow
@@ -28,14 +29,14 @@ public final class BlockRendererMixin implements Globals {
     public boolean pre = false;
 
     @Inject(method = "renderBlockByRenderType", at = @At("HEAD"), cancellable = true)
-    public void onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
         if (this.isSearchEnabled()) {
-            RenderBlockEvent event = new RenderBlockEvent(new BlockCoords(i, j, k, par4));
-            this.getEventManager().call(event);
+            @SuppressWarnings("unused")
+            RenderBlockEvent event = new RenderBlockEvent(new BlockCoords(i, j, k, par4)).call();
         }
 
         if (!this.isXrayEnabled()) {
@@ -69,7 +70,7 @@ public final class BlockRendererMixin implements Globals {
     }
 
     @Inject(method = "renderBlockByRenderType", at = @At("TAIL"), cancellable = true)
-    public void onRenderBlockByRenderTypeTail(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onRenderBlockByRenderTypeTail(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }

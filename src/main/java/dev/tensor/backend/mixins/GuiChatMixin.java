@@ -1,5 +1,6 @@
 package dev.tensor.backend.mixins;
 
+import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.GuiChatScreenEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.GuiChat;
@@ -15,14 +16,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * @since 03-24-2026
  */
 
-@Mixin(value = GuiChat.class, priority = Integer.MAX_VALUE)
+@Mixin(value = GuiChat.class, priority = MixinPriority.VALUE)
 public final class GuiChatMixin extends GuiScreen implements Globals {
 
     @Shadow
     private String message;
 
     @Inject(method = "drawScreen", at = @At("HEAD"))
-    public void onDrawScreen(int j, int f, float par3, CallbackInfo ci) {
+    public void tensor_onDrawScreen(int j, int f, float par3, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -31,7 +32,7 @@ public final class GuiChatMixin extends GuiScreen implements Globals {
             return;
         }
 
-        GuiChatScreenEvent event = new GuiChatScreenEvent(this.message, 2, this.width - 2, this.height - 14, this.height - 2);
-        this.getEventManager().call(event);
+        @SuppressWarnings("unused")
+        GuiChatScreenEvent event = new GuiChatScreenEvent(this.message, 2, this.width - 2, this.height - 14, this.height - 2).call();
     }
 }

@@ -5,7 +5,7 @@ import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.hack.render.Render3DObject;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 @Hack.Info(name = "Tracers", category = Category.Render)
-public final class Tracers extends Hack implements Render3DObject {
+public final class Tracers extends Render3DHack {
 
     @Override
     public int getRenderOrder() {
