@@ -70,6 +70,7 @@ public final class Waypoints extends Render3DHack {
         }
 
         //todo: sort waypoints by distance (NOT IN THIS METHOD DO IT WHEN LOADING)
+        //Should render farthest first?
         this.waypoints.forEach(waypoint -> {
 
             if (waypoint.isEnabled()) {
