@@ -45,7 +45,7 @@ public final class CommandManager implements Manager {
         this.addCommand(new Setting());
         this.addCommand(new Toggle());
 
-        this.postSortHacks();
+        this.postSortCommands();
     }
 
     public void addCommand(Command COMMAND) {
@@ -98,7 +98,7 @@ public final class CommandManager implements Manager {
         return command.get();
     }
 
-    private void postSortHacks() {
+    private void postSortCommands() {
         this.COMMANDS.sort(Comparator.comparing(Command::getName));
     }
 

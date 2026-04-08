@@ -78,27 +78,27 @@ public interface Globals {
     }
 
     default EventManager getEventManager() {
-        return (EventManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof EventManager).findFirst().orElse(null);
+        return (EventManager) this.getTensor().MANAGERS.get(EventManager.class);
     }
 
     default ConfigManager getConfigManager() {
-        return (ConfigManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof ConfigManager).findFirst().orElse(null);
+        return (ConfigManager) this.getTensor().MANAGERS.get(ConfigManager.class);
     }
 
     default FriendManager getFriendManager() {
-        return (FriendManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof FriendManager).findFirst().orElse(null);
+        return (FriendManager) this.getTensor().MANAGERS.get(FriendManager.class);
     }
 
     default CustomGUIManager getCustomGUIManager() {
-        return (CustomGUIManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof CustomGUIManager).findFirst().orElse(null);
+        return (CustomGUIManager) this.getTensor().MANAGERS.get(CustomGUIManager.class);
     }
 
     default HackManager getHackManager() {
-        return (HackManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof HackManager).findFirst().orElse(null);
+        return (HackManager) this.getTensor().MANAGERS.get(HackManager.class);
     }
 
     default CommandManager getCommandManager() {
-        return (CommandManager) this.getTensor().MANAGERS.stream().filter(manager -> manager instanceof CommandManager).findFirst().orElse(null);
+        return (CommandManager) this.getTensor().MANAGERS.get(CommandManager.class);
     }
 
     default Xray getXray() {

@@ -7,7 +7,7 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Hoosiers
@@ -50,7 +50,7 @@ public final class TensorClassic implements ModInitializer, Globals {
         return LOGGER;
     }
 
-    public ArrayList<Manager> MANAGERS = new ArrayList<>();
+    public HashMap<Class<? extends Manager>, Manager> MANAGERS = new HashMap<>();
 
     @Override
     public void onInitialize() {
@@ -67,12 +67,16 @@ public final class TensorClassic implements ModInitializer, Globals {
 
     private void loadManagers() {
 
-        this.MANAGERS.add(this.returnLoadedManager(new EventManager()));
-        this.MANAGERS.add(this.returnLoadedManager(new ConfigManager()));
-        this.MANAGERS.add(this.returnLoadedManager(new FriendManager()));
-        this.MANAGERS.add(this.returnLoadedManager(new CustomGUIManager()));
-        this.MANAGERS.add(this.returnLoadedManager(new HackManager()));
-        this.MANAGERS.add(this.returnLoadedManager(new CommandManager()));
+        this.addManager(this.returnLoadedManager(new EventManager()));
+        this.addManager(this.returnLoadedManager(new ConfigManager()));
+        this.addManager(this.returnLoadedManager(new FriendManager()));
+        this.addManager(this.returnLoadedManager(new CustomGUIManager()));
+        this.addManager(this.returnLoadedManager(new HackManager()));
+        this.addManager(this.returnLoadedManager(new CommandManager()));
+    }
+
+    private <T extends Manager> void addManager(T manager) {
+        this.MANAGERS.put(manager.getClass(), manager);
     }
 
     private <T extends Manager> T returnLoadedManager(T manager) {
@@ -90,7 +94,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         long saveStartTime = System.currentTimeMillis();
 
-        this.MANAGERS.forEach(manager -> manager.save(LOGGER));
+        this.MANAGERS.values().forEach(manager -> manager.save(LOGGER));
 
         long saveEndTime = System.currentTimeMillis();
 

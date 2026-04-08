@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +35,10 @@ public final class HackManager implements Manager {
     }
 
     private final ArrayList<Hack> HACKS = new ArrayList<>();
+
+    private final HashMap<Class<? extends Hack>, Hack> HACK_CALL = new HashMap<>();
+    private final HashMap<String, Hack> HACK_CALL_STRING = new HashMap<>();
+
     private final ArrayList<Render3DHack> RENDER_3D_HACKS = new ArrayList<>();
 
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
@@ -159,6 +164,8 @@ public final class HackManager implements Manager {
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
+        this.HACK_CALL.put(HACK.getClass(), HACK);
+        this.HACK_CALL_STRING.put(HACK.NAME.toLowerCase(), HACK);
 
         if (HACK instanceof Render3DHack) {
             this.RENDER_3D_HACKS.add((Render3DHack) HACK);
@@ -187,11 +194,11 @@ public final class HackManager implements Manager {
 
     @SuppressWarnings("unchecked")
     public <T extends Hack> T getHack(Class<T> aClass) {
-        return (T) this.getHacks().stream().filter(hack -> hack.getClass().equals(aClass)).findFirst().orElse(null);
+        return (T) this.HACK_CALL.get(aClass);
     }
 
     public Hack getHack(String NAME) {
-        return this.getHacks().stream().filter(hack -> hack.NAME.equalsIgnoreCase(NAME)).findFirst().orElse(null);
+        return this.HACK_CALL_STRING.get(NAME.toLowerCase());
     }
 
     private void postSortHacks() {
