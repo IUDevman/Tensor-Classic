@@ -5,6 +5,7 @@ import dev.tensor.backend.events.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.RenderGlobal;
 import net.minecraft.src.Tessellator;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -78,5 +79,15 @@ public final class RenderGlobalMixin implements Globals {
 
             Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.8F);
         }
+    }
+
+    @Inject(method = "renderCloudsFancy", at = @At("HEAD"))
+    public void fixGLGlitchHead(float par1, CallbackInfo ci) {
+        GL11.glPushMatrix();
+    }
+
+    @Inject(method = "renderCloudsFancy", at = @At("TAIL"))
+    public void fixGLGlitchTail(float par1, CallbackInfo ci) {
+        GL11.glPopMatrix();
     }
 }

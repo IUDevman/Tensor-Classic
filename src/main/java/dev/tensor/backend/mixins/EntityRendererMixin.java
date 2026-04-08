@@ -3,10 +3,7 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.EntityRenderer;
-import net.minecraft.src.Material;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -69,7 +66,7 @@ public abstract class EntityRendererMixin implements Globals {
         }
     }
 
-    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityRenderer;renderRainSnow(F)V", shift = At.Shift.BEFORE))
+    @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderGlobal;renderClouds(F)V", shift = At.Shift.AFTER))
     public void tensor_onRenderWorld(float l, long par2, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
