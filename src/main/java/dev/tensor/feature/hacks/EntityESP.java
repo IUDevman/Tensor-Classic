@@ -21,7 +21,7 @@ public final class EntityESP extends Render3DHack {
 
     @Override
     public int getRenderOrder() {
-        return RenderOrder.ENTITY_ESP;
+        return RenderOrder.ENTITYESP;
     }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
