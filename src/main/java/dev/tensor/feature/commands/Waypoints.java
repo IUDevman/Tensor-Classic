@@ -1,6 +1,5 @@
 package dev.tensor.feature.commands;
 
-import dev.tensor.feature.hacks.Waypoints;
 import dev.tensor.misc.helpers.waypoint.WaypointList;
 import dev.tensor.misc.imp.command.Command;
 
@@ -11,18 +10,18 @@ import java.util.ArrayList;
  * @since 04-08-2026
  */
 
-public final class Waypoint implements Command {
+public final class Waypoints implements Command {
 
     @Override
     public String getName() {
-        return "Waypoint";
+        return "Waypoints";
     }
 
     @Override
     public String[] getAcceptedNames() {
         return new String[]{
                 this.getName(),
-                "Waypoints",
+                "Waypoint",
                 "Marker",
                 "Markers"
         };
@@ -58,7 +57,7 @@ public final class Waypoint implements Command {
             return;
         }
 
-        WaypointList waypointList = this.getHackManager().getHack(Waypoints.class).waypointList.getValue();
+        WaypointList waypointList = this.getHackManager().getHack(dev.tensor.feature.hacks.Waypoints.class).waypointList.getValue();
 
         if (firstEntry.equalsIgnoreCase("list")) {
             String MESSAGE_PRE = this.getName() + " (" + this.getColor(ChatColor.AQUA) + waypointList.getWaypoints().size() + this.getColor(ChatColor.DEFAULT) + "): ";

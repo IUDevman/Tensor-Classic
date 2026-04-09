@@ -44,7 +44,7 @@ public final class CommandManager implements Manager {
         this.addCommand(new Reset());
         this.addCommand(new Setting());
         this.addCommand(new Toggle());
-        this.addCommand(new Waypoint());
+        this.addCommand(new Waypoints());
 
         this.postSortCommands();
     }
