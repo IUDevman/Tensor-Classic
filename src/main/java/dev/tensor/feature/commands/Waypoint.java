@@ -30,12 +30,12 @@ public final class Waypoint implements Command {
 
     @Override
     public String getRegex() {
-        return "{name} {list/add/remove} {name$or$name_this/x_y_z}";
+        return "{name} {list/toggle/add/remove} {name$or$name_this/x_y_z}";
     }
 
     @Override
     public String getDescription() {
-        return "Add, remove, or list waypoints to render with Waypoints.";
+        return "Toggle, add, remove, or list waypoints to render with Waypoints.";
     }
 
     @Override
@@ -53,7 +53,7 @@ public final class Waypoint implements Command {
             return;
         }
 
-        if (!firstEntry.equalsIgnoreCase("list") && !firstEntry.equalsIgnoreCase("add") && !firstEntry.equalsIgnoreCase("remove")) {
+        if (!firstEntry.equalsIgnoreCase("list") && !firstEntry.equalsIgnoreCase("add") && !firstEntry.equalsIgnoreCase("remove") && !firstEntry.equalsIgnoreCase("toggle")) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
             return;
         }
@@ -65,7 +65,7 @@ public final class Waypoint implements Command {
 
             ArrayList<String> WAYPOINTS = new ArrayList<>();
 
-            waypointList.getWaypoints().forEach(waypoint -> WAYPOINTS.add(this.getColor(ChatColor.RED) + waypoint.getName()
+            waypointList.getWaypoints().forEach(waypoint -> WAYPOINTS.add((waypoint.isEnabled() ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + waypoint.getName()
                     + this.getColor(ChatColor.DEFAULT) + " (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT)
                     + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", "
                     + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ")"));
@@ -82,28 +82,28 @@ public final class Waypoint implements Command {
         }
 
         if (ARGS.length == 1) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String secondEntry = ARGS[1];
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String[] secondEntryArgs = secondEntry.split("_");
 
         if (secondEntryArgs.length < 1) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String name = secondEntryArgs[0];
 
         if (name == null || name.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
@@ -111,6 +111,12 @@ public final class Waypoint implements Command {
 
         if (waypoint == null && !shouldAdd) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' from waypoint list!");
+            return;
+        }
+
+        if (waypoint != null && firstEntry.equalsIgnoreCase("toggle")) {
+            waypoint.toggle();
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT)  + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") toggled (" + (waypoint.isEnabled() ? this.getColor(ChatColor.GREEN) + "Enabled" : this.getColor(ChatColor.RED) + "Disabled") + this.getColor(ChatColor.DEFAULT) + ")!");
             return;
         }
 
