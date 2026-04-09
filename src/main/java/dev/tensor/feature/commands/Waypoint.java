@@ -1,0 +1,163 @@
+package dev.tensor.feature.commands;
+
+import dev.tensor.feature.hacks.Waypoints;
+import dev.tensor.misc.helpers.waypoint.WaypointList;
+import dev.tensor.misc.imp.command.Command;
+
+import java.util.ArrayList;
+
+/**
+ * @author Hoosiers
+ * @since 04-08-2026
+ */
+
+public final class Waypoint implements Command {
+
+    @Override
+    public String getName() {
+        return "Waypoint";
+    }
+
+    @Override
+    public String[] getAcceptedNames() {
+        return new String[]{
+                this.getName(),
+                "Waypoints",
+                "Marker",
+                "Markers"
+        };
+    }
+
+    @Override
+    public String getRegex() {
+        return "{name} {list/add/remove} {name$or$name_this/x_y_z}";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Add, remove, or list waypoints to render with Waypoints.";
+    }
+
+    @Override
+    public void onCommand(String[] ARGS) {
+
+        if (ARGS == null || ARGS.length == 0) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
+            return;
+        }
+
+        String firstEntry = ARGS[0];
+
+        if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
+            return;
+        }
+
+        WaypointList waypointList = this.getHackManager().getHack(Waypoints.class).waypointList.getValue();
+
+        boolean shouldAdd = false;
+
+        if (firstEntry.equalsIgnoreCase("list")) {
+            String MESSAGE_PRE = this.getName() + " (" + this.getColor(ChatColor.AQUA) + waypointList.getWaypoints().size() + this.getColor(ChatColor.DEFAULT) + "): ";
+
+            ArrayList<String> WAYPOINTS = new ArrayList<>();
+
+            waypointList.getWaypoints().forEach(waypoint -> WAYPOINTS.add(this.getColor(ChatColor.RED) + waypoint.getName()
+                    + this.getColor(ChatColor.DEFAULT) + " (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT)
+                    + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", "
+                    + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ")"));
+
+            this.sendClientMessageWithPrefix(MESSAGE_PRE + WAYPOINTS);
+            return;
+
+        } else if (firstEntry.equalsIgnoreCase("add")) {
+            shouldAdd = true;
+
+        } else if (firstEntry.equalsIgnoreCase("remove")) {
+
+        } else {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
+            return;
+        }
+
+        String secondEntry = ARGS[2];
+
+        if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            return;
+        }
+
+        String[] secondEntryArgs = secondEntry.split("_");
+
+        if (secondEntryArgs.length < 1) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            return;
+        }
+
+        String name = secondEntryArgs[0];
+
+        if (name == null || name.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
+            return;
+        }
+
+        dev.tensor.misc.helpers.waypoint.Waypoint waypoint = waypointList.getWaypoints().stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+
+        if (waypoint == null && !shouldAdd) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' from waypoint list!");
+            return;
+        }
+
+        if (!shouldAdd) {
+            waypointList.removeFromWaypointsList(waypoint);
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT)  + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") removed from waypoints list!");
+            return;
+        }
+
+        if (waypoint != null) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (name already used)!");
+            return;
+        }
+
+        String thisOrX = secondEntryArgs[1];
+
+        if (thisOrX == null || thisOrX.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (no 'this' or coordinates inputted)!");
+            return;
+        }
+
+        if (thisOrX.equalsIgnoreCase("this")) {
+            try {
+                int x = (int) this.getPlayer().posX;
+                int y = (int) this.getPlayer().posY;
+                int z = (int) this.getPlayer().posZ;
+
+                dev.tensor.misc.helpers.waypoint.Waypoint waypointAdd = new dev.tensor.misc.helpers.waypoint.Waypoint(name, x, y, z);
+                waypointList.addToWaypointList(waypointAdd);
+                this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.DEFAULT) + "' with coordinates (" + this.getColor(ChatColor.YELLOW) + x + this.getColor(ChatColor.DEFAULT)  + ", " + this.getColor(ChatColor.YELLOW) + y + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + z + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
+
+            } catch (Exception ignored) {
+                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
+            }
+
+            return;
+        }
+
+        String Y = secondEntryArgs[2];
+        String Z = secondEntryArgs[3];
+
+        if (Y == null || Y.equalsIgnoreCase(" ") || Z == null || Z.equalsIgnoreCase(" ")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (invalid coordinates inputted)!");
+            return;
+        }
+
+        try {
+            dev.tensor.misc.helpers.waypoint.Waypoint waypointAdd = new dev.tensor.misc.helpers.waypoint.Waypoint(name, Integer.parseInt(thisOrX), Integer.parseInt(Y), Integer.parseInt(Z));
+            waypointList.addToWaypointList(waypointAdd);
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.DEFAULT) + "' with coordinates (" + this.getColor(ChatColor.YELLOW) + thisOrX + this.getColor(ChatColor.DEFAULT)  + ", " + this.getColor(ChatColor.YELLOW) + Y + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + Z + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
+
+        } catch (Exception ignored) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
+        }
+    }
+}
