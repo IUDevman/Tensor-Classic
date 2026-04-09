@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.misc.helpers.waypoint.Waypoint;
+import dev.tensor.misc.helpers.waypoint.WaypointList;
 import dev.tensor.misc.helpers.waypoint.WaypointRender;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -8,7 +8,6 @@ import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 
-import java.util.ArrayList;
 
 /**
  * @author Hoosiers
@@ -23,11 +22,11 @@ public final class Waypoints extends Render3DHack {
         return RenderOrder.WAYPOINTS;
     }
 
-    //todo: waypoints list setting; NOTE FOR FUTURE ME: Do not have the list reset on hack reset.
+    public final WaypointListSetting waypointList = new WaypointListSetting("Waypoints", new WaypointList(WaypointList.EMPTY()), "");
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true);
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
-    public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 6, 2, 10);
+    public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
     public final ColorSettingNoAlpha tagTextColor = new ColorSettingNoAlpha("Tag Text Color", WaypointRender.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Tag Background Color", WaypointRender.defaultBackgroundColor);
@@ -38,43 +37,11 @@ public final class Waypoints extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);
 
-    private final ArrayList<Waypoint> waypoints = new ArrayList<>();
-
-    private boolean sorted = false;
-
-    @Override
-    public void onEnable(boolean isNull) {
-
-        //temporary for testing
-        this.waypoints.add(new Waypoint("Test", 1000, 100, 200));
-        this.waypoints.add(new Waypoint("Test1", 0, 100, 0));
-        this.waypoints.add(new Waypoint("Test2", 500, 100, 200));
-        this.waypoints.add(new Waypoint("Test3", 30, 30, 60));
-
-        this.waypoints.forEach(waypoint -> waypoint.setEnabled(true));
-
-        if (!isNull) {
-            this.sortWaypoints();
-        }
-    }
-
-    @Override
-    public void onDisable(boolean isNull) {
-        this.sorted = false;
-    }
-
     @Override
     public void onRender3D(float renderPartialTicks) {
-        if (!this.sorted) {
-            this.sortWaypoints();
-        }
-
-        //todo: sort waypoints by distance (NOT IN THIS METHOD DO IT WHEN LOADING)
-        //Should render farthest first?
-        this.waypoints.forEach(waypoint -> {
+        this.waypointList.getValue().getSortedWaypoints().forEach(waypoint -> {
 
             if (waypoint.isEnabled()) {
-
                 WaypointRender.RenderType type = null;
 
                 switch ((Type) this.renderType.getValue()) {
@@ -124,11 +91,6 @@ public final class Waypoints extends Render3DHack {
                         this.boxFillAlpha.getValue());
             }
         });
-    }
-
-    private void sortWaypoints() {
-        //todo
-        this.sorted = true;
     }
 
     private enum Mode {

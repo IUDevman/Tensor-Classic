@@ -121,6 +121,6 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
 
     @Override
     public void reset() {
-        this.getValue().resetEntityList();
+        /* removed reset 04-08-26 */
     }
 }

@@ -17,8 +17,8 @@ public final class EntityTypeList implements Globals {
     private final ArrayList<String> entityList;
 
     public EntityTypeList(ArrayList<String> entityList) {
-        this.entityListDefault = entityList;
-        this.entityList = entityList;
+        this.entityListDefault = new ArrayList<>(entityList);
+        this.entityList = new ArrayList<>(entityList);
     }
 
     public ArrayList<String> getEntityList() {

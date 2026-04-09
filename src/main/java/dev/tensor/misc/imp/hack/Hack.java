@@ -181,12 +181,18 @@ public abstract class Hack implements Globals {
         this.getSettings().forEach(objectSetting -> {
             JsonElement jsonElement = settingObject.get(objectSetting.getName());
 
-            if (jsonElement == null) return;
-
-            objectSetting.load(jsonElement);
+            if (jsonElement != null && !objectSetting.shouldExcludeFromHackConfig()) {
+                objectSetting.load(jsonElement);
+            }
         });
 
         this.setEnabled(jsonObject.get("Enabled").getAsBoolean());
+
+        this.getSettings().forEach(objectSetting -> {
+            if (objectSetting.shouldExcludeFromHackConfig()) {
+                objectSetting.load(null);
+            }
+        });
     }
 
     public void save(String modulePath) throws Exception {
@@ -202,10 +208,22 @@ public abstract class Hack implements Globals {
 
         JsonObject settingObject = new JsonObject();
 
-        this.getSettings().forEach(objectSetting -> objectSetting.save(settingObject));
+        this.getSettings().forEach(objectSetting -> {
+
+            if (!objectSetting.shouldExcludeFromHackConfig()) {
+                objectSetting.save(settingObject);
+            }
+        });
 
         jsonObject.add("Settings", settingObject);
 
         this.getConfigManager().createAndWrite(path, jsonObject);
+
+        this.getSettings().forEach(objectSetting -> {
+
+            if (objectSetting.shouldExcludeFromHackConfig()) {
+                objectSetting.save(null);
+            }
+        });
     }
 }

@@ -1,9 +1,6 @@
 package dev.tensor.feature.managers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import dev.tensor.TensorClassic;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
@@ -20,6 +17,7 @@ import java.nio.file.Paths;
  */
 
 public final class ConfigManager implements Manager {
+
     @Override
     public String getName() {
         return "ConfigManager";
@@ -67,6 +65,11 @@ public final class ConfigManager implements Manager {
         return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonObject();
     }
 
+    public JsonArray getJsonArrayFromPath(Path path) throws Exception {
+        InputStream inputStream = Files.newInputStream(path);
+        return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonArray();
+    }
+
     public void registerFile(Path path) throws IOException {
         if (Files.exists(path)) Files.delete(path);
 
@@ -78,6 +81,15 @@ public final class ConfigManager implements Manager {
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(path.toString()), StandardCharsets.UTF_8);
 
         String jsonString = gson.toJson(new JsonParser().parse(jsonObject.toString()));
+        outputStreamWriter.write(jsonString);
+        outputStreamWriter.close();
+    }
+
+    public void createAndWrite(Path path, JsonArray jsonArray) throws Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(path.toString()), StandardCharsets.UTF_8);
+
+        String jsonString = gson.toJson(new JsonParser().parse(jsonArray.toString()));
         outputStreamWriter.write(jsonString);
         outputStreamWriter.close();
     }

@@ -116,6 +116,6 @@ public class BlockListSetting implements Setting<BlockList> {
 
     @Override
     public void reset() {
-        this.getValue().resetBlockList();
+        /* removed reset 04-08-26 */
     }
 }

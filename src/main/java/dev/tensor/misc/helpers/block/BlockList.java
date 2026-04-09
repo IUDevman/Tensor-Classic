@@ -17,8 +17,8 @@ public final class BlockList implements Globals {
     private final ArrayList<String> blockList;
 
     public BlockList(ArrayList<String> blockList) {
-        this.blockListDefault = blockList;
-        this.blockList = blockList;
+        this.blockListDefault = new ArrayList<>(blockList);
+        this.blockList = new ArrayList<>(blockList);
     }
 
     public void addToBlockList(Block block) {

@@ -3,6 +3,7 @@ package dev.tensor.feature.commands;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.Setting;
+import dev.tensor.misc.imp.setting.settings.WaypointListSetting;
 
 /**
  * @author Hoosiers
@@ -77,6 +78,11 @@ public final class Reset implements Command {
 
         if (setting == null) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find setting '" + this.getColor(ChatColor.AQUA) + secondEntry + this.getColor(ChatColor.RED) + "' to reset for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "'!");
+            return;
+        }
+
+        if (setting instanceof WaypointListSetting) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to reset setting '" + this.getColor(ChatColor.AQUA) + setting.getName() + this.getColor(ChatColor.RED) + "' for hack'" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "' (can not reset WaypointListSetting with command - use ClickGUI)!");
             return;
         }
 

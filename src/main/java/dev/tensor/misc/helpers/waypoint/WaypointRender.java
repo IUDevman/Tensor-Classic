@@ -79,6 +79,9 @@ public final class WaypointRender implements Render3D {
             double rMaxY = (monolith ? 192 : this.getRenderPos().maxY) - RenderManager.renderPosY;
             double rMaxZ = (monolith ? maxedZ + (this.width / 2) / 2 : this.getRenderPos().maxZ) - RenderManager.renderPosZ;
 
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
             switch (renderType) {
                 case Outline:
                     this.drawOutlineBox(rMinX, rMinY, rMinZ, rMaxX, rMaxY, rMaxZ, lineWidth, boxColor);
@@ -90,10 +93,14 @@ public final class WaypointRender implements Render3D {
                     this.drawOutlineBox(rMinX, rMinY, rMinZ, rMaxX, rMaxY, rMaxZ, lineWidth, boxColor);
                     break;
             }
+
+            GL11.glDisable(GL11.GL_BLEND);
         }
 
         double distance = Math.sqrt(this.getPlayer().getDistanceSq(maxedX, maxedY, maxedZ));
-        double scaling = -Math.max(0.0833334D * tagScale, 0.0833334D * tagScale * Math.min(tagDistanceMultiplier, (distance / 45.2548D)));
+
+        /* Kinda >> Jank << way of calculating scale. I pretty much sat here and changed the doubles until I got something that looked nice */
+        double scaling = -Math.max(0.0833334D * tagScale, 0.0833334D * tagScale * Math.min(tagDistanceMultiplier, distance / 35.2548D));
 
         GL11.glPushMatrix();
 

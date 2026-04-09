@@ -30,4 +30,8 @@ public interface Setting<T> extends Globals {
     default void reset() {
         this.setValue(this.getDefaultValue());
     }
+
+    default boolean shouldExcludeFromHackConfig() {
+        return false;
+    }
 }
