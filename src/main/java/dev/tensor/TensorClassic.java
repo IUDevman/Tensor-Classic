@@ -109,7 +109,6 @@ public final class TensorClassic implements ModInitializer, Globals {
             this.saveManagers();
         }
 
-        this.MANAGERS.clear();
         this.loadManagers();
 
         long resetEndTime = System.currentTimeMillis();

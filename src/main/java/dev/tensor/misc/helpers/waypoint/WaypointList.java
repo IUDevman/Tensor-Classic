@@ -65,11 +65,15 @@ public final class WaypointList implements Globals {
 
         JsonArray jsonArray = this.getConfigManager().getJsonArrayFromPath(path);
 
+        if (jsonArray == null || jsonArray.isEmpty()) {
+            return;
+        }
+
         jsonArray.forEach(jsonElement -> {
 
             JsonObject jsonObject = jsonElement.getAsJsonObject();
 
-            if (jsonObject != null && !jsonObject.isEmpty()) {
+            if (jsonObject != null) {
 
                 String name = jsonObject.get("Name").getAsString();
                 boolean enabled = jsonObject.get("Enabled").getAsBoolean();

@@ -53,9 +53,12 @@ public final class Waypoint implements Command {
             return;
         }
 
-        WaypointList waypointList = this.getHackManager().getHack(Waypoints.class).waypointList.getValue();
+        if (!firstEntry.equalsIgnoreCase("list") && !firstEntry.equalsIgnoreCase("add") && !firstEntry.equalsIgnoreCase("remove")) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
+            return;
+        }
 
-        boolean shouldAdd = false;
+        WaypointList waypointList = this.getHackManager().getHack(Waypoints.class).waypointList.getValue();
 
         if (firstEntry.equalsIgnoreCase("list")) {
             String MESSAGE_PRE = this.getName() + " (" + this.getColor(ChatColor.AQUA) + waypointList.getWaypoints().size() + this.getColor(ChatColor.DEFAULT) + "): ";
@@ -70,17 +73,20 @@ public final class Waypoint implements Command {
             this.sendClientMessageWithPrefix(MESSAGE_PRE + WAYPOINTS);
             return;
 
-        } else if (firstEntry.equalsIgnoreCase("add")) {
+        }
+
+        boolean shouldAdd = false;
+
+        if (firstEntry.equalsIgnoreCase("add")) {
             shouldAdd = true;
+        }
 
-        } else if (firstEntry.equalsIgnoreCase("remove")) {
-
-        } else {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
+        if (ARGS.length == 1) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
             return;
         }
 
-        String secondEntry = ARGS[2];
+        String secondEntry = ARGS[1];
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add/remove waypoint (no name inputted)!");
@@ -119,6 +125,11 @@ public final class Waypoint implements Command {
             return;
         }
 
+        if (secondEntryArgs.length < 2) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (no 'this' or coordinates inputted)!");
+            return;
+        }
+
         String thisOrX = secondEntryArgs[1];
 
         if (thisOrX == null || thisOrX.equalsIgnoreCase(" ")) {
@@ -140,6 +151,11 @@ public final class Waypoint implements Command {
                 this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
             }
 
+            return;
+        }
+
+        if (secondEntryArgs.length < 4) {
+            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (not all coordinate values inputted)!");
             return;
         }
 
