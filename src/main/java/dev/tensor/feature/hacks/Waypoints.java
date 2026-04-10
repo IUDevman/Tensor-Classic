@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.misc.helpers.waypoint.Waypoint;
 import dev.tensor.misc.helpers.waypoint.WaypointList;
 import dev.tensor.misc.helpers.waypoint.WaypointRender;
 import dev.tensor.misc.imp.hack.Category;
@@ -7,6 +8,8 @@ import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
+
+import java.util.ArrayList;
 
 
 /**
@@ -22,7 +25,7 @@ public final class Waypoints extends Render3DHack {
         return RenderOrder.WAYPOINTS;
     }
 
-    public final WaypointListSetting waypointList = new WaypointListSetting("Waypoints", new WaypointList(WaypointList.EMPTY()), "");
+    public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "");
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true);
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
@@ -37,9 +40,22 @@ public final class Waypoints extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);
 
+    private final ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.waypointsToRender.clear();
+    }
+
+    @Override
+    public void onClientTick() {
+        this.waypointsToRender.clear();
+        this.waypointsToRender.addAll(this.waypointList.getValue().getSortedWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer"));
+    }
+
     @Override
     public void onRender3D(float renderPartialTicks) {
-        this.waypointList.getValue().getSortedWaypoints().forEach(waypoint -> {
+        this.waypointsToRender.forEach(waypoint -> {
 
             if (waypoint.isEnabled()) {
                 WaypointRender.RenderType type = null;

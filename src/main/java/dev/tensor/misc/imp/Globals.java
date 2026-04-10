@@ -1,6 +1,8 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
+import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
+import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
@@ -51,6 +53,20 @@ public interface Globals {
 
     default boolean isMultiplayer() {
         return this.getWorld().multiplayerWorld;
+    }
+
+    default String getServerIP() {
+        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).getNetManager()).getNetworkSocket().getInetAddress().getHostName();
+
+        if (hostName == null) {
+            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).getNetManager()).getNetworkSocket().getInetAddress().getHostAddress();
+        }
+
+        if (hostName == null) {
+            return "Penis";
+        }
+
+        return hostName;
     }
 
     default void resetWorld() {

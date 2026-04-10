@@ -15,15 +15,20 @@ public final class Waypoint implements Globals {
     private final int y;
     private final int z;
 
+    private final boolean overworld;
+    private final String server;
+
     private final WaypointRender render;
 
     private boolean enabled = false;
 
-    public Waypoint(String name, int x, int y, int z) {
+    public Waypoint(String name, int x, int y, int z, boolean overworld, String server) {
         this.name = name;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.overworld = overworld;
+        this.server = server;
 
         this.render = new WaypointRender(this);
     }
@@ -54,6 +59,14 @@ public final class Waypoint implements Globals {
 
     public int getZ() {
         return this.z;
+    }
+
+    public boolean isOverworld() {
+        return this.overworld;
+    }
+
+    public String getServer() {
+        return this.server;
     }
 
     public WaypointRender getRender() {

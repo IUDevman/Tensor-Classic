@@ -10,7 +10,8 @@
     "EntityMixin",
     "NetworkManagerMixin",
     "WorldMixin",
-    "accessors.EntityAccessor"
+    "accessors.EntityAccessor",
+    "accessors.NetworkManagerAccessor"
   ],
   "client": [
     "BlockRendererMixin",
@@ -26,7 +27,8 @@
     "RenderManagerMixin",
     "RenderPlayerMixin",
     "TessellatorMixin",
-    "accessors.MinecraftAccessor"
+    "accessors.MinecraftAccessor",
+    "accessors.NetClientHandlerAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

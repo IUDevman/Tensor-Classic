@@ -13,7 +13,7 @@ import java.awt.*;
  * @since 03-31-2026
  */
 
-public class EntityTypeSettingObject implements ButtonSettingObject {
+public final class EntityTypeSettingObject implements ButtonSettingObject {
 
     private final String value;
     private final EntityTypeListSetting setting;
@@ -40,7 +40,7 @@ public class EntityTypeSettingObject implements ButtonSettingObject {
 
     @Override
     public int getWidth() {
-        return this.button.tensorGUI.guiWidth - (2 * offSetX);
+        return this.button.tensorGUI.guiWidth - (2 * this.offSetX);
     }
 
     @Override
