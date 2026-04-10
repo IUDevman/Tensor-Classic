@@ -129,6 +129,10 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
             return;
         }
 
+        if (this.value.length() >= this.integerSetting.getMax().toString().length()) {
+            return;
+        }
+
         String name = Keyboard.getKeyName(key);
 
         if (name.equalsIgnoreCase("PERIOD")) {

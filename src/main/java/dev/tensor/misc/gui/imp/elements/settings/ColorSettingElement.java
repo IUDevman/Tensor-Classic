@@ -195,6 +195,10 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             return;
         }
 
+        if (this.value.length() >= 3) {
+            return;
+        }
+
         this.value += Keyboard.getKeyName(key);
     }
 

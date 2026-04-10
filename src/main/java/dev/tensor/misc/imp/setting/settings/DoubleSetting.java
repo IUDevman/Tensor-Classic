@@ -50,7 +50,7 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
 
     @Override
     public String getValueString(boolean color) {
-        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue().toString();
+        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getFormattedFromValue(this.getValue());
     }
 
     @Override
@@ -89,7 +89,7 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
     }
 
     @SuppressWarnings("MalformedFormatString")
-    private String getFormattedFromValue(double VALUE) {
+    public String getFormattedFromValue(double VALUE) {
         return String.format("%." + this.getDecimal() + "f", VALUE);
     }
 

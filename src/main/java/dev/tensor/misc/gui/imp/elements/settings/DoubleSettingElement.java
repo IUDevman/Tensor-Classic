@@ -68,7 +68,7 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getMin() + " -> " + this.doubleSetting.getMax() + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValue());
+        String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMin()) + " -> " + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()) + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValueString(false));
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
@@ -127,6 +127,10 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         if (key == Keyboard.KEY_BACK) {
             if (this.value.length() < 1) return;
             this.value = this.value.substring(0, this.value.length() - 1);
+            return;
+        }
+
+        if (this.value.length() >= this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()).length()) {
             return;
         }
 
