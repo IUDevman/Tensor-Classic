@@ -23,10 +23,11 @@ public final class Waypoint implements Globals {
     private boolean enabled = false;
 
     public Waypoint(String name, int x, int y, int z, boolean overworld, String server) {
+
         this.name = name;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = this.clampCoord(x, -30000000, 30000000);
+        this.y = this.clampCoord(y, 0, 256);
+        this.z = this.clampCoord(z, -30000000, 30000000);
         this.overworld = overworld;
         this.server = server;
 
@@ -71,6 +72,16 @@ public final class Waypoint implements Globals {
 
     public WaypointRender getRender() {
         return this.render;
+    }
+
+    private int clampCoord(int value, int min, int max) {
+        if (value > max) {
+            value = max;
+        } else if (value < min) {
+            value = min;
+        }
+
+        return value;
     }
 }
 

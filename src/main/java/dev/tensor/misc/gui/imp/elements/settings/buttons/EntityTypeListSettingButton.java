@@ -85,6 +85,8 @@ public final class EntityTypeListSettingButton implements ButtonSetting {
         this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 5, this.getPosY() + this.getHeight(), fillColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
 
+        GL11.glEnable(GL11.GL_SCISSOR_TEST);
+
         int posX = this.getPosX() + 5;
         int posY = this.getPosY() + this.tensorGUI.titleHeight + 2;
         int width1 = this.getWidth() - 7;
