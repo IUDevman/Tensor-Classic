@@ -17,6 +17,8 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
 public final class Suffix extends Hack {
 
     public final EnumSetting separator = new EnumSetting("Separator", Separator.Right_Arrow);
+    public final EnumSetting clientName = new EnumSetting("Client", Clients.Tensor);
+
 
     @SuppressWarnings("unused")
     @EventTarget(value = Priority.LOWEST)
@@ -26,7 +28,7 @@ public final class Suffix extends Hack {
 
         if (!message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
 
-            String messageSuffix = message + " " + this.getSuffix(TensorClassic.MOD_NAME_SHORT);
+            String messageSuffix = message + " " + this.getSuffix(this.getClientName());
 
             if (messageSuffix.length() >= 256) {
                 return;
@@ -34,6 +36,14 @@ public final class Suffix extends Hack {
 
             event.ARGS = messageSuffix;
         }
+    }
+
+    private String getClientName() {
+        if (this.clientName.getValue().equals(Clients.Tensor)) {
+            return TensorClassic.MOD_NAME_SHORT;
+        }
+
+        return this.clientName.getValue().name();
     }
 
     private String getSuffix(String message) {
@@ -66,5 +76,21 @@ public final class Suffix extends Hack {
         Line,
         Brackets,
         None
+    }
+
+    public enum Clients {
+        Tensor,
+        Relique,
+        $now,
+        Velocity,
+        Space,
+        Rose,
+        Hephaestus,
+        End,
+        Radium,
+        Infinity,
+        GameSense,
+        MaybeAClient,
+        FreeCliff
     }
 }
