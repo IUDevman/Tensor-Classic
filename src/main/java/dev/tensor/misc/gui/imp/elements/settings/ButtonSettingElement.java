@@ -5,15 +5,9 @@ import dev.tensor.misc.gui.imp.elements.ButtonSetting;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.BlockListSettingButton;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.DummySettingButton;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.EntityTypeListSettingButton;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.StringSettingButton;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.*;
 import dev.tensor.misc.imp.setting.Setting;
-import dev.tensor.misc.imp.setting.settings.BlockListSetting;
-import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import dev.tensor.misc.imp.setting.settings.StringSetting;
+import dev.tensor.misc.imp.setting.settings.*;
 
 import java.awt.*;
 
@@ -38,6 +32,8 @@ public final class ButtonSettingElement extends SettingElement {
             this.button = new BlockListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (BlockListSetting) setting);
         } else if (this.setting instanceof EntityTypeListSetting) {
             this.button = new EntityTypeListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (EntityTypeListSetting) setting);
+        } else if (this.setting instanceof WaypointListSetting) {
+            this.button = new WaypointListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (WaypointListSetting) setting);
         } else {
             button = new DummySettingButton();
         }
