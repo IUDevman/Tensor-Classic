@@ -1,10 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.BlockBreakEvent;
-import dev.tensor.backend.events.ChatSentEvent;
-import dev.tensor.backend.events.CloseInventoryEvent;
-import dev.tensor.backend.events.Packet10FlyingEvent;
+import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -72,6 +69,20 @@ public final class NetClientHandlerMixin implements Globals {
                     ci.cancel();
                 }
             }
+        }
+    }
+
+    @Inject(method = "handleChat", at = @At("HEAD"), cancellable = true)
+    public void onHandleChat(Packet3Chat par1, CallbackInfo ci) {
+        if (this.failsNullCheck() || par1 == null) {
+            return;
+        }
+
+        ChatReceivedEvent event = new ChatReceivedEvent(par1.message).call();
+
+        if (event.isCancelled()) {
+            this.sendMessageWithLinesColor(event.message);
+            ci.cancel();
         }
     }
 }

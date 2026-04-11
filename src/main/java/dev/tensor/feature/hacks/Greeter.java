@@ -40,10 +40,6 @@ public final class Greeter extends Hack {
     @SuppressWarnings("unused")
     @EventTarget()
     public void onChatReceivedEvent(ChatReceivedEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
-
         String message = event.message;
 
         if (message == null) {

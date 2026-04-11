@@ -26,13 +26,8 @@ public final class ChatTimestamp extends Hack {
     public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY);
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.HIGHEST)
+    @EventTarget(value = Priority.LOWEST)
     public void onChatReceivedEvent(ChatReceivedEvent event) {
-
-        if (event.message.startsWith("§r")) {
-            return;
-        }
-
         String leftSeparator = this.getSeparator(true);
 
         String dateFormat = this.getDateFormat();
@@ -41,7 +36,7 @@ public final class ChatTimestamp extends Hack {
 
         String rightSeparator = this.getSeparator(false);
 
-        event.message = "§r" + this.getColor((ChatColor) this.separatorColor.getValue())
+        event.message = this.getColor((ChatColor) this.separatorColor.getValue())
                 + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
                 + timeStamp + this.getColor((ChatColor) this.separatorColor.getValue())
                 + rightSeparator + (this.space.getValue() ? " " : "") + this.getColor(ChatColor.DEFAULT)
