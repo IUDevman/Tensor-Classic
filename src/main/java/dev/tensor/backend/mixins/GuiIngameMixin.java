@@ -7,6 +7,7 @@ import dev.tensor.backend.events.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.GuiIngame;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,7 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = GuiIngame.class, priority = MixinPriority.VALUE)
-public final class GuiIngameMixin implements Globals {
+public abstract class GuiIngameMixin implements Globals {
+
+    @Shadow
+    public abstract void addChatMessage(String string);
 
     @Inject(method = "renderGameOverlay", at = @At("TAIL"))
     public void tensor_onRenderGameOverlay(float bl, boolean i, int j, int par4, CallbackInfo ci) {
@@ -29,14 +33,18 @@ public final class GuiIngameMixin implements Globals {
         Render2DEvent event = new Render2DEvent().call();
     }
 
-    @Inject(method = "addChatMessage", at = @At("HEAD"))
-    public void tensor_onAddChatMessage(String par1, CallbackInfo ci) {
+    @Inject(method = "addChatMessage", at = @At("HEAD"), cancellable = true)
+    public void tensor_onAddChatMessage(String string, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        @SuppressWarnings("unused")
-        ChatReceivedEvent event = new ChatReceivedEvent(par1).call();
+        ChatReceivedEvent event = new ChatReceivedEvent(string).call();
+
+        if (event.isCancelled()) {
+            this.addChatMessage(event.message);
+            ci.cancel();
+        }
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)

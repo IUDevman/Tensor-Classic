@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.ChatReceivedEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -37,8 +38,11 @@ public final class Greeter extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
+    @EventTarget()
     public void onChatReceivedEvent(ChatReceivedEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
 
         String message = event.message;
 
