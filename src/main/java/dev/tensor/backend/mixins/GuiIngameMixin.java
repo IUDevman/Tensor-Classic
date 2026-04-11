@@ -33,7 +33,7 @@ public abstract class GuiIngameMixin implements Globals {
         Render2DEvent event = new Render2DEvent().call();
     }
 
-    @Inject(method = "addChatMessage", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "addChatMessage", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/FontRenderer;getStringWidth(Ljava/lang/String;)I", shift = At.Shift.BEFORE), cancellable = true)
     public void tensor_onAddChatMessage(String string, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
