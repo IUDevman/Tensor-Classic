@@ -55,7 +55,7 @@ public final class EnumSettingElement extends SettingElement {
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.enumSetting.getName() + " : " + this.getColor(ChatColor.LIGHT_GRAY) + this.enumSetting.getValue().name().replace("_", " ").replace("$", ":");
+        String text = this.enumSetting.getName() + " : " + this.getColor(ChatColor.LIGHT_GRAY) + this.enumSetting.getValue().name().replace("_", " ").replace("$", this.enumSetting.getValue().name().equals("$now") ? "$" : ":");
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 
