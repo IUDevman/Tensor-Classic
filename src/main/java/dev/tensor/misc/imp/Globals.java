@@ -1,6 +1,7 @@
 package dev.tensor.misc.imp;
 
 import dev.tensor.TensorClassic;
+import dev.tensor.backend.mixins.accessors.GuiIngameAccessor;
 import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
 import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
 import dev.tensor.feature.hacks.Search;
@@ -215,6 +216,7 @@ public interface Globals {
         this.sendMessageWithLinesColor(prefixMessage);
     }
 
+    @SuppressWarnings("unchecked")
     default void sendMessageWithLinesColor(String message) {
 
         while (this.getFontRenderer().getStringWidth(message) > 320) {
@@ -240,7 +242,11 @@ public interface Globals {
             message = previousMessageColor + message.substring(firstEnd);
         }
 
-        this.getPlayer().addChatMessage(message);
+        ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().add(0, new ChatLine(message));
+
+        while(((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() > 50) {
+            ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().remove(((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() - 1);
+        }
     }
 
     default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {

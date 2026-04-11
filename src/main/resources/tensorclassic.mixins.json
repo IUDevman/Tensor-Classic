@@ -27,6 +27,7 @@
     "RenderManagerMixin",
     "RenderPlayerMixin",
     "TessellatorMixin",
+    "accessors.GuiIngameAccessor",
     "accessors.MinecraftAccessor",
     "accessors.NetClientHandlerAccessor"
   ],
