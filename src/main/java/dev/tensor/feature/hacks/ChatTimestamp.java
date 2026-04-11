@@ -25,9 +25,35 @@ public final class ChatTimestamp extends Hack {
     public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.RED);
     public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY);
 
+    private String messageCutPrev = "";
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.messageCutPrev = "";
+    }
+
     @SuppressWarnings("unused")
     @EventTarget(value = Priority.LOWEST)
     public void onChatReceivedEvent(ChatReceivedEvent event) {
+        if (this.messageCutPrev != "") {
+
+            if (event.message.startsWith(">")) {
+                String first = event.message.substring(0, 1);
+                String rest = event.message.substring(1);
+                event.message = first + this.messageCutPrev + rest;
+
+            } else if (event.message.startsWith("§") && event.message.length() > 1) {
+                String first = event.message.substring(0, 2);
+                String rest = event.message.substring(2);
+                event.message = first + this.messageCutPrev + rest;
+                
+            } else {
+                event.message = this.messageCutPrev + event.message;
+            }
+
+            this.messageCutPrev = "";
+        }
+
         String leftSeparator = this.getSeparator(true);
 
         String dateFormat = this.getDateFormat();
@@ -42,6 +68,22 @@ public final class ChatTimestamp extends Hack {
                 + rightSeparator + (this.space.getValue() ? " " : "") + this.getColor(ChatColor.DEFAULT)
                 + event.message;
 
+        if (this.getFontRenderer().getStringWidth(event.message) > 320) {
+
+            int firstEnd = 1;
+
+            while (firstEnd < event.message.length() && this.getFontRenderer().getStringWidth(event.message.substring(0, firstEnd + 1)) <= 320) {
+                firstEnd++;
+            }
+
+            String cutMessage = event.message.substring(0, firstEnd);
+            this.messageCutPrev = event.message.substring(firstEnd);
+            event.message = cutMessage;
+        } else {
+            this.messageCutPrev = "";
+        }
+
+        this.getTensorLogger().info(event.message);
         event.cancel();
     }
 
