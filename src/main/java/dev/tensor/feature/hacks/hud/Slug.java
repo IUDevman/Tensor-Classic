@@ -73,6 +73,7 @@ public final class Slug extends Hack implements HUDObject {
 
     private int rotation = 0;
 
+    @Override
     public void onClientTick() {
         if (this.rotation >= 360) {
             this.rotation = 0;
@@ -83,8 +84,6 @@ public final class Slug extends Hack implements HUDObject {
 
     @Override
     public void render() {
-        this.prepareScale();
-
         if (texture == -1) {
             this.setupTexture();
         }
@@ -92,6 +91,8 @@ public final class Slug extends Hack implements HUDObject {
         if (texture == -1) {
             return;
         }
+
+        this.prepareScale();
 
         this.getMinecraft().renderEngine.bindTexture(texture);
 
