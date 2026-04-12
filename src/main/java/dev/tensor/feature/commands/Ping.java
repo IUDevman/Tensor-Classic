@@ -12,7 +12,7 @@ import java.net.InetAddress;
  */
 
 public final class Ping extends SimpleCallableCommand {
-    
+
     @Override
     public String getName() {
         return "Ping";
@@ -54,14 +54,14 @@ public final class Ping extends SimpleCallableCommand {
                 boolean reached = false;
 
                 if (!server.isReachable(50)) {
-                    start = 50;
+                    start = 51;
                 } else {
                     reached = true;
                 }
 
                 if (!reached) {
                     if (!server.isReachable(100)) {
-                        start = 100;
+                        start = 101;
                     } else {
                         reached = true;
                     }
@@ -69,7 +69,7 @@ public final class Ping extends SimpleCallableCommand {
 
                 if (!reached) {
                     if (!server.isReachable(150)) {
-                        start = 150;
+                        start = 151;
                     } else {
                         reached = true;
                     }
@@ -77,7 +77,7 @@ public final class Ping extends SimpleCallableCommand {
 
                 if (!reached) {
                     if (!server.isReachable(200)) {
-                        start = 200;
+                        start = 201;
                     } else {
                         reached = true;
                     }
