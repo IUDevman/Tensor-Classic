@@ -2,12 +2,15 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.*;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiGameOver;
+import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.Packet0KeepAlive;
 import org.lwjgl.input.Keyboard;
 
@@ -27,6 +30,7 @@ public final class HephFreecam extends Hack {
     }
 
     public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true);
+    public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
 
     private double oldX;
@@ -154,6 +158,45 @@ public final class HephFreecam extends Hack {
         this.setEnabled(false);
     }
 
+    @SuppressWarnings("unused")
+    @EventTarget(value = Priority.HIGHEST)
+    public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
+        switch ((Highlight) this.highlight.getValue()) {
+            case None:
+                event.cancel();
+                break;
+            case Normal:
+                break;
+            case Above_Ground:
+                if (this.isInSelectionResult(event.positionToRender)) {
+                    event.cancel();
+                }
+                break;
+        }
+    }
+
+    private boolean isInSelectionResult(MovingObjectPosition position) {
+        boolean inX = false;
+        boolean inY = false;
+        boolean inZ = false;
+
+        if (this.getPlayer().posX >= position.blockX - 0.5 && this.getPlayer().posX <= position.blockX + 1.5) {
+            inX = true;
+        }
+
+        if (this.getPlayer().posY >= position.blockY - 0.5 && this.getPlayer().posY <= position.blockY + 1.5) {
+            inY = true;
+        } else if (this.getPlayer().posY + 1 >= position.blockY - 0.5 && this.getPlayer().posY + 1 <= position.blockY + 1.5) {
+            inY = true;
+        }
+
+        if (this.getPlayer().posZ >= position.blockZ - 0.5 && this.getPlayer().posZ <= position.blockZ + 1.5) {
+            inZ = true;
+        }
+
+        return inX && inY && inZ;
+    }
+
     private boolean isPlayerMoving() {
         return this.getPlayer().motionX != 0 || this.getPlayer().motionZ != 0;
     }
@@ -198,5 +241,11 @@ public final class HephFreecam extends Hack {
 
         this.getPlayer().motionX = forwardSpeed * moveSpeed * motionX + strafeSpeed * moveSpeed * motionZ;
         this.getPlayer().motionZ = forwardSpeed * moveSpeed * motionZ - strafeSpeed * moveSpeed * motionX;
+    }
+
+    private enum Highlight {
+        Normal,
+        None,
+        Above_Ground
     }
 }

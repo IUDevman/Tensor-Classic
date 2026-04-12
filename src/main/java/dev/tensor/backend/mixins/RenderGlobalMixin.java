@@ -1,10 +1,10 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.events.RenderSelectionBoxEvent;
 import dev.tensor.backend.events.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
-import net.minecraft.src.RenderGlobal;
-import net.minecraft.src.Tessellator;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -82,12 +82,27 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderCloudsFancy", at = @At("HEAD"))
-    public void fixGLGlitchHead(float par1, CallbackInfo ci) {
+    public void tensor_fixGLGlitchHead(float par1, CallbackInfo ci) {
         GL11.glPushMatrix();
     }
 
     @Inject(method = "renderCloudsFancy", at = @At("TAIL"))
-    public void fixGLGlitchTail(float par1, CallbackInfo ci) {
+    public void tensor_fixGLGlitchTail(float par1, CallbackInfo ci) {
         GL11.glPopMatrix();
+    }
+
+    @Inject(method = "drawSelectionBox", at = @At("HEAD"), cancellable = true)
+    public void tensor_onDrawSelectionBox(EntityPlayer arg2, MovingObjectPosition i, int arg3, ItemStack f, float par5, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
+            RenderSelectionBoxEvent event = new RenderSelectionBoxEvent(i).call();
+
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        }
     }
 }
