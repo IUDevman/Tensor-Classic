@@ -51,6 +51,7 @@ public final class HackManager implements Manager {
         this.addHack(new Armor());
         this.addHack(new AutoEat());
         this.addHack(new AutoLogin());
+        this.addHack(new AutoReconnect());
         this.addHack(new AutoRespawn());
         this.addHack(new AutoTool());
         this.addHack(new AutoWalk());
@@ -71,6 +72,7 @@ public final class HackManager implements Manager {
         this.addHack(new GreenText());
         this.addHack(new Greeter());
         this.addHack(new HackList());
+        this.addHack(new HephFreecam());
         this.addHack(new HUDEditor());
         this.addHack(new Inventory());
         this.addHack(new InventoryMove());
@@ -133,29 +135,11 @@ public final class HackManager implements Manager {
     public void save(Logger LOGGER) {
         LOGGER.info("Saved: " + this.getName());
 
-        ClickGUI clickGUI = this.getHack(ClickGUI.class);
-
-        if (clickGUI.isEnabled()) {
-            clickGUI.toggle();
-        }
-
-        HUDEditor hudEditor = this.getHack(HUDEditor.class);
-
-        if (hudEditor.isEnabled()) {
-            hudEditor.toggle();
-        }
-
-        FakePlayer fakePlayer = this.getHack(FakePlayer.class);
-
-        if (fakePlayer.isEnabled()) {
-            fakePlayer.toggle();
-        }
-
-        this.saveHacks(LOGGER);
-    }
-
-    private void saveHacks(Logger LOGGER) {
         this.getHacks().forEach(hack -> {
+            if (hack.shouldDisableOnDisconnect() && hack.isEnabled()) {
+                hack.toggle();
+            }
+
             try {
                 hack.save(this.hackPath);
             } catch (Exception ingored) {

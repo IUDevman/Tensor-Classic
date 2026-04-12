@@ -33,19 +33,21 @@ public final class InventoryMove extends Hack {
             return;
         }
 
-        ClickGUI clickGUI = this.getHackManager().getHack(ClickGUI.class);
-
-        if (clickGUI.isEnabled() && clickGUI.tensorGUI != null && clickGUI.tensorGUI.isSearching()) {
+        if (this.shouldNotMove()) {
             this.handleMove(true);
-            return;
-        }
-
-        if (this.getMinecraft().currentScreen instanceof GuiChat || this.getMinecraft().currentScreen instanceof GuiEditSign) {
-            this.handleMove(true);
-            return;
         }
 
         this.handleMove(false);
+    }
+
+    public boolean shouldNotMove() {
+        ClickGUI clickGUI = this.getHackManager().getHack(ClickGUI.class);
+
+        if (clickGUI.isEnabled() && clickGUI.tensorGUI != null && clickGUI.tensorGUI.isSearching()) {
+            return true;
+        }
+
+        return this.getMinecraft().currentScreen instanceof GuiChat || this.getMinecraft().currentScreen instanceof GuiEditSign;
     }
 
     private void handleMove(boolean stop) {

@@ -2,9 +2,11 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.*;
+import dev.tensor.misc.gui.TensorGuiConnectFailed;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,6 +18,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = NetClientHandler.class, priority = MixinPriority.VALUE)
 public final class NetClientHandlerMixin implements Globals {
+
+    @Shadow
+    private NetworkManager netManager;
+
+    @Shadow
+    private boolean disconnected;
 
     @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
     public void tensor_onAddToSendQueue(Packet arg, CallbackInfo ci) {
@@ -54,6 +62,11 @@ public final class NetClientHandlerMixin implements Globals {
 
             Packet10FlyingEvent event = new Packet10FlyingEvent(packet).call();
 
+            if (event.isCancelled()) {
+                ci.cancel();
+                return;
+            }
+
             arg = event.packet;
             return;
         }
@@ -73,7 +86,7 @@ public final class NetClientHandlerMixin implements Globals {
     }
 
     @Inject(method = "handleChat", at = @At("HEAD"), cancellable = true)
-    public void onHandleChat(Packet3Chat par1, CallbackInfo ci) {
+    public void tensor_onHandleChat(Packet3Chat par1, CallbackInfo ci) {
         if (this.failsNullCheck() || par1 == null) {
             return;
         }
@@ -82,6 +95,37 @@ public final class NetClientHandlerMixin implements Globals {
 
         if (event.isCancelled()) {
             this.sendMessageWithLinesColor(event.message);
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "handleKickDisconnect", at = @At("HEAD"), cancellable = true)
+    public void tensor_onHandleKickDisconnect(Packet255KickDisconnect par1, CallbackInfo ci) {
+        if (this.failsNullCheck() || par1 == null) {
+            return;
+        }
+
+        if (this.isAutoReconnectEnabled()) {
+            this.netManager.networkShutdown("disconnect.kicked");
+            this.disconnected = true;
+            this.getMinecraft().changeWorld1(null);
+            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.disconnected", "disconnect.genericReason", par1.reason));
+
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "handleErrorMessage", at = @At("HEAD"), cancellable = true)
+    public void tensor_onHandleErrorMessage(String objects, Object[] par2, CallbackInfo ci) {
+        if (this.failsNullCheck() || this.disconnected) {
+            return;
+        }
+
+        if (this.isAutoReconnectEnabled()) {
+            this.disconnected = true;
+            this.getMinecraft().changeWorld1(null);
+            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.lost", objects, par2));
+
             ci.cancel();
         }
     }

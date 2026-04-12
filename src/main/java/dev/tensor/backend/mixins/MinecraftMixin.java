@@ -1,10 +1,13 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.events.ChangeWorldEvent;
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.World;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,5 +42,15 @@ public final class MinecraftMixin implements Globals {
             @SuppressWarnings("unused")
             KeyPressedEvent event = new KeyPressedEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
         }
+    }
+
+    @Inject(method = "changeWorld", at = @At("HEAD"))
+    public void tensor_onChangeWorld(World string, String arg2, EntityPlayer par3, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        @SuppressWarnings("unused")
+        ChangeWorldEvent event = new ChangeWorldEvent().call();
     }
 }

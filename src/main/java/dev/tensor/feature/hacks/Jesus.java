@@ -22,6 +22,12 @@ public final class Jesus extends Hack {
 
     @Override
     public void onClientTick() {
+        HephFreecam hephFreecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (hephFreecam.isEnabled()) {
+            return;
+        }
+
         boolean inWater = this.getPlayer().isInWater();
         boolean inLava = this.getPlayer().isInsideOfMaterial(Material.lava);
 

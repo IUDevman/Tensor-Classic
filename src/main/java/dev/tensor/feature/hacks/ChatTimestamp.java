@@ -46,7 +46,7 @@ public final class ChatTimestamp extends Hack {
                 String first = event.message.substring(0, 2);
                 String rest = event.message.substring(2);
                 event.message = first + this.messageCutPrev + rest;
-                
+
             } else {
                 event.message = this.messageCutPrev + event.message;
             }

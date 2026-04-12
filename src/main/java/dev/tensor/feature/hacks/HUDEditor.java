@@ -17,6 +17,11 @@ import java.awt.*;
 @Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE)
 public final class HUDEditor extends Hack {
 
+    @Override
+    public boolean shouldDisableOnDisconnect() {
+        return true;
+    }
+
     public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 

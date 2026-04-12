@@ -226,4 +226,8 @@ public abstract class Hack implements Globals {
             }
         });
     }
+
+    public boolean shouldDisableOnDisconnect() {
+        return false;
+    }
 }

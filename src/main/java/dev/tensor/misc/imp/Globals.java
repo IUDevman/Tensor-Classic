@@ -4,6 +4,7 @@ import dev.tensor.TensorClassic;
 import dev.tensor.backend.mixins.accessors.GuiIngameAccessor;
 import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
 import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
+import dev.tensor.feature.hacks.AutoReconnect;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
@@ -118,6 +119,10 @@ public interface Globals {
         return (CommandManager) this.getTensor().MANAGERS.get(CommandManager.class);
     }
 
+    default AutoReconnect getAutoReconnect() {
+        return this.getHackManager().getHack(AutoReconnect.class);
+    }
+
     default Xray getXray() {
         return this.getHackManager().getHack(Xray.class);
     }
@@ -140,6 +145,16 @@ public interface Globals {
         }
 
         return search.isEnabled();
+    }
+
+    default boolean isAutoReconnectEnabled() {
+        AutoReconnect autoReconnect = this.getAutoReconnect();
+
+        if (autoReconnect == null) {
+            return false;
+        }
+
+        return autoReconnect.isEnabled();
     }
 
     default String getColor(ChatColor COLOR) {
@@ -244,7 +259,7 @@ public interface Globals {
 
         ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().add(0, new ChatLine(message));
 
-        while(((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() > 50) {
+        while (((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() > 50) {
             ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().remove(((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() - 1);
         }
     }

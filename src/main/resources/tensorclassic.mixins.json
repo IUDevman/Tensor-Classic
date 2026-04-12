@@ -16,9 +16,11 @@
   "client": [
     "BlockRendererMixin",
     "EffectRendererMixin",
+    "EntityClientPlayerMPMixin",
     "EntityPlayerSPMixin",
     "EntityRendererMixin",
     "GuiChatMixin",
+    "GuiConnectingMixin",
     "GuiIngameMixin",
     "ItemRendererMixin",
     "MinecraftMixin",

@@ -1,5 +1,7 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.ChangeWorldEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -15,6 +17,11 @@ import net.minecraft.src.ItemStack;
 
 @Hack.Info(name = "FakePlayer", category = Category.Misc)
 public final class FakePlayer extends Hack {
+
+    @Override
+    public boolean shouldDisableOnDisconnect() {
+        return true;
+    }
 
     public final BooleanSetting geared = new BooleanSetting("Geared", true);
     public final StringSetting name = new StringSetting("Name", "Hoosiers");
@@ -49,5 +56,11 @@ public final class FakePlayer extends Hack {
         }
 
         this.fakePlayer = null;
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        this.setEnabled(false);
     }
 }

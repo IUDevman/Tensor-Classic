@@ -1,7 +1,6 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.ChatReceivedEvent;
 import dev.tensor.backend.events.Render2DEvent;
 import dev.tensor.backend.events.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;

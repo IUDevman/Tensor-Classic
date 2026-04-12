@@ -13,6 +13,11 @@ import java.awt.*;
 @Hack.Info(name = "ClickGUI", category = Category.Client, bind = Keyboard.KEY_RSHIFT)
 public final class ClickGUI extends Hack {
 
+    @Override
+    public boolean shouldDisableOnDisconnect() {
+        return true;
+    }
+
     public final BooleanSetting renderHUD = new BooleanSetting("Render HUD", true);
     public final IntegerSetting x = new IntegerSetting("X", 265, 2, 5000);
     public final IntegerSetting y = new IntegerSetting("Y", 135, 2, 2000);
