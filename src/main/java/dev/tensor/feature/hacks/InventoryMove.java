@@ -16,7 +16,7 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "InventoryMove", category = Category.Movement)
 public final class InventoryMove extends Hack {
 
-    public final BooleanSetting jump = new BooleanSetting("Jump", true);
+    public final BooleanSetting jump = new BooleanSetting("Jump", false);
     public final BooleanSetting sneak = new BooleanSetting("Sneak", false);
 
     @Override

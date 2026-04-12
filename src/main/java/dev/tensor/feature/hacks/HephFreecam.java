@@ -136,7 +136,7 @@ public final class HephFreecam extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onVelocityEvent(VelocityEvent event) {
-        if (event.type.equals(VelocityEvent.Type.Block)) {
+        if (event.type.equals(VelocityEvent.Type.Block) || event.type.equals(VelocityEvent.Type.Fluid)) {
             event.cancel();
         }
     }
