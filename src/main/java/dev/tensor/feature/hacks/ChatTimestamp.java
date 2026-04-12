@@ -82,8 +82,7 @@ public final class ChatTimestamp extends Hack {
         } else {
             this.messageCutPrev = "";
         }
-
-        this.getTensorLogger().info(event.message);
+        
         event.cancel();
     }
 
