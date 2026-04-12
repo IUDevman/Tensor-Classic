@@ -98,7 +98,7 @@ public final class Ping extends SimpleCallableCommand {
             }
 
             try {
-                for (int i = start; i < 250; i++) {
+                for (int i = start; i <= 250; i++) {
                     boolean reachable = server.isReachable(i);
 
                     if (reachable) {
