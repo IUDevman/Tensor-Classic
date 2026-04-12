@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.gui.TensorHUDEditor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -18,6 +19,7 @@ public final class InventoryMove extends Hack {
 
     public final BooleanSetting jump = new BooleanSetting("Jump", false);
     public final BooleanSetting sneak = new BooleanSetting("Sneak", false);
+    public final BooleanSetting bypass = new BooleanSetting("Bypass for Tensor", true);
 
     @Override
     public void onDisable(boolean isNull) {
@@ -73,12 +75,24 @@ public final class InventoryMove extends Hack {
         this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindLeft.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindLeft.keyCode));
         this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindRight.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindRight.keyCode));
 
-        if (this.jump.getValue()) {
+        boolean tensorBypass = this.bypass.getValue() && this.shouldBypassGUI();
+
+        if (this.jump.getValue() || tensorBypass) {
             this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindJump.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode));
         }
 
-        if (this.sneak.getValue()) {
+        if (this.sneak.getValue() || tensorBypass) {
             this.getPlayer().handleKeyPress(this.getMinecraft().gameSettings.keyBindSneak.keyCode, !stop && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindSneak.keyCode));
         }
+    }
+
+    private boolean shouldBypassGUI() {
+        ClickGUI clickGUI = this.getHackManager().getHack(ClickGUI.class);
+
+        if (clickGUI.isEnabled() && clickGUI.tensorGUI != null && !clickGUI.tensorGUI.isSearching()) {
+            return true;
+        }
+
+        return this.getMinecraft().currentScreen instanceof TensorHUDEditor;
     }
 }
