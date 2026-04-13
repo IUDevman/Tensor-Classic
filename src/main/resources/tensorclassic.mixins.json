@@ -11,6 +11,7 @@
     "NetworkManagerMixin",
     "WorldMixin",
     "accessors.EntityAccessor",
+    "accessors.ItemToolAccessor",
     "accessors.NetworkManagerAccessor"
   ],
   "client": [
