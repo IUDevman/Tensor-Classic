@@ -3,10 +3,7 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.EntityRenderer;
-import net.minecraft.src.Material;
+import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -125,5 +122,20 @@ public abstract class EntityRendererMixin implements Globals {
         }
 
         return instance.prevTimeInPortal;
+    }
+
+    @Redirect(method = "orientCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;distanceTo(Lnet/minecraft/src/Vec3D;)D"))
+    public double tensor_onOrientCameraDistanceTo(Vec3D instance, Vec3D vec3D) {
+        if (this.failsNullCheck()) {
+            return instance.distanceTo(vec3D);
+        }
+
+        CameraClipEvent event = new CameraClipEvent().call();
+
+        if (event.isCancelled()) {
+            return 100;
+        }
+
+        return instance.distanceTo(vec3D);
     }
 }

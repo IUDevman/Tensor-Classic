@@ -4,11 +4,13 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.ChangeWorldEvent;
 import dev.tensor.backend.events.ClientTickEvent;
 import dev.tensor.backend.events.KeyPressedEvent;
+import dev.tensor.backend.events.MouseEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,7 +34,7 @@ public final class MinecraftMixin implements Globals {
         ClientTickEvent clientTickEvent = new ClientTickEvent().call();
     }
 
-    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", shift = At.Shift.AFTER, ordinal = 1))
+    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", shift = At.Shift.AFTER, ordinal = 1, remap = false))
     public void tensor_onGetEventKeyState(CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
@@ -42,6 +44,17 @@ public final class MinecraftMixin implements Globals {
             @SuppressWarnings("unused")
             KeyPressedEvent event = new KeyPressedEvent(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
         }
+    }
+
+    @SuppressWarnings("DiscouragedShift")
+    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventDWheel()I", shift = At.Shift.BEFORE, remap = false))
+    public void tensor_onGetMouseState(CallbackInfo ci) {
+        if (this.failsNullCheck() || this.getMinecraft().currentScreen != null) {
+            return;
+        }
+
+        @SuppressWarnings("unused")
+        MouseEvent event = new MouseEvent(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call();
     }
 
     @Inject(method = "changeWorld", at = @At("HEAD"))
