@@ -82,7 +82,7 @@ public final class ChatTimestamp extends Hack {
         } else {
             this.messageCutPrev = "";
         }
-        
+
         event.cancel();
     }
 

@@ -8,5 +8,4 @@ import dev.tensor.misc.event.imp.EventCancellable;
  */
 
 public final class LightValueEvent extends EventCancellable {
-
 }
