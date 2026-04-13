@@ -107,6 +107,10 @@ public final class AutoTool extends Hack {
                 strength = 10 + ((ItemToolAccessor) tool).getToolMaterial().getHarvestLevel();
             }
 
+            if (this.getInventory().getCurrentItem().getItem() == Item.flintAndSteel && blockId == Block.tnt.blockID) {
+                strength = -10;
+            }
+
             if (strength > currentStrength) {
                 currentStrength = strength;
                 swapSlot = i;
