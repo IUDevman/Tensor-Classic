@@ -18,7 +18,7 @@ import java.awt.*;
 @Hack.Info(name = "Welcomer", category = Category.HUD, enabled = true)
 public final class Welcomer extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 500, 0, this.getMaxX());
+    public final IntegerSetting x = new IntegerSetting("X", 550, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 0, 255));

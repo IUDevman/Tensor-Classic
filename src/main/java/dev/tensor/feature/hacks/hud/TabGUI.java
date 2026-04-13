@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * @since 03-15-2026
  */
 
-@Hack.Info(name = "TabGUI", category = Category.HUD, enabled = true)
+@Hack.Info(name = "TabGUI", category = Category.HUD)
 public final class TabGUI extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
