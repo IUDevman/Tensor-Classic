@@ -35,7 +35,6 @@ public final class BlockHighlight extends Render3DHack {
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final ColorSetting color = new ColorSetting("Color", Color.RED);
 
-    //private MovingObjectPosition positionToRender = null;
     private BlockCoords positionToRender = null;
 
     @Override
@@ -139,7 +138,6 @@ public final class BlockHighlight extends Render3DHack {
             int x = event.positionToRender.blockX;
             int y = event.positionToRender.blockY;
             int z = event.positionToRender.blockZ;
-
 
             int blockID = this.getWorld().getBlockId(x, y, z);
 

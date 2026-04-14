@@ -265,7 +265,7 @@ public final class Search extends Render3DHack {
             if (metadata == 1) {
                 rx = blockCoords.x - RenderManager.renderPosX;
                 ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
-                rz = blockCoords.z + 0.35D - RenderManager.renderPosZ;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.35D;
 
                 dx = 0.3D;
                 dy = 0.6D;
@@ -289,7 +289,7 @@ public final class Search extends Render3DHack {
                 mz = dz + rz;
 
             } else if (metadata == 3) {
-                rx = blockCoords.x + 0.35D - RenderManager.renderPosX;
+                rx = blockCoords.x - RenderManager.renderPosX + 0.35D;
                 ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
                 rz = blockCoords.z - RenderManager.renderPosZ;
 
@@ -315,9 +315,9 @@ public final class Search extends Render3DHack {
                 mz = dz + rz;
 
             } else if (metadata == 5) {
-                rx = blockCoords.x + 0.4D - RenderManager.renderPosX;
+                rx = blockCoords.x - RenderManager.renderPosX + 0.4D;
                 ry = blockCoords.y - RenderManager.renderPosY;
-                rz = blockCoords.z + 0.4D - RenderManager.renderPosZ;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.4D;
 
                 dx = 0.2D;
                 dy = 0.6D;

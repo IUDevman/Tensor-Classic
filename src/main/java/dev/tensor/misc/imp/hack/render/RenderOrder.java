@@ -13,8 +13,9 @@ public final class RenderOrder {
     public static final int WAYPOINTS = 3;
     public static final int KILLAURA = 4;
     public static final int ENTITYESP = 5;
-    public static final int BLOCKHIGHLIGHT = 6;
-    public static final int SEARCH = 7;
+    public static final int BREAKPROGRESS = 6;
+    public static final int BLOCKHIGHLIGHT = 7;
+    public static final int SEARCH = 8;
 
-    public static final int DEFAULT = 8;
+    public static final int DEFAULT = 9;
 }

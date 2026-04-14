@@ -31,6 +31,7 @@ public final class HephFreecam extends Hack {
 
     public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true);
     public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
+    public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
 
     private double oldX;
@@ -172,6 +173,14 @@ public final class HephFreecam extends Hack {
                     event.cancel();
                 }
                 break;
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget(value = Priority.HIGHEST)
+    public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
+        if (!this.showBreakProgress.getValue()) {
+            event.cancel();
         }
     }
 

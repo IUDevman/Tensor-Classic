@@ -1,6 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.events.RenderBlockBreakEvent;
 import dev.tensor.backend.events.RenderSelectionBoxEvent;
 import dev.tensor.backend.events.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
@@ -99,6 +100,21 @@ public final class RenderGlobalMixin implements Globals {
 
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
             RenderSelectionBoxEvent event = new RenderSelectionBoxEvent(i).call();
+
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        }
+    }
+
+    @Inject(method = "drawBlockBreaking", at = @At("HEAD"), cancellable = true)
+    public void tensor_onDrawBlockBreaking(EntityPlayer arg2, MovingObjectPosition i, int arg3, ItemStack f, float par5, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+        
+        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
+            RenderBlockBreakEvent event = new RenderBlockBreakEvent(i).call();
 
             if (event.isCancelled()) {
                 ci.cancel();
