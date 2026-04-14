@@ -13,8 +13,7 @@ import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.Block;
-import net.minecraft.src.RenderManager;
+import net.minecraft.src.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -176,9 +175,159 @@ public final class Search extends Render3DHack {
     }
 
     private void renderForBlock(BlockCoords blockCoords) {
-        double rx = blockCoords.x - RenderManager.renderPosX;
-        double ry = blockCoords.y - RenderManager.renderPosY;
-        double rz = blockCoords.z - RenderManager.renderPosZ;
+        blockCoords.block.setBlockBoundsBasedOnState(this.getWorld(), blockCoords.x, blockCoords.y, blockCoords.z);
+
+        double rx = blockCoords.x - RenderManager.renderPosX + blockCoords.block.minX;
+        double ry = blockCoords.y - RenderManager.renderPosY + blockCoords.block.minY;
+        double rz = blockCoords.z - RenderManager.renderPosZ + blockCoords.block.minZ;
+
+        double dx = (blockCoords.block.maxX - blockCoords.block.minX);
+        double dy = (blockCoords.block.maxY - blockCoords.block.minY);
+        double dz = (blockCoords.block.maxZ - blockCoords.block.minZ);
+
+        double mx = dx + rx;
+        double my = dy + ry;
+        double mz = dz + rz;
+
+        if (blockCoords.block instanceof BlockLadder) {
+            int metadata = this.getWorld().getBlockMetadata(blockCoords.x, blockCoords.y, blockCoords.z);
+
+            if (metadata == 2) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.9D;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 0.1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 3) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 0.1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 4) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.9D;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 5) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+            }
+        }
+
+        if (blockCoords.block instanceof BlockTorch || blockCoords.block instanceof BlockRedstoneTorch) {
+            int metadata = this.getWorld().getBlockMetadata(blockCoords.x, blockCoords.y, blockCoords.z);
+
+            if (metadata == 1) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z + 0.35D - RenderManager.renderPosZ;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 2) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.7D;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.35D;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 3) {
+                rx = blockCoords.x + 0.35D - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 4) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.35D;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.7D;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 5) {
+                rx = blockCoords.x + 0.4D - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z + 0.4D - RenderManager.renderPosZ;
+
+                dx = 0.2D;
+                dy = 0.6D;
+                dz = 0.2D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+            }
+        }
 
         Color color = this.searchColor.getValue();
 
@@ -191,11 +340,11 @@ public final class Search extends Render3DHack {
         if (!this.tracers.getValue().equals(TracerMode.None)) {
 
             if (this.tracers.getValue().equals(TracerMode.Custom) && this.customTracers.containsBlock(blockCoords.block)) {
-                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+                this.drawTracer(rx + (dx / 2), ry + (dy / 2), rz + (dz / 2), this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             } else if (this.tracers.getValue().equals(TracerMode.All)) {
-                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+                this.drawTracer(rx + (dx / 2), ry + (dy / 2), rz + (dz / 2), this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             } else if (this.tracers.getValue().equals(TracerMode.Portal) && blockCoords.block.blockID == Block.portal.blockID) {
-                this.drawTracer(rx + 0.5, ry + 0.5, rz + 0.5, this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
+                this.drawTracer(rx + (dx / 2), ry + (dy / 2), rz + (dz / 2), this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             }
         }
 
@@ -203,14 +352,14 @@ public final class Search extends Render3DHack {
             case None:
                 break;
             case Outline:
-                this.drawOutlineBox(rx, ry, rz, 1, this.lineWidth.getValue(), color);
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
                 break;
             case Fill:
-                this.drawFillBox(rx, ry, rz, 1, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
                 break;
             case Both:
-                this.drawFillBox(rx, ry, rz, 1, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
-                this.drawOutlineBox(rx, ry, rz, 1, this.lineWidth.getValue(), color);
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
                 break;
         }
     }

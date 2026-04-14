@@ -40,97 +40,81 @@ public interface Render3D extends Globals {
         GL11.glPopMatrix();
     }
 
-    default void drawOutlineBox(double x, double y, double z, int width, int lineWidth, Color color) {
-        double wX = x + width;
-        double wY = y + width;
-        double wZ = z + width;
-
-        this.drawOutlineBox(x, y, z, wX, wY, wZ, lineWidth, color);
-    }
-
-    default void drawOutlineBox(double x, double y, double z, double wX, double wY, double wZ, int lineWidth, Color color) {
+    default void drawOutlineBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color) {
         GL11.glLineWidth(lineWidth);
         GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
 
         Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
-        Tessellator.instance.addVertex(x, y, z);
-        Tessellator.instance.addVertex(wX, y, z);
-        Tessellator.instance.addVertex(wX, y, wZ);
-        Tessellator.instance.addVertex(x, y, wZ);
-        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(minX, minY, minZ);
+        Tessellator.instance.addVertex(maxX, minY, minZ);
+        Tessellator.instance.addVertex(maxX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, minY, minZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
-        Tessellator.instance.addVertex(x, wY, z);
-        Tessellator.instance.addVertex(wX, wY, z);
-        Tessellator.instance.addVertex(wX, wY, wZ);
-        Tessellator.instance.addVertex(x, wY, wZ);
-        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_LINES);
-        Tessellator.instance.addVertex(x, y, z);
-        Tessellator.instance.addVertex(x, wY, z);
-        Tessellator.instance.addVertex(wX, y, z);
-        Tessellator.instance.addVertex(wX, wY, z);
-        Tessellator.instance.addVertex(wX, y, wZ);
-        Tessellator.instance.addVertex(wX, wY, wZ);
-        Tessellator.instance.addVertex(x, y, wZ);
-        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.addVertex(minX, minY, minZ);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, minY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, minY, maxZ);
+        Tessellator.instance.addVertex(maxX, maxY, maxZ);
+        Tessellator.instance.addVertex(minX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, maxZ);
         Tessellator.instance.draw();
     }
 
-    default void drawFillBox(double x, double y, double z, int width, Color color) {
-        double wX = x + width;
-        double wY = y + width;
-        double wZ = z + width;
-
-        this.drawFillBox(x, y, z, wX, wY, wZ, color);
-    }
-
-    default void drawFillBox(double x, double y, double z, double wX, double wY, double wZ, Color color) {
+    default void drawFillBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color) {
         GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(wX, y, wZ);
-        Tessellator.instance.addVertex(wX, y, z);
-        Tessellator.instance.addVertex(wX, wY, z);
-        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.addVertex(maxX, minY, maxZ);
+        Tessellator.instance.addVertex(maxX, minY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, maxZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(x, y, z);
-        Tessellator.instance.addVertex(x, y, wZ);
-        Tessellator.instance.addVertex(x, wY, wZ);
-        Tessellator.instance.addVertex(x, wY, z);
+        Tessellator.instance.addVertex(minX, minY, minZ);
+        Tessellator.instance.addVertex(minX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(wX, y, z);
-        Tessellator.instance.addVertex(x, y, z);
-        Tessellator.instance.addVertex(x, wY, z);
-        Tessellator.instance.addVertex(wX, wY, z);
+        Tessellator.instance.addVertex(maxX, minY, minZ);
+        Tessellator.instance.addVertex(minX, minY, minZ);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
+        Tessellator.instance.addVertex(maxX, maxY, minZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(x, y, wZ);
-        Tessellator.instance.addVertex(wX, y, wZ);
-        Tessellator.instance.addVertex(wX, wY, wZ);
-        Tessellator.instance.addVertex(x, wY, wZ);
+        Tessellator.instance.addVertex(minX, minY, maxZ);
+        Tessellator.instance.addVertex(maxX, minY, maxZ);
+        Tessellator.instance.addVertex(maxX, maxY, maxZ);
+        Tessellator.instance.addVertex(minX, maxY, maxZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(wX, wY, z);
-        Tessellator.instance.addVertex(x, wY, z);
-        Tessellator.instance.addVertex(x, wY, wZ);
-        Tessellator.instance.addVertex(wX, wY, wZ);
+        Tessellator.instance.addVertex(maxX, maxY, minZ);
+        Tessellator.instance.addVertex(minX, maxY, minZ);
+        Tessellator.instance.addVertex(minX, maxY, maxZ);
+        Tessellator.instance.addVertex(maxX, maxY, maxZ);
         Tessellator.instance.draw();
 
         Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(wX, y, z);
-        Tessellator.instance.addVertex(wX, y, wZ);
-        Tessellator.instance.addVertex(x, y, wZ);
-        Tessellator.instance.addVertex(x, y, z);
+        Tessellator.instance.addVertex(maxX, minY, minZ);
+        Tessellator.instance.addVertex(maxX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, minY, maxZ);
+        Tessellator.instance.addVertex(minX, minY, minZ);
         Tessellator.instance.draw();
     }
 
