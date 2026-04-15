@@ -35,7 +35,21 @@ public final class FPS extends Hack implements HUDObject {
             }
         }
     };
-    public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 200, 20, 500);
+    public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 200, 20, 500) {
+
+        @Override
+        public void setValue(Integer value) {
+            super.setValue(value);
+
+            if (!this.failsNullCheck()) {
+                FPS fps = this.getHackManager().getHack(FPS.class);
+
+                if (fps != null && fps.isEnabled() && fps.average.getValue()) {
+                    fps.resetFPS();
+                }
+            }
+        }
+    };
     public final ColorSetting color = new ColorSetting("Color", new Color(255, 255, 0, 255));
 
     private final ArrayDeque<Integer> fpsDeque = new ArrayDeque<>();
@@ -151,7 +165,7 @@ public final class FPS extends Hack implements HUDObject {
         this.fpsDeque.clear();
     }
 
-    public enum Direction {
+    private enum Direction {
         Left,
         Right
     }
