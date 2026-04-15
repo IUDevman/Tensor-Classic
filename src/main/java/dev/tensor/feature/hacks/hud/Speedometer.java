@@ -62,8 +62,7 @@ public final class Speedometer extends Hack implements HUDObject {
     public DoubleSetting getScale() {
         return this.scale;
     }
-
-
+    
     @Override
     public int getWidth() {
         return 100;
@@ -83,7 +82,6 @@ public final class Speedometer extends Hack implements HUDObject {
     public int getHeightScaled() {
         return (int) (this.getHeight() * this.scale.getValue());
     }
-
 
     @Override
     public void onEnable(boolean isNull) {
