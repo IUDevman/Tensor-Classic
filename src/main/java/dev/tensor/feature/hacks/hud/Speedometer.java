@@ -62,7 +62,7 @@ public final class Speedometer extends Hack implements HUDObject {
     public DoubleSetting getScale() {
         return this.scale;
     }
-    
+
     @Override
     public int getWidth() {
         return 100;
@@ -192,12 +192,12 @@ public final class Speedometer extends Hack implements HUDObject {
         this.speedDeque.clear();
     }
 
-    public enum Direction {
+    private enum Direction {
         Left,
         Right
     }
 
-    public enum Units {
+    private enum Units {
         BPS,
         MPS,
         KPH,

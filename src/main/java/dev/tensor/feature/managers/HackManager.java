@@ -71,6 +71,7 @@ public final class HackManager implements Manager {
         this.addHack(new EntityESP());
         this.addHack(new FakePlayer());
         this.addHack(new FOV());
+        this.addHack(new FPS());
         this.addHack(new Fullbright());
         this.addHack(new GreenText());
         this.addHack(new Greeter());

@@ -28,8 +28,8 @@ import java.util.Optional;
 @Hack.Info(name = "Slug", category = Category.HUD)
 public final class Slug extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMaxY());
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2);
     public final EnumSetting mode = new EnumSetting("Mode", Mode.None);
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.WHITE);

@@ -19,8 +19,8 @@ import java.awt.*;
 @Hack.Info(name = "Armor", category = Category.HUD)
 public final class Armor extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 83, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 105, 0, this.getMaxY());
+    public final IntegerSetting x = new IntegerSetting("X", 86, 0, this.getMaxX());
+    public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 2.0, 0.5, 3.0, 1);
     public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));

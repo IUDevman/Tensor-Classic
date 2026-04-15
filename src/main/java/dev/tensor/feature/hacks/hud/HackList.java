@@ -22,7 +22,7 @@ import java.util.Optional;
 public final class HackList extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 105, 0, this.getMaxY());
+    public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 2.0, 1);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting add = new EnumSetting("Add", Add.Down);

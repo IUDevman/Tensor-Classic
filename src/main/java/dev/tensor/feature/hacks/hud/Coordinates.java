@@ -170,13 +170,13 @@ public final class Coordinates extends Hack implements HUDObject {
         return 0;
     }
 
-    public enum Direction {
+    private enum Direction {
         Left,
         Right,
         Center
     }
 
-    public enum Type {
+    private enum Type {
         Overworld,
         Nether,
         Both

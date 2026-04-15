@@ -19,7 +19,7 @@ import java.awt.*;
 public final class Inventory extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY());
+    public final IntegerSetting y = new IntegerSetting("Y", 314, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
