@@ -157,6 +157,10 @@ public final class BlockHighlight extends Render3DHack {
     }
 
     private boolean hasSameCoords(MovingObjectPosition position) {
+        if (this.positionToRender == null) {
+            return false;
+        }
+
         boolean isX = position.blockX == this.positionToRender.x;
         boolean isY = position.blockY == this.positionToRender.y;
         boolean isZ = position.blockZ == this.positionToRender.z;
