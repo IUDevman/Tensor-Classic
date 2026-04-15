@@ -112,7 +112,7 @@ public final class RenderGlobalMixin implements Globals {
         if (this.failsNullCheck()) {
             return;
         }
-        
+
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
             RenderBlockBreakEvent event = new RenderBlockBreakEvent(i).call();
 
