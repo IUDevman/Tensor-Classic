@@ -315,11 +315,11 @@ public final class Nuker extends Render3DHack {
                     double timeSeconds = time / 24;
                     double timeMS = timeSeconds * 1000;
 
-                    this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-
                     if (this.rotate.getValue()) {
                         this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
                     }
+
+                    this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                     try {
                         Thread.sleep((long) timeMS);
@@ -327,11 +327,11 @@ public final class Nuker extends Render3DHack {
 
                     }
 
-                    this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-
                     if (this.rotate.getValue())  {
                         this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
                     }
+
+                    this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                     this.prevBlocksMinedVanilla.add(blockCoords);
                     this.queueToRemove.add(blockCoords);
@@ -341,7 +341,7 @@ public final class Nuker extends Render3DHack {
                 break;
             case Instant:
                 this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-                this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 2));
+                this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
                 break;
         }
     }
