@@ -10,6 +10,7 @@ import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 04-15-2026
  */
 
-@Hack.Info(name = "Nuker", category = Category.Player)
+@Hack.Info(name = "Nuker", category = Category.Player, bind = Keyboard.KEY_N)
 public final class Nuker extends Render3DHack {
 
     @Override
@@ -30,9 +31,10 @@ public final class Nuker extends Render3DHack {
     }
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
-    public final EnumSetting target = new EnumSetting("Target", Target.Toggle); //todo
+    public final EnumSetting target = new EnumSetting("Target", Target.Click); //todo
     public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()));
     public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
+    public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced);
     public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false);
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
@@ -143,7 +145,28 @@ public final class Nuker extends Render3DHack {
         this.blocksToMine.sort(Comparator.comparing(blockCoords -> this.getPlayer().getDistanceSq(blockCoords.x, blockCoords.y, blockCoords.z)));
 
         if (!this.prevBlocksMinedVanilla.isEmpty()) {
-            this.prevBlocksMinedVanilla.clear();
+
+            if (!this.comparePrev.getValue()) {
+                this.prevBlocksMinedVanilla.clear();
+            } else {
+                switch ((ClearingMode) this.comparePrevMode.getValue()) {
+                    case Lazy:
+                        this.prevBlocksMinedVanilla.clear();
+                        break;
+                    case Advanced:
+                        ArrayList<BlockCoords> queueToRemovePrev = new ArrayList<>();
+
+                        this.prevBlocksMinedVanilla.forEach(blockCoords -> {
+
+                            if (!this.queueToRemove.contains(blockCoords)) {
+                                queueToRemovePrev.add(blockCoords);
+                            }
+                        });
+
+                        this.prevBlocksMinedVanilla.removeAll(queueToRemovePrev);
+                        break;
+                }
+            }
         }
 
         if (this.blocksToMine.isEmpty()) {
@@ -196,7 +219,7 @@ public final class Nuker extends Render3DHack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onBlockBreakEvent(BlockBreakEvent event) {
-        if (!this.target.getValue().equals(Target.Toggle)) {
+        if (!this.target.getValue().equals(Target.Click)) {
             return;
         }
 
@@ -238,7 +261,7 @@ public final class Nuker extends Render3DHack {
                 return !this.BLOCKED_BLOCKS.containsBlock(block);
             case Instant:
                 return this.INSTANT_BLOCKS.containsBlock(block);
-            case Toggle:
+            case Click:
                 return !this.BLOCKED_BLOCKS.containsBlock(block) && this.customToggleID == block.blockID;
             case Custom:
                 return !this.BLOCKED_BLOCKS.containsBlock(block) && this.customTargets.containsBlock(block);
@@ -471,7 +494,7 @@ public final class Nuker extends Render3DHack {
 
     private enum Target {
         All,
-        Toggle,
+        Click,
         Instant,
         Custom
     }
@@ -486,5 +509,10 @@ public final class Nuker extends Render3DHack {
         Outline,
         Fill,
         Both
+    }
+
+    private enum ClearingMode {
+        Lazy,
+        Advanced
     }
 }
