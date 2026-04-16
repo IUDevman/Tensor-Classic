@@ -52,7 +52,7 @@ public final class Nuker extends Render3DHack {
     private final ArrayList<BlockCoords> renderBlocksToMine = new ArrayList<>();
     private final ArrayList<BlockCoords> prevBlocksMinedVanilla = new ArrayList<>();
 
-    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.NUKER_INSTANT());
+    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
     private int delayTicks = 0;

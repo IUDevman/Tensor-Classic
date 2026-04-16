@@ -236,26 +236,26 @@ public final class BlockList implements Globals {
         return new ArrayList<>(UTILITY);
     }
 
-    private static final ArrayList<String> NUKER_INSTANT = new ArrayList<>();
+    private static final ArrayList<String> BREAK_INSTANT = new ArrayList<>();
 
-    public static ArrayList<String> NUKER_INSTANT() {
-        if (NUKER_INSTANT.isEmpty()) {
-            NUKER_INSTANT.add(String.valueOf(Block.sapling.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.deadBush.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.tallGrass.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.plantRed.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.plantYellow.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.mushroomRed.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.mushroomBrown.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.torchWood.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.fire.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.crops.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.torchRedstoneActive.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.torchRedstoneIdle.blockID));
-            NUKER_INSTANT.add(String.valueOf(Block.reed.blockID));
+    public static ArrayList<String> BREAK_INSTANT() {
+        if (BREAK_INSTANT.isEmpty()) {
+            BREAK_INSTANT.add(String.valueOf(Block.sapling.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.deadBush.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.tallGrass.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.plantRed.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.plantYellow.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.mushroomRed.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.mushroomBrown.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.torchWood.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.fire.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.crops.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.torchRedstoneActive.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.torchRedstoneIdle.blockID));
+            BREAK_INSTANT.add(String.valueOf(Block.reed.blockID));
         }
 
-        return new ArrayList<>(NUKER_INSTANT);
+        return new ArrayList<>(BREAK_INSTANT);
     }
 
     private static final ArrayList<String> NUKER_BLOCKLIST = new ArrayList<>();

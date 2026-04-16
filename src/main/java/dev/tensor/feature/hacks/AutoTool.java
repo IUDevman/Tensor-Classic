@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -17,6 +18,8 @@ import net.minecraft.src.*;
 public final class AutoTool extends Hack {
 
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false);
+
+    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
 
     private boolean swapped = false;
     private int prevItem = -1;
@@ -83,6 +86,10 @@ public final class AutoTool extends Hack {
         Block block = Block.blocksList[blockId];
 
         if (block == Block.bedrock) {
+            return;
+        }
+
+        if (this.INSTANT_BLOCKS.containsBlock(block)) {
             return;
         }
 
