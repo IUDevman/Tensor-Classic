@@ -93,6 +93,7 @@ public final class HackManager implements Manager {
         this.addHack(new NoParticles());
         this.addHack(new NoViewBob());
         this.addHack(new NoWeather());
+        this.addHack(new Nuker());
         this.addHack(new PortalInventory());
         this.addHack(new SafeWalk());
         this.addHack(new Search());

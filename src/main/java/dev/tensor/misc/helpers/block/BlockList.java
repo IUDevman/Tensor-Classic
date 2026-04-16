@@ -236,6 +236,43 @@ public final class BlockList implements Globals {
         return new ArrayList<>(UTILITY);
     }
 
+    private static final ArrayList<String> NUKER_INSTANT = new ArrayList<>();
+
+    public static ArrayList<String> NUKER_INSTANT() {
+        if (NUKER_INSTANT.isEmpty()) {
+            NUKER_INSTANT.add(String.valueOf(Block.sapling.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.deadBush.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.tallGrass.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.plantRed.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.plantYellow.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.mushroomRed.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.mushroomBrown.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.torchWood.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.fire.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.crops.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.torchRedstoneActive.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.torchRedstoneIdle.blockID));
+            NUKER_INSTANT.add(String.valueOf(Block.reed.blockID));
+        }
+
+        return new ArrayList<>(NUKER_INSTANT);
+    }
+
+    private static final ArrayList<String> NUKER_BLOCKLIST = new ArrayList<>();
+
+    public static ArrayList<String> NUKER_BLOCKLIST() {
+        if (NUKER_BLOCKLIST.isEmpty()) {
+            NUKER_BLOCKLIST.add(String.valueOf(Block.bedrock.blockID));
+            NUKER_BLOCKLIST.add(String.valueOf(Block.waterStill.blockID));
+            NUKER_BLOCKLIST.add(String.valueOf(Block.waterMoving.blockID));
+            NUKER_BLOCKLIST.add(String.valueOf(Block.lavaStill.blockID));
+            NUKER_BLOCKLIST.add(String.valueOf(Block.lavaMoving.blockID));
+            NUKER_BLOCKLIST.add(String.valueOf(Block.portal.blockID));
+        }
+
+        return new ArrayList<>(NUKER_BLOCKLIST);
+    }
+
     private static final ArrayList<String> CUSTOM = new ArrayList<>();
 
     public static ArrayList<String> CUSTOM() {

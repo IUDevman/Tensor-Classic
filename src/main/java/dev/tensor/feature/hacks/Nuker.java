@@ -1,0 +1,490 @@
+package dev.tensor.feature.hacks;
+
+import dev.tensor.backend.events.BlockBreakEvent;
+import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.block.BlockCoords;
+import dev.tensor.misc.helpers.block.BlockList;
+import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
+import dev.tensor.misc.imp.setting.settings.*;
+import net.minecraft.src.*;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+/**
+ * @author Hoosiers
+ * @since 04-15-2026
+ */
+
+@Hack.Info(name = "Nuker", category = Category.Player)
+public final class Nuker extends Render3DHack {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.NUKER;
+    }
+
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
+    public final EnumSetting target = new EnumSetting("Target", Target.Toggle); //todo
+    public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()));
+    public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
+    public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false);
+    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
+    public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
+    public final IntegerSetting customBTP = new IntegerSetting("Custom BPT", 5, 2, 50);
+    public final BooleanSetting esp = new BooleanSetting("ESP", true);
+    public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
+
+    private final ArrayList<BlockCoords> blocksToMine = new ArrayList<>();
+    private final ArrayList<BlockCoords> blocksBreakingVanilla = new ArrayList<>();
+    private final ArrayList<BlockCoords> queueToRemove = new ArrayList<>();
+    private final ArrayList<BlockCoords> renderBlocksToMine = new ArrayList<>();
+    private final ArrayList<BlockCoords> prevBlocksMinedVanilla = new ArrayList<>();
+
+    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.NUKER_INSTANT());
+    private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
+
+    private int delayTicks = 0;
+
+    private int customToggleID = 0;
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.blocksToMine.clear();
+        this.blocksBreakingVanilla.clear();
+        this.queueToRemove.clear();
+        this.renderBlocksToMine.clear();
+        this.prevBlocksMinedVanilla.clear();
+
+        this.delayTicks = 0;
+
+        this.customToggleID = 0;
+    }
+
+    @Override
+    public void onClientTick() {
+        this.blocksToMine.clear();
+
+        this.queueToRemove.forEach(this.blocksBreakingVanilla::remove);
+        this.queueToRemove.clear();
+
+        if (this.delayTicks >= this.delay.getValue()) {
+            this.delayTicks = 0;
+
+        } else {
+            this.delayTicks++;
+            return;
+        }
+
+        for (int x = (int) (this.getPlayer().posX - this.range.getValue()); x < this.getPlayer().posX + this.range.getValue(); x++) {
+
+            for (int y = (int) (this.getPlayer().posY - (this.below.getValue() ? this.range.getValue() : 1)); y < this.getPlayer().posY + this.range.getValue(); y++) {
+
+                for (int z = (int) (this.getPlayer().posZ - this.range.getValue()); z < this.getPlayer().posZ + this.range.getValue(); z++) {
+
+                    int blockId = this.getWorld().getBlockId(x, y, z);
+
+                    if (blockId == 0) {
+                        continue;
+                    }
+
+                    Block block = Block.blocksList[blockId];
+
+                    if (block == null) {
+                        continue;
+                    }
+
+                    if (this.isBlockOnBreakList(block)) {
+
+                        double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
+
+                        if (distanceSq > Math.pow(this.range.getValue(), 2)) {
+                            continue;
+                        }
+
+                        BlockCoords blockCoords = new BlockCoords(block, x, y, z);
+
+                        if (this.mode.getValue().equals(Mode.Vanilla) && this.comparePrev.getValue() && !this.prevBlocksMinedVanilla.isEmpty()) {
+
+                            AtomicBoolean hasPrev = new AtomicBoolean(false);
+
+                            this.prevBlocksMinedVanilla.forEach(blockCoords1 -> {
+                                if (!hasPrev.get() && blockCoords1.block == blockCoords.block) {
+                                    if (blockCoords1.x == blockCoords.x) {
+                                        if (blockCoords1.y == blockCoords.y) {
+                                            if (blockCoords1.z == blockCoords.z) {
+                                                hasPrev.set(true);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+                            if (hasPrev.get()) {
+                                continue;
+                            }
+                        }
+
+                        this.blocksToMine.add(blockCoords);
+                    }
+                }
+            }
+        }
+
+        this.blocksToMine.sort(Comparator.comparing(blockCoords -> this.getPlayer().getDistanceSq(blockCoords.x, blockCoords.y, blockCoords.z)));
+
+        if (!this.prevBlocksMinedVanilla.isEmpty()) {
+            this.prevBlocksMinedVanilla.clear();
+        }
+
+        if (this.blocksToMine.isEmpty()) {
+            this.renderBlocksToMine.clear();
+            return;
+        }
+
+        if (this.mode.getValue().equals(Mode.Vanilla) && !this.blocksBreakingVanilla.isEmpty()) {
+            this.renderBlocksToMine.clear();
+            this.renderBlocksToMine.addAll(this.blocksToMine);
+            return;
+        }
+
+        int blocksToBreak = 1;
+
+        if (this.bptMode.getValue().equals(BPTMode.All)) {
+            blocksToBreak = this.blocksToMine.size();
+        } else if (this.bptMode.getValue().equals(BPTMode.Custom)) {
+            blocksToBreak = this.customBTP.getValue() + 1;
+        }
+
+        if (blocksToBreak > this.blocksToMine.size()) {
+            blocksToBreak = this.blocksToMine.size();
+        }
+
+        for (int i = 0; i < blocksToBreak; i++) {
+            this.breakBlock(this.blocksToMine.get(i));
+        }
+
+        this.renderBlocksToMine.clear();
+        this.renderBlocksToMine.addAll(this.blocksToMine);
+    }
+
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        if (!this.esp.getValue()) {
+            return;
+        }
+
+        this.renderBlocksToMine.forEach(this::renderForBlock);
+
+        this.blocksBreakingVanilla.forEach(blockCoords -> {
+
+            if (!this.renderBlocksToMine.contains(blockCoords)) {
+                this.renderForBlock(blockCoords);
+            }
+        });
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onBlockBreakEvent(BlockBreakEvent event) {
+        if (!this.target.getValue().equals(Target.Toggle)) {
+            return;
+        }
+
+        if (event.packet == null) {
+            return;
+        }
+
+        if (event.packet.status != 0) {
+            return;
+        }
+
+        int blockId = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
+
+        if (this.customToggleID == blockId) {
+            return;
+        }
+
+        Block block = Block.blocksList[blockId];
+
+        if (block == null) {
+            return;
+        }
+
+        if (this.BLOCKED_BLOCKS.containsBlock(block)) {
+            return;
+        }
+
+        this.customToggleID = blockId;
+    }
+
+    private boolean isBlockOnBreakList(Block block) {
+
+        if (block.blockID == 0) {
+            return false;
+        }
+
+        switch ((Target) this.target.getValue()) {
+            case All:
+                return !this.BLOCKED_BLOCKS.containsBlock(block);
+            case Instant:
+                return this.INSTANT_BLOCKS.containsBlock(block);
+            case Toggle:
+                return !this.BLOCKED_BLOCKS.containsBlock(block) && this.customToggleID == block.blockID;
+            case Custom:
+                return !this.BLOCKED_BLOCKS.containsBlock(block) && this.customTargets.containsBlock(block);
+        }
+
+        return false;
+    }
+
+    private void breakBlock(BlockCoords blockCoords) {
+        if (this.INSTANT_BLOCKS.containsBlock(blockCoords.block)) {
+            this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+            return;
+        }
+
+        switch ((Mode) this.mode.getValue()) {
+            case Vanilla:
+                Thread vanilla = new Thread(() -> {
+
+                    this.blocksBreakingVanilla.add(blockCoords);
+
+                    float blockStrength = blockCoords.block.blockStrength(this.getPlayer());
+
+                    if (blockStrength == 0) {
+                        return;
+                    }
+
+                    double time = Math.ceil(1 / blockStrength);
+
+                    double timeSeconds = time / 24;
+                    double timeMS = timeSeconds * 1000;
+
+                    this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+
+                    try {
+                        Thread.sleep((long) timeMS);
+                    } catch (Exception ignored) {
+
+                    }
+
+                    this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+
+                    this.prevBlocksMinedVanilla.add(blockCoords);
+                    this.queueToRemove.add(blockCoords);
+                });
+
+                vanilla.start();
+                break;
+            case Instant:
+                this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 2));
+                break;
+        }
+    }
+
+    private void renderForBlock(BlockCoords blockCoords) {
+        blockCoords.block.setBlockBoundsBasedOnState(this.getWorld(), blockCoords.x, blockCoords.y, blockCoords.z);
+
+        double rx = blockCoords.x - RenderManager.renderPosX + blockCoords.block.minX;
+        double ry = blockCoords.y - RenderManager.renderPosY + blockCoords.block.minY;
+        double rz = blockCoords.z - RenderManager.renderPosZ + blockCoords.block.minZ;
+
+        double dx = (blockCoords.block.maxX - blockCoords.block.minX);
+        double dy = (blockCoords.block.maxY - blockCoords.block.minY);
+        double dz = (blockCoords.block.maxZ - blockCoords.block.minZ);
+
+        double mx = dx + rx;
+        double my = dy + ry;
+        double mz = dz + rz;
+
+        if (blockCoords.block instanceof BlockLadder) {
+            int metadata = this.getWorld().getBlockMetadata(blockCoords.x, blockCoords.y, blockCoords.z);
+
+            if (metadata == 2) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.9D;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 0.1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 3) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 0.1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 4) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.9D;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 5) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 1D;
+                dy = 1D;
+                dz = 1D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+            }
+        }
+
+        if (blockCoords.block instanceof BlockTorch || blockCoords.block instanceof BlockRedstoneTorch) {
+            int metadata = this.getWorld().getBlockMetadata(blockCoords.x, blockCoords.y, blockCoords.z);
+
+            if (metadata == 1) {
+                rx = blockCoords.x - RenderManager.renderPosX;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.35D;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 2) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.7D;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.35D;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 3) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.35D;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 4) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.35D;
+                ry = blockCoords.y - RenderManager.renderPosY + 0.2D;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.7D;
+
+                dx = 0.3D;
+                dy = 0.6D;
+                dz = 0.3D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+
+            } else if (metadata == 5) {
+                rx = blockCoords.x - RenderManager.renderPosX + 0.4D;
+                ry = blockCoords.y - RenderManager.renderPosY;
+                rz = blockCoords.z - RenderManager.renderPosZ + 0.4D;
+
+                dx = 0.2D;
+                dy = 0.6D;
+                dz = 0.2D;
+
+                mx = dx + rx;
+                my = dy + ry;
+                mz = dz + rz;
+            }
+        }
+
+        Color color = this.esp_color.getValue();
+
+        switch ((RenderMode) this.renderMode.getValue()) {
+            case Outline:
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                break;
+            case Fill:
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                break;
+            case Both:
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                break;
+        }
+    }
+
+    private enum Mode {
+        Vanilla,
+        Instant
+    }
+
+    private enum Target {
+        All,
+        Toggle,
+        Instant,
+        Custom
+    }
+
+    private enum BPTMode {
+        Single,
+        All,
+        Custom
+    }
+
+    private enum RenderMode {
+        Outline,
+        Fill,
+        Both
+    }
+}
