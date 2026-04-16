@@ -277,7 +277,11 @@ public interface Globals {
     }
 
     default float[] pitchAndYawTo(Entity entity) {
-        Vector4f deltas = this.returnDeltas(entity);
+        return this.pitchAndYawTo(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
+    }
+
+    default float[] pitchAndYawTo(double x, double y, double z) {
+        Vector4f deltas = this.returnDeltas(x, y, z);
 
         double angle = 180 / Math.PI;
 
@@ -290,10 +294,10 @@ public interface Globals {
         };
     }
 
-    default Vector4f returnDeltas(Entity entity) {
-        double deltaX = entity.posX - this.getPlayer().posX;
-        double deltaY = entity.posY + entity.getEyeHeight() - this.getPlayer().posY - this.getPlayer().getEyeHeight();
-        double deltaZ = entity.posZ - this.getPlayer().posZ;
+    default Vector4f returnDeltas(double x, double y, double z) {
+        double deltaX = x - this.getPlayer().posX;
+        double deltaY = y - this.getPlayer().posY - this.getPlayer().getEyeHeight();
+        double deltaZ = z - this.getPlayer().posZ;
 
         double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 

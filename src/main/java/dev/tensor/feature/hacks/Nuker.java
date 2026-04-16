@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.BlockBreakEvent;
+import dev.tensor.backend.events.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -39,7 +40,8 @@ public final class Nuker extends Render3DHack {
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
-    public final IntegerSetting customBTP = new IntegerSetting("Custom BPT", 5, 2, 50);
+    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
@@ -59,6 +61,10 @@ public final class Nuker extends Render3DHack {
 
     private int customToggleID = 0;
 
+    private boolean rotated = false;
+    private float pitch = 0;
+    private float yaw = 0;
+
     @Override
     public void onDisable(boolean isNull) {
         this.blocksToMine.clear();
@@ -70,6 +76,10 @@ public final class Nuker extends Render3DHack {
         this.delayTicks = 0;
 
         this.customToggleID = 0;
+
+        this.rotated = false;
+        this.pitch = 0;
+        this.yaw = 0;
     }
 
     @Override
@@ -185,7 +195,7 @@ public final class Nuker extends Render3DHack {
         if (this.bptMode.getValue().equals(BPTMode.All)) {
             blocksToBreak = this.blocksToMine.size();
         } else if (this.bptMode.getValue().equals(BPTMode.Custom)) {
-            blocksToBreak = this.customBTP.getValue() + 1;
+            blocksToBreak = this.customBPT.getValue() + 1;
         }
 
         if (blocksToBreak > this.blocksToMine.size()) {
@@ -250,6 +260,18 @@ public final class Nuker extends Render3DHack {
         this.customToggleID = blockId;
     }
 
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
+        if (this.rotate.getValue() && this.rotated) {
+            event.packet.pitch = this.pitch;
+            event.packet.yaw = this.yaw;
+            this.pitch = 0;
+            this.yaw = 0;
+            this.rotated = false;
+        }
+    }
+
     private boolean isBlockOnBreakList(Block block) {
 
         if (block.blockID == 0) {
@@ -295,6 +317,10 @@ public final class Nuker extends Render3DHack {
 
                     this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
+                    if (this.rotate.getValue()) {
+                        this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                    }
+
                     try {
                         Thread.sleep((long) timeMS);
                     } catch (Exception ignored) {
@@ -302,6 +328,10 @@ public final class Nuker extends Render3DHack {
                     }
 
                     this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+
+                    if (this.rotate.getValue())  {
+                        this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                    }
 
                     this.prevBlocksMinedVanilla.add(blockCoords);
                     this.queueToRemove.add(blockCoords);
@@ -314,6 +344,14 @@ public final class Nuker extends Render3DHack {
                 this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 2));
                 break;
         }
+    }
+
+    private void rotate(int x, int y, int z) {
+        float[] pitchAndYaw = this.pitchAndYawTo(x, y, z);
+
+        this.pitch = pitchAndYaw[0];
+        this.yaw = pitchAndYaw[1];
+        this.rotated = true;
     }
 
     private void renderForBlock(BlockCoords blockCoords) {

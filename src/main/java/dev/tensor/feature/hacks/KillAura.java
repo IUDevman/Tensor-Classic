@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -153,7 +154,7 @@ public final class KillAura extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
+    @EventTarget(value = Priority.LOWEST)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
         if (this.rotate.getValue() && this.rotated) {
             event.packet.pitch = this.pitch;
