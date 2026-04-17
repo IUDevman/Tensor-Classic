@@ -2,15 +2,18 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.PortalCloseGUIEvent;
+import dev.tensor.backend.events.SignEvent;
 import dev.tensor.backend.events.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayerSP;
 import net.minecraft.src.GuiScreen;
+import net.minecraft.src.TileEntitySign;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
@@ -44,6 +47,19 @@ public final class EntityPlayerSPMixin implements Globals {
             }
         } else {
             instance.displayGuiScreen(guiScreen);
+        }
+    }
+
+    @Inject(method = "displayGUIEditSign", at = @At("HEAD"), cancellable = true)
+    public void tensor_onDisplayGUIEditSign(TileEntitySign par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        SignEvent event = new SignEvent(par1).call();
+
+        if (event.isCancelled()) {
+            ci.cancel();
         }
     }
 }
