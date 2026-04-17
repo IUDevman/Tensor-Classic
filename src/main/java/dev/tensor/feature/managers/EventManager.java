@@ -75,7 +75,7 @@ public final class EventManager implements Manager {
     private void register(Method method, Object object) {
         Class<? extends Event> indexClass = (Class<? extends Event>) method.getParameterTypes()[0];
 
-        final MethodData data = new MethodData(object, method, method.getAnnotation(EventTarget.class).value());
+        final MethodData data = new MethodData(object, method, method.getAnnotation(EventTarget.class).priority());
 
         if (!data.getTarget().isAccessible()) {
             data.getTarget().setAccessible(true);

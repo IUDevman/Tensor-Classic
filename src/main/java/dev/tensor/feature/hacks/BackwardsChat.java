@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class BackwardsChat extends Hack {
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.HIGH)
+    @EventTarget(priority = Priority.HIGH)
     public void onChatSentEvent(ChatSentEvent event) {
 
         String message = event.ARGS;

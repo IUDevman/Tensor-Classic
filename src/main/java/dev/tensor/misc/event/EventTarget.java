@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface EventTarget {
 
-    byte value() default Priority.MEDIUM;
+    byte priority() default Priority.MEDIUM;
 }

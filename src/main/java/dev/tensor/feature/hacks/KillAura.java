@@ -154,7 +154,7 @@ public final class KillAura extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.LOWEST)
+    @EventTarget(priority = Priority.LOWEST)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
         if (this.rotate.getValue() && this.rotated) {
             event.packet.pitch = this.pitch;

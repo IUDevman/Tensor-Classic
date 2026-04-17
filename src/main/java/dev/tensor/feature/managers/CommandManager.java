@@ -110,7 +110,7 @@ public final class CommandManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.HIGHEST)
+    @EventTarget(priority = Priority.HIGHEST)
     public void onChatSentEvent(ChatSentEvent event) {
         Commands COMMANDS = this.getHackManager().getHack(Commands.class);
 

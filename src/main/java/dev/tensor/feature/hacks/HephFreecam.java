@@ -160,7 +160,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.HIGHEST)
+    @EventTarget(priority = Priority.HIGHEST)
     public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
         switch ((Highlight) this.highlight.getValue()) {
             case None:
@@ -177,7 +177,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.HIGHEST)
+    @EventTarget(priority = Priority.HIGHEST)
     public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
         if (!this.showBreakProgress.getValue()) {
             event.cancel();

@@ -21,7 +21,7 @@ public final class Suffix extends Hack {
 
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.LOWEST)
+    @EventTarget(priority = Priority.LOWEST)
     public void onChatSentEvent(ChatSentEvent event) {
 
         String message = event.ARGS;

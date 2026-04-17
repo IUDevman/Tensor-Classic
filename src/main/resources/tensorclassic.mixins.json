@@ -33,7 +33,8 @@
     "accessors.EntityRendererAccessor",
     "accessors.GuiIngameAccessor",
     "accessors.MinecraftAccessor",
-    "accessors.NetClientHandlerAccessor"
+    "accessors.NetClientHandlerAccessor",
+    "accessors.PlayerControllerMPAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -33,7 +33,7 @@ public final class ChatTimestamp extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(value = Priority.LOWEST)
+    @EventTarget(priority = Priority.LOWEST)
     public void onChatReceivedEvent(ChatReceivedEvent event) {
         if (this.messageCutPrev != "") {
 
