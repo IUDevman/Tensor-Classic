@@ -49,44 +49,6 @@ public interface Globals {
         return this.getPlayer().inventory;
     }
 
-    default boolean failsNullCheck() {
-        return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
-    }
-
-    default boolean isMultiplayer() {
-        return this.getWorld().multiplayerWorld;
-    }
-
-    default String getServerIP() {
-        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostName();
-
-        if (hostName == null) {
-            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostAddress();
-        }
-
-        if (hostName == null) {
-            return "Penis";
-        }
-
-        return hostName;
-    }
-
-    default void resetWorld() {
-        if (this.failsNullCheck()) {
-            return;
-        }
-
-        this.getMinecraft().renderGlobal.loadRenderers();
-    }
-
-    default void sendPacket(Packet packet) {
-        if (this.getMinecraft().getSendQueue() == null) {
-            return;
-        }
-
-        this.getMinecraft().getSendQueue().addToSendQueue(packet);
-    }
-
     default TensorClassic getTensor() {
         return TensorClassic.getInstance();
     }
@@ -105,10 +67,6 @@ public interface Globals {
 
     default FriendManager getFriendManager() {
         return (FriendManager) this.getTensor().MANAGERS.get(FriendManager.class);
-    }
-
-    default CustomGUIManager getCustomGUIManager() {
-        return (CustomGUIManager) this.getTensor().MANAGERS.get(CustomGUIManager.class);
     }
 
     default HackManager getHackManager() {
@@ -155,6 +113,44 @@ public interface Globals {
         }
 
         return autoReconnect.isEnabled();
+    }
+
+    default boolean failsNullCheck() {
+        return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
+    }
+
+    default boolean isMultiplayer() {
+        return this.getWorld().multiplayerWorld;
+    }
+
+    default void sendPacket(Packet packet) {
+        if (this.getMinecraft().getSendQueue() == null) {
+            return;
+        }
+
+        this.getMinecraft().getSendQueue().addToSendQueue(packet);
+    }
+
+    default void resetWorld() {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        this.getMinecraft().renderGlobal.loadRenderers();
+    }
+
+    default String getServerIP() {
+        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostName();
+
+        if (hostName == null) {
+            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostAddress();
+        }
+
+        if (hostName == null) {
+            return "Penis";
+        }
+
+        return hostName;
     }
 
     default String getColor(ChatColor COLOR) {
@@ -217,16 +213,16 @@ public interface Globals {
         DEFAULT
     }
 
-    default String getPrefix() {
+    default String getHeader() {
         return this.getColor(ChatColor.LIGHT_GRAY) + "[" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_NAME + this.getColor(ChatColor.LIGHT_GRAY) + "] " + this.getColor(ChatColor.DEFAULT);
     }
 
-    default void sendClientMessageWithPrefix(String message) {
+    default void sendClientMessageWithHeader(String message) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        String prefixMessage = this.getPrefix() + message;
+        String prefixMessage = this.getHeader() + message;
 
         this.sendMessageWithLinesColor(prefixMessage);
     }
@@ -262,18 +258,6 @@ public interface Globals {
         while (((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().size() > 50) {
             ((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().remove(((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().size() - 1);
         }
-    }
-
-    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
-        this.getCustomGUIManager().drawRectangle(minX, minY, maxX, maxY, color);
-    }
-
-    default void drawString(String text, int x, int y, int color) {
-        this.getCustomGUIManager().drawString(text, x, y, color);
-    }
-
-    default void drawCenteredString(String text, int x, int y, int color) {
-        this.getCustomGUIManager().drawCenteredString(text, x, y, color);
     }
 
     default float[] pitchAndYawTo(Entity entity) {

@@ -134,7 +134,7 @@ public final class CommandManager implements Manager {
         if (ARGS.startsWith(PREFIX)) {
 
             if (ARGS.equalsIgnoreCase(PREFIX)) {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command name inputted)!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command name inputted)!");
                 return true;
             }
 
@@ -175,7 +175,7 @@ public final class CommandManager implements Manager {
             });
 
             if (!HAS_DISPATCHED.get()) {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command found for '" + this.getColor(ChatColor.AQUA) + ARGS_1[0] + this.getColor(ChatColor.RED) + "')!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command found for '" + this.getColor(ChatColor.AQUA) + ARGS_1[0] + this.getColor(ChatColor.RED) + "')!");
             }
 
             return true;

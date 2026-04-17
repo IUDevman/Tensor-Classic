@@ -44,13 +44,13 @@ public final class MiddleClickFriend extends Hack {
 
         if (!isFriend) {
             this.getFriendManager().addFriend(playerMP);
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + "Added friend '" + this.getColor(ChatColor.GREEN) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' to the friends list!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + "Added friend '" + this.getColor(ChatColor.GREEN) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' to the friends list!");
             return;
         }
 
         if (!this.onlyAdd.getValue()) {
             this.getFriendManager().removeFriend(playerMP);
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + "Removed friend '" + this.getColor(ChatColor.RED) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' from the friends list!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + "Removed friend '" + this.getColor(ChatColor.RED) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' from the friends list!");
         }
     }
 }

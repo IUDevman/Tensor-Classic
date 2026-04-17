@@ -33,7 +33,7 @@ public final class Ping extends SimpleCallableCommand {
     @Override
     public void onCommandTriggered() {
         if (!this.isMultiplayer()) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to determine server ping (in singleplayer)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to determine server ping (in singleplayer)!");
         }
 
         InetAddress server = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress();
@@ -42,7 +42,7 @@ public final class Ping extends SimpleCallableCommand {
             return;
         }
 
-        this.sendClientMessageWithPrefix(this.getName() + ": Calculating server ping...");
+        this.sendClientMessageWithHeader(this.getName() + ": Calculating server ping...");
 
         //Is this DDOS? :O
         Thread thread = new Thread(() -> {
@@ -93,7 +93,7 @@ public final class Ping extends SimpleCallableCommand {
             }
 
             if (start == 250) {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Server ping not found (>250ms or unreachable)!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Server ping not found (>250ms or unreachable)!");
                 return;
             }
 
@@ -110,9 +110,9 @@ public final class Ping extends SimpleCallableCommand {
             }
 
             if (ms != 0) {
-                this.sendClientMessageWithPrefix(this.getName() + ": Server ping is " + this.getColor(ChatColor.AQUA) + ms + "ms" + this.getColor(ChatColor.DEFAULT) + "!");
+                this.sendClientMessageWithHeader(this.getName() + ": Server ping is " + this.getColor(ChatColor.AQUA) + ms + "ms" + this.getColor(ChatColor.DEFAULT) + "!");
             } else {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Server ping not found (>250ms or unreachable)!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Server ping not found (>250ms or unreachable)!");
             }
         });
 

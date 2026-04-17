@@ -1,6 +1,5 @@
 package dev.tensor.misc.imp.render;
 
-import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
@@ -11,7 +10,7 @@ import java.awt.*;
  * @since 04-06-2026
  */
 
-public interface Render3D extends Globals {
+public interface Render3D extends Render2D {
 
     default double translateOffset(double previousPos, double currentPos, float renderPartialTicks) {
         return (currentPos - previousPos) * renderPartialTicks;

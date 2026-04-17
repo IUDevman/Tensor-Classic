@@ -38,14 +38,14 @@ public final class Prefix implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set prefix (no new prefix inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set prefix (no new prefix inputted)!");
             return;
         }
 
         String newPrefix = ARGS[0];
 
         if (newPrefix == null || newPrefix.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set prefix (no new prefix inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set prefix (no new prefix inputted)!");
             return;
         }
 
@@ -56,7 +56,7 @@ public final class Prefix implements Command {
         commands.prefix.setValue(newPrefix);
 
         if (!oldPrefix.equalsIgnoreCase(commands.prefix.getValue())) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set prefix to '" + this.getColor(ChatColor.AQUA) + newPrefix + this.getColor(ChatColor.DEFAULT) + "'!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set prefix to '" + this.getColor(ChatColor.AQUA) + newPrefix + this.getColor(ChatColor.DEFAULT) + "'!");
         }
     }
 }

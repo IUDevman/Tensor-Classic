@@ -42,6 +42,6 @@ public final class Hacks extends SimpleCallableCommand {
 
         this.getHackManager().getHacks().forEach(hack -> HACKS.add((hack.isEnabled() ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + hack.NAME + this.getColor(ChatColor.DEFAULT)));
 
-        this.sendClientMessageWithPrefix(MESSAGE_PRE + HACKS);
+        this.sendClientMessageWithHeader(MESSAGE_PRE + HACKS);
     }
 }

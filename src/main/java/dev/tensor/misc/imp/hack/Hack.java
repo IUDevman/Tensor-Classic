@@ -143,7 +143,7 @@ public abstract class Hack implements Globals {
             MESSAGE += this.getColor(ChatColor.RED) + "Disabled!";
         }
 
-        this.sendClientMessageWithPrefix(MESSAGE);
+        this.sendClientMessageWithHeader(MESSAGE);
     }
 
     protected void onEnable(boolean isNull) {

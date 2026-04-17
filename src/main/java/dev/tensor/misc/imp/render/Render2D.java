@@ -2,6 +2,7 @@ package dev.tensor.misc.imp.render;
 
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
+import org.lwjgl.opengl.EXTRescaleNormal;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -13,12 +14,45 @@ import java.awt.*;
 
 public interface Render2D extends Globals {
 
-    int GL_WTF_IS_THIS = 32826;
+    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
+        float r = (float) (color >> 16 & 255) / 255.0F;
+        float g = (float) (color >> 8 & 255) / 255.0F;
+        float b = (float) (color & 255) / 255.0F;
+        float a = (float) (color >> 24 & 255) / 255.0F;
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+
+        GL11.glColor4f(r, g, b, a);
+
+        Tessellator.instance.startDrawingQuads();
+        Tessellator.instance.addVertex(minX, maxY, 0.0F);
+        Tessellator.instance.addVertex(maxX, maxY, 0.0F);
+        Tessellator.instance.addVertex(maxX, minY, 0.0F);
+        Tessellator.instance.addVertex(minX, minY, 0.0F);
+        Tessellator.instance.draw();
+
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    default void drawString(String text, int x, int y, int color) {
+        this.getInGameGUI().drawString(this.getFontRenderer(), text, x, y, color);
+    }
+
+    default void drawCenteredString(String text, int x, int y, int color) {
+        this.drawString(text, x - (this.stringWidth(text) / 2), y, color);
+    }
+
+    default int stringWidth(String string) {
+        return this.getFontRenderer().getStringWidth(string);
+    }
 
     default void startItemGL() {
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL_WTF_IS_THIS);
+        GL11.glEnable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
 
         RenderHelper.enableStandardItemLighting();
 
@@ -29,7 +63,7 @@ public interface Render2D extends Globals {
     default void finishItemGL() {
         RenderHelper.disableStandardItemLighting();
 
-        GL11.glDisable(GL_WTF_IS_THIS);
+        GL11.glDisable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
         GL11.glPopMatrix();

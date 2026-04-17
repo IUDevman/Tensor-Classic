@@ -4,6 +4,7 @@ import dev.tensor.feature.hacks.HUDEditor;
 import dev.tensor.misc.gui.imp.Hoverable;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.render.Render2D;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Mouse;
 
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * @since 03-25-2026
  */
 
-public final class TensorHUDEditor extends GuiScreen implements Globals, Hoverable {
+public final class TensorHUDEditor extends GuiScreen implements Render2D, Hoverable {
 
     private final HUDEditor hudEditor;
 

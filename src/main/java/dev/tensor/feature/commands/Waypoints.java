@@ -42,19 +42,19 @@ public final class Waypoints implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
             return;
         }
 
         String firstEntry = ARGS[0];
 
         if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (no arguments inputted)!");
             return;
         }
 
         if (!firstEntry.equalsIgnoreCase("list") && !firstEntry.equalsIgnoreCase("add") && !firstEntry.equalsIgnoreCase("remove") && !firstEntry.equalsIgnoreCase("toggle")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to modify waypoint list (unknown argument inputted)!");
             return;
         }
 
@@ -74,71 +74,71 @@ public final class Waypoints implements Command {
                     + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", "
                     + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ")"));
 
-            this.sendClientMessageWithPrefix(MESSAGE_PRE + WAYPOINTS);
+            this.sendClientMessageWithHeader(MESSAGE_PRE + WAYPOINTS);
             return;
         }
 
         boolean shouldAdd = firstEntry.equalsIgnoreCase("add");
 
         if (ARGS.length == 1) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String secondEntry = ARGS[1];
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String[] secondEntryArgs = secondEntry.split("_");
 
         if (secondEntryArgs.length < 1) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         String name = secondEntryArgs[0];
 
         if (name == null || name.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle/add/remove waypoint (no name inputted)!");
             return;
         }
 
         dev.tensor.misc.helpers.waypoint.Waypoint waypoint = waypointList.getWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer").stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
 
         if (waypoint == null && !shouldAdd) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' from waypoint list!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' from waypoint list!");
             return;
         }
 
         if (waypoint != null && firstEntry.equalsIgnoreCase("toggle")) {
             waypoint.toggle();
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") toggled (" + (waypoint.isEnabled() ? this.getColor(ChatColor.GREEN) + "Enabled" : this.getColor(ChatColor.RED) + "Disabled") + this.getColor(ChatColor.DEFAULT) + ")!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") toggled (" + (waypoint.isEnabled() ? this.getColor(ChatColor.GREEN) + "Enabled" : this.getColor(ChatColor.RED) + "Disabled") + this.getColor(ChatColor.DEFAULT) + ")!");
             return;
         }
 
         if (!shouldAdd) {
             waypointList.removeFromWaypointsList(waypoint);
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") removed from waypoints list!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypoint.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypoint.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypoint.getZ() + this.getColor(ChatColor.DEFAULT) + ") removed from waypoints list!");
             return;
         }
 
         if (waypoint != null) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (name already used)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (name already used)!");
             return;
         }
 
         if (secondEntryArgs.length < 2) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (no 'this' or coordinates inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (no 'this' or coordinates inputted)!");
             return;
         }
 
         String thisOrX = secondEntryArgs[1];
 
         if (thisOrX == null || thisOrX.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (no 'this' or coordinates inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (no 'this' or coordinates inputted)!");
             return;
         }
 
@@ -151,17 +151,17 @@ public final class Waypoints implements Command {
                 dev.tensor.misc.helpers.waypoint.Waypoint waypointAdd = new dev.tensor.misc.helpers.waypoint.Waypoint(name, x, y, z, !this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer");
                 waypointAdd.setEnabled(true);
                 waypointList.addToWaypointList(waypointAdd);
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypointAdd.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypointAdd.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getZ() + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypointAdd.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypointAdd.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getZ() + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
 
             } catch (Exception ignored) {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
             }
 
             return;
         }
 
         if (secondEntryArgs.length < 4) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (not all coordinate values inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint (not all coordinate values inputted)!");
             return;
         }
 
@@ -169,7 +169,7 @@ public final class Waypoints implements Command {
         String Z = secondEntryArgs[3];
 
         if (Y == null || Y.equalsIgnoreCase(" ") || Z == null || Z.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (invalid coordinates inputted)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (invalid coordinates inputted)!");
             return;
         }
 
@@ -177,10 +177,10 @@ public final class Waypoints implements Command {
             dev.tensor.misc.helpers.waypoint.Waypoint waypointAdd = new dev.tensor.misc.helpers.waypoint.Waypoint(name, Integer.parseInt(thisOrX), Integer.parseInt(Y), Integer.parseInt(Z), !this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer");
             waypointAdd.setEnabled(true);
             waypointList.addToWaypointList(waypointAdd);
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypointAdd.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypointAdd.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getZ() + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Waypoint '" + this.getColor(ChatColor.AQUA) + waypointAdd.getName() + this.getColor(ChatColor.DEFAULT) + "' (" + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld") + this.getColor(ChatColor.DEFAULT) + "/" + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer") + ") with coordinates (" + this.getColor(ChatColor.YELLOW) + waypointAdd.getX() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getY() + this.getColor(ChatColor.DEFAULT) + ", " + this.getColor(ChatColor.YELLOW) + waypointAdd.getZ() + this.getColor(ChatColor.DEFAULT) + ") added to waypoints list!");
 
         } catch (Exception ignored) {
-            this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
+            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to add waypoint '" + this.getColor(ChatColor.AQUA) + name + this.getColor(ChatColor.RED) + "' to waypoint list (unknown error occurred)!");
         }
     }
 }

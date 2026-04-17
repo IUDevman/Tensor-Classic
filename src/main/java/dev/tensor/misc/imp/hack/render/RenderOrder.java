@@ -7,16 +7,16 @@ package dev.tensor.misc.imp.hack.render;
 
 public final class RenderOrder {
 
-    public static final int TRACERS = 0;
-    public static final int NAMETAGS = 1;
-    public static final int WOLFOWNER = 2;
-    public static final int WAYPOINTS = 3;
-    public static final int KILLAURA = 4;
-    public static final int ENTITYESP = 5;
-    public static final int BREAKPROGRESS = 6;
-    public static final int BLOCKHIGHLIGHT = 7;
-    public static final int NUKER = 8;
-    public static final int SEARCH = 9;
+    public static final int TRACERS = 10;
+    public static final int NAMETAGS = 20;
+    public static final int WOLFOWNER = 30;
+    public static final int WAYPOINTS = 40;
+    public static final int KILLAURA = 50;
+    public static final int ENTITYESP = 60;
+    public static final int BREAKPROGRESS = 70;
+    public static final int BLOCKHIGHLIGHT = 80;
+    public static final int NUKER = 90;
+    public static final int SEARCH = 100;
 
-    public static final int DEFAULT = 10;
+    public static final int DEFAULT = 110;
 }

@@ -25,7 +25,7 @@ public final class DeathCoords extends Hack {
         if (this.getMinecraft().currentScreen instanceof GuiGameOver) {
 
             if (!this.messaged) {
-                this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + "You died at x = " + this.getColor(ChatColor.AQUA)
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "You died at x = " + this.getColor(ChatColor.AQUA)
                         + ((int) this.getPlayer().posX) + this.getColor(ChatColor.RED) + ", y = " + this.getColor(ChatColor.AQUA)
                         + ((int) this.getPlayer().posY) + this.getColor(ChatColor.RED) + ", z = " + this.getColor(ChatColor.AQUA)
                         + ((int) this.getPlayer().posZ) + this.getColor(ChatColor.RED) + "!");

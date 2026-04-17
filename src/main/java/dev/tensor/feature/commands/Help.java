@@ -44,6 +44,6 @@ public final class Help extends SimpleCallableCommand {
                 this.getColor(ChatColor.AQUA) + clientPrefix + "Commands" + this.getColor(ChatColor.DEFAULT) +
                 " for the list of available commands!";
 
-        this.sendClientMessageWithPrefix(helpString);
+        this.sendClientMessageWithHeader(helpString);
     }
 }

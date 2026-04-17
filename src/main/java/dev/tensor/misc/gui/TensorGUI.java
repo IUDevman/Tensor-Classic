@@ -11,6 +11,7 @@ import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
@@ -30,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * https://github.com/qe7/Hephaestus-Babric
  */
 
-public final class TensorGUI extends GuiScreen implements Globals, Hoverable {
+public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     public final ClickGUI clickGUI;
 

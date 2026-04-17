@@ -47,6 +47,6 @@ public final class Commands extends SimpleCallableCommand {
             COMMANDS.add(commandString);
         });
 
-        this.sendClientMessageWithPrefix(MESSAGE_PRE + COMMANDS);
+        this.sendClientMessageWithHeader(MESSAGE_PRE + COMMANDS);
     }
 }

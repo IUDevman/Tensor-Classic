@@ -327,7 +327,7 @@ public final class Nuker extends Render3DHack {
 
                     }
 
-                    if (this.rotate.getValue())  {
+                    if (this.rotate.getValue()) {
                         this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
                     }
 

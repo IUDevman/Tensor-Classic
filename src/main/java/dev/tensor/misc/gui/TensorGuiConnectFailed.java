@@ -3,6 +3,7 @@ package dev.tensor.misc.gui;
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.AutoReconnect;
 import dev.tensor.misc.imp.Globals;
+import dev.tensor.misc.imp.render.Render2D;
 import net.minecraft.src.GuiConnectFailed;
 import net.minecraft.src.GuiConnecting;
 
@@ -13,7 +14,7 @@ import java.text.DecimalFormat;
  * @since 04-11-2026
  */
 
-public final class TensorGuiConnectFailed extends GuiConnectFailed implements Globals {
+public final class TensorGuiConnectFailed extends GuiConnectFailed implements Render2D {
 
     private final AutoReconnect autoReconnect;
     private final boolean restart;

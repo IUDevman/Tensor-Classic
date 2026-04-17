@@ -2,6 +2,7 @@ package dev.tensor.misc.gui.imp;
 
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.imp.Globals;
+import dev.tensor.misc.imp.render.Render2D;
 
 import java.awt.*;
 
@@ -10,7 +11,7 @@ import java.awt.*;
  * @since 05-03-2021
  */
 
-public interface Element extends Globals {
+public interface Element extends Render2D {
 
     int getWidth();
 

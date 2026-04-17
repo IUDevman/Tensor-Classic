@@ -3,6 +3,7 @@ package dev.tensor.misc.gui;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
+import dev.tensor.misc.imp.render.Render2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 09-03-2021
  */
 
-public final class TensorChatGUI implements Globals {
+public final class TensorChatGUI implements Render2D {
 
     public void render(String prefix, String message, int minX, int minY, int maxX, int maxY, int fillColor, int outlineColor, int textColor) {
 

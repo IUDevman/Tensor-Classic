@@ -21,17 +21,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = Minecraft.class, priority = MixinPriority.VALUE)
 public abstract class MinecraftMixin implements Globals {
 
-    @Shadow public boolean inGameHasFocus;
+    @Shadow
+    public boolean inGameHasFocus;
 
-    @Shadow public GuiScreen currentScreen;
+    @Shadow
+    public GuiScreen currentScreen;
 
-    @Shadow protected abstract void clickMouse(int i);
+    @Shadow
+    protected abstract void clickMouse(int i);
 
-    @Shadow private int mouseTicksRan;
+    @Shadow
+    private int mouseTicksRan;
 
-    @Shadow private int ticksRan;
+    @Shadow
+    private int ticksRan;
 
-    @Shadow public MovingObjectPosition objectMouseOver;
+    @Shadow
+    public MovingObjectPosition objectMouseOver;
 
     @Inject(method = "runTick", at = @At("TAIL"))
     public void tensor_onRunTick(CallbackInfo ci) {
