@@ -15,5 +15,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface MinecraftAccessor {
 
     @Accessor(value = "timer")
-    Timer getTimer();
+    Timer tensor_getTimer();
 }

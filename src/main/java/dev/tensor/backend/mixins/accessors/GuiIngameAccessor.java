@@ -16,5 +16,5 @@ import java.util.List;
 public interface GuiIngameAccessor {
 
     @Accessor(value = "chatMessageList")
-    List getChatMessagesList();
+    List tensor_getChatMessageList();
 }

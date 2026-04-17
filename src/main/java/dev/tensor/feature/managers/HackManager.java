@@ -96,6 +96,7 @@ public final class HackManager implements Manager {
         this.addHack(new NoWeather());
         this.addHack(new Nuker());
         this.addHack(new PortalInventory());
+        this.addHack(new RoseFastPlace());
         this.addHack(new SafeWalk());
         this.addHack(new Search());
         this.addHack(new Slug());
@@ -241,7 +242,7 @@ public final class HackManager implements Manager {
             return;
         }
 
-        float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).getTimer().renderPartialTicks;
+        float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().renderPartialTicks;
 
         this.getEnabledRender3DObjectHacks().forEach(hack -> hack.renderIn3D(renderPartialTicks));
     }

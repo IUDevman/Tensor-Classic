@@ -62,7 +62,7 @@ public final class Jesus extends Hack {
             return;
         }
 
-        if (!(((EntityAccessor) this.getPlayer()).fallDistance() >= 3)) {
+        if (!(((EntityAccessor) this.getPlayer()).tensor_getFallDistance() >= 3)) {
             event.cancel();
         }
     }

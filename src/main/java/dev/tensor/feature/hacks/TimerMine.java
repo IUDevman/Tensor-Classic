@@ -22,7 +22,7 @@ public final class TimerMine extends Hack {
     @Override
     public void onDisable(boolean isNull) {
         if (!isNull) {
-            ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.getDefaultTPS();
+            ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.getDefaultTPS();
         }
     }
 
@@ -33,7 +33,7 @@ public final class TimerMine extends Hack {
         this.ticksSinceBreakStart++;
 
         if (this.ticksSinceBreakStart >= this.shutOffAfter.getValue()) {
-            ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.getDefaultTPS();
+            ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.getDefaultTPS();
         }
     }
 
@@ -44,9 +44,9 @@ public final class TimerMine extends Hack {
         int status = event.packet.status;
 
         if (status == 0) {
-            ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
+            ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
         } else {
-            ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.getDefaultTPS();
+            ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.getDefaultTPS();
         }
 
         this.ticksSinceBreakStart = 0;

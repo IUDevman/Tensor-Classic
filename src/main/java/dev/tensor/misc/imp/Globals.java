@@ -58,10 +58,10 @@ public interface Globals {
     }
 
     default String getServerIP() {
-        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).getNetManager()).getNetworkSocket().getInetAddress().getHostName();
+        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostName();
 
         if (hostName == null) {
-            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).getNetManager()).getNetworkSocket().getInetAddress().getHostAddress();
+            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostAddress();
         }
 
         if (hostName == null) {
@@ -257,10 +257,10 @@ public interface Globals {
             message = previousMessageColor + message.substring(firstEnd);
         }
 
-        ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().add(0, new ChatLine(message));
+        ((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().add(0, new ChatLine(message));
 
-        while (((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() > 50) {
-            ((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().remove(((GuiIngameAccessor) this.getInGameGUI()).getChatMessagesList().size() - 1);
+        while (((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().size() > 50) {
+            ((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().remove(((GuiIngameAccessor) this.getInGameGUI()).tensor_getChatMessageList().size() - 1);
         }
     }
 

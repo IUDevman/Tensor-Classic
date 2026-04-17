@@ -17,7 +17,7 @@ import org.lwjgl.input.Keyboard;
 /**
  * @author Hoosiers
  * @credit q7e
- * @source https://github.com/qe7/Hephaestus/blob/main/src/main/java/io/github/qe7/features/impl/modules/impl/misc/FreeCameraModule.java
+ * @source https://github.com/qe7/Hephaestus
  * @since 04-11-2026
  */
 

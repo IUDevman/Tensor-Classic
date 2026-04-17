@@ -36,7 +36,7 @@ public final class Ping extends SimpleCallableCommand {
             this.sendClientMessageWithPrefix(this.getColor(ChatColor.RED) + this.getName() + ": Failed to determine server ping (in singleplayer)!");
         }
 
-        InetAddress server = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).getNetManager()).getNetworkSocket().getInetAddress();
+        InetAddress server = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress();
 
         if (server == null) {
             return;

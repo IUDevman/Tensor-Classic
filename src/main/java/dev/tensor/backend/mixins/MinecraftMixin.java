@@ -1,17 +1,14 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.ChangeWorldEvent;
-import dev.tensor.backend.events.ClientTickEvent;
-import dev.tensor.backend.events.KeyPressedEvent;
-import dev.tensor.backend.events.MouseEvent;
+import dev.tensor.backend.events.*;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
+import net.minecraft.src.*;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,7 +19,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = Minecraft.class, priority = MixinPriority.VALUE)
-public final class MinecraftMixin implements Globals {
+public abstract class MinecraftMixin implements Globals {
+
+    @Shadow public boolean inGameHasFocus;
+
+    @Shadow public GuiScreen currentScreen;
+
+    @Shadow protected abstract void clickMouse(int i);
+
+    @Shadow private int mouseTicksRan;
+
+    @Shadow private int ticksRan;
+
+    @Shadow public MovingObjectPosition objectMouseOver;
 
     @Inject(method = "runTick", at = @At("TAIL"))
     public void tensor_onRunTick(CallbackInfo ci) {
@@ -65,5 +74,40 @@ public final class MinecraftMixin implements Globals {
 
         @SuppressWarnings("unused")
         ChangeWorldEvent event = new ChangeWorldEvent().call();
+    }
+
+    @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;isButtonDown(I)Z", ordinal = 1, remap = false))
+    public void tensor_onIsMouseButtonDown(CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (!this.inGameHasFocus) {
+            return;
+        }
+
+        if (this.currentScreen != null) {
+            return;
+        }
+
+        if (!Mouse.isButtonDown(1)) {
+            return;
+        }
+
+        if (this.objectMouseOver == null) {
+            return;
+        }
+
+        if (!this.objectMouseOver.typeOfHit.equals(EnumMovingObjectType.TILE)) {
+            return;
+        }
+
+        BlockClickToPlaceEvent event = new BlockClickToPlaceEvent().call();
+
+        if (event.isCancelled()) {
+            this.clickMouse(1);
+
+            this.mouseTicksRan = this.ticksRan;
+        }
     }
 }

@@ -16,8 +16,8 @@ public final class NoFall extends Hack {
 
     @Override
     public void onClientTick() {
-        if (((EntityAccessor) this.getPlayer()).fallDistance() > 2.5F) {
-            ((EntityAccessor) this.getPlayer()).fallDistance(0F);
+        if (((EntityAccessor) this.getPlayer()).tensor_getFallDistance() > 2.5F) {
+            ((EntityAccessor) this.getPlayer()).tensor_setFallDistance(0F);
         }
     }
 

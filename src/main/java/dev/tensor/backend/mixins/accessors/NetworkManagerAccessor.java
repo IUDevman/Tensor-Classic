@@ -16,5 +16,5 @@ import java.net.Socket;
 public interface NetworkManagerAccessor {
 
     @Accessor(value = "networkSocket")
-    Socket getNetworkSocket();
+    Socket tensor_getNetworkSocket();
 }

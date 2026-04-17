@@ -130,7 +130,7 @@ public final class Speedometer extends Hack implements HUDObject {
         double dX = this.getPlayer().posX - this.getPlayer().prevPosX;
         double dZ = this.getPlayer().posZ - this.getPlayer().prevPosZ;
 
-        double speed = Math.hypot(dX, dZ) * ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond;
+        double speed = Math.hypot(dX, dZ) * ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond;
 
         switch ((Units) this.unit.getValue()) {
             case MPS:

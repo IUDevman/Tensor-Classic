@@ -17,16 +17,16 @@ public final class Timer extends Hack {
 
     @Override
     public void onEnable(boolean isNull) {
-        ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
+        ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
     }
 
     @Override
     public void onDisable(boolean isNull) {
-        ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = 20.0F;
+        ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = 20.0F;
     }
 
     @Override
     public void onClientTick() {
-        ((MinecraftAccessor) this.getMinecraft()).getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
+        ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
     }
 }

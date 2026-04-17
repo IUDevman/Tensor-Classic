@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface EntityAccessor {
 
     @Accessor(value = "fallDistance")
-    float fallDistance();
+    float tensor_getFallDistance();
 
     @Accessor(value = "fallDistance")
-    void fallDistance(float fallDistance);
+    void tensor_setFallDistance(float fallDistance);
 }

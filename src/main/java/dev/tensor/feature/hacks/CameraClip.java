@@ -27,8 +27,8 @@ public final class CameraClip extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
-        if (!isNull && ((EntityRendererAccessor) this.getMinecraft().entityRenderer).getCameraDistance() != this.defaultDistance) {
-            ((EntityRendererAccessor) this.getMinecraft().entityRenderer).setCameraDistance(this.defaultDistance);
+        if (!isNull && ((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_getCameraDistance() != this.defaultDistance) {
+            ((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_setCameraDistance(this.defaultDistance);
         }
     }
 
@@ -42,11 +42,11 @@ public final class CameraClip extends Hack {
 
             float newDistance = this.getNewDistance();
 
-            if (((EntityRendererAccessor) this.getMinecraft().entityRenderer).getCameraDistance() != newDistance) {
-                ((EntityRendererAccessor) this.getMinecraft().entityRenderer).setCameraDistance(newDistance);
+            if (((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_getCameraDistance() != newDistance) {
+                ((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_setCameraDistance(newDistance);
             }
-        } else if (((EntityRendererAccessor) this.getMinecraft().entityRenderer).getCameraDistance() != this.defaultDistance) {
-            ((EntityRendererAccessor) this.getMinecraft().entityRenderer).setCameraDistance(defaultDistance);
+        } else if (((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_getCameraDistance() != this.defaultDistance) {
+            ((EntityRendererAccessor) this.getMinecraft().entityRenderer).tensor_setCameraDistance(defaultDistance);
         }
     }
 

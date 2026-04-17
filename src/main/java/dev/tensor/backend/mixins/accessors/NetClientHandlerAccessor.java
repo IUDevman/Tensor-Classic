@@ -15,5 +15,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface NetClientHandlerAccessor {
 
     @Accessor(value = "netManager")
-    NetworkManager getNetManager();
+    NetworkManager tensor_getNetManager();
 }

@@ -20,8 +20,8 @@ public final class NoBreakDelay extends Hack {
 
             PlayerControllerMP controllerMP = (PlayerControllerMP) this.getMinecraft().playerController;
 
-            if (((PlayerControllerMPAccessor) controllerMP).getBlockHitDelay() > 0)  {
-                ((PlayerControllerMPAccessor) controllerMP).setBlockHitDelay(0);
+            if (((PlayerControllerMPAccessor) controllerMP).tensor_getBlockHitDelay() > 0)  {
+                ((PlayerControllerMPAccessor) controllerMP).tensor_setBlockHitDelay(0);
             }
         }
     }

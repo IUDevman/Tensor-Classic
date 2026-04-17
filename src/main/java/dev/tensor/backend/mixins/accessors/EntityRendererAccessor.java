@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface EntityRendererAccessor {
 
     @Accessor(value = "field_22228_r")
-    float getCameraDistance();
+    float tensor_getCameraDistance();
 
     @Accessor(value = "field_22228_r")
-    void setCameraDistance(float distance);
+    void tensor_setCameraDistance(float distance);
 }

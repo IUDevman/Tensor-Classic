@@ -111,7 +111,7 @@ public final class AutoTool extends Hack {
             if (itemStack.getItem() instanceof ItemPickaxe && this.isBlockOnBullshitList(blockId)) {
                 ItemTool tool = (ItemTool) itemStack.getItem();
 
-                strength = 10 + ((ItemToolAccessor) tool).getToolMaterial().getHarvestLevel();
+                strength = 10 + ((ItemToolAccessor) tool).tensor_getToolMaterial().getHarvestLevel();
             }
 
             if (this.getInventory().getCurrentItem().getItem() == Item.flintAndSteel && blockId == Block.tnt.blockID) {

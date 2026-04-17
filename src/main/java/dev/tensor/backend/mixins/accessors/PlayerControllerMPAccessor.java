@@ -14,8 +14,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface PlayerControllerMPAccessor {
 
     @Accessor(value = "blockHitDelay")
-    int getBlockHitDelay();
+    int tensor_getBlockHitDelay();
 
     @Accessor(value = "blockHitDelay")
-    void setBlockHitDelay(int blockHitDelay);
+    void tensor_setBlockHitDelay(int blockHitDelay);
 }

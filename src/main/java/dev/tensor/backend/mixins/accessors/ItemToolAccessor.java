@@ -15,5 +15,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface ItemToolAccessor {
 
     @Accessor(value = "toolMaterial")
-    EnumToolMaterial getToolMaterial();
+    EnumToolMaterial tensor_getToolMaterial();
 }
