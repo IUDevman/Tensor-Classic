@@ -19,7 +19,7 @@ import java.util.Scanner;
 public final class PhysicsSpammer extends Hack {
 
     public final BooleanSetting greenText = new BooleanSetting("GreenText", true);
-    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 100);
+    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
 
     private final ArrayList<String> cachedPhysicsSpam = new ArrayList<>();
 
