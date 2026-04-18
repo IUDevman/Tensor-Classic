@@ -33,6 +33,7 @@ public final class Nuker extends Render3DHack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
     public final EnumSetting target = new EnumSetting("Target", Target.Click);
+    public final BooleanSetting resetTarget = new BooleanSetting("Disable Resets Target", true);
     public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()));
     public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
     public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced);
@@ -67,6 +68,11 @@ public final class Nuker extends Render3DHack {
     private float yaw = 0;
 
     @Override
+    public void onEnable(boolean isNull) {
+        this.delayTicks = this.delay.getValue();
+    }
+
+    @Override
     public void onDisable(boolean isNull) {
         this.blocksToMine.clear();
         this.blocksBreakingVanilla.clear();
@@ -74,9 +80,9 @@ public final class Nuker extends Render3DHack {
         this.renderBlocksToMine.clear();
         this.prevBlocksMinedVanilla.clear();
 
-        this.delayTicks = 0;
-
-        this.customToggleID = 0;
+        if (this.resetTarget.getValue()) {
+            this.customToggleID = 0;
+        }
 
         this.rotated = false;
         this.pitch = 0;

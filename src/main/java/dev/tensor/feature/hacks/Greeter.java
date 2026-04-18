@@ -27,8 +27,8 @@ public final class Greeter extends Hack {
     private int messageDelay = 0;
 
     @Override
-    public void onDisable(boolean nullCheck) {
-        this.messageDelay = 0;
+    public void onEnable(boolean nullCheck) {
+        this.messageDelay = this.delay.getValue();
     }
 
     @Override

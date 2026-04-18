@@ -58,9 +58,13 @@ public final class KillAura extends Render3DHack {
     private float yaw = 0;
 
     @Override
-    public void onDisable(boolean nullCheck) {
+    public void onEnable(boolean isNull) {
+        this.attackDelay = this.delay.getValue();
+    }
+
+    @Override
+    public void onDisable(boolean isNull) {
         this.target_Entities.clear();
-        this.attackDelay = 0;
         this.rotated = false;
         this.pitch = 0;
         this.yaw = 0;

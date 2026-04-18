@@ -27,8 +27,8 @@ public final class AutoEat extends Hack {
     private int delayTicks = 0;
 
     @Override
-    public void onDisable(boolean isNull) {
-        this.delayTicks = 0;
+    public void onEnable(boolean isNull) {
+        this.delayTicks = this.delay.getValue();
     }
 
     @Override

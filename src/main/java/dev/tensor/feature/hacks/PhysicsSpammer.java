@@ -32,7 +32,7 @@ public final class PhysicsSpammer extends Hack {
             this.runChache.start();
         }
 
-        this.delay = 0;
+        this.delay = this.tickDelay.getValue();
     }
 
     @Override
