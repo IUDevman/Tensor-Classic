@@ -26,10 +26,37 @@ public final class ChatTimestamp extends Hack {
     public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY);
 
     private String messageCutPrev = "";
+    private String colorPrev = "";
+    private int prevLength = 0;
 
     @Override
     public void onDisable(boolean isNull) {
         this.messageCutPrev = "";
+        this.colorPrev = "";
+        this.prevLength = 0;
+    }
+
+    @Override
+    public void onClientTick() {
+        if (this.messageCutPrev != "" && this.prevLength < 320) {
+            String leftSeparator = this.getSeparator(true);
+
+            String dateFormat = this.getDateFormat();
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            String timeStamp = format.format(new Date());
+
+            String rightSeparator = this.getSeparator(false);
+
+            this.sendMessageWithLinesColor(this.getColor((ChatColor) this.separatorColor.getValue())
+                    + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
+                    + timeStamp + this.getColor((ChatColor) this.separatorColor.getValue())
+                    + rightSeparator + (this.space.getValue() ? " " : "") + this.getColor(ChatColor.DEFAULT)
+                    + this.colorPrev + this.messageCutPrev);
+
+            this.messageCutPrev = "";
+            this.colorPrev = "";
+            this.prevLength = 0;
+        }
     }
 
     @SuppressWarnings("unused")
@@ -61,6 +88,24 @@ public final class ChatTimestamp extends Hack {
         String timeStamp = format.format(new Date());
 
         String rightSeparator = this.getSeparator(false);
+
+        this.prevLength = this.getFontRenderer().getStringWidth(event.message);
+
+        if (event.message.startsWith(">")) {
+            this.colorPrev = ">";
+
+        } else {
+            int firstMessageColor = event.message.lastIndexOf('§') + 1;
+
+            String previousMessageColor = "";
+
+            if (firstMessageColor != 0 && firstMessageColor != event.message.length()) {
+                this.colorPrev = "§" + event.message.charAt(firstMessageColor);
+
+            } else {
+                this.colorPrev = "";
+            }
+        }
 
         event.message = this.getColor((ChatColor) this.separatorColor.getValue())
                 + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
