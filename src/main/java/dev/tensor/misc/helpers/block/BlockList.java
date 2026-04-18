@@ -253,6 +253,25 @@ public final class BlockList implements Globals {
             BREAK_INSTANT.add(String.valueOf(Block.torchRedstoneActive.blockID));
             BREAK_INSTANT.add(String.valueOf(Block.torchRedstoneIdle.blockID));
             BREAK_INSTANT.add(String.valueOf(Block.reed.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.plantRed.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.plantYellow.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.mushroomRed.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.mushroomBrown.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.fire.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.crops.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.lever.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.pressurePlatePlanks.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.pressurePlateStone.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.doorSteel.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.doorWood.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.trapdoor.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.cactus.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.reed.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.cake.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.portal.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.button.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.fence.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.ladder.blockID));
         }
 
         return new ArrayList<>(BREAK_INSTANT);
@@ -271,6 +290,30 @@ public final class BlockList implements Globals {
         }
 
         return new ArrayList<>(NUKER_BLOCKLIST);
+    }
+
+    private static final ArrayList<String> SCAFFOLD_BLOCKLIST = new ArrayList<>();
+
+    public static ArrayList<String> SCAFFOLD_BLOCKLIST() {
+        if (SCAFFOLD_BLOCKLIST.isEmpty()) {
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.waterStill.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.waterMoving.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.lavaStill.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.lavaMoving.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchWood.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchRedstoneIdle.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchRedstoneActive.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.sapling.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.blockBed.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.rail.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.railDetector.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.railPowered.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.web.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.tallGrass.blockID));
+            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.deadBush.blockID));
+        }
+
+        return new ArrayList<>(SCAFFOLD_BLOCKLIST);
     }
 
     private static final ArrayList<String> CUSTOM = new ArrayList<>();

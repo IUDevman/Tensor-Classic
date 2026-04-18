@@ -42,6 +42,7 @@ public final class Nuker extends Render3DHack {
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
     public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
+    public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
@@ -321,6 +322,10 @@ public final class Nuker extends Render3DHack {
 
                     this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
+                    if (this.swing.getValue()) {
+                        this.getPlayer().swingItem();
+                    }
+
                     try {
                         Thread.sleep((long) timeMS);
                     } catch (Exception ignored) {
@@ -333,15 +338,29 @@ public final class Nuker extends Render3DHack {
 
                     this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
+                    if (this.swing.getValue()) {
+                        this.getPlayer().swingItem();
+                    }
+
                     this.prevBlocksMinedVanilla.add(blockCoords);
                     this.queueToRemove.add(blockCoords);
                 });
 
                 vanilla.start();
+
                 break;
             case Instant:
+                if (this.rotate.getValue()) {
+                    this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                }
+
                 this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
                 this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+
+                if (this.swing.getValue()) {
+                    this.getPlayer().swingItem();
+                }
+
                 break;
         }
     }

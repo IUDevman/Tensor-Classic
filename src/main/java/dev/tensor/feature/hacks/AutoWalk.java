@@ -32,6 +32,14 @@ public final class AutoWalk extends Hack {
 
     @Override
     public void onClientTick() {
+        HephFreecam hephFreecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (hephFreecam.isEnabled() && !Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindForward.keyCode)) {
+            this.updateMove(false);
+            return;
+        }
+
+
         if (this.getMinecraft().currentScreen != null) {
             if (this.toggleOnDeath.getValue() && this.getMinecraft().currentScreen instanceof GuiGameOver) {
                 this.setEnabled(false);
