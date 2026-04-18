@@ -33,7 +33,6 @@ public final class PhysicsSpammer extends Hack {
         }
 
         this.delay = 0;
-        this.index = 0;
     }
 
     @Override
