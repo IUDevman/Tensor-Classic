@@ -20,6 +20,10 @@ public final class GreenText extends Hack {
         String message = event.ARGS;
 
         if (!message.startsWith(">") && !message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
+            if (event.ARGS.length() + 1 > 100) {
+                return;
+            }
+
             event.ARGS = ">" + event.ARGS;
         }
     }

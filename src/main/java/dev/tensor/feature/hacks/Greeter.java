@@ -81,6 +81,10 @@ public final class Greeter extends Hack {
                 return;
             }
 
+            if (greeter.length() > 100) {
+                return;
+            }
+
             this.sendPacket(new Packet3Chat(greeter));
 
             this.messageDelay = 0;
