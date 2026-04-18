@@ -30,7 +30,7 @@ public final class Suffix extends Hack {
 
             String messageSuffix = message + " " + this.getSuffix(this.getClientName());
 
-            if (messageSuffix.length() >= 256) {
+            if (messageSuffix.length() >= 100) {
                 return;
             }
 
