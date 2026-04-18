@@ -17,6 +17,7 @@ import net.minecraft.src.Packet3Chat;
 @Hack.Info(name = "Greeter", category = Category.Misc)
 public final class Greeter extends Hack {
 
+    public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", true);
     public final BooleanSetting join = new BooleanSetting("Join", true);
@@ -39,6 +40,10 @@ public final class Greeter extends Hack {
     @SuppressWarnings("unused")
     @EventTarget()
     public void onChatReceivedEvent(ChatReceivedEvent event) {
+        if (this.shouldStopForSpammer()) {
+            return;
+        }
+
         String message = event.message;
 
         if (message == null) {
@@ -89,6 +94,16 @@ public final class Greeter extends Hack {
 
             this.messageDelay = 0;
         }
+    }
+
+    private boolean shouldStopForSpammer() {
+        if (!this.stopForSpammer.getValue()) {
+            return false;
+        }
+
+        PhysicsSpammer physicsSpammer = this.getHackManager().getHack(PhysicsSpammer.class);
+
+        return physicsSpammer.isEnabled();
     }
 
     private Type getType(String message) {
