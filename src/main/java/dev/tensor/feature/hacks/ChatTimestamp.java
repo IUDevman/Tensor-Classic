@@ -62,6 +62,8 @@ public final class ChatTimestamp extends Hack {
     @SuppressWarnings("unused")
     @EventTarget(priority = Priority.LOWEST)
     public void onChatReceivedEvent(ChatReceivedEvent event) {
+        this.prevLength = this.getFontRenderer().getStringWidth(event.message);
+
         if (this.messageCutPrev != "") {
 
             if (event.message.startsWith(">")) {
@@ -88,8 +90,6 @@ public final class ChatTimestamp extends Hack {
         String timeStamp = format.format(new Date());
 
         String rightSeparator = this.getSeparator(false);
-
-        this.prevLength = this.getFontRenderer().getStringWidth(event.message);
 
         if (event.message.startsWith(">")) {
             this.colorPrev = ">";
