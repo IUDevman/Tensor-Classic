@@ -84,7 +84,6 @@ public final class Scaffold extends Hack {
         boolean swapped = false;
 
         if (swapSlot != -1 && swapSlot != prevItem) {
-            this.getTensorLogger().info("swapped");
             this.getInventory().currentItem = swapSlot;
             swapped = true;
         }
