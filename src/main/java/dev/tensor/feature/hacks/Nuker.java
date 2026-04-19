@@ -103,12 +103,12 @@ public final class Nuker extends Render3DHack {
             this.delayTicks++;
             return;
         }
+        
+        for (int x = (int) (this.getPlayer().posX - this.range.getValue()); x <= this.getPlayer().posX + this.range.getValue(); x++) {
 
-        for (int x = (int) (this.getPlayer().posX - this.range.getValue()); x < this.getPlayer().posX + this.range.getValue(); x++) {
+            for (int y = (int) (this.getPlayer().posY - (this.below.getValue() ? this.range.getValue() : 1)); y <= this.getPlayer().posY + this.range.getValue(); y++) {
 
-            for (int y = (int) (this.getPlayer().posY - (this.below.getValue() ? this.range.getValue() : 1)); y < this.getPlayer().posY + this.range.getValue(); y++) {
-
-                for (int z = (int) (this.getPlayer().posZ - this.range.getValue()); z < this.getPlayer().posZ + this.range.getValue(); z++) {
+                for (int z = (int) (this.getPlayer().posZ - this.range.getValue()); z <= this.getPlayer().posZ + this.range.getValue(); z++) {
 
                     int blockId = this.getWorld().getBlockId(x, y, z);
 
