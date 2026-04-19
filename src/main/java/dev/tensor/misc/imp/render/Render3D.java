@@ -192,7 +192,7 @@ public interface Render3D extends Render2D {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
-            renderItem.renderTexturedQuad(startX, startY + (itemID < 246 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
+            renderItem.renderTexturedQuad(startX, startY + (itemID < 256 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
 
             GL11.glEnable(GL11.GL_LIGHTING);
         }
