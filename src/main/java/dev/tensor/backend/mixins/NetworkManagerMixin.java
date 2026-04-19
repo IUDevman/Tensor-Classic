@@ -2,15 +2,20 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.KnockbackEvent;
+import dev.tensor.backend.events.SocketInitEvent;
 import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.NetHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet28EntityVelocity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.net.Socket;
 
 /**
  * @author Hoosiers
@@ -38,6 +43,29 @@ public final class NetworkManagerMixin implements Globals {
             if (event.isCancelled()) {
                 cir.setReturnValue(false);
                 cir.cancel();
+            }
+        }
+    }
+
+    @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/net/Socket;getRemoteSocketAddress()Ljava/net/SocketAddress;", shift = At.Shift.BEFORE))
+    public void tensor_onInitSocket(Socket string, String arg, NetHandler par3, CallbackInfo ci) {
+        if (string == null) {
+            return;
+        }
+
+        if (this.getTensor() == null) {
+            return;
+        }
+
+        SocketInitEvent event = new SocketInitEvent().call();
+
+        if (event.isCancelled()) {
+            try {
+                string.setTcpNoDelay(true);
+                this.getTensorLogger().info("TCP set to : {}!", string.getTcpNoDelay());
+
+            } catch (Exception ignored) {
+                this.getTensorLogger().info("TCP Failed to set!");
             }
         }
     }
