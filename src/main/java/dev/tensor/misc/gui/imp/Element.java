@@ -1,7 +1,6 @@
 package dev.tensor.misc.gui.imp;
 
 import dev.tensor.misc.gui.TensorGUI;
-import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.render.Render2D;
 
 import java.awt.*;

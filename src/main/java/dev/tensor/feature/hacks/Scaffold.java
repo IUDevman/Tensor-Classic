@@ -6,15 +6,12 @@ import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import dev.tensor.misc.imp.setting.settings.BlockListSetting;
-import dev.tensor.misc.imp.setting.settings.BooleanSetting;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemBlock;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MathHelper;
+import dev.tensor.misc.imp.hack.render.Render3DHack;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
+import dev.tensor.misc.imp.setting.settings.*;
+import net.minecraft.src.*;
 
+import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -23,7 +20,12 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 @Hack.Info(name = "Scaffold", category = Category.Player)
-public final class Scaffold extends Hack {
+public final class Scaffold extends Render3DHack {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.SCAFFOLD_PLATFORM;
+    }
 
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -33,6 +35,13 @@ public final class Scaffold extends Hack {
     public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()));
     public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()));
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true);
+    public final BooleanSetting esp = new BooleanSetting("ESP", true);
+    public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
+
+    private BlockPos blockPlacingAt = null;
 
     private boolean rotated = false;
     private float pitch = 0;
@@ -40,6 +49,8 @@ public final class Scaffold extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
+        this.blockPlacingAt = null;
+
         this.rotated = false;
         this.pitch = 0;
         this.yaw = 0;
@@ -57,11 +68,48 @@ public final class Scaffold extends Hack {
         }
 
         if (this.airOnly.getValue()) {
+            this.blockPlacingAt = null;
             return;
         }
 
         if (blockID == Block.waterMoving.blockID || blockID == Block.waterStill.blockID || blockID == Block.lavaMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.fire.blockID || blockID == Block.snow.blockID) {
             this.placeBlock(coords);
+        }
+
+        this.blockPlacingAt = null;
+    }
+
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        if (!this.esp.getValue()) {
+            return;
+        }
+
+        if (this.blockPlacingAt == null) {
+            return;
+        }
+
+        double rx = this.blockPlacingAt.x - RenderManager.renderPosX;
+        double ry = this.blockPlacingAt.y - RenderManager.renderPosY;
+        double rz = this.blockPlacingAt.z - RenderManager.renderPosZ;
+
+        double mx = 1 + rx;
+        double my = 1 + ry;
+        double mz = 1 + rz;
+
+        Color color = this.esp_color.getValue();
+
+        switch ((RenderMode) this.renderMode.getValue()) {
+            case Outline:
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                break;
+            case Fill:
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                break;
+            case Both:
+                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                break;
         }
     }
 
@@ -78,7 +126,6 @@ public final class Scaffold extends Hack {
     }
 
     private void placeBlock(BlockPos coords) {
-
         int prevItem = this.getInventory().currentItem;
         int swapSlot = this.getSwapSlot();
         boolean swapped = false;
@@ -108,7 +155,7 @@ public final class Scaffold extends Hack {
             return;
         }
 
-        int[][] directions = this.getDirections(coords.x, coords.y, coords.z);
+        int[][] directions = this.getPlaceDirections(coords.x, coords.y, coords.z);
 
         for (int[] direction : directions) {
             int dirX = direction[0];
@@ -117,6 +164,8 @@ public final class Scaffold extends Hack {
             int dirSide = direction[3];
 
             if (!this.getWorld().canBlockBePlacedAt(block.blockID, dirX, dirY, dirZ, true, dirSide)) {
+                this.blockPlacingAt = coords;
+
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
@@ -237,21 +286,16 @@ public final class Scaffold extends Hack {
         return -1;
     }
 
-    private int[][] getDirections(int startX, int startY, int startZ) {
-        return new int[][]{
-                {startX, startY + 1, startZ, 0},
-                {startX, startY - 1, startZ, 1},
-                {startX, startY, startZ + 1, 2},
-                {startX, startY, startZ - 1, 3},
-                {startX + 1, startY, startZ, 4},
-                {startX - 1, startY, startZ, 5}
-        };
-    }
-
     private enum Swap {
         None,
         First,
         Defined,
         Filter
+    }
+
+    private enum RenderMode {
+        Outline,
+        Fill,
+        Both
     }
 }

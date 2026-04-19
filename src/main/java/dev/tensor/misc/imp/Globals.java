@@ -287,4 +287,15 @@ public interface Globals {
 
         return new Vector4f((float) deltaX, (float) deltaY, (float) deltaZ, (float) distance);
     }
+
+    default int[][] getPlaceDirections(int startX, int startY, int startZ) {
+        return new int[][]{
+                {startX, startY + 1, startZ, 0},
+                {startX, startY - 1, startZ, 1},
+                {startX, startY, startZ + 1, 2},
+                {startX, startY, startZ - 1, 3},
+                {startX + 1, startY, startZ, 4},
+                {startX - 1, startY, startZ, 5}
+        };
+    }
 }

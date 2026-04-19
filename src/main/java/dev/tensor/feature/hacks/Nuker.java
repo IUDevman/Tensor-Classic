@@ -103,7 +103,7 @@ public final class Nuker extends Render3DHack {
             this.delayTicks++;
             return;
         }
-        
+
         for (int x = (int) (this.getPlayer().posX - this.range.getValue()); x <= this.getPlayer().posX + this.range.getValue(); x++) {
 
             for (int y = (int) (this.getPlayer().posY - (this.below.getValue() ? this.range.getValue() : 1)); y <= this.getPlayer().posY + this.range.getValue(); y++) {

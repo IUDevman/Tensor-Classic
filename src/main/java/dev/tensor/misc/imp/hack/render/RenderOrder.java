@@ -15,8 +15,9 @@ public final class RenderOrder {
     public static final int ENTITYESP = 60;
     public static final int BREAKPROGRESS = 70;
     public static final int BLOCKHIGHLIGHT = 80;
-    public static final int NUKER = 90;
-    public static final int SEARCH = 100;
+    public static final int SCAFFOLD_PLATFORM = 90;
+    public static final int NUKER = 100;
+    public static final int SEARCH = 110;
 
-    public static final int DEFAULT = 110;
+    public static final int DEFAULT = 120;
 }

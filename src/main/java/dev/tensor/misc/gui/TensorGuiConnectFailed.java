@@ -2,7 +2,6 @@ package dev.tensor.misc.gui;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.AutoReconnect;
-import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.render.Render2D;
 import net.minecraft.src.GuiConnectFailed;
 import net.minecraft.src.GuiConnecting;

@@ -88,7 +88,7 @@ public final class PhysicsSpammer extends Hack {
         }
     });
 
-    private void cutAndAddMessage(String message)  {
+    private void cutAndAddMessage(String message) {
         if (message.length() > 99) {
             String cut = message.substring(0, 98);
             this.cachedPhysicsSpam.add(cut);

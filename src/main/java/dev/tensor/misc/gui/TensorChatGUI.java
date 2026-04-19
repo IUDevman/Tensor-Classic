@@ -1,6 +1,5 @@
 package dev.tensor.misc.gui;
 
-import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
 import dev.tensor.misc.imp.render.Render2D;
