@@ -177,7 +177,11 @@ public interface Render3D extends Render2D {
 
             GL11.glDisable(GL11.GL_LIGHTING);
 
-            this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/gui/items.png"));
+            if (itemID < 256) {
+                this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/terrain.png"));
+            } else {
+                this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/gui/items.png"));
+            }
 
             int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
             float r = (float) (damageColor >> 16 & 255) / 255.0F;
@@ -188,7 +192,7 @@ public interface Render3D extends Render2D {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
-            renderItem.renderTexturedQuad(startX, startY, itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
+            renderItem.renderTexturedQuad(startX, startY + (itemID < 246 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
 
             GL11.glEnable(GL11.GL_LIGHTING);
         }
