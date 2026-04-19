@@ -92,7 +92,9 @@ public final class HephFreecam extends Hack {
 
     @Override
     public void onClientTick() {
-        this.fakePlayer.inventory.mainInventory[0] = this.getInventory().getCurrentItem();
+        if (this.copyPlayer.getValue() && this.fakePlayer != null) {
+            this.fakePlayer.inventory.mainInventory[0] = this.getInventory().getCurrentItem();
+        }
 
         this.getPlayer().noClip = true;
         this.getPlayer().onGround = false;
