@@ -40,6 +40,7 @@ public final class HackManager implements Manager {
     private final HashMap<String, Hack> HACK_CALL_STRING = new HashMap<>();
 
     private final ArrayList<Render3DHack> RENDER_3D_HACKS = new ArrayList<>();
+    private final ArrayList<Hack> RENDER_HUD_HACKS = new ArrayList<>();
 
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
 
@@ -166,6 +167,8 @@ public final class HackManager implements Manager {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
 
         this.RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder()).reversed());
+
+        this.RENDER_HUD_HACKS.sort(Comparator.comparing(hack -> ((HUDObject) hack).getRenderOrder()).reversed());
     }
 
     public void addHack(Hack HACK) {
@@ -176,14 +179,26 @@ public final class HackManager implements Manager {
         if (HACK instanceof Render3DHack) {
             this.RENDER_3D_HACKS.add((Render3DHack) HACK);
         }
+
+        if (HACK instanceof HUDObject) {
+            this.RENDER_HUD_HACKS.add(HACK);
+        }
     }
 
     public ArrayList<Hack> getHacks() {
         return this.HACKS;
     }
 
+    public ArrayList<Hack> getHudObjects() {
+        return this.RENDER_HUD_HACKS;
+    }
+
     public ArrayList<Render3DHack> getRender3DObjects() {
         return this.RENDER_3D_HACKS;
+    }
+
+    public ArrayList<Hack> getEnabledHudObjects() {
+        return this.getHudObjects().stream().filter(Hack::isEnabled).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Render3DHack> getEnabledRender3DObjectHacks() {
@@ -234,11 +249,7 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.getEnabledHacks().forEach(hack -> {
-            if (hack instanceof HUDObject) {
-                ((HUDObject) hack).render();
-            }
-        });
+        this.getEnabledHudObjects().forEach(hack -> ((HUDObject) hack).render());
     }
 
     @SuppressWarnings("unused")

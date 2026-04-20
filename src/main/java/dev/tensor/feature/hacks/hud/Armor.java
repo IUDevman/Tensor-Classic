@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
@@ -18,6 +19,11 @@ import java.awt.*;
 
 @Hack.Info(name = "Armor", category = Category.HUD)
 public final class Armor extends Hack implements HUDObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.HUD_SHADING_AND_IMAGES;
+    }
 
     public final IntegerSetting x = new IntegerSetting("X", 86, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());

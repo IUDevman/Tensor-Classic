@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 
 import java.awt.*;
@@ -15,6 +16,11 @@ import java.util.ArrayDeque;
 
 @Hack.Info(name = "FPS", category = Category.HUD)
 public final class FPS extends Hack implements HUDObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.HUD_TEXT;
+    }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY());

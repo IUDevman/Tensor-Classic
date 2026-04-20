@@ -60,4 +60,8 @@ public interface HUDObject extends Render2D {
     default void finishScale() {
         GL11.glPopMatrix();
     }
+
+    default int getRenderOrder() {
+        return RenderOrder.HUD_DEFAULT;
+    }
 }

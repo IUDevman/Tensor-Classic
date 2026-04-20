@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
@@ -20,6 +21,11 @@ import java.util.Optional;
 
 @Hack.Info(name = "HackList", category = Category.HUD, drawn = false)
 public final class HackList extends Hack implements HUDObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.HUD_TEXT;
+    }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());

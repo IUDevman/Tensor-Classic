@@ -8,6 +8,7 @@ import dev.tensor.misc.gui.TabGUIEntry;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -23,6 +24,11 @@ import java.util.ArrayList;
 
 @Hack.Info(name = "TabGUI", category = Category.HUD)
 public final class TabGUI extends Hack implements HUDObject {
+
+    @Override
+    public int getRenderOrder() {
+        return RenderOrder.HUD_SHADING_AND_IMAGES;
+    }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 654, 0, this.getMaxY());
