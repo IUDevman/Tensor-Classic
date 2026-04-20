@@ -21,9 +21,9 @@ public final class RenderOrder {
 
     public static final int DEFAULT = 120;
 
-    public static final int HUD_SHADING_AND_IMAGES = 100;
-    public static final int HUD_TEXT = 200;
-    public static final int HUD_IMAGES_ONLY = 300;
+    public static final int HUD_SHADING_AND_IMAGES = 10;
+    public static final int HUD_TEXT = 20;
+    public static final int HUD_IMAGES_ONLY = 30;
 
-    public static final int HUD_DEFAULT = 400;
+    public static final int HUD_DEFAULT = 40;
 }
