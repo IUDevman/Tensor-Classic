@@ -90,13 +90,13 @@ public final class PhysicsSpammer extends Hack {
 
     private void cutAndAddMessage(String message) {
         if (message.length() > 99) {
-            String cut = message.substring(0, 98);
+            String cut = message.substring(0, 99);
             this.cachedPhysicsSpam.add(cut);
 
             String otherEnd = message.substring(99);
 
             if (otherEnd.length() > 1) {
-                this.cutAndAddMessage(message.substring(99));
+                this.cutAndAddMessage(otherEnd);
             }
 
             return;
