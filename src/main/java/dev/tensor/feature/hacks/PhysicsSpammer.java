@@ -79,7 +79,7 @@ public final class PhysicsSpammer extends Hack {
                     String line = scanner.nextLine();
 
                     if (line.startsWith("<p>") && !line.startsWith("<p><a href=") && !line.startsWith("<p>Links to:") && line.length() >= 4) {
-                        this.cutAndAddMessage(line);
+                        this.cutAndAddMessage(line.replace("<p>", ""));
                     }
                 }
 
