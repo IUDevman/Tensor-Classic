@@ -108,8 +108,9 @@ public final class HackManager implements Manager {
         this.addHack(new Speedometer());
         this.addHack(new Step());
         this.addHack(new Suffix());
-        this.addHack(new TCPNoDelay());
         this.addHack(new TabGUI());
+        this.addHack(new TCPNoDelay());
+        this.addHack(new Time());
         this.addHack(new Timer());
         this.addHack(new TimerMine());
         this.addHack(new Tracers());
@@ -161,6 +162,12 @@ public final class HackManager implements Manager {
         });
     }
 
+    private void postSortHacks() {
+        this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
+
+        this.RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder()).reversed());
+    }
+
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
         this.HACK_CALL.put(HACK.getClass(), HACK);
@@ -198,12 +205,6 @@ public final class HackManager implements Manager {
 
     public Hack getHack(String NAME) {
         return this.HACK_CALL_STRING.get(NAME.toLowerCase());
-    }
-
-    private void postSortHacks() {
-        this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
-
-        this.RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder()).reversed());
     }
 
     public boolean shouldSendMessagesGlobal() {
