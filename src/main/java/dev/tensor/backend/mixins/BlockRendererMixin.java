@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.RenderBlockEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.RenderBlockEvent;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;
@@ -35,8 +36,9 @@ public final class BlockRendererMixin implements Globals {
         }
 
         if (this.isSearchEnabled()) {
+
             @SuppressWarnings("unused")
-            RenderBlockEvent event = new RenderBlockEvent(new BlockCoords(i, j, k, par4)).call();
+            RenderBlockEvent event = EventCache.getCachedEvent(RenderBlockEvent.class).withVariables(new BlockCoords(i, j, k, par4)).call();
         }
 
         if (!this.isXrayEnabled()) {

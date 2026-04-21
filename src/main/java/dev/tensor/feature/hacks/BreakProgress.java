@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.RenderBlockBreakEvent;
+import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.hack.Category;

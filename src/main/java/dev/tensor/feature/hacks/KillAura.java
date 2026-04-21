@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.Packet10FlyingEvent;
+import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.helpers.entity.EntityTypeList;

@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.VelocityEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.BlockSoulSand;
 import net.minecraft.src.Entity;
@@ -25,7 +26,7 @@ public final class BlockSoulSandMixin implements Globals {
             return;
         }
 
-        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.SoulSand).call();
+        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.SoulSand).call();
 
         if (event.isCancelled()) {
             ci.cancel();

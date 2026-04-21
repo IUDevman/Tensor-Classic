@@ -1,12 +1,12 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.Render2DEvent;
-import dev.tensor.backend.events.RenderOverlayEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.Render2DEvent;
+import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.GuiIngame;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,10 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = GuiIngame.class, priority = MixinPriority.VALUE)
-public abstract class GuiIngameMixin implements Globals {
-
-    @Shadow
-    public abstract void addChatMessage(String string);
+public final class GuiIngameMixin implements Globals {
 
     @Inject(method = "renderGameOverlay", at = @At("TAIL"))
     public void tensor_onRenderGameOverlay(float bl, boolean i, int j, int par4, CallbackInfo ci) {
@@ -29,7 +26,7 @@ public abstract class GuiIngameMixin implements Globals {
         }
 
         @SuppressWarnings("unused")
-        Render2DEvent event = new Render2DEvent().call();
+        Render2DEvent event = EventCache.getCachedEvent(Render2DEvent.class).call();
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
@@ -38,7 +35,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vignette).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -51,7 +48,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.pumpkin).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -64,7 +61,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.portals).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call();
 
         if (event.isCancelled()) {
             ci.cancel();

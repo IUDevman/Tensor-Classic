@@ -1,8 +1,9 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.FluidBlockEvent;
-import dev.tensor.backend.events.FluidCollisionEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.FluidBlockEvent;
+import dev.tensor.backend.events.variable.FluidCollisionEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.BlockFluid;
@@ -26,7 +27,7 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        FluidCollisionEvent event = new FluidCollisionEvent(j, k, par4).call();
+        FluidCollisionEvent event = EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
@@ -39,7 +40,7 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        FluidBlockEvent event = new FluidBlockEvent().call();
+        FluidBlockEvent event = EventCache.getCachedEvent(FluidBlockEvent.class).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(true);

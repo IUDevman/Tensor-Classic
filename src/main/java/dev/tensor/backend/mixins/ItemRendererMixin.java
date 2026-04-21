@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.RenderOverlayEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.ItemRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,7 +24,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.blocks).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.blocks).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -36,7 +37,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.fire).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.fire).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -49,7 +50,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.water).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.water).call();
 
         if (event.isCancelled()) {
             ci.cancel();

@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.NameTagEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.NameTagEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.RenderPlayer;
@@ -24,7 +25,7 @@ public final class RenderPlayerMixin implements Globals {
             return;
         }
 
-        NameTagEvent event = new NameTagEvent().call();
+        NameTagEvent event = EventCache.getCachedEvent(NameTagEvent.class).call();
 
         if (event.isCancelled()) {
             ci.cancel();

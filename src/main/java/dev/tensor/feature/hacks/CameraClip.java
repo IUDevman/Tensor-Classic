@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.CameraClipEvent;
-import dev.tensor.backend.events.MouseEvent;
+import dev.tensor.backend.events.constant.CameraClipEvent;
+import dev.tensor.backend.events.variable.MouseEvent;
 import dev.tensor.backend.mixins.accessors.EntityRendererAccessor;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;

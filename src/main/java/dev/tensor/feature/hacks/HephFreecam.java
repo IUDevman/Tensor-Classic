@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.*;
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
+import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
+import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.imp.hack.Category;

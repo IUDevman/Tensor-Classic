@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.BlockBreakEvent;
-import dev.tensor.backend.events.Packet10FlyingEvent;
+import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -237,10 +237,6 @@ public final class Nuker extends Render3DHack {
     @EventTarget
     public void onBlockBreakEvent(BlockBreakEvent event) {
         if (!this.target.getValue().equals(Target.Click)) {
-            return;
-        }
-
-        if (event.packet == null) {
             return;
         }
 

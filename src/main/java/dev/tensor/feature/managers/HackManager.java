@@ -1,9 +1,9 @@
 package dev.tensor.feature.managers;
 
-import dev.tensor.backend.events.ClientTickEvent;
-import dev.tensor.backend.events.KeyPressedEvent;
-import dev.tensor.backend.events.Render2DEvent;
-import dev.tensor.backend.events.Render3DEvent;
+import dev.tensor.backend.events.constant.ClientTickEvent;
+import dev.tensor.backend.events.constant.Render2DEvent;
+import dev.tensor.backend.events.constant.Render3DEvent;
+import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.*;

@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.FluidCollisionEvent;
+import dev.tensor.backend.events.variable.FluidCollisionEvent;
 import dev.tensor.backend.mixins.accessors.EntityAccessor;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;

@@ -1,8 +1,9 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.KnockbackEvent;
-import dev.tensor.backend.events.SocketInitEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.KnockbackEvent;
+import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.NetHandler;
 import net.minecraft.src.NetworkManager;
@@ -38,7 +39,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            KnockbackEvent event = new KnockbackEvent().call();
+            KnockbackEvent event = EventCache.getCachedEvent(KnockbackEvent.class).call();
 
             if (event.isCancelled()) {
                 cir.setReturnValue(false);
@@ -57,7 +58,7 @@ public final class NetworkManagerMixin implements Globals {
             return;
         }
 
-        SocketInitEvent event = new SocketInitEvent().call();
+        SocketInitEvent event = EventCache.getCachedEvent(SocketInitEvent.class).call();
 
         if (event.isCancelled()) {
             try {

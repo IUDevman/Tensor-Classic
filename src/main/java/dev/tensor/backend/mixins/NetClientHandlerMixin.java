@@ -1,7 +1,12 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.*;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.CloseInventoryEvent;
+import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.events.variable.ChatReceivedEvent;
+import dev.tensor.backend.events.variable.ChatSentEvent;
+import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.gui.TensorGuiConnectFailed;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
@@ -38,7 +43,7 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            ChatSentEvent event = new ChatSentEvent(packet.message).call();
+            ChatSentEvent event = EventCache.getCachedEvent(ChatSentEvent.class).withVariables(packet.message).call();
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -53,14 +58,15 @@ public final class NetClientHandlerMixin implements Globals {
             Packet14BlockDig packet = (Packet14BlockDig) arg;
 
             @SuppressWarnings("unused")
-            BlockBreakEvent event = new BlockBreakEvent(packet).call();
+            BlockBreakEvent event = EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call();
+
             return;
         }
 
         if (arg instanceof Packet10Flying) {
             Packet10Flying packet = (Packet10Flying) arg;
 
-            Packet10FlyingEvent event = new Packet10FlyingEvent(packet).call();
+            Packet10FlyingEvent event = EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call();
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -76,7 +82,7 @@ public final class NetClientHandlerMixin implements Globals {
 
             if (packet.windowId == this.getPlayer().craftingInventory.windowId) {
 
-                CloseInventoryEvent event = new CloseInventoryEvent().call();
+                CloseInventoryEvent event = EventCache.getCachedEvent(CloseInventoryEvent.class).call();
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -91,7 +97,7 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        ChatReceivedEvent event = new ChatReceivedEvent(par1.message).call();
+        ChatReceivedEvent event = EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call();
 
         if (event.isCancelled()) {
             this.sendMessageWithLinesColor(event.message);

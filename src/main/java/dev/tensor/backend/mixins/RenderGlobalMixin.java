@@ -1,9 +1,10 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.RenderBlockBreakEvent;
-import dev.tensor.backend.events.RenderSelectionBoxEvent;
-import dev.tensor.backend.events.RenderSkyEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
+import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
+import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
@@ -33,7 +34,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -54,7 +55,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isUpdated()) {
             Color color = event.getNewColor();
@@ -73,7 +74,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Clouds).call();
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
 
         if (event.isUpdated()) {
             Color color = event.getNewColor();
@@ -99,7 +100,7 @@ public final class RenderGlobalMixin implements Globals {
         }
 
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            RenderSelectionBoxEvent event = new RenderSelectionBoxEvent(i).call();
+            RenderSelectionBoxEvent event = EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call();
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -114,7 +115,7 @@ public final class RenderGlobalMixin implements Globals {
         }
 
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            RenderBlockBreakEvent event = new RenderBlockBreakEvent(i).call();
+            RenderBlockBreakEvent event = EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call();
 
             if (event.isCancelled()) {
                 ci.cancel();

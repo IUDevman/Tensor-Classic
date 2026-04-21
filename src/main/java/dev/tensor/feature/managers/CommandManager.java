@@ -1,6 +1,6 @@
 package dev.tensor.feature.managers;
 
-import dev.tensor.backend.events.ChatSentEvent;
+import dev.tensor.backend.events.variable.ChatSentEvent;
 import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventTarget;

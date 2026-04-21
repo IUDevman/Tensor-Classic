@@ -1,7 +1,14 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.*;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.CameraClipEvent;
+import dev.tensor.backend.events.constant.HurtCameraEvent;
+import dev.tensor.backend.events.constant.Render3DEvent;
+import dev.tensor.backend.events.constant.ViewBobEvent;
+import dev.tensor.backend.events.variable.FOVModifierEvent;
+import dev.tensor.backend.events.variable.RenderOverlayEvent;
+import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
@@ -33,7 +40,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        FOVModifierEvent event = new FOVModifierEvent().call();
+        FOVModifierEvent event = EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(par1).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(event.FOV);
@@ -46,7 +53,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        HurtCameraEvent event = new HurtCameraEvent().call();
+        HurtCameraEvent event = EventCache.getCachedEvent(HurtCameraEvent.class).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -59,7 +66,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        ViewBobEvent event = new ViewBobEvent().call();
+        ViewBobEvent event = EventCache.getCachedEvent(ViewBobEvent.class).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -73,7 +80,7 @@ public abstract class EntityRendererMixin implements Globals {
         }
 
         @SuppressWarnings("unused")
-        Render3DEvent event = new Render3DEvent().call();
+        Render3DEvent event = EventCache.getCachedEvent(Render3DEvent.class).call();
     }
 
     @Inject(method = "setupFog", at = @At("TAIL"))
@@ -82,7 +89,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog).call();
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call();
 
         if (event.isCancelled()) {
             GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
@@ -100,7 +107,7 @@ public abstract class EntityRendererMixin implements Globals {
             return false;
         }
 
-        RenderSkyEvent event = new RenderSkyEvent(RenderSkyEvent.Type.Fog_Fluids).call();
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog_Fluids).call();
 
         if (event.isCancelled()) {
             return false;
@@ -115,7 +122,7 @@ public abstract class EntityRendererMixin implements Globals {
             return -100;
         }
 
-        RenderOverlayEvent event = new RenderOverlayEvent(RenderOverlayEvent.Type.vomit).call();
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vomit).call();
 
         if (event.isCancelled()) {
             return -100;
@@ -130,7 +137,7 @@ public abstract class EntityRendererMixin implements Globals {
             return instance.distanceTo(vec3D);
         }
 
-        CameraClipEvent event = new CameraClipEvent().call();
+        CameraClipEvent event = EventCache.getCachedEvent(CameraClipEvent.class).call();
 
         if (event.isCancelled()) {
             return 100;

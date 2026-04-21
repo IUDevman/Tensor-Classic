@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.RenderItemEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.RenderItemEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
@@ -26,7 +27,7 @@ public final class RenderManagerMixin implements Globals {
         }
 
         if (f instanceof EntityItem) {
-            RenderItemEvent event = new RenderItemEvent().call();
+            RenderItemEvent event = EventCache.getCachedEvent(RenderItemEvent.class).call();
 
             if (event.isCancelled()) {
                 ci.cancel();

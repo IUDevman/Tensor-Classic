@@ -1,8 +1,9 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.MovementClipEvent;
-import dev.tensor.backend.events.VelocityEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.MovementClipEvent;
+import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +26,7 @@ public final class EntityMixin implements Globals {
             return;
         }
 
-        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.Entity).call();
+        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -38,7 +39,7 @@ public final class EntityMixin implements Globals {
             return instance.isSneaking();
         }
 
-        MovementClipEvent event = new MovementClipEvent().call();
+        MovementClipEvent event = EventCache.getCachedEvent(MovementClipEvent.class).call();
 
         if (event.isCancelled()) {
             return true;

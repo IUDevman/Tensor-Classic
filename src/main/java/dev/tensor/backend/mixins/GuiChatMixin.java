@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.GuiChatScreenEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.GuiChatScreenEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.GuiChat;
 import net.minecraft.src.GuiScreen;
@@ -33,6 +34,6 @@ public final class GuiChatMixin extends GuiScreen implements Globals {
         }
 
         @SuppressWarnings("unused")
-        GuiChatScreenEvent event = new GuiChatScreenEvent(this.message, 2, this.width - 2, this.height - 14, this.height - 2).call();
+        GuiChatScreenEvent event = EventCache.getCachedEvent(GuiChatScreenEvent.class).withVariables(this.message, 2, this.width - 2, this.height - 14, this.height - 2).call();
     }
 }

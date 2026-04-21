@@ -1,7 +1,8 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.ParticleEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.ParticleEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EffectRenderer;
 import net.minecraft.src.Entity;
@@ -24,7 +25,7 @@ public final class EffectRendererMixin implements Globals {
             return;
         }
 
-        ParticleEvent event = new ParticleEvent().call();
+        ParticleEvent event = EventCache.getCachedEvent(ParticleEvent.class).call();
 
         if (event.isCancelled()) {
             ci.cancel();

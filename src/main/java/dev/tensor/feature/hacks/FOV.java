@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.FOVModifierEvent;
+import dev.tensor.backend.events.variable.FOVModifierEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -19,7 +19,7 @@ public final class FOV extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onFovModifierEvent(FOVModifierEvent event) {
-        event.FOV = value.getValue();
+        event.FOV = this.value.getValue();
         event.cancel();
     }
 }

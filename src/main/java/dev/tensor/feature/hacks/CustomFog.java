@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.RenderSkyEvent;
+import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -25,7 +25,6 @@ public final class CustomFog extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onRenderSkyEvent(RenderSkyEvent event) {
-
         if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids) && !this.renderFluidFog.getValue()) {
             event.cancel();
             return;

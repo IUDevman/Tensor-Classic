@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.RenderBlockEvent;
-import dev.tensor.backend.events.ViewBobEvent;
+import dev.tensor.backend.events.constant.ViewBobEvent;
+import dev.tensor.backend.events.variable.RenderBlockEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;

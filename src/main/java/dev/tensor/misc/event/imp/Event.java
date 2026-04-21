@@ -16,4 +16,8 @@ public interface Event extends Globals {
 
         return (T) this;
     }
+
+    default void reset() {
+
+    }
 }

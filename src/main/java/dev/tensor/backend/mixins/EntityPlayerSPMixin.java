@@ -1,9 +1,10 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.PortalCloseGUIEvent;
-import dev.tensor.backend.events.SignEvent;
-import dev.tensor.backend.events.VelocityEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.PortalCloseGUIEvent;
+import dev.tensor.backend.events.variable.SignEvent;
+import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayerSP;
@@ -30,7 +31,7 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.Block).call();
+        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(false);
@@ -40,7 +41,7 @@ public final class EntityPlayerSPMixin implements Globals {
     @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/src/GuiScreen;)V"))
     public void tensor_onLivingUpdateInvokeGuiScreen(Minecraft instance, GuiScreen guiScreen) {
         if (guiScreen == null) {
-            PortalCloseGUIEvent event = new PortalCloseGUIEvent().call();
+            PortalCloseGUIEvent event = EventCache.getCachedEvent(PortalCloseGUIEvent.class).call();
 
             if (!event.isCancelled()) {
                 instance.displayGuiScreen(null);
@@ -56,7 +57,7 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        SignEvent event = new SignEvent(par1).call();
+        SignEvent event = EventCache.getCachedEvent(SignEvent.class).withVariables(par1).call();
 
         if (event.isCancelled()) {
             ci.cancel();

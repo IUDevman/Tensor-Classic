@@ -1,9 +1,10 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
-import dev.tensor.backend.events.LightValueEvent;
-import dev.tensor.backend.events.VelocityEvent;
-import dev.tensor.backend.events.WeatherEvent;
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.constant.LightValueEvent;
+import dev.tensor.backend.events.constant.WeatherEvent;
+import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import net.minecraft.src.Vec3D;
@@ -29,7 +30,7 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        LightValueEvent event = new LightValueEvent().call();
+        LightValueEvent event = EventCache.getCachedEvent(LightValueEvent.class).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(1F);
@@ -42,7 +43,7 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = new WeatherEvent().call();
+        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
 
         if (event.isCancelled()) {
             ci.cancel();
@@ -55,7 +56,7 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = new WeatherEvent().call();
+        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(0.0F);
@@ -68,7 +69,7 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = new WeatherEvent().call();
+        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(0.0F);
@@ -81,7 +82,7 @@ public abstract class WorldMixin implements Globals {
             return instance.lengthVector();
         }
 
-        VelocityEvent event = new VelocityEvent(VelocityEvent.Type.Fluid).call();
+        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Fluid).call();
 
         if (event.isCancelled()) {
             return 0;
@@ -97,7 +98,7 @@ public abstract class WorldMixin implements Globals {
         }
 
         if (f.equalsIgnoreCase("mob.wolf.shake")) {
-            WeatherEvent event = new WeatherEvent().call();
+            WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
 
             if (event.isCancelled()) {
                 ci.cancel();

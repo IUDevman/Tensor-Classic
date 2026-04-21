@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.RenderOverlayEvent;
+import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -27,7 +27,6 @@ public final class NoOverlay extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onRenderOverlayEvent(RenderOverlayEvent event) {
-
         if (this.mode.getValue().equals(Mode.All)) {
             event.cancel();
             return;
