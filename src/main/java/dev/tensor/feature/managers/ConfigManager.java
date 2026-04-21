@@ -52,14 +52,6 @@ public final class ConfigManager implements Manager {
         return this.configPath;
     }
 
-    public void postLoad(Manager manager) {
-        this.getTensorLogger().info("Loaded Config for: " + manager.getName() + "!");
-    }
-
-    public void postSave(Manager manager) {
-        this.getTensorLogger().info("Saved Config for: " + manager.getName() + "!");
-    }
-
     public JsonObject getJsonObjectFromPath(Path path) throws Exception {
         InputStream inputStream = Files.newInputStream(path);
         return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonObject();

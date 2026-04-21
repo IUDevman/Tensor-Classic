@@ -7,7 +7,7 @@ import dev.tensor.misc.event.imp.modifiers.EventVariable;
  * @since 04-20-2026
  */
 
-public abstract class EventVariableCancellable implements EventVariable, Cancellable {
+public class EventVariableCancellable implements EventVariable, Cancellable {
 
     private boolean cancelled;
 
