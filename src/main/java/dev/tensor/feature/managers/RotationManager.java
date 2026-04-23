@@ -78,6 +78,8 @@ public final class RotationManager implements Manager {
                 event.packet.pitch = maxRotation.pitch;
                 event.packet.yaw = maxRotation.yaw;
             }
+
+            this.rotationQueue.clear();
         }
     }
 
