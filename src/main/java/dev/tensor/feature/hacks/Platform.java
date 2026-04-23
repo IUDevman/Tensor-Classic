@@ -1,9 +1,8 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.Packet10FlyingEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -49,10 +48,6 @@ public final class Platform extends Render3DHack {
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
 
-    private boolean rotated = false;
-    private float pitch = 0;
-    private float yaw = 0;
-
     private int delayTicks = 0;
 
     private final ArrayList<BlockPos> blocksToPlace = new ArrayList<>();
@@ -64,10 +59,6 @@ public final class Platform extends Render3DHack {
 
     @Override
     public void onDisable(boolean isNull) {
-        this.rotated = false;
-        this.pitch = 0;
-        this.yaw = 0;
-
         this.blocksToPlace.clear();
     }
 
@@ -112,18 +103,6 @@ public final class Platform extends Render3DHack {
         }
 
         this.blocksToPlace.forEach(this::renderForBlockPos);
-    }
-
-    @SuppressWarnings("unused")
-    @EventTarget()
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        if (this.rotate.getValue() && this.rotated) {
-            event.packet.pitch = this.pitch;
-            event.packet.yaw = this.yaw;
-            this.pitch = 0;
-            this.yaw = 0;
-            this.rotated = false;
-        }
     }
 
     private ArrayList<BlockPos> getBlocksToPlace() {
@@ -206,11 +185,7 @@ public final class Platform extends Render3DHack {
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
-                    float[] pitchAndYaw = this.pitchAndYawTo(dirX, dirY, dirZ);
-
-                    this.pitch = pitchAndYaw[0];
-                    this.yaw = pitchAndYaw[1];
-                    this.rotated = true;
+                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.PLATFORM);
                 }
 
                 if (this.swing.getValue()) {

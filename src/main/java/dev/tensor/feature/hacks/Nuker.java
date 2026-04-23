@@ -1,10 +1,10 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockBreakEvent;
-import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -63,10 +63,6 @@ public final class Nuker extends Render3DHack {
 
     private int customToggleID = 0;
 
-    private boolean rotated = false;
-    private float pitch = 0;
-    private float yaw = 0;
-
     @Override
     public void onEnable(boolean isNull) {
         this.delayTicks = this.delay.getValue();
@@ -83,10 +79,6 @@ public final class Nuker extends Render3DHack {
         if (this.resetTarget.getValue()) {
             this.customToggleID = 0;
         }
-
-        this.rotated = false;
-        this.pitch = 0;
-        this.yaw = 0;
     }
 
     @Override
@@ -263,18 +255,6 @@ public final class Nuker extends Render3DHack {
         this.customToggleID = blockId;
     }
 
-    @SuppressWarnings("unused")
-    @EventTarget
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        if (this.rotate.getValue() && this.rotated) {
-            event.packet.pitch = this.pitch;
-            event.packet.yaw = this.yaw;
-            this.pitch = 0;
-            this.yaw = 0;
-            this.rotated = false;
-        }
-    }
-
     private boolean isBlockOnBreakList(Block block) {
 
         if (block.blockID == 0) {
@@ -319,7 +299,7 @@ public final class Nuker extends Render3DHack {
                     double timeMS = timeSeconds * 1000;
 
                     if (this.rotate.getValue()) {
-                        this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
                     }
 
                     this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
@@ -335,7 +315,7 @@ public final class Nuker extends Render3DHack {
                     }
 
                     if (this.rotate.getValue()) {
-                        this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
                     }
 
                     this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
@@ -353,7 +333,7 @@ public final class Nuker extends Render3DHack {
                 break;
             case Instant:
                 if (this.rotate.getValue()) {
-                    this.rotate(blockCoords.x, blockCoords.y, blockCoords.z);
+                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
                 }
 
                 this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
@@ -365,14 +345,6 @@ public final class Nuker extends Render3DHack {
 
                 break;
         }
-    }
-
-    private void rotate(int x, int y, int z) {
-        float[] pitchAndYaw = this.pitchAndYawTo(x, y, z);
-
-        this.pitch = pitchAndYaw[0];
-        this.yaw = pitchAndYaw[1];
-        this.rotated = true;
     }
 
     private void renderForBlock(BlockCoords blockCoords) {

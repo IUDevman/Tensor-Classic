@@ -1,9 +1,7 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.Packet10FlyingEvent;
-import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.Priority;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -53,10 +51,6 @@ public final class KillAura extends Render3DHack {
     private final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;
 
-    private boolean rotated = false;
-    private float pitch = 0;
-    private float yaw = 0;
-
     @Override
     public void onEnable(boolean isNull) {
         this.attackDelay = this.delay.getValue();
@@ -65,9 +59,6 @@ public final class KillAura extends Render3DHack {
     @Override
     public void onDisable(boolean isNull) {
         this.target_Entities.clear();
-        this.rotated = false;
-        this.pitch = 0;
-        this.yaw = 0;
     }
 
     @Override
@@ -157,18 +148,6 @@ public final class KillAura extends Render3DHack {
         this.target_Entities.forEach(entity -> this.renderESP(entity, renderPartialTicks));
     }
 
-    @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.LOWEST)
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        if (this.rotate.getValue() && this.rotated) {
-            event.packet.pitch = this.pitch;
-            event.packet.yaw = this.yaw;
-            this.pitch = 0;
-            this.yaw = 0;
-            this.rotated = false;
-        }
-    }
-
     private boolean shouldAttackEntity(Entity entity) {
         if (!entity.isEntityAlive()) {
             return false;
@@ -246,11 +225,7 @@ public final class KillAura extends Render3DHack {
     private void attackEntity(Entity entity) {
 
         if (this.rotate.getValue()) {
-            float[] pitchAndYaw = this.pitchAndYawTo(entity);
-
-            this.pitch = pitchAndYaw[0];
-            this.yaw = pitchAndYaw[1];
-            this.rotated = true;
+            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(entity), RotationPriority.KILLAURA);
         }
 
         if (this.swing.getValue()) {

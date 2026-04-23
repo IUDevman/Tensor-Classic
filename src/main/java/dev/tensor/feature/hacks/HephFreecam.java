@@ -131,7 +131,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
+    @EventTarget(priority = Priority.HIGHEST)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
         event.cancel();
     }

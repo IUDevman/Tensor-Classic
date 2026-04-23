@@ -8,6 +8,7 @@ import dev.tensor.feature.hacks.AutoReconnect;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
+import dev.tensor.misc.helpers.rotation.Rotation;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
@@ -67,6 +68,10 @@ public interface Globals {
 
     default FriendManager getFriendManager() {
         return (FriendManager) this.getTensor().MANAGERS.get(FriendManager.class);
+    }
+
+    default RotationManager getRotationManager() {
+        return (RotationManager) this.getTensor().MANAGERS.get(RotationManager.class);
     }
 
     default HackManager getHackManager() {
@@ -260,11 +265,11 @@ public interface Globals {
         }
     }
 
-    default float[] pitchAndYawTo(Entity entity) {
+    default Rotation pitchAndYawTo(Entity entity) {
         return this.pitchAndYawTo(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
     }
 
-    default float[] pitchAndYawTo(double x, double y, double z) {
+    default Rotation pitchAndYawTo(double x, double y, double z) {
         Vector4f deltas = this.returnDeltas(x, y, z);
 
         double angle = 180 / Math.PI;
@@ -272,10 +277,7 @@ public interface Globals {
         float pitch = (float) -(Math.atan2(deltas.y, deltas.w) * angle);
         float yaw = (float) ((Math.atan2(deltas.z, deltas.x) * angle) - 90);
 
-        return new float[]{
-                pitch,
-                yaw
-        };
+        return new Rotation(pitch, yaw);
     }
 
     default Vector4f returnDeltas(double x, double y, double z) {

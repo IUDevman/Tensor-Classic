@@ -1,9 +1,8 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.Packet10FlyingEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -45,17 +44,9 @@ public final class Scaffold extends Render3DHack {
 
     private BlockPos blockPlacingAt = null;
 
-    private boolean rotated = false;
-    private float pitch = 0;
-    private float yaw = 0;
-
     @Override
     public void onDisable(boolean isNull) {
         this.blockPlacingAt = null;
-
-        this.rotated = false;
-        this.pitch = 0;
-        this.yaw = 0;
     }
 
     @Override
@@ -119,18 +110,6 @@ public final class Scaffold extends Render3DHack {
         }
     }
 
-    @SuppressWarnings("unused")
-    @EventTarget()
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        if (this.rotate.getValue() && this.rotated) {
-            event.packet.pitch = this.pitch;
-            event.packet.yaw = this.yaw;
-            this.pitch = 0;
-            this.yaw = 0;
-            this.rotated = false;
-        }
-    }
-
     private void placeBlock(BlockPos coords) {
         int prevItem = this.getInventory().currentItem;
         int swapSlot = this.getSwapSlot();
@@ -175,11 +154,7 @@ public final class Scaffold extends Render3DHack {
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
-                    float[] pitchAndYaw = this.pitchAndYawTo(dirX, dirY, dirZ);
-
-                    this.pitch = pitchAndYaw[0];
-                    this.yaw = pitchAndYaw[1];
-                    this.rotated = true;
+                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.SCAFFOLD);
                 }
 
                 if (this.swing.getValue()) {
