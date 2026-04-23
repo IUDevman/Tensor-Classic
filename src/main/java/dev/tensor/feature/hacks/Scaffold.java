@@ -10,6 +10,7 @@ import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -27,6 +28,7 @@ public final class Scaffold extends Render3DHack {
         return RenderOrder.SCAFFOLD_PLATFORM;
     }
 
+    public final BooleanSetting levitate = new BooleanSetting("Levitate", false);
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
@@ -58,6 +60,10 @@ public final class Scaffold extends Render3DHack {
 
     @Override
     public void onClientTick() {
+        if (this.levitate.getValue() && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
+            this.getPlayer().motionY = 0.30D;
+        }
+
         BlockPos coords = new BlockPos(MathHelper.floor_double(this.getPlayer().posX), MathHelper.floor_double(this.getPlayer().posY) - 2, MathHelper.floor_double(this.getPlayer().posZ));
 
         int blockID = this.getWorld().getBlockId(coords.x, coords.y, coords.z);
