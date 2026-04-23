@@ -52,10 +52,6 @@ public final class Scaffold extends Render3DHack {
 
     @Override
     public void onClientTick() {
-        if (this.levitate.getValue() && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
-            this.getPlayer().motionY = 0.30D;
-        }
-
         double playerX = this.getPlayer().posX;
         double playerY = this.getPlayer().posY;
         double playerZ = this.getPlayer().posZ;
@@ -74,6 +70,9 @@ public final class Scaffold extends Render3DHack {
                 playerY = freecam.oldY;
                 playerZ = freecam.oldZ;
             }
+
+        } else if (this.levitate.getValue() && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
+            this.getPlayer().motionY = 0.30D;
         }
 
         BlockPos coords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
