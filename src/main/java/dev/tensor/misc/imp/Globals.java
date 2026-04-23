@@ -5,6 +5,7 @@ import dev.tensor.backend.mixins.accessors.GuiIngameAccessor;
 import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
 import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
 import dev.tensor.feature.hacks.AutoReconnect;
+import dev.tensor.feature.hacks.HephFreecam;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
@@ -281,9 +282,17 @@ public interface Globals {
     }
 
     default Vector4f returnDeltas(double x, double y, double z) {
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
         double deltaX = x - this.getPlayer().posX;
         double deltaY = y - this.getPlayer().posY - this.getPlayer().getEyeHeight();
         double deltaZ = z - this.getPlayer().posZ;
+
+        if (freecam != null && freecam.isEnabled()) {
+            deltaX = x - freecam.oldX;
+            deltaY = y - freecam.oldY - this.getPlayer().getEyeHeight();
+            deltaZ = z - freecam.oldZ;
+        }
 
         double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
 

@@ -10,10 +10,7 @@ import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.GuiGameOver;
-import net.minecraft.src.MovingObjectPosition;
-import net.minecraft.src.Packet0KeepAlive;
+import net.minecraft.src.*;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -36,9 +33,9 @@ public final class HephFreecam extends Hack {
     public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
 
-    private double oldX;
-    private double oldY;
-    private double oldZ;
+    public double oldX;
+    public double oldY;
+    public double oldZ;
     private float oldYaw;
     private float oldPitch;
 
@@ -133,6 +130,10 @@ public final class HephFreecam extends Hack {
     @SuppressWarnings("unused")
     @EventTarget(priority = Priority.HIGHEST)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
+        if (event.packet instanceof Packet12PlayerLook) {
+            return;
+        }
+
         event.cancel();
     }
 
