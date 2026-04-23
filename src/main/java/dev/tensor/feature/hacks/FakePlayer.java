@@ -58,6 +58,15 @@ public final class FakePlayer extends Hack {
         this.fakePlayer = null;
     }
 
+    @Override
+    public void onClientTick() {
+        if (this.fakePlayer != null) {
+            this.fakePlayer.motionX = 0;
+            this.fakePlayer.motionY = 0;
+            this.fakePlayer.motionZ = 0;
+        }
+    }
+
     @SuppressWarnings("unused")
     @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {

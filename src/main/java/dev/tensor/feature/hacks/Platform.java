@@ -34,6 +34,7 @@ public final class Platform extends Render3DHack {
     public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting depth = new IntegerSetting("Depth", 1, 1, 3);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
@@ -66,7 +67,26 @@ public final class Platform extends Render3DHack {
     public void onClientTick() {
         this.blocksToPlace.clear();
 
-        ArrayList<BlockPos> blocksToPlaceQueue = this.getBlocksToPlace();
+        double playerX = this.getPlayer().posX;
+        double playerY = this.getPlayer().posY;
+        double playerZ = this.getPlayer().posZ;
+
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (freecam != null && freecam.isEnabled()) {
+
+            if (this.freecamMode.getValue().equals(Freecam.Stop)) {
+                return;
+            }
+
+            if (this.freecamMode.getValue().equals(Freecam.Player)) {
+                playerX = freecam.oldX;
+                playerY = freecam.oldY;
+                playerZ = freecam.oldZ;
+            }
+        }
+
+        ArrayList<BlockPos> blocksToPlaceQueue = this.getBlocksToPlace(playerX, playerY, playerZ);
 
         this.blocksToPlace.addAll(blocksToPlaceQueue);
 
@@ -105,10 +125,10 @@ public final class Platform extends Render3DHack {
         this.blocksToPlace.forEach(this::renderForBlockPos);
     }
 
-    private ArrayList<BlockPos> getBlocksToPlace() {
+    private ArrayList<BlockPos> getBlocksToPlace(double playerX, double playerY, double playerZ) {
         ArrayList<BlockPos> blockPos = new ArrayList<>();
 
-        BlockPos playerCoords = new BlockPos(MathHelper.floor_double(this.getPlayer().posX), MathHelper.floor_double(this.getPlayer().posY) - 2, MathHelper.floor_double(this.getPlayer().posZ));
+        BlockPos playerCoords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
 
         for (int x = (int) (playerCoords.x - this.range.getValue()); x <= playerCoords.x + this.range.getValue(); x++) {
 
@@ -116,9 +136,9 @@ public final class Platform extends Render3DHack {
 
                 for (int z = (int) (playerCoords.z - this.range.getValue()); z <= playerCoords.z + this.range.getValue(); z++) {
 
-                    double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
+                    double distance = this.getDistance(x - playerX, y - playerY, z - playerZ);
 
-                    if (distanceSq > Math.pow(this.range.getValue(), 2)) {
+                    if (distance > this.range.getValue()) {
                         continue;
                     }
 
@@ -332,6 +352,12 @@ public final class Platform extends Render3DHack {
         Single,
         All,
         Custom
+    }
+
+    private enum Freecam {
+        Stop,
+        Player,
+        Camera
     }
 
     private enum Swap {

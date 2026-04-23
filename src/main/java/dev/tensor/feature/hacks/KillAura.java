@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.helpers.entity.EntityTypeList;
+import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -37,6 +38,7 @@ public final class KillAura extends Render3DHack {
     public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
     public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -63,7 +65,6 @@ public final class KillAura extends Render3DHack {
 
     @Override
     public void onClientTick() {
-
         this.target_Entities.clear();
 
         if (this.attackDelay >= this.delay.getValue()) {
@@ -71,6 +72,25 @@ public final class KillAura extends Render3DHack {
         } else {
             this.attackDelay++;
             return;
+        }
+
+        double playerX = this.getPlayer().posX;
+        double playerY = this.getPlayer().posY;
+        double playerZ = this.getPlayer().posZ;
+
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (freecam != null && freecam.isEnabled()) {
+
+            if (this.freecamMode.getValue().equals(Freecam.Stop)) {
+                return;
+            }
+
+            if (this.freecamMode.getValue().equals(Freecam.Player)) {
+                playerX = freecam.oldX;
+                playerY = freecam.oldY;
+                playerZ = freecam.oldZ;
+            }
         }
 
         LinkedHashMap<Entity, Double> entitiesToKill = new LinkedHashMap<>();
@@ -82,17 +102,17 @@ public final class KillAura extends Render3DHack {
                 continue;
             }
 
-            if (entity == this.getPlayer()) {
+            if (entity == this.getPlayer() || entity instanceof FakePlayer) {
                 continue;
             }
 
             if (this.shouldAttackEntity(entity)) {
 
-                if (!this.behindWalls.getValue() && !this.isEntityBehindWalls(entity)) {
+                if (!this.behindWalls.getValue() && !this.isEntityBehindWalls(entity, playerX, playerY, playerZ)) {
                     continue;
                 }
 
-                double distance = this.getPlayer().getDistanceToEntity(entity);
+                double distance = this.getDistance(entity.posX - playerX, entity.posY - playerY, entity.posZ - playerZ);
 
                 if (distance <= this.range.getValue()) {
                     entitiesToKill.put(entity, distance);
@@ -235,12 +255,12 @@ public final class KillAura extends Render3DHack {
         this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
     }
 
-    private boolean isEntityBehindWalls(Entity entity) {
+    private boolean isEntityBehindWalls(Entity entity, double playerX, double playerY, double playerZ) {
 
-        if (this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY + this.getPlayer().getEyeHeight(), this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null) {
+        if (this.getWorld().rayTraceBlocks(Vec3D.createVector(playerX, playerY + this.getPlayer().getEyeHeight(), playerZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null) {
             return true;
         } else
-            return this.getWorld().rayTraceBlocks(Vec3D.createVector(this.getPlayer().posX, this.getPlayer().posY, this.getPlayer().posZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
+            return this.getWorld().rayTraceBlocks(Vec3D.createVector(playerX, playerY, playerZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
     }
 
     private void renderESP(Entity entity, float renderPartialTicks) {
@@ -276,6 +296,12 @@ public final class KillAura extends Render3DHack {
         All,
         None,
         Custom
+    }
+
+    private enum Freecam {
+        Stop,
+        Player,
+        Camera
     }
 
     public enum Sort {

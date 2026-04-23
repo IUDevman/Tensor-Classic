@@ -38,6 +38,7 @@ public final class Nuker extends Render3DHack {
     public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
     public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced);
     public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
@@ -96,11 +97,30 @@ public final class Nuker extends Render3DHack {
             return;
         }
 
-        for (int x = (int) (this.getPlayer().posX - this.range.getValue()); x <= this.getPlayer().posX + this.range.getValue(); x++) {
+        double playerX = this.getPlayer().posX;
+        double playerY = this.getPlayer().posY;
+        double playerZ = this.getPlayer().posZ;
 
-            for (int y = (int) (this.getPlayer().posY - (this.below.getValue() ? this.range.getValue() : 1)); y <= this.getPlayer().posY + this.range.getValue(); y++) {
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
 
-                for (int z = (int) (this.getPlayer().posZ - this.range.getValue()); z <= this.getPlayer().posZ + this.range.getValue(); z++) {
+        if (freecam != null && freecam.isEnabled()) {
+
+            if (this.freecamMode.getValue().equals(Freecam.Stop)) {
+                return;
+            }
+
+            if (this.freecamMode.getValue().equals(Freecam.Player)) {
+                playerX = freecam.oldX;
+                playerY = freecam.oldY;
+                playerZ = freecam.oldZ;
+            }
+        }
+
+        for (int x = (int) (playerX - this.range.getValue()); x <= playerX + this.range.getValue(); x++) {
+
+            for (int y = (int) (playerY - (this.below.getValue() ? this.range.getValue() : 1)); y <= playerY + this.range.getValue(); y++) {
+
+                for (int z = (int) (playerZ - this.range.getValue()); z <= playerZ + this.range.getValue(); z++) {
 
                     int blockId = this.getWorld().getBlockId(x, y, z);
 
@@ -116,9 +136,9 @@ public final class Nuker extends Render3DHack {
 
                     if (this.isBlockOnBreakList(block)) {
 
-                        double distanceSq = this.getPlayer().getDistanceSq(x, y, z);
+                        double distance = this.getDistance(x - playerX, y - playerY, z - playerZ);
 
-                        if (distanceSq > Math.pow(this.range.getValue(), 2)) {
+                        if (distance > this.range.getValue()) {
                             continue;
                         }
 
@@ -528,6 +548,12 @@ public final class Nuker extends Render3DHack {
         Click,
         Instant,
         Custom
+    }
+
+    private enum Freecam {
+        Stop,
+        Player,
+        Camera
     }
 
     private enum BPTMode {

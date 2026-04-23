@@ -28,6 +28,7 @@ public final class Scaffold extends Render3DHack {
     }
 
     public final BooleanSetting levitate = new BooleanSetting("Levitate", false);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
@@ -55,7 +56,27 @@ public final class Scaffold extends Render3DHack {
             this.getPlayer().motionY = 0.30D;
         }
 
-        BlockPos coords = new BlockPos(MathHelper.floor_double(this.getPlayer().posX), MathHelper.floor_double(this.getPlayer().posY) - 2, MathHelper.floor_double(this.getPlayer().posZ));
+        double playerX = this.getPlayer().posX;
+        double playerY = this.getPlayer().posY;
+        double playerZ = this.getPlayer().posZ;
+
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (freecam != null && freecam.isEnabled()) {
+
+            if (this.freecamMode.getValue().equals(Freecam.Stop)) {
+                this.blockPlacingAt = null;
+                return;
+            }
+
+            if (this.freecamMode.getValue().equals(Freecam.Player)) {
+                playerX = freecam.oldX;
+                playerY = freecam.oldY;
+                playerZ = freecam.oldZ;
+            }
+        }
+
+        BlockPos coords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
 
         int blockID = this.getWorld().getBlockId(coords.x, coords.y, coords.z);
 
@@ -265,6 +286,12 @@ public final class Scaffold extends Render3DHack {
         }
 
         return -1;
+    }
+
+    private enum Freecam {
+        Stop,
+        Player,
+        Camera
     }
 
     private enum Swap {

@@ -294,9 +294,13 @@ public interface Globals {
             deltaZ = z - freecam.oldZ;
         }
 
-        double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+        double distance = this.getDistance(deltaX, deltaY, deltaZ);
 
         return new Vector4f((float) deltaX, (float) deltaY, (float) deltaZ, (float) distance);
+    }
+
+    default double getDistance(double deltaX, double deltaY, double deltaZ) {
+        return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
     }
 
     default int[][] getPlaceDirections(int startX, int startY, int startZ) {
