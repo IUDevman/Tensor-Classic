@@ -66,17 +66,17 @@ public final class RotationManager implements Manager {
             return;
         }
 
-        int max = this.rotationQueue.keySet().stream().max(Comparator.comparing(integer -> integer)).get();
+        int maxPriority = this.rotationQueue.keySet().stream().max(Comparator.comparing(integer -> integer)).get();
 
-        Rotation maxRotation = this.rotationQueue.get(max);
+        Rotation maxPriorityRotation = this.rotationQueue.get(maxPriority);
 
-        if (maxRotation != null) {
+        if (maxPriorityRotation != null) {
             if (event.isCancelled()) {
-                this.sendPacket(new Packet12PlayerLook(maxRotation.yaw, maxRotation.pitch, true));
+                this.sendPacket(new Packet12PlayerLook(maxPriorityRotation.yaw, maxPriorityRotation.pitch, true));
 
             } else {
-                event.packet.pitch = maxRotation.pitch;
-                event.packet.yaw = maxRotation.yaw;
+                event.packet.pitch = maxPriorityRotation.pitch;
+                event.packet.yaw = maxPriorityRotation.yaw;
             }
 
             this.rotationQueue.clear();
