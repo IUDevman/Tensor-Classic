@@ -119,6 +119,7 @@ public final class HackManager implements Manager {
         this.addHack(new TimerMine());
         this.addHack(new Tracers());
         this.addHack(new Velocity());
+        this.addHack(new VisualRange());
         this.addHack(new Waypoints());
         this.addHack(new Welcomer());
         this.addHack(new WolfOwner());
