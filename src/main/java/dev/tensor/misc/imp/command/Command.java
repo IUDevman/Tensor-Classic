@@ -22,4 +22,12 @@ public interface Command extends Globals {
     default String[] getRegexInArray() {
         return this.getRegex().split(" ");
     }
+
+    default boolean shouldParseFullMessage() {
+        return false;
+    }
+
+    default void onCommand(String fullMessage) {
+
+    }
 }

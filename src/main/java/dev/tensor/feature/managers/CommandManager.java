@@ -44,6 +44,7 @@ public final class CommandManager implements Manager {
         this.addCommand(new Prefix());
         this.addCommand(new Reset());
         this.addCommand(new Setting());
+        this.addCommand(new TellRaw());
         this.addCommand(new Toggle());
         this.addCommand(new Waypoints());
 
@@ -69,23 +70,6 @@ public final class CommandManager implements Manager {
         });
 
         return commands;
-    }
-
-    public ArrayList<Command> getListCommandsThatStartWith(String text) {
-        ArrayList<Command> commands = new ArrayList<>();
-
-        this.getCommands().forEach(command -> Arrays.stream(command.getAcceptedNames()).forEach(string -> {
-
-            if (string.toLowerCase().startsWith(text.toLowerCase())) {
-                commands.add(command);
-            }
-        }));
-
-        return commands;
-    }
-
-    public Command getCommand(String name) {
-        return this.getCommands().stream().filter(command -> command.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
     public Command getListCommand(String name) {
@@ -163,13 +147,31 @@ public final class CommandManager implements Manager {
 
                     if (acceptedName.equalsIgnoreCase(ARGS_1[0])) {
 
+                        if (command.shouldParseFullMessage()) {
+                            String pre = ARGS_1[0] + " ";
+                            String message = ARGS;
 
-                        String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1, 1, ARGS_1.length);
+                            if (message.length() > pre.length() + 1) {
+                                message = message.substring(pre.length() + 1);
 
-                        command.onCommand(COMMAND_ARGS);
+                                if (!message.isEmpty()) {
+                                    command.onCommand(message);
+                                } else {
+                                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command '" + this.getColor(ChatColor.AQUA) + command.getName() + this.getColor(ChatColor.RED) + "' (no message inputted)!");
+                                }
+                            } else {
+                                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command '" + this.getColor(ChatColor.AQUA) + command.getName() + this.getColor(ChatColor.RED) + "' (no message inputted)!");
+                            }
 
-                        HAS_DISPATCHED.set(true);
+                            HAS_DISPATCHED.set(true);
 
+                        } else {
+                            String[] COMMAND_ARGS = Arrays.copyOfRange(ARGS_1, 1, ARGS_1.length);
+
+                            command.onCommand(COMMAND_ARGS);
+
+                            HAS_DISPATCHED.set(true);
+                        }
                     }
                 });
             });
