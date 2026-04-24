@@ -4,9 +4,11 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.LightValueEvent;
 import dev.tensor.backend.events.constant.WeatherEvent;
+import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityOtherPlayerMP;
 import net.minecraft.src.Vec3D;
 import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -103,6 +105,34 @@ public abstract class WorldMixin implements Globals {
             if (event.isCancelled()) {
                 ci.cancel();
             }
+        }
+    }
+
+    @Inject(method = "entityJoinedWorld", at = @At("HEAD"))
+    public void tensor_onEntityJoinedWorld(Entity par1, CallbackInfoReturnable<Boolean> cir) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (par1 instanceof EntityOtherPlayerMP) {
+            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
+
+            @SuppressWarnings("unused")
+            PlayerJoinLeaveWorldEvent event = EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call();
+        }
+    }
+
+    @Inject(method = "setEntityDead", at = @At("HEAD"))
+    public void tensor_onSetEntityDead(Entity par1, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        if (par1 instanceof EntityOtherPlayerMP) {
+            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
+
+            @SuppressWarnings("unused")
+            PlayerJoinLeaveWorldEvent event = EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call();
         }
     }
 }

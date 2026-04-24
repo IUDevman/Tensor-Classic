@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.AttackEntityEvent;
+import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;

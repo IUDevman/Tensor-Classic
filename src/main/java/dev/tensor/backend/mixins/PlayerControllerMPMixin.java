@@ -2,7 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.AttackEntityEvent;
+import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
@@ -30,7 +30,11 @@ public final class PlayerControllerMPMixin implements Globals {
             return;
         }
 
+        if (par2 == null) {
+            return;
+        }
+
         @SuppressWarnings("unused")
-        AttackEntityEvent event = EventCache.getCachedEvent(AttackEntityEvent.class).call();
+        AttackEntityEvent event = EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(par2).call();
     }
 }
