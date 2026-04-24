@@ -114,8 +114,6 @@ public final class AutoTool extends Hack {
             currentStrength = currentItem.getStrVsBlock(block);
         }
 
-        this.getTensorLogger().info(String.valueOf(currentStrength));
-
         int oldSlot = swapSlot;
 
         for (int i = 0; i < 9; i++) {
