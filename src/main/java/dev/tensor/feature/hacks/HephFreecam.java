@@ -99,7 +99,7 @@ public final class HephFreecam extends Hack {
         }
 
         this.getPlayer().noClip = true;
-        this.getPlayer().onGround = false;
+        this.getPlayer().onGround = true;
 
         this.getPlayer().motionY = 0;
 
