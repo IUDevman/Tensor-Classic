@@ -17,7 +17,19 @@ import net.minecraft.src.*;
 @Hack.Info(name = "AutoTool", category = Category.Player)
 public final class AutoTool extends Hack {
 
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false);
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false) {
+
+        @Override
+        public void setValue(Boolean value) {
+            super.setValue(value);
+
+            AutoTool autoTool = this.getHackManager().getHack(AutoTool.class);
+
+            if (autoTool != null && autoTool.isEnabled()) {
+                autoTool.resetPrevSlot();
+            }
+        }
+    };
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
 
@@ -138,7 +150,7 @@ public final class AutoTool extends Hack {
         } else return blockID == Block.oreRedstoneGlowing.blockID;
     }
 
-    private void resetPrevSlot() {
+    public void resetPrevSlot() {
         this.status = 0;
         this.ticksSince = 0;
         this.swapped = false;

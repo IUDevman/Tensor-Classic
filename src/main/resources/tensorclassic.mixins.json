@@ -26,6 +26,7 @@
     "ItemRendererMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",
+    "PlayerControllerMPMixin",
     "RenderGlobalMixin",
     "RenderManagerMixin",
     "RenderPlayerMixin",
