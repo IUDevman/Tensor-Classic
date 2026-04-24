@@ -97,7 +97,10 @@ public final class Platform extends Render3DHack {
             this.delayTicks = 0;
         }
 
-        this.blocksToPlace.sort(Comparator.comparing(blockCoords -> this.getPlayer().getDistanceSq(blockCoords.x, blockCoords.y, blockCoords.z)));
+        final double finalPlayerX = playerX;
+        final double finalPlayerY = playerY;
+        final double finalPlayerZ = playerZ;
+        this.blocksToPlace.sort(Comparator.comparing(blockCoords -> this.getDistance(blockCoords.x - finalPlayerX, blockCoords.y - finalPlayerY, blockCoords.z - finalPlayerZ)));
 
         int blocksToPlace = 1;
 
