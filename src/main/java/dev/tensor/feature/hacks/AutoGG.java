@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventTarget;
@@ -45,6 +46,12 @@ public final class AutoGG extends Hack {
         if (this.messageDelay < 1000) {
             this.messageDelay++;
         }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        this.prevTargeted = "";
     }
 
     @SuppressWarnings("unused")
