@@ -21,6 +21,10 @@ public final class AutoSword extends Hack {
         public void setValue(Boolean value) {
             super.setValue(value);
 
+            if (this.failsNullCheck()) {
+                return;
+            }
+
             AutoSword autoSword = this.getHackManager().getHack(AutoSword.class);
 
             if (autoSword != null && autoSword.isEnabled()) {

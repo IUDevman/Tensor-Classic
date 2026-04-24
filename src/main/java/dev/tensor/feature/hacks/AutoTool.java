@@ -23,6 +23,10 @@ public final class AutoTool extends Hack {
         public void setValue(Boolean value) {
             super.setValue(value);
 
+            if (this.failsNullCheck()) {
+                return;
+            }
+
             AutoTool autoTool = this.getHackManager().getHack(AutoTool.class);
 
             if (autoTool != null && autoTool.isEnabled()) {

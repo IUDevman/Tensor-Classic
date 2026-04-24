@@ -19,6 +19,10 @@ public final class Rotations extends Hack {
         public void setValue(Enum<?> value) {
             super.setValue(value);
 
+            if (this.failsNullCheck()) {
+                return;
+            }
+
             Rotations rotations = this.getHackManager().getHack(Rotations.class);
 
             if (rotations != null && rotations.isEnabled()) {
