@@ -51,6 +51,7 @@ public final class HackManager implements Manager {
         this.addHack(new AntiKnockback());
         this.addHack(new Armor());
         this.addHack(new AutoEat());
+        this.addHack(new AutoGG());
         this.addHack(new AutoLogin());
         this.addHack(new AutoReconnect());
         this.addHack(new AutoRespawn());
