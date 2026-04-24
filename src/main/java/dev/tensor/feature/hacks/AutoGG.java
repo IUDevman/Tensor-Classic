@@ -24,10 +24,9 @@ public final class AutoGG extends Hack {
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", false);
     public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
-    public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... You can't handle the strength of my {WEAPON}}!");
+    public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!");
 
     private String prevTargeted = "";
-    private String prevWeapon = "Hand";
 
     private int messageDelay = 0;
 
@@ -39,7 +38,6 @@ public final class AutoGG extends Hack {
     @Override
     public void onDisable(boolean isNull) {
         this.prevTargeted = "";
-        this.prevWeapon = "Hand";
     }
 
     @Override
@@ -69,7 +67,6 @@ public final class AutoGG extends Hack {
         if (this.prevTargeted.equalsIgnoreCase(entityName)) {
 
             this.prevTargeted = "";
-            this.prevWeapon = "Hand";
 
             if (this.stopForSpammer.getValue()) {
                 PhysicsSpammer spammer = this.getHackManager().getHack(PhysicsSpammer.class);
@@ -80,7 +77,7 @@ public final class AutoGG extends Hack {
             }
 
             if (this.messageDelay >= this.delay.getValue()) {
-                String ggMessage = (this.greenText.getValue() ? ">" : "") + this.message.getValue().replace("{NAME}", entityName).replace("{WEAPON}", this.prevWeapon);
+                String ggMessage = (this.greenText.getValue() ? ">" : "") + this.message.getValue().replace("{NAME}", entityName);
 
                 if (ggMessage.length() > 100) {
                     return;
@@ -99,30 +96,22 @@ public final class AutoGG extends Hack {
         if (event.entityHit instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) event.entityHit;
 
-            ItemStack currentItem = this.getInventory().getCurrentItem();
-
             if (this.finalHitOnly.getValue()) {
                 int health = otherPlayerMP.health;
 
-                int damage = 1;
+                ItemStack currentItem = this.getInventory().getCurrentItem();
+                int currentDamage = 1;
 
                 if (currentItem != null) {
-                    damage = currentItem.getDamageVsEntity(otherPlayerMP);
+                    currentDamage = currentItem.getDamageVsEntity(otherPlayerMP);
                 }
 
-                if (health - damage > 0) {
+                if (health > 0 && health - currentDamage > 0) {
                     return;
                 }
             }
 
             this.prevTargeted = otherPlayerMP.username;
-
-            if (currentItem == null) {
-                this.prevWeapon = "Hand";
-
-            } else {
-                this.prevWeapon = currentItem.getItemName();
-            }
         }
     }
 }
