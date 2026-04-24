@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockPos;
@@ -42,6 +43,14 @@ public final class VisualRange extends Hack {
         } else if (!this.shouldMessage) {
             this.shouldMessage = true;
         }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        this.loadedEntityNames.clear();
+        this.startUpTicks = 0;
+        this.shouldMessage = false;
     }
 
     @SuppressWarnings("unused")
