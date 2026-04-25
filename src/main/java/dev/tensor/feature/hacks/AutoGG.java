@@ -13,6 +13,8 @@ import net.minecraft.src.EntityOtherPlayerMP;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet3Chat;
 
+import java.util.ArrayList;
+
 /**
  * @author Hoosiers
  * @since 04-24-2026
@@ -27,7 +29,7 @@ public final class AutoGG extends Hack {
     public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
     public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!");
 
-    private String prevTargeted = "";
+    private final ArrayList<String> targets = new ArrayList<>();
 
     private int messageDelay = 0;
 
@@ -38,7 +40,7 @@ public final class AutoGG extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
-        this.prevTargeted = "";
+        this.targets.clear();
     }
 
     @Override
@@ -51,7 +53,7 @@ public final class AutoGG extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
-        this.prevTargeted = "";
+        this.targets.clear();
     }
 
     @SuppressWarnings("unused")
@@ -61,7 +63,7 @@ public final class AutoGG extends Hack {
             return;
         }
 
-        if (this.prevTargeted.isEmpty()) {
+        if (this.targets.isEmpty()) {
             return;
         }
 
@@ -71,9 +73,9 @@ public final class AutoGG extends Hack {
 
         String entityName = event.otherPlayerMP.username;
 
-        if (this.prevTargeted.equalsIgnoreCase(entityName)) {
+        if (this.targets.contains(entityName)) {
 
-            this.prevTargeted = "";
+            this.targets.remove(entityName);
 
             if (this.stopForSpammer.getValue()) {
                 PhysicsSpammer spammer = this.getHackManager().getHack(PhysicsSpammer.class);
@@ -118,7 +120,9 @@ public final class AutoGG extends Hack {
                 }
             }
 
-            this.prevTargeted = otherPlayerMP.username;
+            if (!this.targets.contains(otherPlayerMP.username))  {
+                this.targets.add(otherPlayerMP.username);
+            }
         }
     }
 }
