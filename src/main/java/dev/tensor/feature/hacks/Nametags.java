@@ -32,7 +32,7 @@ public final class Nametags extends Render3DHack {
 
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting darkenSneak = new BooleanSetting("Darken Sneak", false);
-    public final BooleanSetting showHealth = new BooleanSetting("Show Health", true);
+    public final BooleanSetting showHealth = new BooleanSetting("Show Health", false);
     public final BooleanSetting showItems = new BooleanSetting("Show Items", true);
     public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
     public final BooleanSetting background = new BooleanSetting("Background", false);
