@@ -114,9 +114,7 @@ public final class AutoGG extends Hack {
 
             String username = otherPlayerMP.username;
 
-            if (this.finalHitOnly.getValue()) {
-                this.lastHitName = username;
-            }
+            this.lastHitName = username;
 
             if (!this.targets.contains(username))  {
                 this.targets.add(username);
