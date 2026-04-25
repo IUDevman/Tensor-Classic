@@ -43,13 +43,17 @@ public final class Nametags extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-        List entities = this.getWorld().playerEntities;
+        List entities = this.getWorld().loadedEntityList;
 
         for (int i = 0; i < entities.size(); i++) {
 
             Entity entity = (Entity) entities.get(i);
 
             if (entity == null) {
+                continue;
+            }
+
+            if (entity.isDead) {
                 continue;
             }
 

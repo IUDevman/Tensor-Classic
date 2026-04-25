@@ -46,6 +46,10 @@ public final class WolfOwner extends Render3DHack {
                 continue;
             }
 
+            if (entity.isDead) {
+                continue;
+            }
+
             if (entity instanceof EntityWolf) {
 
                 EntityWolf entityWolf = (EntityWolf) entity;
