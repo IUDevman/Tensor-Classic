@@ -10,7 +10,6 @@ import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 import net.minecraft.src.EntityOtherPlayerMP;
-import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet3Chat;
 
 import java.util.ArrayList;
