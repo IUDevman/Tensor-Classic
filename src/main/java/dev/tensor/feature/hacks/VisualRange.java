@@ -58,7 +58,7 @@ public final class VisualRange extends Hack {
     public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
         String name = event.otherPlayerMP.username;
 
-        if (event.otherPlayerMP.isDead) {
+        if (event.otherPlayerMP.isDead || event.otherPlayerMP.health <= 0) {
             this.loadedEntityNames.remove(name);
             return;
         }

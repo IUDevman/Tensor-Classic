@@ -66,6 +66,10 @@ public final class Tracers extends Render3DHack {
                 continue;
             }
 
+            if (entity.isDead) {
+                continue;
+            }
+
             if (entity instanceof EntityOtherPlayerMP) {
 
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;

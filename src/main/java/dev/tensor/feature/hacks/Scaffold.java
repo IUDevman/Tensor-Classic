@@ -1,5 +1,7 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.MovementClipEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -28,6 +30,7 @@ public final class Scaffold extends Render3DHack {
     }
 
     public final BooleanSetting levitate = new BooleanSetting("Levitate", false);
+    public final BooleanSetting safeWalk = new BooleanSetting("Safe Walk", true);
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -127,6 +130,14 @@ public final class Scaffold extends Render3DHack {
                 this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
                 this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
                 break;
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onMovementClipEvent(MovementClipEvent event) {
+        if (this.safeWalk.getValue()) {
+            event.cancel();
         }
     }
 

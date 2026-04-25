@@ -57,6 +57,10 @@ public final class EntityESP extends Render3DHack {
                 continue;
             }
 
+            if (entity.isDead) {
+                continue;
+            }
+
             if (entity instanceof EntityOtherPlayerMP) {
 
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;

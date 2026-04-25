@@ -1,5 +1,7 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.MovementClipEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -9,6 +11,7 @@ import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
+import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -27,13 +30,14 @@ public final class Platform extends Render3DHack {
     public int getRenderOrder() {
         return RenderOrder.SCAFFOLD_PLATFORM;
     }
-
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Instant);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 1, 20);
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.All);
     public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting depth = new IntegerSetting("Depth", 1, 1, 3);
+    public final BooleanSetting levitate = new BooleanSetting("Levitate", false);
+    public final BooleanSetting safeWalk = new BooleanSetting("Safe Walk", true);
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -84,6 +88,8 @@ public final class Platform extends Render3DHack {
                 playerY = freecam.oldY;
                 playerZ = freecam.oldZ;
             }
+        } else if (this.levitate.getValue() && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
+            this.getPlayer().motionY = 0.30D;
         }
 
         ArrayList<BlockPos> blocksToPlaceQueue = this.getBlocksToPlace(playerX, playerY, playerZ);
@@ -126,6 +132,14 @@ public final class Platform extends Render3DHack {
         }
 
         this.blocksToPlace.forEach(this::renderForBlockPos);
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onMovementClipEvent(MovementClipEvent event) {
+        if (this.safeWalk.getValue()) {
+            event.cancel();
+        }
     }
 
     private ArrayList<BlockPos> getBlocksToPlace(double playerX, double playerY, double playerZ) {
