@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
 @Hack.Info(name = "Rotations", category = Category.Client, enabled = true)
 public final class Rotations extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Intercept) {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Packet) {
 
         @Override
         public void setValue(Enum<?> value) {
