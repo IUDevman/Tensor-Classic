@@ -6,6 +6,7 @@ import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 @Hack.Info(name = "VisualRange", category = Category.Combat)
 public final class VisualRange extends Hack {
 
-    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Start Up Delay Ticks", 5, 1, 20);
+    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", true);
+    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
     public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
     public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
 
@@ -72,7 +74,7 @@ public final class VisualRange extends Hack {
                 if (!this.loadedEntityNames.contains(name)) {
                     this.loadedEntityNames.add(name);
 
-                    if (this.shouldMessage) {
+                    if (this.shouldMessage()) {
                         this.sendVRMessage(isFriend, name, blockPos, true);
                     }
                 }
@@ -81,12 +83,20 @@ public final class VisualRange extends Hack {
                 if (this.loadedEntityNames.contains(name)) {
                     this.loadedEntityNames.remove(name);
 
-                    if (this.shouldMessage) {
+                    if (this.shouldMessage()) {
                         this.sendVRMessage(isFriend, name, blockPos, false);
                     }
                 }
                 break;
         }
+    }
+
+    private boolean shouldMessage() {
+        if (!this.antiSpam.getValue()) {
+            return true;
+        }
+
+        return this.shouldMessage;
     }
 
     private void sendVRMessage(boolean friend, String name, BlockPos position, boolean firstSeen) {
