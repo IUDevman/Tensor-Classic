@@ -26,7 +26,7 @@ public final class AutoGG extends Hack {
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", false);
-    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
+    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", false);
     public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!");
 
     private final ArrayList<String> targets = new ArrayList<>();
@@ -45,7 +45,7 @@ public final class AutoGG extends Hack {
 
     @Override
     public void onClientTick() {
-        if (this.messageDelay < 1000) {
+        if (this.messageDelay < 101) {
             this.messageDelay++;
         }
     }
