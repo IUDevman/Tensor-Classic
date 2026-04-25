@@ -26,10 +26,11 @@ public final class AutoGG extends Hack {
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", false);
-    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", false);
+    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
     public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!");
 
     private final ArrayList<String> targets = new ArrayList<>();
+    private String lastHitName = "";
 
     private int messageDelay = 0;
 
@@ -41,6 +42,7 @@ public final class AutoGG extends Hack {
     @Override
     public void onDisable(boolean isNull) {
         this.targets.clear();
+        this.lastHitName = "";
     }
 
     @Override
@@ -54,6 +56,7 @@ public final class AutoGG extends Hack {
     @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.targets.clear();
+        this.lastHitName = "";
     }
 
     @SuppressWarnings("unused")
@@ -74,6 +77,11 @@ public final class AutoGG extends Hack {
         String entityName = event.otherPlayerMP.username;
 
         if (this.targets.contains(entityName)) {
+
+            if (this.finalHitOnly.getValue() && !this.lastHitName.equalsIgnoreCase(entityName)) {
+                this.targets.remove(entityName);
+                return;
+            }
 
             this.targets.remove(entityName);
 
@@ -105,23 +113,14 @@ public final class AutoGG extends Hack {
         if (event.entityHit instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) event.entityHit;
 
+            String username = otherPlayerMP.username;
+
             if (this.finalHitOnly.getValue()) {
-                int health = otherPlayerMP.health;
-
-                ItemStack currentItem = this.getInventory().getCurrentItem();
-                int currentDamage = 1;
-
-                if (currentItem != null) {
-                    currentDamage = currentItem.getDamageVsEntity(otherPlayerMP);
-                }
-
-                if (health > 0 && health - currentDamage > 0) {
-                    return;
-                }
+                this.lastHitName = username;
             }
 
-            if (!this.targets.contains(otherPlayerMP.username))  {
-                this.targets.add(otherPlayerMP.username);
+            if (!this.targets.contains(username))  {
+                this.targets.add(username);
             }
         }
     }
