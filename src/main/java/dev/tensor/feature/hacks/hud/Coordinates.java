@@ -90,14 +90,14 @@ public final class Coordinates extends Hack implements HUDObject {
                 this.renderCoordinate(coordinatesOverworld, 1, this.overworldColor.getValue());
                 break;
             case Nether:
-                String coordinatesNether = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY / 8)).replace("{Z}", coordinateFormat.format(posZ / 8));
+                String coordinatesNether = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                 coordinatesNether = coordinatesNether.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
 
                 this.renderCoordinate(coordinatesNether, 1, this.netherColor.getValue());
                 break;
             case Both:
                 if (this.getWorld().worldProvider.isHellWorld) {
-                    String coordinatesNether1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY / 8)).replace("{Z}", coordinateFormat.format(posZ / 8));
+                    String coordinatesNether1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                     coordinatesNether1 = coordinatesNether1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
                     this.renderCoordinate(coordinatesNether1, 1, this.netherColor.getValue());
 
@@ -109,7 +109,7 @@ public final class Coordinates extends Hack implements HUDObject {
                     coordinatesOverworld1 = coordinatesOverworld1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
                     this.renderCoordinate(coordinatesOverworld1, 1, this.overworldColor.getValue());
 
-                    String coordinatesNether1 = this.coordinatesString.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY / 8)).replace("{Z}", coordinateFormat.format(posZ / 8));
+                    String coordinatesNether1 = this.coordinatesString.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                     this.renderCoordinate(coordinatesNether1, 12, this.netherColor.getValue());
                     break;
                 }
@@ -126,7 +126,6 @@ public final class Coordinates extends Hack implements HUDObject {
 
         if (this.getWorld().worldProvider.isNether) {
             posX *= 8;
-            posY *= 8;
             posZ *= 8;
         }
 
