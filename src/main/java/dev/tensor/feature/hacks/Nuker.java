@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
@@ -246,6 +247,16 @@ public final class Nuker extends Render3DHack {
                 this.renderForBlock(blockCoords);
             }
         });
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        this.blocksToMine.clear();
+        this.blocksBreakingVanilla.clear();
+        this.queueToRemove.clear();
+        this.renderBlocksToMine.clear();
+        this.prevBlocksMinedVanilla.clear();
     }
 
     @SuppressWarnings("unused")

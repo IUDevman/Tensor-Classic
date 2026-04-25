@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ViewBobEvent;
 import dev.tensor.backend.events.variable.RenderBlockEvent;
 import dev.tensor.misc.event.EventTarget;
@@ -136,6 +137,12 @@ public final class Search extends Render3DHack {
         if (!this.tracers.getValue().equals(TracerMode.None)) {
             event.cancel();
         }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        this.blockCoords.clear();
     }
 
     @Override
