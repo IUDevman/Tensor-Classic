@@ -20,7 +20,7 @@ import java.util.ArrayList;
 @Hack.Info(name = "VisualRange", category = Category.Combat)
 public final class VisualRange extends Hack {
 
-    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", true);
+    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false);
     public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
     public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
     public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
@@ -51,8 +51,6 @@ public final class VisualRange extends Hack {
     @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.loadedEntityNames.clear();
-        this.startUpTicks = 0;
-        this.shouldMessage = false;
     }
 
     @SuppressWarnings("unused")
