@@ -155,6 +155,8 @@ public final class AutoTool extends Hack {
             return true;
         } else if (blockID == Block.brick.blockID) {
             return true;
+        } else if (blockID == Block.mobSpawner.blockID) {
+            return true;
         } else if (blockID == Block.oreRedstone.blockID) {
             return true;
         } else return blockID == Block.oreRedstoneGlowing.blockID;
