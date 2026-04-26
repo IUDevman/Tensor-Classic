@@ -16,7 +16,7 @@ import java.awt.*;
 public final class AutoReconnect extends Hack {
 
     public final IntegerSetting delaySeconds = new IntegerSetting("Delay Seconds", 5, 1, 60);
-    public final IntegerSetting restartSeconds = new IntegerSetting("Restart Seconds", 30, 1, 180);
+    public final IntegerSetting restartSeconds = new IntegerSetting("Restart Seconds", 60, 1, 180);
     public final ColorSettingNoAlpha textColor = new ColorSettingNoAlpha("Text Color", Color.YELLOW);
 
     private String lastName;
