@@ -15,6 +15,7 @@ import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,8 +42,18 @@ public final class Nametags extends Render3DHack {
     public final ColorSetting friendColor = new ColorSetting("Friend Color", Color.CYAN);
     public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150));
 
+    private final ArrayList<EntityPlayer> playersToRender = new ArrayList<>();
+
     @Override
-    public void onRender3D(float renderPartialTicks) {
+    public void onDisable(boolean isNull) {
+        this.playersToRender.clear();
+    }
+
+    @SuppressWarnings("rawtypes")
+    @Override
+    public void onClientTick() {
+        this.playersToRender.clear();
+
         List entities = this.getWorld().loadedEntityList;
 
         for (int i = 0; i < entities.size(); i++) {
@@ -58,9 +69,14 @@ public final class Nametags extends Render3DHack {
             }
 
             if (entity instanceof EntityOtherPlayerMP || entity instanceof FakePlayer) {
-                this.renderNameTagForPlayer((EntityPlayer) entity, renderPartialTicks);
+                this.playersToRender.add((EntityPlayer) entity);
             }
         }
+    }
+
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        this.playersToRender.forEach(entityPlayer -> this.renderNameTagForPlayer(entityPlayer, renderPartialTicks));
     }
 
     @SuppressWarnings("unused")

@@ -14,6 +14,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.*;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -46,15 +47,17 @@ public final class Tracers extends Render3DHack {
     public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
     public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
 
-    @SuppressWarnings("unused")
-    @EventTarget
-    public void onViewBobEvent(ViewBobEvent event) {
-        event.cancel();
+    private final HashMap<Entity, Color> entitiesWithColorToTrace = new HashMap<>();
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.entitiesWithColorToTrace.clear();
     }
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void onRender3D(float renderPartialTicks) {
+    public void onClientTick() {
+        this.entitiesWithColorToTrace.clear();
 
         List entities = this.getWorld().loadedEntityList;
 
@@ -75,12 +78,12 @@ public final class Tracers extends Render3DHack {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.renderTracerForEntity(otherPlayer, this.friendsColor.getValue(), renderPartialTicks);
+                    this.entitiesWithColorToTrace.put(otherPlayer, this.friendsColor.getValue());
                     continue;
                 }
 
                 if (this.players.getValue()) {
-                    this.renderTracerForEntity(otherPlayer, this.playersColor.getValue(), renderPartialTicks);
+                    this.entitiesWithColorToTrace.put(otherPlayer, this.playersColor.getValue());
                     continue;
                 }
 
@@ -90,24 +93,35 @@ public final class Tracers extends Render3DHack {
             String entityName = entity.getClass().getSimpleName();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.animalsColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToTrace.put(entity, this.animalsColor.getValue());
                 continue;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.hostilesColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToTrace.put(entity, this.hostilesColor.getValue());
                 continue;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.renderTracerForEntity(entity, this.itemColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToTrace.put(entity, this.itemColor.getValue());
                 continue;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
-                this.renderTracerForEntity(entity, this.miscColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToTrace.put(entity, this.miscColor.getValue());
             }
         }
+    }
+
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        this.entitiesWithColorToTrace.forEach((entity, color) -> this.renderTracerForEntity(entity, color, renderPartialTicks));
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onViewBobEvent(ViewBobEvent event) {
+        event.cancel();
     }
 
     private void renderTracerForEntity(Entity entity, Color color, float renderPartialTicks) {

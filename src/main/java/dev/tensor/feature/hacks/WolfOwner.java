@@ -14,6 +14,7 @@ import net.minecraft.src.RenderManager;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,8 +35,17 @@ public final class WolfOwner extends Render3DHack {
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.RED);
     public final ColorSettingNoAlpha friendColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
 
+    private final HashMap<EntityWolf, Color> wolvesWithColorToRender = new HashMap<>();
+
     @Override
-    public void onRender3D(float renderPartialTicks) {
+    public void onDisable(boolean isNull) {
+        this.wolvesWithColorToRender.clear();
+    }
+
+    @Override
+    public void onClientTick() {
+        this.wolvesWithColorToRender.clear();
+
         List entities = this.getWorld().loadedEntityList;
 
         for (int i = 0; i < entities.size(); i++) {
@@ -59,13 +69,18 @@ public final class WolfOwner extends Render3DHack {
                 if (owner != null && !owner.isEmpty()) {
                     Color color1 = owner.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValue() : this.getFriendManager().isFriend(owner) ? this.friendColor.getValue() : this.color.getValue();
 
-                    this.renderNameTagForWolf(entityWolf, owner, color1, renderPartialTicks);
+                    this.wolvesWithColorToRender.put(entityWolf, color1);
                 }
             }
         }
     }
 
-    private void renderNameTagForWolf(EntityWolf entity, String owner, Color color, float renderPartialTicks) {
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        this.wolvesWithColorToRender.forEach((entityWolf, color1) -> this.renderNameTagForWolf(entityWolf, color1, renderPartialTicks));
+    }
+
+    private void renderNameTagForWolf(EntityWolf entity, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;
 
         double x = bb.minX + ((bb.maxX - bb.minX) / 2) + this.translateOffset(entity.lastTickPosX, entity.posX, renderPartialTicks);
@@ -88,7 +103,7 @@ public final class WolfOwner extends Render3DHack {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDepthMask(false);
 
-        String owner1 = "Owner: " + owner;
+        String owner1 = "Owner: " + entity.getWolfOwner();
         this.drawString(owner1, -this.getFontRenderer().getStringWidth(owner1) / 2, 0, color.getRGB());
 
         GL11.glDisable(GL11.GL_TEXTURE_2D);

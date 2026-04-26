@@ -9,6 +9,7 @@ import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -43,9 +44,17 @@ public final class EntityESP extends Render3DHack {
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
 
+    private final HashMap<Entity, Color> entitiesWithColorToRender = new HashMap<>();
+
+    @Override
+    public void onDisable(boolean isNull) {
+        this.entitiesWithColorToRender.clear();
+    }
+
     @SuppressWarnings("rawtypes")
     @Override
-    public void onRender3D(float renderPartialTicks) {
+    public void onClientTick() {
+        this.entitiesWithColorToRender.clear();
 
         List entities = this.getWorld().loadedEntityList;
 
@@ -66,12 +75,12 @@ public final class EntityESP extends Render3DHack {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.renderESPForEntity(otherPlayer, this.friendsColor.getValue(), renderPartialTicks);
+                    this.entitiesWithColorToRender.put(otherPlayer, this.friendsColor.getValue());
                     continue;
                 }
 
                 if (this.players.getValue()) {
-                    this.renderESPForEntity(otherPlayer, this.playersColor.getValue(), renderPartialTicks);
+                    this.entitiesWithColorToRender.put(otherPlayer, this.playersColor.getValue());
                     continue;
                 }
 
@@ -81,24 +90,29 @@ public final class EntityESP extends Render3DHack {
             String entityName = entity.getClass().getSimpleName();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.animalsColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToRender.put(entity, this.animalsColor.getValue());
                 continue;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.hostilesColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToRender.put(entity, this.hostilesColor.getValue());
                 continue;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.renderESPForEntity(entity, this.itemColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToRender.put(entity, this.itemColor.getValue());
                 continue;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
-                this.renderESPForEntity(entity, this.miscColor.getValue(), renderPartialTicks);
+                this.entitiesWithColorToRender.put(entity, this.miscColor.getValue());
             }
         }
+    }
+
+    @Override
+    public void onRender3D(float renderPartialTicks) {
+        this.entitiesWithColorToRender.forEach((entity, color) -> this.renderESPForEntity(entity, color, renderPartialTicks));
     }
 
     private void renderESPForEntity(Entity entity, Color color, float renderPartialTicks) {

@@ -30,6 +30,7 @@ public final class Platform extends Render3DHack {
     public int getRenderOrder() {
         return RenderOrder.SCAFFOLD_PLATFORM;
     }
+
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Instant);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 1, 20);
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.All);

@@ -116,7 +116,7 @@ public final class AutoGG extends Hack {
 
             this.lastHitName = username;
 
-            if (!this.targets.contains(username))  {
+            if (!this.targets.contains(username)) {
                 this.targets.add(username);
             }
         }
