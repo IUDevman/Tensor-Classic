@@ -111,6 +111,10 @@ public final class AutoTool extends Hack {
         ItemStack currentItem = this.getInventory().getStackInSlot(swapSlot);
 
         if (currentItem != null) {
+            if (currentItem.getItem() == Item.flintAndSteel && blockId == Block.tnt.blockID) {
+                return;
+            }
+
             currentStrength = currentItem.getStrVsBlock(block);
         }
 
@@ -130,10 +134,6 @@ public final class AutoTool extends Hack {
                 ItemTool tool = (ItemTool) itemStack.getItem();
 
                 strength = 10 + ((ItemToolAccessor) tool).tensor_getToolMaterial().getHarvestLevel();
-            }
-
-            if (currentItem != null && currentItem.getItem() == Item.flintAndSteel && blockId == Block.tnt.blockID) {
-                strength = -10;
             }
 
             if (strength > currentStrength) {
