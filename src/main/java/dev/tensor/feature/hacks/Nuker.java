@@ -18,6 +18,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -56,10 +57,12 @@ public final class Nuker extends Render3DHack {
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
 
     private final ArrayList<BlockCoords> blocksToMine = new ArrayList<>();
-    private final ArrayList<BlockCoords> blocksBreakingVanilla = new ArrayList<>();
+    private final HashMap<BlockCoords, Thread> blocksBreakingVanilla = new HashMap<>();
     private final ArrayList<BlockCoords> queueToRemove = new ArrayList<>();
     private final ArrayList<BlockCoords> renderBlocksToMine = new ArrayList<>();
     private final ArrayList<BlockCoords> prevBlocksMinedVanilla = new ArrayList<>();
+
+    private final ArrayList<Thread> activeThreads = new ArrayList<>();
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
@@ -81,6 +84,9 @@ public final class Nuker extends Render3DHack {
         this.renderBlocksToMine.clear();
         this.prevBlocksMinedVanilla.clear();
 
+        this.activeThreads.forEach(Thread::interrupt);
+        this.activeThreads.clear();
+
         if (this.resetTarget.getValue()) {
             this.customToggleID = 0;
         }
@@ -90,7 +96,18 @@ public final class Nuker extends Render3DHack {
     public void onClientTick() {
         this.blocksToMine.clear();
 
-        this.queueToRemove.forEach(this.blocksBreakingVanilla::remove);
+        this.queueToRemove.forEach(blockCoords -> {
+
+            Thread toInterrupt = this.blocksBreakingVanilla.get(blockCoords);
+
+            if (toInterrupt != null) {
+                toInterrupt.interrupt();
+                this.activeThreads.remove(toInterrupt);
+            }
+
+            this.blocksBreakingVanilla.remove(blockCoords);
+        });
+
         this.queueToRemove.clear();
 
         if (this.delayTicks >= this.delay.getValue()) {
@@ -244,7 +261,7 @@ public final class Nuker extends Render3DHack {
 
         this.renderBlocksToMine.forEach(this::renderForBlock);
 
-        this.blocksBreakingVanilla.forEach(blockCoords -> {
+        this.blocksBreakingVanilla.keySet().forEach(blockCoords -> {
 
             if (!this.renderBlocksToMine.contains(blockCoords)) {
                 this.renderForBlock(blockCoords);
@@ -260,6 +277,9 @@ public final class Nuker extends Render3DHack {
         this.queueToRemove.clear();
         this.renderBlocksToMine.clear();
         this.prevBlocksMinedVanilla.clear();
+
+        this.activeThreads.forEach(Thread::interrupt);
+        this.activeThreads.clear();
     }
 
     @SuppressWarnings("unused")
@@ -314,7 +334,7 @@ public final class Nuker extends Render3DHack {
 
     private void breakBlock(BlockCoords blockCoords) {
         if (this.INSTANT_BLOCKS.containsBlock(blockCoords.block)) {
-            this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+            this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
             return;
         }
 
@@ -323,8 +343,6 @@ public final class Nuker extends Render3DHack {
                 Thread vanilla = new Thread(() -> {
                     int prevItem = this.getInventory().currentItem;
                     int newItem = this.swapFor(blockCoords.block, prevItem);
-
-                    this.blocksBreakingVanilla.add(blockCoords);
 
                     float blockStrength = blockCoords.block.blockStrength(this.getPlayer());
 
@@ -375,6 +393,8 @@ public final class Nuker extends Render3DHack {
                 });
 
                 vanilla.start();
+                this.blocksBreakingVanilla.put(blockCoords, vanilla);
+                this.activeThreads.add(vanilla);
 
                 break;
             case Instant:
