@@ -14,4 +14,8 @@ public interface Manager extends Globals {
     void load(Logger LOGGER);
 
     void save(Logger LOGGER);
+
+    default void loadPost(Logger LOGGER) {
+
+    }
 }

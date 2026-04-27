@@ -21,8 +21,8 @@ import java.util.List;
 public final class EntityESP extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.ENTITYESP;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.EntityESP;
     }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
@@ -66,7 +66,7 @@ public final class EntityESP extends Render3DHack {
                 continue;
             }
 
-            if (entity.isDead) {
+            if (!entity.isEntityAlive()) {
                 continue;
             }
 

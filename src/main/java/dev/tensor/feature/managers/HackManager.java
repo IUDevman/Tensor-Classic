@@ -39,8 +39,9 @@ public final class HackManager implements Manager {
     private final HashMap<Class<? extends Hack>, Hack> HACK_CALL = new HashMap<>();
     private final HashMap<String, Hack> HACK_CALL_STRING = new HashMap<>();
 
-    private final ArrayList<Render3DHack> RENDER_3D_HACKS = new ArrayList<>();
-    private final ArrayList<Hack> RENDER_HUD_HACKS = new ArrayList<>();
+    private final ArrayList<Hack> ENABLED_HACKS = new ArrayList<>();
+    private final ArrayList<Render3DHack> ENABLED_RENDER_3D_HACKS = new ArrayList<>();
+    private final ArrayList<Hack> ENABLED_RENDER_HUD_HACKS = new ArrayList<>();
 
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
 
@@ -127,11 +128,15 @@ public final class HackManager implements Manager {
         this.addHack(new Xray());
 
         this.postSortHacks();
-
-        this.loadHacks(LOGGER);
     }
 
-    private void loadHacks(Logger LOGGER) {
+    @Override
+    public void loadPost(Logger LOGGER) {
+        this.postLoadHacks(LOGGER);
+    }
+
+    //Do not run this until after the entire client is loaded
+    public void postLoadHacks(Logger LOGGER) {
         try {
             if (!Files.exists(Paths.get(this.hackPath))) {
                 Files.createDirectories(Paths.get(this.hackPath));
@@ -170,22 +175,53 @@ public final class HackManager implements Manager {
     private void postSortHacks() {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
 
-        this.RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder()).reversed());
+        this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder().getValue()).reversed());
 
-        this.RENDER_HUD_HACKS.sort(Comparator.comparing(hack -> ((HUDObject) hack).getRenderOrder()).reversed());
+        this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack -> ((HUDObject) hack).getRenderOrder().getValue()).reversed());
+    }
+
+    public void onHackToggled(Hack hack, boolean enabled) {
+        if (enabled) {
+            if (!this.ENABLED_HACKS.contains(hack)) {
+                this.ENABLED_HACKS.add(hack);
+            }
+
+            if (hack instanceof Render3DHack && !this.ENABLED_RENDER_3D_HACKS.contains((Render3DHack) hack)) {
+                this.ENABLED_RENDER_3D_HACKS.add((Render3DHack) hack);
+                this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack1 -> ((Render3DHack) hack1).getRenderOrder().getValue()).reversed());
+            }
+
+            if (hack instanceof HUDObject && !this.ENABLED_RENDER_HUD_HACKS.contains(hack)) {
+                this.ENABLED_RENDER_HUD_HACKS.add(hack);
+                this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack1 -> ((HUDObject) hack1).getRenderOrder().getValue()).reversed());
+            }
+
+            return;
+        }
+
+        this.ENABLED_HACKS.remove(hack);
+
+        if (hack instanceof Render3DHack) {
+            this.ENABLED_RENDER_3D_HACKS.remove(hack);
+        }
+
+        if (hack instanceof HUDObject) {
+            this.ENABLED_RENDER_HUD_HACKS.remove(hack);
+        }
     }
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
+        this.ENABLED_HACKS.add(HACK);
         this.HACK_CALL.put(HACK.getClass(), HACK);
         this.HACK_CALL_STRING.put(HACK.NAME.toLowerCase(), HACK);
 
         if (HACK instanceof Render3DHack) {
-            this.RENDER_3D_HACKS.add((Render3DHack) HACK);
+            this.ENABLED_RENDER_3D_HACKS.add((Render3DHack) HACK);
         }
 
         if (HACK instanceof HUDObject) {
-            this.RENDER_HUD_HACKS.add(HACK);
+            this.ENABLED_RENDER_HUD_HACKS.add(HACK);
         }
     }
 
@@ -193,28 +229,20 @@ public final class HackManager implements Manager {
         return this.HACKS;
     }
 
-    public ArrayList<Hack> getHudObjects() {
-        return this.RENDER_HUD_HACKS;
-    }
-
-    public ArrayList<Render3DHack> getRender3DObjects() {
-        return this.RENDER_3D_HACKS;
-    }
-
-    public ArrayList<Hack> getEnabledHudObjects() {
-        return this.getHudObjects().stream().filter(Hack::isEnabled).collect(Collectors.toCollection(ArrayList::new));
-    }
-
-    public ArrayList<Render3DHack> getEnabledRender3DObjectHacks() {
-        return this.getRender3DObjects().stream().filter(Hack::isEnabled).collect(Collectors.toCollection(ArrayList::new));
-    }
-
     public ArrayList<Hack> getHacksInCategory(Category CATEGORY) {
         return this.getHacks().stream().filter(hack -> hack.CATEGORY.equals(CATEGORY)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public ArrayList<Hack> getEnabledHacks() {
-        return this.getHacks().stream().filter(Hack::isEnabled).collect(Collectors.toCollection(ArrayList::new));
+        return this.ENABLED_HACKS;
+    }
+
+    public ArrayList<Hack> getEnabledHudObjects() {
+        return this.ENABLED_RENDER_HUD_HACKS;
+    }
+
+    public ArrayList<Render3DHack> getEnabledRender3DObjectHacks() {
+        return this.ENABLED_RENDER_3D_HACKS;
     }
 
     @SuppressWarnings("unchecked")

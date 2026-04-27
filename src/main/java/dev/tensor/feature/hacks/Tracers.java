@@ -26,8 +26,8 @@ import java.util.List;
 public final class Tracers extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.TRACERS;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Tracers;
     }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
@@ -69,7 +69,7 @@ public final class Tracers extends Render3DHack {
                 continue;
             }
 
-            if (entity.isDead) {
+            if (!entity.isEntityAlive()) {
                 continue;
             }
 

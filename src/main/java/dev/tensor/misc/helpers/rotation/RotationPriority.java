@@ -5,10 +5,20 @@ package dev.tensor.misc.helpers.rotation;
  * @since 04-22-2026
  */
 
-public final class RotationPriority {
+public enum RotationPriority {
 
-    public static final int PLATFORM = 1;
-    public static final int SCAFFOLD = 2;
-    public static final int NUKER = 3;
-    public static final int KILLAURA = 4;
+    Platform(1),
+    Scaffold(2),
+    Nuker(3),
+    KillAura(4);
+
+    private final int value;
+
+    RotationPriority(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return this.value;
+    }
 }

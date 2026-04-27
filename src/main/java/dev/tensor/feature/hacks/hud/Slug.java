@@ -30,8 +30,8 @@ import java.util.Optional;
 public final class Slug extends Hack implements HUDObject {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.HUD_IMAGES_ONLY;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Hud_Images_Only;
     }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());

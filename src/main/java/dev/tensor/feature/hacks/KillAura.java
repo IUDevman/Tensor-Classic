@@ -24,8 +24,8 @@ import java.util.List;
 public final class KillAura extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.KILLAURA;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.KillAura;
     }
 
     public final BooleanSetting players = new BooleanSetting("Players", true);
@@ -245,7 +245,7 @@ public final class KillAura extends Render3DHack {
     private void attackEntity(Entity entity) {
 
         if (this.rotate.getValue()) {
-            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(entity), RotationPriority.KILLAURA);
+            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(entity), RotationPriority.KillAura);
         }
 
         if (this.swing.getValue()) {

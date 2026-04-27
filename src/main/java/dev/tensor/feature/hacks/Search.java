@@ -29,8 +29,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class Search extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.SEARCH;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Search;
     }
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Chest) {
@@ -147,13 +147,17 @@ public final class Search extends Render3DHack {
 
     @Override
     public void onClientTick() {
+        ArrayList<BlockCoords> toRemove = new ArrayList<>();
+
         this.blockCoords.forEach(blockCoords1 -> {
             if (this.getWorld().getBlockId(blockCoords1.x, blockCoords1.y, blockCoords1.z) != blockCoords1.block.blockID) {
-                this.blockCoords.remove(blockCoords1);
+                toRemove.add(blockCoords1);
             } else if (this.getPlayer().getDistanceSq(blockCoords1.x, blockCoords1.y, blockCoords1.z) >= 65536) {
-                this.blockCoords.remove(blockCoords1);
+                toRemove.add(blockCoords1);
             }
         });
+
+        this.blockCoords.removeAll(toRemove);
     }
 
     @Override

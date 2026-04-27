@@ -138,6 +138,10 @@ public interface Globals {
     }
 
     default void sendPacketBypass(Packet packet) {
+        if (this.getMinecraft().getSendQueue() == null) {
+            return;
+        }
+
         NetworkManager networkManager = ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager();
 
         if (networkManager == null) {

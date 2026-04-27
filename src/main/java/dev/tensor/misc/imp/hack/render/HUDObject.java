@@ -61,7 +61,7 @@ public interface HUDObject extends Render2D {
         GL11.glPopMatrix();
     }
 
-    default int getRenderOrder() {
-        return RenderOrder.HUD_DEFAULT;
+    default RenderOrder getRenderOrder() {
+        return RenderOrder.HUD_Default;
     }
 }

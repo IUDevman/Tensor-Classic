@@ -28,8 +28,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class Nuker extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.NUKER;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Nuker;
     }
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
@@ -333,7 +333,7 @@ public final class Nuker extends Render3DHack {
                     double timeMS = timeSeconds * 1000;
 
                     if (this.rotate.getValue()) {
-                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
+                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
                     this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
@@ -349,7 +349,7 @@ public final class Nuker extends Render3DHack {
                     }
 
                     if (this.rotate.getValue()) {
-                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
+                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
                     this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
@@ -367,7 +367,7 @@ public final class Nuker extends Render3DHack {
                 break;
             case Instant:
                 if (this.rotate.getValue()) {
-                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.NUKER);
+                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                 }
 
                 this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));

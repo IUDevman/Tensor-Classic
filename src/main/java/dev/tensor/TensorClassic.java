@@ -73,6 +73,8 @@ public final class TensorClassic implements ModInitializer, Globals {
         this.addManager(this.returnLoadedManager(new RotationManager()));
         this.addManager(this.returnLoadedManager(new HackManager()));
         this.addManager(this.returnLoadedManager(new CommandManager()));
+
+        this.MANAGERS.values().forEach(manager -> manager.loadPost(LOGGER));
     }
 
     private <T extends Manager> void addManager(T manager) {

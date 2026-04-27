@@ -27,8 +27,8 @@ import java.util.List;
 public final class Nametags extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.NAMETAGS;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Nametags;
     }
 
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
@@ -64,7 +64,7 @@ public final class Nametags extends Render3DHack {
                 continue;
             }
 
-            if (entity.isDead) {
+            if (!entity.isEntityAlive()) {
                 continue;
             }
 

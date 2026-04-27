@@ -26,8 +26,8 @@ import java.awt.*;
 public final class BlockHighlight extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.BLOCKHIGHLIGHT;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.BlockHighlight;
     }
 
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);

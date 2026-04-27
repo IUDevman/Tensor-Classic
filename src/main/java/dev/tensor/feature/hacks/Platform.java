@@ -27,8 +27,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class Platform extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.SCAFFOLD_PLATFORM;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Scaffold_or_Platform;
     }
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Instant);
@@ -223,7 +223,7 @@ public final class Platform extends Render3DHack {
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
-                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.PLATFORM);
+                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.Platform);
                 }
 
                 if (this.swing.getValue()) {

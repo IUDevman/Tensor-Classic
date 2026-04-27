@@ -3,6 +3,7 @@ package dev.tensor.feature.managers;
 import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.rotation.Rotation;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Packet12PlayerLook;
 import org.slf4j.Logger;
@@ -46,15 +47,15 @@ public final class RotationManager implements Manager {
         this.rotationMode = mode;
     }
 
-    public void addToRotationQueue(Rotation rotation, int priority) {
+    public void addToRotationQueue(Rotation rotation, RotationPriority priority) {
         switch (this.rotationMode) {
             case None:
                 break;
             case Intercept:
-                this.rotationQueue.put(priority, rotation);
+                this.rotationQueue.put(priority.getValue(), rotation);
                 break;
             case Packet:
-                this.sendPacket(new Packet12PlayerLook(rotation.yaw, rotation.pitch, true));
+                this.sendPacketBypass(new Packet12PlayerLook(rotation.yaw, rotation.pitch, true));
                 break;
         }
     }
@@ -72,7 +73,7 @@ public final class RotationManager implements Manager {
 
         if (maxPriorityRotation != null) {
             if (event.isCancelled()) {
-                this.sendPacket(new Packet12PlayerLook(maxPriorityRotation.yaw, maxPriorityRotation.pitch, true));
+                this.sendPacketBypass(new Packet12PlayerLook(maxPriorityRotation.yaw, maxPriorityRotation.pitch, true));
 
             } else {
                 event.packet.pitch = maxPriorityRotation.pitch;

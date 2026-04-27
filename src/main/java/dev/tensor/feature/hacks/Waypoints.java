@@ -21,8 +21,8 @@ import java.util.ArrayList;
 public final class Waypoints extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.WAYPOINTS;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Waypoints;
     }
 
     public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "");

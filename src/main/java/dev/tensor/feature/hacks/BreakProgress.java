@@ -27,8 +27,8 @@ import java.awt.*;
 public final class BreakProgress extends Render3DHack {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.BREAKPROGRESS;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.BreakProgress;
     }
 
     public final EnumSetting render = new EnumSetting("Render", Render.Fill);

@@ -23,8 +23,8 @@ import java.util.Optional;
 public final class HackList extends Hack implements HUDObject {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.HUD_TEXT;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.HUD_Text;
     }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());

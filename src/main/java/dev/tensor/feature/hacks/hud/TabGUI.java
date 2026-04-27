@@ -26,8 +26,8 @@ import java.util.ArrayList;
 public final class TabGUI extends Hack implements HUDObject {
 
     @Override
-    public int getRenderOrder() {
-        return RenderOrder.HUD_SHADING_AND_IMAGES;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.HUD_Shading_and_Images;
     }
 
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());

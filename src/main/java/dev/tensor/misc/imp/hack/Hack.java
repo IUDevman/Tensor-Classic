@@ -111,7 +111,7 @@ public abstract class Hack implements Globals {
         this.ENABLED = true;
 
         this.getEventManager().register(this);
-
+        this.getHackManager().onHackToggled(this, true);
         this.onEnable(this.failsNullCheck());
         this.sendToggleMessage(true);
     }
@@ -120,7 +120,7 @@ public abstract class Hack implements Globals {
         this.ENABLED = false;
 
         this.getEventManager().unregister(this);
-
+        this.getHackManager().onHackToggled(this, false);
         this.onDisable(this.failsNullCheck());
         this.sendToggleMessage(false);
     }

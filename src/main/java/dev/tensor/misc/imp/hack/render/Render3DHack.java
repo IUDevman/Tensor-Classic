@@ -10,8 +10,8 @@ import dev.tensor.misc.imp.render.Render3D;
 
 public abstract class Render3DHack extends Hack implements Render3D {
 
-    public int getRenderOrder() {
-        return RenderOrder.DEFAULT;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Default;
     }
 
     public void onRender3D(float renderPartialTicks) {
