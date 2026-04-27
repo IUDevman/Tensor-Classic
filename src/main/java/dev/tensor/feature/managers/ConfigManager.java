@@ -52,11 +52,13 @@ public final class ConfigManager implements Manager {
         return this.configPath;
     }
 
+    @SuppressWarnings("deprecation")
     public JsonObject getJsonObjectFromPath(Path path) throws Exception {
         InputStream inputStream = Files.newInputStream(path);
         return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonObject();
     }
 
+    @SuppressWarnings("deprecation")
     public JsonArray getJsonArrayFromPath(Path path) throws Exception {
         InputStream inputStream = Files.newInputStream(path);
         return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonArray();

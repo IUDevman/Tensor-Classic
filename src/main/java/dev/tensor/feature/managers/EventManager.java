@@ -42,7 +42,7 @@ public final class EventManager implements Manager {
 
     public void register(Object object) {
         for (final Method method : object.getClass().getDeclaredMethods()) {
-            if (isMethodBad(method)) {
+            if (this.isMethodBad(method)) {
                 continue;
             }
 

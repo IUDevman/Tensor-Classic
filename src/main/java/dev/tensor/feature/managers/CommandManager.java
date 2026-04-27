@@ -110,7 +110,6 @@ public final class CommandManager implements Manager {
     }
 
     private boolean runCommand(String PREFIX, String ARGS) {
-
         if (ARGS == null) {
             return false;
         }
