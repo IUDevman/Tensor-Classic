@@ -140,7 +140,7 @@ public final class AutoTool extends Hack {
                 strength = itemStack.getStrVsBlock(block);
             }
 
-            if (itemStack.getItem() instanceof ItemPickaxe && this.isBlockOnBullshitList(blockId)) {
+            if (itemStack.getItem() instanceof ItemPickaxe && this.isBlockOnBullshitListForSwap(blockId)) {
                 ItemTool tool = (ItemTool) itemStack.getItem();
 
                 strength = 10 + ((ItemToolAccessor) tool).tensor_getToolMaterial().getHarvestLevel();
@@ -158,18 +158,6 @@ public final class AutoTool extends Hack {
             this.prevItem = oldSlot;
             this.getInventory().currentItem = swapSlot;
         }
-    }
-
-    private boolean isBlockOnBullshitList(int blockID) {
-        if (blockID == Block.obsidian.blockID) {
-            return true;
-        } else if (blockID == Block.brick.blockID) {
-            return true;
-        } else if (blockID == Block.mobSpawner.blockID) {
-            return true;
-        } else if (blockID == Block.oreRedstone.blockID) {
-            return true;
-        } else return blockID == Block.oreRedstoneGlowing.blockID;
     }
 
     public void resetPrevSlot() {

@@ -327,4 +327,16 @@ public interface Globals {
                 {startX - 1, startY, startZ, 5}
         };
     }
+
+    default boolean isBlockOnBullshitListForSwap(int blockID) {
+        if (blockID == Block.obsidian.blockID) {
+            return true;
+        } else if (blockID == Block.brick.blockID) {
+            return true;
+        } else if (blockID == Block.mobSpawner.blockID) {
+            return true;
+        } else if (blockID == Block.oreRedstone.blockID) {
+            return true;
+        } else return blockID == Block.oreRedstoneGlowing.blockID;
+    }
 }

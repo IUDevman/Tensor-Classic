@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -46,6 +47,8 @@ public final class Nuker extends Render3DHack {
     public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
+    public final BooleanSetting swap = new BooleanSetting("Swap", true);
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
@@ -318,6 +321,8 @@ public final class Nuker extends Render3DHack {
         switch ((Mode) this.mode.getValue()) {
             case Vanilla:
                 Thread vanilla = new Thread(() -> {
+                    int prevItem = this.getInventory().currentItem;
+                    int newItem = this.swapFor(blockCoords.block, prevItem);
 
                     this.blocksBreakingVanilla.add(blockCoords);
 
@@ -336,11 +341,13 @@ public final class Nuker extends Render3DHack {
                         this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
-                    this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                    this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                     if (this.swing.getValue()) {
                         this.getPlayer().swingItem();
                     }
+
+                    this.swapBack(prevItem, newItem);
 
                     try {
                         Thread.sleep((long) timeMS);
@@ -352,11 +359,16 @@ public final class Nuker extends Render3DHack {
                         this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
-                    this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                    int prevItem1 = this.getInventory().currentItem;
+                    int newItem1 = this.swapFor(blockCoords.block, prevItem);
+
+                    this.sendPacketBypass(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                     if (this.swing.getValue()) {
                         this.getPlayer().swingItem();
                     }
+
+                    this.swapBack(prevItem1, newItem1);
 
                     this.prevBlocksMinedVanilla.add(blockCoords);
                     this.queueToRemove.add(blockCoords);
@@ -370,14 +382,95 @@ public final class Nuker extends Render3DHack {
                     this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                 }
 
-                this.sendPacket(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-                this.sendPacket(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                int prevItem = this.getInventory().currentItem;
+                int newItem = this.swapFor(blockCoords.block, prevItem);
+
+                this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                this.sendPacketBypass(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                 if (this.swing.getValue()) {
                     this.getPlayer().swingItem();
                 }
 
+                this.swapBack(prevItem, newItem);
+
                 break;
+        }
+    }
+
+    private int swapFor(Block block, int currentItemSlot) {
+        if (!this.swap.getValue()) {
+            return -1;
+        }
+
+        if (block == Block.bedrock) {
+            return -1;
+        }
+
+        if (this.INSTANT_BLOCKS.containsBlock(block)) {
+            return -1;
+        }
+
+        int swapSlot = currentItemSlot;
+        float currentStrength = 0;
+
+        ItemStack currentItem = this.getInventory().getStackInSlot(swapSlot);
+
+        if (currentItem != null) {
+            if (currentItem.getItem() instanceof ItemTool) {
+                currentStrength = currentItem.getItem().getStrVsBlock(currentItem, block);
+            } else {
+                currentStrength = currentItem.getStrVsBlock(block);
+            }
+        }
+
+        for (int i = 0; i < 9; i++) {
+
+            ItemStack itemStack = this.getInventory().getStackInSlot(i);
+
+            if (itemStack == null) {
+                continue;
+            }
+
+            float strength;
+
+            if (itemStack.getItem() instanceof ItemTool) {
+                strength = itemStack.getItem().getStrVsBlock(itemStack, block);
+            } else {
+                strength = itemStack.getStrVsBlock(block);
+            }
+
+            if (itemStack.getItem() instanceof ItemPickaxe && this.isBlockOnBullshitListForSwap(block.blockID)) {
+                ItemTool tool = (ItemTool) itemStack.getItem();
+
+                strength = 10 + ((ItemToolAccessor) tool).tensor_getToolMaterial().getHarvestLevel();
+            }
+
+            if (strength > currentStrength) {
+                currentStrength = strength;
+                swapSlot = i;
+            }
+        }
+
+        if (swapSlot != currentItemSlot) {
+            this.getInventory().currentItem = swapSlot;
+            return swapSlot;
+        } else {
+            return -1;
+        }
+    }
+
+    private void swapBack(int oldSlot, int newSlot) {
+        if (!this.swapBack.getValue()) {
+            return;
+        }
+
+        if (newSlot == -1) {
+            return;
+        }
+
+        if (oldSlot != newSlot) {
+            this.getInventory().currentItem = oldSlot;
         }
     }
 
