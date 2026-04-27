@@ -115,7 +115,11 @@ public final class AutoTool extends Hack {
                 return;
             }
 
-            currentStrength = currentItem.getStrVsBlock(block);
+            if (currentItem.getItem() instanceof ItemTool) {
+                currentStrength = currentItem.getItem().getStrVsBlock(currentItem, block);
+            } else {
+                currentStrength = currentItem.getStrVsBlock(block);
+            }
         }
 
         int oldSlot = swapSlot;
@@ -128,7 +132,13 @@ public final class AutoTool extends Hack {
                 continue;
             }
 
-            float strength = itemStack.getStrVsBlock(block);
+            float strength;
+
+            if (itemStack.getItem() instanceof ItemTool) {
+                strength = itemStack.getItem().getStrVsBlock(itemStack, block);
+            } else {
+                strength = itemStack.getStrVsBlock(block);
+            }
 
             if (itemStack.getItem() instanceof ItemPickaxe && this.isBlockOnBullshitList(blockId)) {
                 ItemTool tool = (ItemTool) itemStack.getItem();
