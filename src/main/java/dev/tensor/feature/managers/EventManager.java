@@ -112,7 +112,7 @@ public final class EventManager implements Manager {
         try {
             data.getTarget().invoke(data.getSource(), argument);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored) {
-
+            this.getTensorLogger().info(this.getName() + ": Failed to invoke event '" + argument.getClass().getSimpleName() + "'!");
         }
     }
 
