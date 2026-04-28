@@ -85,7 +85,7 @@ public final class BreadCrumbs extends Render3DHack {
 
                 ArrayList<double[]> toRemove = new ArrayList<>();
 
-                for (int i = 0; i < toRemoveInt.get(); i++) {
+                for (int i = 0; i <= toRemoveInt.get(); i++) {
                     toRemove.add(this.loggedPositions.get(i));
                 }
 
