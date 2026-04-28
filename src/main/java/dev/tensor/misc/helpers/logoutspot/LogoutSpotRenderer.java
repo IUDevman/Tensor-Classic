@@ -38,20 +38,19 @@ public final class LogoutSpotRenderer implements Render3D {
             int z = this.instance.coords.z;
 
             double minX = x - (this.width / 2);
-            double minY = y - (this.height / 2);
             double minZ = z - (this.width / 2);
 
             double maxX = x + (this.width / 2);
-            double maxY = y + (this.height / 2);
+            double maxY = y + this.height;
             double maxZ = z + (this.width / 2);
 
-            this.renderPos = AxisAlignedBB.getBoundingBox(minX, minY, minZ, maxX, maxY, maxZ);
+            this.renderPos = AxisAlignedBB.getBoundingBox(minX, y, minZ, maxX, maxY, maxZ);
         }
 
         return this.renderPos;
     }
 
-    public void render(boolean box, boolean title, boolean coords, boolean distance, boolean background, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha) {
+    public void render(boolean box, boolean title, boolean coords, boolean distance, boolean time, boolean background, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha) {
         if (box) {
             AxisAlignedBB bb = this.getRenderPos();
 
@@ -82,7 +81,7 @@ public final class LogoutSpotRenderer implements Render3D {
         }
 
         double tagMaxX = this.instance.coords.x;
-        double tagMaxY = this.instance.coords.y + (this.height / 2) + 0.6;
+        double tagMaxY = this.instance.coords.y + this.height + 0.5;
         double tagMaxZ = this.instance.coords.z;
 
         double distanceSq = this.getPlayer().getDistanceSq(tagMaxX, tagMaxY, tagMaxZ);
@@ -104,7 +103,19 @@ public final class LogoutSpotRenderer implements Render3D {
         String username = this.instance.username;
         boolean isFriend = this.getFriendManager().isFriend(username);
 
-        String toRender = (title ? "LogoutSpot: " : "") + (isFriend ? "(F) " : "") + username + (coords ? " (" + this.instance.coords.x + ", " + this.instance.coords.y + ", " + this.instance.coords.z + ")" : "") + (distance ? " (" + this.instance.getDistance() + ")" : "");
+        int timeMS = Math.toIntExact(this.instance.getDiffTimeMS());
+
+        boolean longerThan1Sec = false;
+        double timeS = 0;
+
+        if (timeMS >= 1000) {
+            longerThan1Sec = true;
+            timeS = (double) timeMS / 1000;
+        }
+
+        String timeString = time ? " (" + (longerThan1Sec ? (timeS >= 100 ? "100+" : String.format("%.1f", timeS)) + "s" : timeMS + "ms") + ")" : "";
+
+        String toRender = (title ? "LogoutSpot: " : "") + (isFriend ? "(F) " : "") + username + (coords ? " (" + this.instance.coords.x + ", " + this.instance.coords.y + ", " + this.instance.coords.z + ")" : "") + (distance ? " (" + this.instance.getDistance() + ")" : "") + timeString;
         int toRenderWidth = this.getFontRenderer().getStringWidth(toRender);
 
         if (background) {

@@ -31,7 +31,8 @@ public final class LogoutSpots extends Render3DHack {
 
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coords", true);
-    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true);
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);
+    public final BooleanSetting showTime = new BooleanSetting("Time", false);
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
@@ -60,7 +61,7 @@ public final class LogoutSpots extends Render3DHack {
 
             this.playersLoggedQueue.forEach(logoutSpot -> {
 
-                if (this.isLoggedName(logoutSpot.username) && !this.playersLogged.contains(logoutSpot)) {
+                if (this.isLoggedName(logoutSpot.username) && !this.isLoggedPlayer(logoutSpot.username)) {
                     this.playersLogged.add(logoutSpot);
                     toRemove.add(logoutSpot.username);
                 }
@@ -118,6 +119,10 @@ public final class LogoutSpots extends Render3DHack {
                 this.removeLoggedPlayer(username);
             }
 
+            if (this.isQueuedPlayer(username)) {
+                this.removeQueuedPlayer(username);
+            }
+
             return;
         }
 
@@ -126,7 +131,7 @@ public final class LogoutSpots extends Render3DHack {
                 return;
             }
 
-            if (!this.isLoggedPlayer(username)) {
+            if (!this.isQueuedPlayer(username)) {
                 BlockPos coords = new BlockPos((int) otherPlayerMP.posX, (int) otherPlayerMP.posY, (int) otherPlayerMP.posZ);
                 LogoutSpot logoutSpot = new LogoutSpot(username, coords, System.currentTimeMillis());
 
@@ -155,6 +160,10 @@ public final class LogoutSpots extends Render3DHack {
 
             if (this.isLoggedPlayer(username)) {
                 this.removeLoggedPlayer(username);
+            }
+
+            if (this.isQueuedPlayer(username)) {
+                this.removeQueuedPlayer(username);
             }
 
             this.loggedNames.remove(username);
@@ -189,8 +198,25 @@ public final class LogoutSpots extends Render3DHack {
         return this.loggedNames.stream().filter(name -> name.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
     }
 
+    private boolean isQueuedPlayer(String username) {
+        return this.playersLoggedQueue.stream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+    }
+
     private boolean isLoggedPlayer(String username) {
         return this.playersLogged.stream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+    }
+
+    private void removeQueuedPlayer(String username) {
+        ArrayList<LogoutSpot> toRemove = new ArrayList<>();
+
+        this.playersLoggedQueue.forEach(logoutSpot -> {
+
+            if (logoutSpot.username.equalsIgnoreCase(username)) {
+                toRemove.add(logoutSpot);
+            }
+        });
+
+        this.playersLoggedQueue.removeAll(toRemove);
     }
 
     private void removeLoggedPlayer(String username) {
@@ -229,6 +255,7 @@ public final class LogoutSpots extends Render3DHack {
                 this.title.getValue(),
                 this.showCoords.getValue(),
                 this.showDistance.getValue(),
+                this.showTime.getValue(),
                 this.tagBackground.getValue(),
                 this.tagScale.getValue(),
                 this.tagDistanceMultiplier.getValue(),

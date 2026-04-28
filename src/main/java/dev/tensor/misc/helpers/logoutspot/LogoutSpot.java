@@ -17,6 +17,8 @@ public final class LogoutSpot implements Globals {
 
     private final LogoutSpotRenderer render;
 
+    private long diffTime = 0;
+
     public LogoutSpot(String username, BlockPos coords, long timeLogged) {
         this.username = username;
         this.coords = coords;
@@ -46,6 +48,13 @@ public final class LogoutSpot implements Globals {
     }
 
     public long getDiffTimeMS() {
-        return System.currentTimeMillis() - timeLogged;
+
+        if (this.diffTime >= 100000) {
+            return this.diffTime;
+        }
+
+        this.diffTime = System.currentTimeMillis() - this.timeLogged;
+
+        return this.diffTime;
     }
 }
