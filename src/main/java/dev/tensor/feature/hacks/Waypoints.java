@@ -31,8 +31,8 @@ public final class Waypoints extends Render3DHack {
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
-    public final ColorSettingNoAlpha tagTextColor = new ColorSettingNoAlpha("Tag Text Color", WaypointRender.defaultTagTextColor);
-    public final ColorSetting tagBackgroundColor = new ColorSetting("Tag Background Color", WaypointRender.defaultBackgroundColor);
+    public final ColorSettingNoAlpha tagTextColor = new ColorSettingNoAlpha("Text Color", WaypointRender.defaultTagTextColor);
+    public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", WaypointRender.defaultBackgroundColor);
     public final EnumSetting renderMode = new EnumSetting("Render Mode", Mode.Monolith);
     public final BooleanSetting onlyCloseMonoliths = new BooleanSetting("Only Close Monoliths", false);
     public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);
