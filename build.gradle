@@ -3,7 +3,8 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
-sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 archivesBaseName = project.archives_base_name
 version = project.mod_version
@@ -26,7 +27,7 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings("org.wksh:mcp:b1.7.3-release")
+    mappings "org.wksh:mcp:b1.7.3-release"
     modImplementation "babric:fabric-loader:${project.loader_version}"
 
     implementation "org.slf4j:slf4j-api:1.8.0-beta4"
@@ -45,23 +46,16 @@ processResources {
     }
 }
 
-java {
-    withSourcesJar()
-}
-
 shadowJar {
     configurations = [project.configurations.shadow]
     exclude("META-INF")
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}.txt" }
+    }
 }
 
 remapJar {
     dependsOn(shadowJar)
     mustRunAfter(shadowJar)
     inputFile = file(shadowJar.archivePath)
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
 }
