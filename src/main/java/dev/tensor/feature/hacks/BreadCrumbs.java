@@ -29,7 +29,7 @@ public final class BreadCrumbs extends Render3DHack {
         return RenderOrder.BreadCrumbs;
     }
 
-    public final IntegerSetting maxPos = new IntegerSetting("Max Logged Positions", 1200, 600, 12000);
+    public final IntegerSetting maxPos = new IntegerSetting("Max Positions", 1200, 600, 12000);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final ColorSetting color = new ColorSetting("Color", Color.GREEN);
 
