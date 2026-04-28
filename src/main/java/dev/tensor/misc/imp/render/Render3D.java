@@ -4,6 +4,7 @@ import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @author Hoosiers
@@ -124,6 +125,27 @@ public interface Render3D extends Render2D {
         Tessellator.instance.startDrawing(GL11.GL_LINES);
         Tessellator.instance.addVertex(0, 0, 0);
         Tessellator.instance.addVertex(targetX, targetY, targetZ);
+        Tessellator.instance.draw();
+    }
+
+    default void drawBreadCrumbs(ArrayList<double[]> positions, double renderPosX, double renderPosY, double renderPosZ, int lineWidth, Color color) {
+        if (positions.isEmpty()) {
+            return;
+        }
+
+        GL11.glLineWidth(lineWidth);
+        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+
+        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
+
+        for (double[] position : positions) {
+            if (position == null) {
+                continue;
+            }
+
+            Tessellator.instance.addVertex(position[0] - renderPosX, position[1] - renderPosY, position[2] - renderPosZ);
+        }
+
         Tessellator.instance.draw();
     }
 

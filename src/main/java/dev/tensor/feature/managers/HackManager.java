@@ -62,6 +62,7 @@ public final class HackManager implements Manager {
         this.addHack(new AutoWalk());
         this.addHack(new BackwardsChat());
         this.addHack(new BlockHighlight());
+        this.addHack(new BreadCrumbs());
         this.addHack(new BreakProgress());
         this.addHack(new CameraClip());
         this.addHack(new ChatTimestamp());
@@ -214,17 +215,8 @@ public final class HackManager implements Manager {
 
     public void addHack(Hack HACK) {
         this.HACKS.add(HACK);
-        this.ENABLED_HACKS.add(HACK);
         this.HACK_CALL.put(HACK.getClass(), HACK);
         this.HACK_CALL_STRING.put(HACK.NAME.toLowerCase(), HACK);
-
-        if (HACK instanceof Render3DHack) {
-            this.ENABLED_RENDER_3D_HACKS.add((Render3DHack) HACK);
-        }
-
-        if (HACK instanceof HUDObject) {
-            this.ENABLED_RENDER_HUD_HACKS.add(HACK);
-        }
     }
 
     public ArrayList<Hack> getHacks() {
