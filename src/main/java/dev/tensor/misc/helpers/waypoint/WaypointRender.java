@@ -31,8 +31,7 @@ public final class WaypointRender implements Render3D {
         this.instance = instance;
     }
 
-    public AxisAlignedBB getRenderPos() {
-
+    private AxisAlignedBB getRenderPos() {
         if (this.renderPos == null) {
             int x = this.instance.getX();
             int y = this.instance.getY();
