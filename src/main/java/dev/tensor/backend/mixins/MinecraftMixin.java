@@ -2,18 +2,22 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.BlockClickToPlaceEvent;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ClientTickEvent;
+import dev.tensor.backend.events.variable.BlockClickToPlaceEvent;
 import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.backend.events.variable.MouseEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.*;
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.GuiScreen;
+import net.minecraft.src.MovingObjectPosition;
+import net.minecraft.src.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -105,20 +109,19 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        if (this.objectMouseOver == null) {
-            return;
-        }
-
-        if (!this.objectMouseOver.typeOfHit.equals(EnumMovingObjectType.TILE)) {
-            return;
-        }
-
-        BlockClickToPlaceEvent event = EventCache.getCachedEvent(BlockClickToPlaceEvent.class).call();
+        BlockClickToPlaceEvent event = EventCache.getCachedEvent(BlockClickToPlaceEvent.class).withVariables(1).call();
 
         if (event.isCancelled()) {
-            this.clickMouse(1);
-
-            this.mouseTicksRan = this.ticksRan;
+            for (int i = 0; i < event.count; i++) {
+                this.tensor_runMouseClick();
+            }
         }
+    }
+
+    @Unique
+    private void tensor_runMouseClick() {
+        this.clickMouse(1);
+
+        this.mouseTicksRan = this.ticksRan;
     }
 }
