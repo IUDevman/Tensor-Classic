@@ -3,8 +3,8 @@ package dev.tensor.misc.event.imp.modifiers.cancellable;
 import dev.tensor.misc.event.imp.modifiers.EventConstant;
 
 /**
- * @author DarkMagician6
- * @since 08-27-2013
+ * @author Hoosiers
+ * @since 04-20-2026
  */
 
 public class EventConstantCancellable implements EventConstant, Cancellable {

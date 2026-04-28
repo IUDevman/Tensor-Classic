@@ -4,7 +4,7 @@ import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.Priority;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -134,7 +134,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.HIGHEST)
+    @EventTarget(priority = EventPriority.Highest)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
         event.cancel();
     }
@@ -169,7 +169,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.HIGHEST)
+    @EventTarget(priority = EventPriority.Highest)
     public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
         switch ((Highlight) this.highlight.getValue()) {
             case None:
@@ -186,7 +186,7 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.HIGHEST)
+    @EventTarget(priority = EventPriority.Highest)
     public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
         if (!this.showBreakProgress.getValue()) {
             event.cancel();

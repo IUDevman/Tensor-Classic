@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatSentEvent;
 import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.Priority;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class BackwardsChat extends Hack {
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.HIGH)
+    @EventTarget(priority = EventPriority.High)
     public void onChatSentEvent(ChatSentEvent event) {
         String message = event.ARGS;
 

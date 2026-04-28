@@ -2,7 +2,7 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.Event;
-import dev.tensor.misc.event.imp.Priority;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
 
@@ -75,7 +75,7 @@ public final class EventManager implements Manager {
     private void register(Method method, Object object) {
         Class<? extends Event> indexClass = (Class<? extends Event>) method.getParameterTypes()[0];
 
-        final MethodData data = new MethodData(object, method, method.getAnnotation(EventTarget.class).priority());
+        final MethodData data = new MethodData(object, method, method.getAnnotation(EventTarget.class).priority().getValue());
 
         if (!data.getTarget().isAccessible()) {
             data.getTarget().setAccessible(true);
@@ -119,7 +119,7 @@ public final class EventManager implements Manager {
     private void sortListValue(Class<? extends Event> indexClass) {
         List<MethodData> sortedList = new CopyOnWriteArrayList<>();
 
-        for (final byte priority : Priority.STANDARD_VALUES) {
+        for (final byte priority : EventPriority.STANDARD_VALUES_ARRAY) {
             for (final MethodData data : this.REGISTRY_MAP.get(indexClass)) {
                 if (data.getPriority() == priority) {
                     sortedList.add(data);

@@ -4,7 +4,7 @@ import dev.tensor.backend.events.variable.ChatSentEvent;
 import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.Priority;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.command.Command;
 import org.slf4j.Logger;
@@ -94,7 +94,7 @@ public final class CommandManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = Priority.HIGHEST)
+    @EventTarget(priority = EventPriority.Highest)
     public void onChatSentEvent(ChatSentEvent event) {
         Commands COMMANDS = this.getHackManager().getHack(Commands.class);
 

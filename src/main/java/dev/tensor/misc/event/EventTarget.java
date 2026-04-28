@@ -1,6 +1,6 @@
 package dev.tensor.misc.event;
 
-import dev.tensor.misc.event.imp.Priority;
+import dev.tensor.misc.event.imp.EventPriority;
 
 import java.lang.annotation.*;
 
@@ -14,5 +14,5 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface EventTarget {
 
-    byte priority() default Priority.MEDIUM;
+    EventPriority priority() default EventPriority.Medium;
 }
