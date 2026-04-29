@@ -14,14 +14,21 @@ import net.minecraft.src.*;
 /**
  * @author Hoosiers
  * @since 04-29-2026
+ * <p>
+ * General notes for running this (on NoCheat servers such as 2bet2t):
+ * 1. Slot position 9 is the only position that this exploit works with.
+ * 2. This exploit ONLY works with damage from breaking blocks or attacking entities.
+ * This means that damage like lighting flint and steel can not be bypassed.
+ * 3. Slot position 9 MUST be occupied by a tool with the following:
+ * a. Same type (ex: shovel -> shovel).
+ * b. Greater than or equal harvest level (diamond tool must have diamond tool in slot 9;
+ * wood can have gold, stone, iron, or diamond tool in slot 9).
+ * c. Preferably slot 9 tool has no damage - If your slot 9 tool has 10 damage,
+ * your main hand tool will take 10 damage and then not take anymore.
  */
 
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
 public final class InfiniteDurability extends Hack {
-
-    /// todo:
-    /// Add right click use for "Misc tools" (Hoes, Flint and Steel, Fishing Rod, Shears; all take 1 damage on  click)
-
     public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
@@ -37,6 +44,24 @@ public final class InfiniteDurability extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onPacket7UseEntityEvent(Packet7UseEntityEvent event) {
+        if (event.packet.isLeftClick != 1) {
+            ItemStack currentItem = this.getInventory().getCurrentItem();
+
+            if (currentItem == null) {
+                return;
+            }
+
+            if (currentItem.getItem() instanceof ItemShears) {
+                boolean hasDispatched = this.runSwapProtocol(event.packet, true);
+
+                if (hasDispatched) {
+                    event.cancel();
+                }
+            }
+
+            return;
+        }
+
         boolean hasDispatched = this.runSwapProtocol(event.packet, false);
 
         if (hasDispatched) {
@@ -73,7 +98,7 @@ public final class InfiniteDurability extends Hack {
 
         Item currentItem = currentStack.getItem();
 
-        if (!(currentItem instanceof ItemTool || currentItem instanceof ItemSword || (shears && currentItem instanceof ItemShears))) {
+        if (!(currentItem instanceof ItemTool) && !(currentItem instanceof ItemSword) && !(shears && currentItem instanceof ItemShears)) {
             return false;
         }
 

@@ -418,11 +418,11 @@ public final class Nuker extends Render3DHack {
         }
     }
 
-    private void swapPacket14BlockDigStatus(Packet14BlockDig packet, int blockId) {
+    private void swapPacket14BlockDigStatus(Packet14BlockDig packet, int blockID) {
         InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
 
         if (infiniteDurability != null && infiniteDurability.isEnabled()) {
-            boolean hasDispatched = infiniteDurability.runSwapProtocol(packet, (blockId == Block.web.blockID || blockId == Block.leaves.blockID));
+            boolean hasDispatched = infiniteDurability.runSwapProtocol(packet, (blockID == Block.web.blockID || blockID == Block.leaves.blockID));
 
             if (!hasDispatched) {
                 this.sendPacketBypass(packet);

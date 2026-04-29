@@ -100,10 +100,6 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            if (packet.isLeftClick != 1) {
-                return;
-            }
-
             Packet7UseEntityEvent event = EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call();
 
             if (event.isCancelled()) {
