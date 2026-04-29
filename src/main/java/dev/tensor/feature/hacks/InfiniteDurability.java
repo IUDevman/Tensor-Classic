@@ -36,7 +36,7 @@ public final class InfiniteDurability extends Hack {
     @SuppressWarnings("unused")
     @EventTarget
     public void onPacket7UseEntityEvent(Packet7UseEntityEvent event) {
-        boolean hasDispatched = this.runSwapProtocol(event.packet);
+        boolean hasDispatched = this.runSwapProtocol(event.packet, false);
 
         if (hasDispatched) {
             event.cancel();
@@ -56,14 +56,14 @@ public final class InfiniteDurability extends Hack {
             return;
         }
 
-        boolean hasDispatched = this.runSwapProtocol(event.packet);
+        boolean hasDispatched = this.runSwapProtocol(event.packet, (blockId == Block.web.blockID || blockId == Block.leaves.blockID));
 
         if (hasDispatched) {
             event.cancel();
         }
     }
 
-    public boolean runSwapProtocol(Packet packet) {
+    public boolean runSwapProtocol(Packet packet, boolean shears) {
         ItemStack currentStack = this.getInventory().getCurrentItem();
 
         if (currentStack == null) {
@@ -72,12 +72,12 @@ public final class InfiniteDurability extends Hack {
 
         Item currentItem = currentStack.getItem();
 
-        if (!(currentItem instanceof ItemTool || currentItem instanceof ItemSword || currentItem instanceof ItemShears)) {
+        if (!(currentItem instanceof ItemTool || currentItem instanceof ItemSword || (shears && currentItem instanceof ItemShears))) {
             return false;
         }
 
         int prevItem = this.getInventory().currentItem;
-        int mainInventoryItem = this.checkSlot9(currentItem);
+        int mainInventoryItem = this.checkSlot9(currentItem, shears);
 
         if (mainInventoryItem < 9) {
             if (this.errorMessage.getValue() && System.currentTimeMillis() - this.prevTime > 5000) {
@@ -99,7 +99,7 @@ public final class InfiniteDurability extends Hack {
         return true;
     }
 
-    private int checkSlot9(Item item) {
+    private int checkSlot9(Item item, boolean shears) {
         ItemStack itemStack = this.getInventory().mainInventory[9];
 
         if (itemStack == null) {
@@ -116,7 +116,7 @@ public final class InfiniteDurability extends Hack {
         boolean lookAxe = item instanceof ItemAxe;
         boolean lookShovel = item instanceof ItemSpade;
         boolean lookSword = item instanceof ItemSword;
-        boolean lookShears = item instanceof ItemShears;
+        boolean lookShears = shears && item instanceof ItemShears;
 
         if (lookPick && item1 instanceof ItemPickaxe) {
             return 9;
