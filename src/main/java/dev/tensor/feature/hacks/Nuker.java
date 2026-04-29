@@ -334,7 +334,7 @@ public final class Nuker extends Render3DHack {
 
     private void breakBlock(BlockCoords blockCoords) {
         if (this.INSTANT_BLOCKS.containsBlock(blockCoords.block)) {
-            this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+            this.swapPacket14BlockDigStatus(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
             return;
         }
 
@@ -380,7 +380,7 @@ public final class Nuker extends Render3DHack {
                     int prevItem1 = this.getInventory().currentItem;
                     int newItem1 = this.swapFor(blockCoords.block, prevItem);
 
-                    this.sendPacketBypass(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                    this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                     if (this.swing.getValue()) {
                         this.getPlayer().swingItem();
@@ -406,7 +406,7 @@ public final class Nuker extends Render3DHack {
                 int newItem = this.swapFor(blockCoords.block, prevItem);
 
                 this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-                this.sendPacketBypass(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0));
 
                 if (this.swing.getValue()) {
                     this.getPlayer().swingItem();
@@ -415,6 +415,21 @@ public final class Nuker extends Render3DHack {
                 this.swapBack(prevItem, newItem);
 
                 break;
+        }
+    }
+
+    private void swapPacket14BlockDigStatus(Packet14BlockDig packet) {
+        InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
+
+        if (infiniteDurability != null && infiniteDurability.isEnabled()) {
+            boolean hasDispatched = infiniteDurability.runSwapProtocol(packet);
+
+            if (!hasDispatched) {
+                this.sendPacketBypass(packet);
+            }
+
+        } else {
+            this.sendPacketBypass(packet);
         }
     }
 

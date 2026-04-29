@@ -3,10 +3,7 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.CloseInventoryEvent;
-import dev.tensor.backend.events.variable.BlockBreakEvent;
-import dev.tensor.backend.events.variable.ChatReceivedEvent;
-import dev.tensor.backend.events.variable.ChatSentEvent;
-import dev.tensor.backend.events.variable.Packet10FlyingEvent;
+import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.gui.TensorGuiConnectFailed;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
@@ -60,6 +57,10 @@ public final class NetClientHandlerMixin implements Globals {
             @SuppressWarnings("unused")
             BlockBreakEvent event = EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call();
 
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+
             return;
         }
 
@@ -87,6 +88,26 @@ public final class NetClientHandlerMixin implements Globals {
                 if (event.isCancelled()) {
                     ci.cancel();
                 }
+            }
+
+            return;
+        }
+
+        if (arg instanceof Packet7UseEntity) {
+            Packet7UseEntity packet = (Packet7UseEntity) arg;
+
+            if (packet.playerEntityId != this.getPlayer().entityId) {
+                return;
+            }
+
+            if (packet.isLeftClick != 1) {
+                return;
+            }
+
+            Packet7UseEntityEvent event = EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call();
+
+            if (event.isCancelled()) {
+                ci.cancel();
             }
         }
     }

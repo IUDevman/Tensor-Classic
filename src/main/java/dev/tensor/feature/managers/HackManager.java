@@ -85,6 +85,7 @@ public final class HackManager implements Manager {
         this.addHack(new HackList());
         this.addHack(new HephFreecam());
         this.addHack(new HUDEditor());
+        this.addHack(new InfiniteDurability());
         this.addHack(new Inventory());
         this.addHack(new InventoryMove());
         this.addHack(new Jesus());
