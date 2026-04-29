@@ -138,6 +138,10 @@ public final class BreadCrumbs extends Render3DHack {
     }
 
     private void addCurrentPlayerPosition() {
+        if (this.getPlayer().ticksExisted < 1) {
+            return;
+        }
+
         double[] currentPosition = this.getCurrentPlayerPosition();
 
         if (this.loggedPositions.size() >= this.maxPos.getValue()) {

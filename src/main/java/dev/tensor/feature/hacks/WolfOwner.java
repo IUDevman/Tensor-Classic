@@ -56,6 +56,10 @@ public final class WolfOwner extends Render3DHack {
                 continue;
             }
 
+            if (entity.ticksExisted < 1) {
+                continue;
+            }
+
             if (!entity.isEntityAlive()) {
                 continue;
             }

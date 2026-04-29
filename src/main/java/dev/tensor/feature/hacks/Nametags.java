@@ -64,6 +64,10 @@ public final class Nametags extends Render3DHack {
                 continue;
             }
 
+            if (entity.ticksExisted < 1) {
+                continue;
+            }
+
             if (!entity.isEntityAlive()) {
                 continue;
             }
