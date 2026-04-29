@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.events.variable.Packet7UseEntityEvent;
+import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -81,7 +82,7 @@ public final class InfiniteDurability extends Hack {
 
         if (mainInventoryItem < 9) {
             if (this.errorMessage.getValue() && System.currentTimeMillis() - this.prevTime > 5000) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "InfiniteDurability: Will not work without a tool of the same type in slot 9 (top left inventory slot, you have to manually do this)! Disable this message in settings.");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "InfiniteDurability: Will not work without a tool of the same type (and >= level) in slot 9 (top left inventory slot, you have to manually do this)! Disable this message in settings.");
                 this.prevTime = System.currentTimeMillis();
             }
 
@@ -119,15 +120,43 @@ public final class InfiniteDurability extends Hack {
         boolean lookShears = shears && item instanceof ItemShears;
 
         if (lookPick && item1 instanceof ItemPickaxe) {
+            ItemPickaxe pickaxe9 = (ItemPickaxe) item1;
+            ItemPickaxe packaxeH = (ItemPickaxe) item;
+
+            if (((ItemToolAccessor) pickaxe9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) packaxeH).tensor_getToolMaterial().getHarvestLevel()) {
+                return -1;
+            }
+
             return 9;
 
         } else if (lookAxe && item1 instanceof ItemAxe) {
+            ItemAxe axe9 = (ItemAxe) item1;
+            ItemAxe axeH = (ItemAxe) item;
+
+            if (((ItemToolAccessor) axe9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) axeH).tensor_getToolMaterial().getHarvestLevel()) {
+                return -1;
+            }
+
             return 9;
 
         } else if (lookShovel && item1 instanceof ItemSpade) {
+            ItemSpade spade9 = (ItemSpade) item1;
+            ItemSpade spadeH = (ItemSpade) item;
+
+            if (((ItemToolAccessor) spade9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) spadeH).tensor_getToolMaterial().getHarvestLevel()) {
+                return -1;
+            }
+
             return 9;
 
         } else if (lookSword && item1 instanceof ItemSword) {
+            ItemSword sword9 = (ItemSword) item1;
+            ItemSword swordH = (ItemSword) item;
+
+            if (sword9.getDamageVsEntity(null) < swordH.getDamageVsEntity(null)) {
+                return -1;
+            }
+
             return 9;
 
         } else if (lookShears && item1 instanceof ItemShears) {
