@@ -59,6 +59,8 @@ public final class Scaffold extends Render3DHack {
         double playerY = this.getPlayer().posY;
         double playerZ = this.getPlayer().posZ;
 
+        boolean shouldLevitate = false;
+
         HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
 
         if (freecam != null && freecam.isEnabled()) {
@@ -74,8 +76,8 @@ public final class Scaffold extends Render3DHack {
                 playerZ = freecam.oldZ;
             }
 
-        } else if (this.levitate.getValue() && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
-            this.getPlayer().motionY = 0.30D;
+        } else if (this.levitate.getValue() && this.getMinecraft().currentScreen == null && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindJump.keyCode)) {
+            shouldLevitate = true;
         }
 
         BlockPos coords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
@@ -83,7 +85,7 @@ public final class Scaffold extends Render3DHack {
         int blockID = this.getWorld().getBlockId(coords.x, coords.y, coords.z);
 
         if (blockID == 0) {
-            this.placeBlock(coords);
+            this.placeBlock(coords, shouldLevitate);
             return;
         }
 
@@ -93,7 +95,7 @@ public final class Scaffold extends Render3DHack {
         }
 
         if (blockID == Block.waterMoving.blockID || blockID == Block.waterStill.blockID || blockID == Block.lavaMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.fire.blockID || blockID == Block.snow.blockID) {
-            this.placeBlock(coords);
+            this.placeBlock(coords, shouldLevitate);
         }
 
         this.blockPlacingAt = null;
@@ -141,7 +143,7 @@ public final class Scaffold extends Render3DHack {
         }
     }
 
-    private void placeBlock(BlockPos coords) {
+    private void placeBlock(BlockPos coords, boolean shouldLevitate) {
         int prevItem = this.getInventory().currentItem;
         int swapSlot = this.getSwapSlot();
         boolean swapped = false;
@@ -169,6 +171,10 @@ public final class Scaffold extends Render3DHack {
 
         if (this.ignoreList.containsBlock(block)) {
             return;
+        }
+
+        if (shouldLevitate) {
+            this.getPlayer().motionY = 0.30D;
         }
 
         int[][] directions = this.getPlaceDirections(coords.x, coords.y, coords.z);
