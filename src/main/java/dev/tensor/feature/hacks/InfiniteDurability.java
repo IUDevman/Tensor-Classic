@@ -25,11 +25,15 @@ import net.minecraft.src.*;
  * wood can have gold, stone, iron, or diamond tool in slot 9).
  * c. Preferably slot 9 tool has no damage - If your slot 9 tool has 10 damage,
  * your main hand tool will take 10 damage and then not take anymore.
+ * 4. The Swap Slot 9 setting switches the swap slot to the desired tool if found, but doesn't filter by damage.
+ * Put your least damaged tools closer to slot 9.
  */
 
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
 public final class InfiniteDurability extends Hack {
+
     public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);
+    public final BooleanSetting swapTo9 = new BooleanSetting("Swap Slot 9", true);
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
@@ -107,7 +111,7 @@ public final class InfiniteDurability extends Hack {
 
         if (mainInventoryItem < 9) {
             if (this.errorMessage.getValue() && System.currentTimeMillis() - this.prevTime > 5000) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "InfiniteDurability: Will not work without a tool of the same type (and >= level) in slot 9 (top left inventory slot, you have to manually do this)! Disable this message in settings.");
+                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "InfiniteDurability: Will not work without a tool of the same type (and >= level) in slot 9 (top left inventory slot)! Disable this message in settings.");
                 this.prevTime = System.currentTimeMillis();
             }
 
@@ -126,30 +130,51 @@ public final class InfiniteDurability extends Hack {
     }
 
     private int checkSlot9(Item item, boolean shears) {
-        ItemStack itemStack = this.getInventory().mainInventory[9];
-
-        if (itemStack == null) {
-            return -1;
-        }
-
-        Item item1 = itemStack.getItem();
-
-        if (!item1.isDamagable()) {
-            return -1;
-        }
-
         boolean lookPick = item instanceof ItemPickaxe;
         boolean lookAxe = item instanceof ItemAxe;
         boolean lookShovel = item instanceof ItemSpade;
         boolean lookSword = item instanceof ItemSword;
         boolean lookShears = shears && item instanceof ItemShears;
 
+        ItemStack itemStackOld = this.getInventory().mainInventory[9];
+        Item item1;
+
+        int returnVal = -1;
+
+        if (itemStackOld == null) {
+            if (lookPick) {
+                returnVal = this.searchAndSwapTo9(ItemPickaxe.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookAxe) {
+                returnVal = this.searchAndSwapTo9(ItemAxe.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookShovel) {
+                returnVal = this.searchAndSwapTo9(ItemSpade.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookSword) {
+                returnVal = this.searchAndSwapTo9(ItemSword.class, item.getDamageVsEntity(null));
+
+            } else if (lookShears) {
+                returnVal = this.searchAndSwapTo9(ItemShears.class, -1);
+            }
+
+            if (returnVal == -1) {
+                return -1;
+            }
+        }
+
+        if (returnVal != -1) {
+            return 9;
+        } else {
+            item1 = itemStackOld.getItem();
+        }
+
         if (lookPick && item1 instanceof ItemPickaxe) {
             ItemPickaxe pickaxe9 = (ItemPickaxe) item1;
             ItemPickaxe packaxeH = (ItemPickaxe) item;
 
             if (((ItemToolAccessor) pickaxe9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) packaxeH).tensor_getToolMaterial().getHarvestLevel()) {
-                return -1;
+                return this.searchAndSwapTo9(ItemPickaxe.class, ((ItemToolAccessor) packaxeH).tensor_getToolMaterial().getHarvestLevel());
             }
 
             return 9;
@@ -159,7 +184,7 @@ public final class InfiniteDurability extends Hack {
             ItemAxe axeH = (ItemAxe) item;
 
             if (((ItemToolAccessor) axe9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) axeH).tensor_getToolMaterial().getHarvestLevel()) {
-                return -1;
+                return this.searchAndSwapTo9(ItemAxe.class, ((ItemToolAccessor) axeH).tensor_getToolMaterial().getHarvestLevel());
             }
 
             return 9;
@@ -169,7 +194,7 @@ public final class InfiniteDurability extends Hack {
             ItemSpade spadeH = (ItemSpade) item;
 
             if (((ItemToolAccessor) spade9).tensor_getToolMaterial().getHarvestLevel() < ((ItemToolAccessor) spadeH).tensor_getToolMaterial().getHarvestLevel()) {
-                return -1;
+                return this.searchAndSwapTo9(ItemSpade.class, ((ItemToolAccessor) spadeH).tensor_getToolMaterial().getHarvestLevel());
             }
 
             return 9;
@@ -179,7 +204,7 @@ public final class InfiniteDurability extends Hack {
             ItemSword swordH = (ItemSword) item;
 
             if (sword9.getDamageVsEntity(null) < swordH.getDamageVsEntity(null)) {
-                return -1;
+                return this.searchAndSwapTo9(ItemSword.class, swordH.getDamageVsEntity(null));
             }
 
             return 9;
@@ -188,7 +213,97 @@ public final class InfiniteDurability extends Hack {
             return 9;
 
         } else {
+            if (lookPick) {
+                return this.searchAndSwapTo9(ItemPickaxe.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookAxe) {
+                return this.searchAndSwapTo9(ItemAxe.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookShovel) {
+                return this.searchAndSwapTo9(ItemSpade.class, ((ItemToolAccessor) item).tensor_getToolMaterial().getHarvestLevel());
+
+            } else if (lookSword) {
+                return this.searchAndSwapTo9(ItemSword.class, item.getDamageVsEntity(null));
+
+            } else if (lookShears) {
+                return this.searchAndSwapTo9(ItemShears.class, -1);
+
+            } else {
+                return -1;
+            }
+        }
+    }
+
+    private int searchAndSwapTo9(Class<? extends Item> classToFind, int harvestLevelToReach) {
+        if (!this.swapTo9.getValue()) {
             return -1;
         }
+
+        int startPosition = 9;
+        int newPosition = startPosition;
+
+        ItemStack[] mainInventory = this.getInventory().mainInventory;
+
+        for (int i = startPosition; i < mainInventory.length; i++) {
+
+            ItemStack itemStack = mainInventory[i];
+
+            if (itemStack == null) {
+                continue;
+            }
+
+            Item item = itemStack.getItem();
+
+            if (item == null) {
+                continue;
+            }
+
+            if (item.getClass() == classToFind) {
+
+                if (item instanceof ItemShears) {
+                    newPosition = i;
+                    break;
+
+                } else if (item instanceof ItemSword) {
+                    ItemSword sword = (ItemSword) item;
+
+                    if (sword.getDamageVsEntity(null) >= harvestLevelToReach) {
+                        newPosition = i;
+                        break;
+                    }
+
+                } else if (item instanceof ItemTool) {
+                    ItemTool tool = (ItemTool) item;
+
+                    if (((ItemToolAccessor) tool).tensor_getToolMaterial().getHarvestLevel() >= harvestLevelToReach) {
+                        newPosition = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (newPosition != startPosition) {
+            ItemStack from9 = mainInventory[startPosition];
+            ItemStack toSwap = mainInventory[newPosition];
+
+            Packet102WindowClick click1 = new Packet102WindowClick(0, newPosition, 0, false, toSwap, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(click1);
+            this.getInventory().mainInventory[newPosition] = null;
+
+            Packet102WindowClick click2 = new Packet102WindowClick(0, startPosition, 0, false, from9, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(click2);
+            this.getInventory().mainInventory[startPosition] = toSwap;
+            
+            if (from9 != null) {
+                Packet102WindowClick click3 = new Packet102WindowClick(0, newPosition, 0, false, from9, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+                this.sendPacket(click3);
+                this.getInventory().mainInventory[newPosition] = from9;
+            }
+
+            return startPosition;
+        }
+
+        return -1;
     }
 }
