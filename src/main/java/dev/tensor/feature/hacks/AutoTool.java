@@ -38,8 +38,8 @@ public final class AutoTool extends Hack {
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
-    private boolean swapped = false;
-    private int prevItem = -1;
+    public boolean swapped = false;
+    public int prevItem = -1;
     private int status = 0;
 
     private int ticksSince = 0;
@@ -70,6 +70,12 @@ public final class AutoTool extends Hack {
         this.ticksSince = 0;
 
         if (!this.swapBack.getValue()) {
+            return;
+        }
+
+        InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
+
+        if (infiniteDurability != null && infiniteDurability.isEnabled()) {
             return;
         }
 

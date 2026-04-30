@@ -334,7 +334,16 @@ public final class Nuker extends Render3DHack {
 
     private void breakBlock(BlockCoords blockCoords) {
         if (this.INSTANT_BLOCKS.containsBlock(blockCoords.block)) {
+            if (this.rotate.getValue()) {
+                this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+            }
+
             this.swapPacket14BlockDigStatus(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+
+            if (this.swing.getValue()) {
+                this.getPlayer().swingItem();
+            }
+
             return;
         }
 
@@ -359,7 +368,15 @@ public final class Nuker extends Render3DHack {
                         this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
-                    this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                    boolean shears = false;
+
+                    if (this.checkForShearSwap(prevItem, newItem, blockCoords.block.blockID)) {
+                        this.swapPacket14BlockDigStatus(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+                        shears = true;
+
+                    } else {
+                        this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                    }
 
                     if (this.swing.getValue()) {
                         this.getPlayer().swingItem();
@@ -373,20 +390,22 @@ public final class Nuker extends Render3DHack {
 
                     }
 
-                    if (this.rotate.getValue()) {
-                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                    if (!shears) {
+                        if (this.rotate.getValue()) {
+                            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                        }
+
+                        int prevItem1 = this.getInventory().currentItem;
+                        int newItem1 = this.swapFor(blockCoords.block, prevItem);
+
+                        this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+
+                        if (this.swing.getValue()) {
+                            this.getPlayer().swingItem();
+                        }
+
+                        this.swapBack(prevItem1, newItem1);
                     }
-
-                    int prevItem1 = this.getInventory().currentItem;
-                    int newItem1 = this.swapFor(blockCoords.block, prevItem);
-
-                    this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
-
-                    if (this.swing.getValue()) {
-                        this.getPlayer().swingItem();
-                    }
-
-                    this.swapBack(prevItem1, newItem1);
 
                     this.prevBlocksMinedVanilla.add(blockCoords);
                     this.queueToRemove.add(blockCoords);
@@ -405,8 +424,19 @@ public final class Nuker extends Render3DHack {
                 int prevItem = this.getInventory().currentItem;
                 int newItem = this.swapFor(blockCoords.block, prevItem);
 
-                this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
-                this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+                boolean shears = false;
+
+                if (this.checkForShearSwap(prevItem, newItem, blockCoords.block.blockID)) {
+                    this.swapPacket14BlockDigStatus(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+                    shears = true;
+
+                } else {
+                    this.sendPacketBypass(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0));
+                }
+
+                if (!shears) {
+                    this.swapPacket14BlockDigStatus(new Packet14BlockDig(2, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
+                }
 
                 if (this.swing.getValue()) {
                     this.getPlayer().swingItem();
@@ -431,6 +461,26 @@ public final class Nuker extends Render3DHack {
         } else {
             this.sendPacketBypass(packet);
         }
+    }
+
+    private boolean checkForShearSwap(int prevItem, int newItem, int blockID) {
+        if (blockID != Block.web.blockID && blockID != Block.leaves.blockID) {
+            return false;
+        }
+
+        if (newItem != -1) {
+            ItemStack itemStack = this.getInventory().getStackInSlot(newItem);
+
+            if (itemStack != null && itemStack.getItem() instanceof ItemShears) {
+                return true;
+            }
+
+            return false;
+        }
+
+        ItemStack prevItemStack = this.getInventory().getStackInSlot(prevItem);
+
+        return prevItemStack != null && prevItemStack.getItem() instanceof ItemShears;
     }
 
     private int swapFor(Block block, int currentItemSlot) {

@@ -33,8 +33,8 @@ public final class AutoSword extends Hack {
         }
     };
 
-    private boolean swapped = false;
-    private int prevItem = -1;
+    public boolean swapped = false;
+    public int prevItem = -1;
 
     private int ticksSince = 0;
 
@@ -58,6 +58,12 @@ public final class AutoSword extends Hack {
         this.ticksSince = 0;
 
         if (!this.swapBack.getValue()) {
+            return;
+        }
+
+        InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
+
+        if (infiniteDurability != null && infiniteDurability.isEnabled()) {
             return;
         }
 
