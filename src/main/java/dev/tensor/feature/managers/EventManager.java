@@ -58,7 +58,6 @@ public final class EventManager implements Manager {
         this.cleanMap(true);
     }
 
-    @SuppressWarnings("UnusedReturnValue")
     public Event call(final Event event) {
         List<MethodData> dataList = this.REGISTRY_MAP.get(event.getClass());
 
