@@ -233,7 +233,7 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     private boolean isWithinRenderDistance(LogoutSpot logoutSpot) {
-        return this.getPlayer().getDistanceSq(logoutSpot.coords.x, logoutSpot.coords.y, logoutSpot.coords.z) < 65536;
+        return this.getDistanceSqWithFreecam(logoutSpot.coords.x, logoutSpot.coords.y, logoutSpot.coords.z) < 65536;
     }
 
     private void renderLogoutSpot(LogoutSpot logoutSpot) {

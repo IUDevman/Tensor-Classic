@@ -70,7 +70,7 @@ public final class BreadCrumbs extends Render3DHack {
                     continue;
                 }
 
-                if (this.getPlayer().getDistanceSq(pos[0], pos[1], pos[2]) >= 65536) {
+                if (this.getDistanceSqWithFreecam(pos[0], pos[1], pos[2]) >= 65536) {
                     triggerRemove.set(true);
                     toRemoveInt.set(i);
                     break;

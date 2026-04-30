@@ -13,7 +13,6 @@ import dev.tensor.misc.helpers.rotation.Rotation;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
-import org.lwjgl.util.vector.Vector4f;
 import org.slf4j.Logger;
 
 /**
@@ -285,17 +284,17 @@ public interface Globals {
     }
 
     default Rotation pitchAndYawTo(double x, double y, double z) {
-        Vector4f deltas = this.returnDeltas(x, y, z);
+        double[] deltas = this.returnDeltas(x, y, z);
 
         double angle = 180 / Math.PI;
 
-        float pitch = (float) -(Math.atan2(deltas.y, deltas.w) * angle);
-        float yaw = (float) ((Math.atan2(deltas.z, deltas.x) * angle) - 90);
+        float pitch = (float) -(Math.atan2(deltas[1], deltas[3]) * angle);
+        float yaw = (float) ((Math.atan2(deltas[2], deltas[0]) * angle) - 90);
 
         return new Rotation(pitch, yaw);
     }
 
-    default Vector4f returnDeltas(double x, double y, double z) {
+    default double[] returnDeltas(double x, double y, double z) {
         HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
 
         double deltaX = x - this.getPlayer().posX;
@@ -308,13 +307,40 @@ public interface Globals {
             deltaZ = z - freecam.oldZ;
         }
 
-        double distance = this.getDistance(deltaX, deltaY, deltaZ);
-
-        return new Vector4f((float) deltaX, (float) deltaY, (float) deltaZ, (float) distance);
+        return new double[]{
+                deltaX,
+                deltaY,
+                deltaZ,
+                this.getDistance(deltaX, deltaY, deltaZ)
+        };
     }
 
     default double getDistance(double deltaX, double deltaY, double deltaZ) {
-        return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2));
+        return Math.sqrt(this.getDistanceSq(deltaX, deltaY, deltaZ));
+    }
+
+    default double getDistanceSq(double deltaX, double deltaY, double deltaZ) {
+        return Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2);
+    }
+
+    default double getDistanceSqWithFreecam(double x, double y, double z) {
+        double pX = this.getPlayer().posX;
+        double pY = this.getPlayer().posY;
+        double pZ = this.getPlayer().posZ;
+
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (freecam != null && freecam.isEnabled()) {
+            pX = freecam.oldX;
+            pY = freecam.oldY;
+            pZ = freecam.oldZ;
+        }
+
+        double dX = x - pX;
+        double dY = y - pY;
+        double dZ = z - pZ;
+
+        return this.getDistanceSq(dX, dY, dZ);
     }
 
     default int[][] getPlaceDirections(int startX, int startY, int startZ) {
