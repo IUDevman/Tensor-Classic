@@ -70,15 +70,16 @@ public final class InfiniteDurability extends Hack {
 
         if (hasDispatched) {
             event.cancel();
-        }
 
-        AutoSword autoSword = this.getHackManager().getHack(AutoSword.class);
+            AutoSword autoSword = this.getHackManager().getHack(AutoSword.class);
 
-        if (autoSword != null && autoSword.isEnabled() && autoSword.swapBack.getValue()) {
-            if (autoSword.swapped && autoSword.prevItem != -1 && this.getInventory().currentItem != autoSword.prevItem) {
+            if (autoSword != null && autoSword.isEnabled() && autoSword.swapBack.getValue()) {
+                if (autoSword.swapped && autoSword.prevItem != -1 && this.getInventory().currentItem != autoSword.prevItem) {
 
-                this.getInventory().currentItem = autoSword.prevItem;
-                autoSword.resetPrevSlot();
+                    this.getInventory().currentItem = autoSword.prevItem;
+                    autoSword.resetPrevSlot();
+                    autoSword.dispatched = true;
+                }
             }
         }
     }
@@ -96,16 +97,17 @@ public final class InfiniteDurability extends Hack {
 
         if (hasDispatched) {
             event.cancel();
-        }
 
-        if (event.packet.status == 2) {
-            AutoTool autoTool = this.getHackManager().getHack(AutoTool.class);
+            if (event.packet.status == 2) {
+                AutoTool autoTool = this.getHackManager().getHack(AutoTool.class);
 
-            if (autoTool != null && autoTool.isEnabled() && autoTool.swapBack.getValue()) {
-                if (autoTool.swapped && autoTool.prevItem != -1 && this.getInventory().currentItem != autoTool.prevItem) {
+                if (autoTool != null && autoTool.isEnabled() && autoTool.swapBack.getValue()) {
+                    if (autoTool.swapped && autoTool.prevItem != -1 && this.getInventory().currentItem != autoTool.prevItem) {
 
-                    this.getInventory().currentItem = autoTool.prevItem;
-                    autoTool.resetPrevSlot();
+                        this.getInventory().currentItem = autoTool.prevItem;
+                        autoTool.resetPrevSlot();
+                        autoTool.dispatched = true;
+                    }
                 }
             }
         }

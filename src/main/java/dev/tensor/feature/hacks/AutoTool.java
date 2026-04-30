@@ -38,6 +38,7 @@ public final class AutoTool extends Hack {
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
+    public boolean dispatched = false;
     public boolean swapped = false;
     public int prevItem = -1;
     private int status = 0;
@@ -75,7 +76,7 @@ public final class AutoTool extends Hack {
 
         InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
 
-        if (infiniteDurability != null && infiniteDurability.isEnabled()) {
+        if (infiniteDurability != null && infiniteDurability.isEnabled() && this.dispatched) {
             return;
         }
 
@@ -157,6 +158,7 @@ public final class AutoTool extends Hack {
 
         if (swapSlot != oldSlot) {
             this.ticksSince = 0;
+            this.dispatched = false;
             this.swapped = true;
             this.prevItem = oldSlot;
             this.getInventory().currentItem = swapSlot;
@@ -166,6 +168,7 @@ public final class AutoTool extends Hack {
     public void resetPrevSlot() {
         this.status = 0;
         this.ticksSince = 0;
+        this.dispatched = false;
         this.swapped = false;
         this.prevItem = -1;
     }
