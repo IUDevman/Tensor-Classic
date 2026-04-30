@@ -294,7 +294,7 @@ public final class InfiniteDurability extends Hack {
             Packet102WindowClick click2 = new Packet102WindowClick(0, startPosition, 0, false, from9, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
             this.sendPacket(click2);
             this.getInventory().mainInventory[startPosition] = toSwap;
-            
+
             if (from9 != null) {
                 Packet102WindowClick click3 = new Packet102WindowClick(0, newPosition, 0, false, from9, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
                 this.sendPacket(click3);
