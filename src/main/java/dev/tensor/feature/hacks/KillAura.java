@@ -1,5 +1,7 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.EventCache;
+import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -41,6 +43,7 @@ public final class KillAura extends Render3DHack {
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
+    public final EnumSetting type = new EnumSetting("Hit Type", HitType.Vanilla);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
@@ -252,7 +255,17 @@ public final class KillAura extends Render3DHack {
             this.getPlayer().swingItem();
         }
 
-        this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
+        switch ((HitType) this.type.getValue()) {
+            case Vanilla:
+                this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
+                break;
+            case Packet:
+                @SuppressWarnings("unused")
+                AttackEntityEvent event = EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(entity).call();
+
+                this.sendPacket(new Packet7UseEntity(this.getPlayer().entityId, entity.entityId, 1));
+                break;
+        }
     }
 
     private boolean isEntityBehindWalls(Entity entity, double playerX, double playerY, double playerZ) {
@@ -302,6 +315,11 @@ public final class KillAura extends Render3DHack {
         Stop,
         Player,
         Camera
+    }
+
+    public enum HitType {
+        Vanilla,
+        Packet
     }
 
     public enum Sort {
