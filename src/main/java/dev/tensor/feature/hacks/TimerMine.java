@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -16,8 +17,10 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 public final class TimerMine extends Hack {
 
     public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 35, 20, 40);
-
     public final IntegerSetting shutOffAfter = new IntegerSetting("Shutoff Ticks", 20, 1, 80);
+
+    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
+    private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
     @Override
     public void onDisable(boolean isNull) {
@@ -43,6 +46,12 @@ public final class TimerMine extends Hack {
         int status = event.packet.status;
 
         if (status == 0) {
+            int blockID = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
+
+            if (this.INSTANT_BLOCKS.containsBlock(blockID) || this.BLOCKED_BLOCKS.containsBlock(blockID)) {
+                return;
+            }
+
             ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.ticksPerSecond.getValue();
         } else {
             ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().ticksPerSecond = this.getDefaultTPS();

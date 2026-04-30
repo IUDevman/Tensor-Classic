@@ -36,6 +36,7 @@ public final class AutoTool extends Hack {
     };
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
+    private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
     private boolean swapped = false;
     private int prevItem = -1;
@@ -97,11 +98,7 @@ public final class AutoTool extends Hack {
 
         Block block = Block.blocksList[blockId];
 
-        if (block == Block.bedrock) {
-            return;
-        }
-
-        if (this.INSTANT_BLOCKS.containsBlock(block)) {
+        if (this.INSTANT_BLOCKS.containsBlock(block) || this.BLOCKED_BLOCKS.containsBlock(block)) {
             return;
         }
 
