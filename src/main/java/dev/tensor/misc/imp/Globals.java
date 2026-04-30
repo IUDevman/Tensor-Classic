@@ -335,6 +335,14 @@ public interface Globals {
             return true;
         } else if (blockID == Block.mobSpawner.blockID) {
             return true;
+        } else if (blockID == Block.glowStone.blockID) {
+            return true;
+        } else if (blockID == Block.stairCompactCobblestone.blockID) {
+            return true;
+        } else if (blockID == Block.stoneOvenIdle.blockID) {
+            return true;
+        } else if (blockID == Block.stoneOvenActive.blockID) {
+            return true;
         } else if (blockID == Block.oreRedstone.blockID) {
             return true;
         } else return blockID == Block.oreRedstoneGlowing.blockID;
