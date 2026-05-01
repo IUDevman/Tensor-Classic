@@ -34,8 +34,7 @@ public final class InfiniteDurability extends Hack {
 
     public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);
     public final BooleanSetting swapTo9 = new BooleanSetting("Swap Slot 9", true);
-
-    private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
+    
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
     private long prevTime = 0;
