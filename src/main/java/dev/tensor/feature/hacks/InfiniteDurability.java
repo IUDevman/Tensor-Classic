@@ -29,7 +29,8 @@ import net.minecraft.src.*;
  * Put your least damaged tools closer to slot 9.
  * 5. This hack works with (Tensor) Nuker, AutoTool, and AutoSword.
  * 6. Your tools do not take damage, but most times you can see-client side damage (more apparent with lower durability
- * tools). This resets when moving the item or switching tools.
+ * tools). This resets when moving the item or switching tools. With SwapBack setting your original tool will
+ * take client-side damage and reset the same way.
  */
 
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
