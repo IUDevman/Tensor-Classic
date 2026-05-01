@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "YawLock", category = Category.Movement)
 public final class YawLock extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Facing);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45);
     public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360);
 
     private boolean needsYaw = false;
