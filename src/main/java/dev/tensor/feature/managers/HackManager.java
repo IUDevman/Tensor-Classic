@@ -130,6 +130,7 @@ public final class HackManager implements Manager {
         this.addHack(new WolfOwner());
         this.addHack(new XCarry());
         this.addHack(new Xray());
+        this.addHack(new YawLock());
 
         this.postSortHacks();
     }
