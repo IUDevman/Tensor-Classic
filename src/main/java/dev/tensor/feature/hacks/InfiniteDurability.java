@@ -27,6 +27,9 @@ import net.minecraft.src.*;
  * your main hand tool will take 10 damage and then not take anymore.
  * 4. The Swap Slot 9 setting switches the swap slot to the desired tool if found, but doesn't filter by damage.
  * Put your least damaged tools closer to slot 9.
+ * 5. This hack works with (Tensor) Nuker, AutoTool, and AutoSword.
+ * 6. Your tools do not take damage, but most times you can see-client side damage (more apparent with lower durability
+ * tools). This resets when moving the item or switching tools.
  */
 
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
@@ -34,7 +37,7 @@ public final class InfiniteDurability extends Hack {
 
     public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);
     public final BooleanSetting swapTo9 = new BooleanSetting("Swap Slot 9", true);
-    
+
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 
     private long prevTime = 0;
