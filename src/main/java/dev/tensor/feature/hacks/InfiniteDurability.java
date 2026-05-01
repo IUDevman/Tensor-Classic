@@ -29,8 +29,7 @@ import net.minecraft.src.*;
  * Put your least damaged tools closer to slot 9.
  * 5. This hack works with (Tensor) Nuker, AutoTool, and AutoSword.
  * 6. Your tools do not take damage, but most times you can see-client side damage (more apparent with lower durability
- * tools). This resets when moving the item or switching tools. With SwapBack setting your original tool will
- * take client-side damage and reset the same way.
+ * tools). This resets randomly when mining or when moving the item/switching tools.
  */
 
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
@@ -73,17 +72,6 @@ public final class InfiniteDurability extends Hack {
 
         if (hasDispatched) {
             event.cancel();
-
-            AutoSword autoSword = this.getHackManager().getHack(AutoSword.class);
-
-            if (autoSword != null && autoSword.isEnabled() && autoSword.swapBack.getValue()) {
-                if (autoSword.swapped && autoSword.prevItem != -1 && this.getInventory().currentItem != autoSword.prevItem) {
-
-                    this.getInventory().currentItem = autoSword.prevItem;
-                    autoSword.resetPrevSlot();
-                    autoSword.dispatched = true;
-                }
-            }
         }
     }
 
@@ -100,19 +88,6 @@ public final class InfiniteDurability extends Hack {
 
         if (hasDispatched) {
             event.cancel();
-
-            if (event.packet.status == 2) {
-                AutoTool autoTool = this.getHackManager().getHack(AutoTool.class);
-
-                if (autoTool != null && autoTool.isEnabled() && autoTool.swapBack.getValue()) {
-                    if (autoTool.swapped && autoTool.prevItem != -1 && this.getInventory().currentItem != autoTool.prevItem) {
-
-                        this.getInventory().currentItem = autoTool.prevItem;
-                        autoTool.resetPrevSlot();
-                        autoTool.dispatched = true;
-                    }
-                }
-            }
         }
     }
 

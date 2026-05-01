@@ -37,8 +37,6 @@ public final class AutoSword extends Hack {
     public boolean swapped = false;
     public int prevItem = -1;
 
-    private int ticksSince = 0;
-
     @Override
     public void onEnable(boolean isNull) {
         this.resetPrevSlot();
@@ -51,20 +49,9 @@ public final class AutoSword extends Hack {
 
     @Override
     public void onClientTick() {
-        if (this.ticksSince < 1) {
-            this.ticksSince++;
-            return;
-        }
-
-        this.ticksSince = 0;
-
         if (!this.swapBack.getValue()) {
-            return;
-        }
-
-        InfiniteDurability infiniteDurability = this.getHackManager().getHack(InfiniteDurability.class);
-
-        if (infiniteDurability != null && infiniteDurability.isEnabled() && this.dispatched) {
+            this.prevItem = -1;
+            this.swapped = false;
             return;
         }
 
@@ -107,7 +94,6 @@ public final class AutoSword extends Hack {
         }
 
         if (swapSlot != oldSlot) {
-            this.ticksSince = 0;
             this.dispatched = false;
             this.swapped = true;
             this.prevItem = oldSlot;
@@ -116,7 +102,6 @@ public final class AutoSword extends Hack {
     }
 
     public void resetPrevSlot() {
-        this.ticksSince = 0;
         this.dispatched = false;
         this.swapped = false;
         this.prevItem = -1;
