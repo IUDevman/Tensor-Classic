@@ -40,7 +40,7 @@ public final class Waypoints extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);
 
-    private final ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
+    public final ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
 
     @Override
     public void onDisable(boolean isNull) {

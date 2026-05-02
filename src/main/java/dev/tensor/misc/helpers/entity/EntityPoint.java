@@ -12,20 +12,33 @@ public final class EntityPoint implements Render2D {
     private final int x;
     private final int y;
     private final int color;
-    private final int dWY;
+    private final int worldYDiff;
+    private final boolean plusSymbol;
+    private final int radius;
 
-    public EntityPoint(int x, int y, int color, int dWY) {
+    public EntityPoint(int x, int y, int color, int worldYDiff, boolean plusSymbol, int radius) {
         this.x = x;
         this.y = y;
         this.color = color;
-        this.dWY = dWY;
+        this.worldYDiff = worldYDiff;
+        this.plusSymbol = plusSymbol;
+        this.radius = radius;
     }
 
-    public void render(int sphereRadius) {
-        this.drawRectangle(this.x - sphereRadius, this.y - sphereRadius, this.x + sphereRadius, this.y + sphereRadius, this.color);
+    public void render() {
+        if (this.plusSymbol) {
+            this.drawRectangle(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius, this.color);
+            this.drawRectangle(this.x + this.radius, this.y - this.radius, this.x + (2 * this.radius), this.y + this.radius, this.color);
+            this.drawRectangle(this.x - (2 * this.radius), this.y - this.radius, this.x - this.radius, this.y + this.radius, this.color);
+            this.drawRectangle(this.x - this.radius, this.y + this.radius, this.x + this.radius, this.y + (2 * this.radius), this.color);
+            this.drawRectangle(this.x - this.radius, this.y - (2 * this.radius), this.x + this.radius, this.y - this.radius, this.color);
+
+        } else {
+            this.drawRectangle(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius, this.color);
+        }
     }
 
     public int getWorldYDiff() {
-        return this.dWY;
+        return this.worldYDiff;
     }
 }

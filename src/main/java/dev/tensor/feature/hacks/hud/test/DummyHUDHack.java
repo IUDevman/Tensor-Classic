@@ -13,6 +13,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
+@SuppressWarnings("unused")
 @Hack.Info(name = "DummyHUDHack", category = Category.HUD)
 public final class DummyHUDHack extends Hack implements HUDObject {
 

@@ -43,7 +43,7 @@ public final class LogoutSpots extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor);
 
-    private final ArrayList<LogoutSpot> playersLogged = new ArrayList<>();
+    public final ArrayList<LogoutSpot> playersLogged = new ArrayList<>();
     private final ArrayList<LogoutSpot> playersLoggedQueue = new ArrayList<>();
     private final ArrayList<String> loggedNames = new ArrayList<>();
 

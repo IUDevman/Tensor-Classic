@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks.hud;
 
 import dev.tensor.feature.hacks.HephFreecam;
+import dev.tensor.feature.hacks.LogoutSpots;
+import dev.tensor.feature.hacks.Waypoints;
 import dev.tensor.misc.helpers.entity.EntityPoint;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.helpers.entity.FakePlayer;
@@ -46,12 +48,16 @@ public final class Radar extends Hack implements HUDObject {
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false);
+    public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false);
+    public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point);
     public final ColorSettingNoAlpha playersColor = new ColorSettingNoAlpha("Player Color", Color.ORANGE);
     public final ColorSettingNoAlpha friendsColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
     public final ColorSettingNoAlpha animalsColor = new ColorSettingNoAlpha("Animal Color", Color.GREEN);
     public final ColorSettingNoAlpha hostilesColor = new ColorSettingNoAlpha("Hostile Color", Color.RED);
     public final ColorSettingNoAlpha itemColor = new ColorSettingNoAlpha("Item Color", Color.YELLOW);
     public final ColorSettingNoAlpha miscColor = new ColorSettingNoAlpha("Misc Color", Color.PINK);
+    public final ColorSettingNoAlpha waypointColor = new ColorSettingNoAlpha("Waypoint Color", Color.LIGHT_GRAY);
     public final ColorSettingNoAlpha markerColors = new ColorSettingNoAlpha("Marker Color", Color.WHITE);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
@@ -122,8 +128,23 @@ public final class Radar extends Hack implements HUDObject {
             }
         }
 
+        int sphereRadius = this.getPointRadius();
+        boolean shouldPlayerPlus = false;
+        double bigPointMultiplier = 1;
+
+        switch ((PlayerMarker) this.playerMarker.getValue()) {
+            case Point:
+                break;
+            case Big_Point:
+                bigPointMultiplier = 1.5;
+                break;
+            case Plus:
+                shouldPlayerPlus = true;
+                break;
+        }
+
         int radius = this.radius.getValue();
-        int radiusSq = (int) Math.pow(radius, 2);
+        int radiusSq = (int) Math.pow(radius * 1.05, 2);
 
         List entities = this.getWorld().loadedEntityList;
 
@@ -156,7 +177,60 @@ public final class Radar extends Hack implements HUDObject {
                 continue;
             }
 
-            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (entity.posX - playerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (entity.posZ - playerZ) * 100 / radius), color, (int) (entity.posY - playerY)));
+            boolean point = false;
+            double pointMultiplier = 1;
+
+            if (entity instanceof EntityOtherPlayerMP) {
+                point = shouldPlayerPlus;
+
+                if (bigPointMultiplier != 1) {
+                    pointMultiplier = bigPointMultiplier;
+                }
+            }
+
+            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (entity.posX - playerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (entity.posZ - playerZ) * 100 / radius), color, (int) (entity.posY - playerY), point, (int) (sphereRadius * pointMultiplier)));
+        }
+
+        if (this.logoutSpots.getValue()) {
+            LogoutSpots logoutSpots1 = this.getHackManager().getHack(LogoutSpots.class);
+
+            if (logoutSpots1 != null && logoutSpots1.isEnabled()) {
+                if (!logoutSpots1.playersLogged.isEmpty()) {
+
+                    final double finalPlayerX = playerX;
+                    final double finalPlayerY = playerY;
+                    final double finalPlayerZ = playerZ;
+
+                    logoutSpots1.playersLogged.forEach(logoutSpot -> {
+                        if (this.isWithinRange(logoutSpot.coords.x, logoutSpot.coords.z, finalPlayerX, finalPlayerZ, radiusSq)) {
+                            int color = this.getFriendManager().isFriend(logoutSpot.username) ? this.friendsColor.getValue().getRGB() : this.playersColor.getValue().getRGB();
+
+                            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (logoutSpot.coords.x - finalPlayerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (logoutSpot.coords.z - finalPlayerZ) * 100 / radius), color, (int) (logoutSpot.coords.y - finalPlayerY), true, sphereRadius));
+                        }
+                    });
+                }
+            }
+        }
+
+        if (this.waypoints.getValue()) {
+            Waypoints waypoints1 = this.getHackManager().getHack(Waypoints.class);
+
+            if (waypoints1 != null && waypoints1.isEnabled()) {
+                if (!waypoints1.waypointsToRender.isEmpty()) {
+
+                    int color = this.waypointColor.getValue().getRGB();
+
+                    final double finalPlayerX = playerX;
+                    final double finalPlayerY = playerY;
+                    final double finalPlayerZ = playerZ;
+
+                    waypoints1.waypointsToRender.forEach(waypoint -> {
+                        if (this.isWithinRange(waypoint.getX(), waypoint.getZ(), finalPlayerX, finalPlayerZ, radiusSq)) {
+                            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (waypoint.getX() - finalPlayerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (waypoint.getZ() - finalPlayerZ) * 100 / radius), color, (int) (waypoint.getY() - finalPlayerY), true, sphereRadius));
+                        }
+                    });
+                }
+            }
         }
 
         if (this.freecamMode.getValue().equals(Freecam.Camera)) {
@@ -168,7 +242,7 @@ public final class Radar extends Hack implements HUDObject {
                 double dY = freeY - playerZ;
 
                 if (Math.pow(dX, 2) <= radiusSq && Math.pow(dY, 2) <= radiusSq) {
-                    this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValue().getRGB(), (int) (freecam.oldY - playerY)));
+                    this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValue().getRGB(), (int) (freecam.oldY - playerY), true, sphereRadius));
                 }
             }
         }
@@ -183,9 +257,7 @@ public final class Radar extends Hack implements HUDObject {
         this.drawRectangle(1, 1, this.getWidth() - 1, this.getHeight() - 1, this.fillColor.getValue().getRGB());
 
         if (!this.pointsToRender.isEmpty()) {
-            int radius = this.getPointRadius();
-
-            this.pointsToRender.forEach(entityPoint -> entityPoint.render(radius));
+            this.pointsToRender.forEach(EntityPoint::render);
         }
 
         this.drawCenteredString("N", this.getWidth() / 2, 5, this.markerColors.getValue().getRGB());
@@ -237,12 +309,16 @@ public final class Radar extends Hack implements HUDObject {
         return Math.max(Math.min(radius, 3), 1);
     }
 
-    private boolean isEntityWithinRange(Entity entity, double playerX, double playerZ, int radiusSq) {
-        if (Math.pow(entity.posX - playerX, 2) > radiusSq) {
+    private boolean isWithinRange(double targetX, double targetZ, double playerX, double playerZ, int radiusSq) {
+        if (Math.pow(targetX - playerX, 2) > radiusSq) {
             return false;
         }
 
-        return Math.pow(entity.posZ - playerZ, 2) <= radiusSq;
+        return Math.pow(targetZ - playerZ, 2) <= radiusSq;
+    }
+
+    private boolean isEntityWithinRange(Entity entity, double playerX, double playerZ, int radiusSq) {
+        return this.isWithinRange(entity.posX, entity.posZ, playerX, playerZ, radiusSq);
     }
 
     private int getEntityColor(Entity entity) {
@@ -284,5 +360,11 @@ public final class Radar extends Hack implements HUDObject {
     private enum Freecam {
         Player,
         Camera
+    }
+
+    private enum PlayerMarker {
+        Point,
+        Big_Point,
+        Plus
     }
 }
