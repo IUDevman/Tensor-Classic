@@ -39,7 +39,7 @@ public final class HephFreecam extends Hack {
     public double oldX;
     public double oldY;
     public double oldZ;
-    private float oldYaw;
+    public float oldYaw;
     private float oldPitch;
 
     private EntityPlayer fakePlayer = null;

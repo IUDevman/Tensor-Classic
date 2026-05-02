@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -15,6 +16,7 @@ public final class YawLock extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45);
     public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360);
+    public final BooleanSetting freecam = new BooleanSetting("Freecam", false);
 
     private boolean needsYaw = false;
     private float toYaw = 0;
@@ -37,6 +39,14 @@ public final class YawLock extends Hack {
 
     @Override
     public void onClientTick() {
+        if (!this.freecam.getValue()) {
+            HephFreecam freecam1 = this.getHackManager().getHack(HephFreecam.class);
+
+            if (freecam1 != null && freecam1.isEnabled()) {
+                return;
+            }
+        }
+
         if (this.needsYaw) {
             this.toYaw = this.getPlayerYaw();
             this.needsYaw = false;
@@ -66,6 +76,14 @@ public final class YawLock extends Hack {
 
     private float getPlayerYaw() {
         float yaw = this.getPlayer().rotationYaw;
+
+        if (!this.freecam.getValue()) {
+            HephFreecam freecam1 = this.getHackManager().getHack(HephFreecam.class);
+
+            if (freecam1 != null && freecam1.isEnabled()) {
+                yaw = freecam1.oldYaw;
+            }
+        }
 
         while (yaw <= 0) {
             yaw += 360;

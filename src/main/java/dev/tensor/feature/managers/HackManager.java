@@ -107,6 +107,7 @@ public final class HackManager implements Manager {
         this.addHack(new PhysicsSpammer());
         this.addHack(new Platform());
         this.addHack(new PortalInventory());
+        this.addHack(new Radar());
         this.addHack(new RoseFastPlace());
         this.addHack(new Rotations());
         this.addHack(new SafeWalk());

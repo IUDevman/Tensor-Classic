@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.hack.render;
 import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import net.minecraft.src.ScaledResolution;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -49,7 +50,34 @@ public interface HUDObject extends Render2D {
     }
 
     default void prepareScale() {
+        this.prepareScale(false);
+    }
+
+    default void prepareScale(boolean scissor) {
         GL11.glPushMatrix();
+
+        if (scissor) {
+            GL11.glEnable(GL11.GL_SCISSOR_TEST);
+
+            int posX = this.getMinX().getValue();
+            int posY = this.getMinY().getValue();
+            int width1 = this.getWidthScaled();
+            int height1 = this.getHeightScaled();
+
+            int windowHeight = this.getMinecraft().displayHeight;
+
+            ScaledResolution scaledResolution = new ScaledResolution(this.getMinecraft().gameSettings, this.getMinecraft().displayWidth, this.getMinecraft().displayHeight);
+            double scaleX = (double) this.getMinecraft().displayWidth / (double) scaledResolution.getScaledWidth();
+            double scaleY = (double) this.getMinecraft().displayHeight / (double) scaledResolution.getScaledHeight();
+
+            int widthScaled = (int) (scaleX * width1);
+            int heightScaled = (int) (scaleY * height1);
+            int xScaled = (int) (posX * scaleX);
+            int yScaled = (int) (posY * scaleY);
+
+            GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+        }
+
         double scale = this.getScale().getValue();
 
         GL11.glTranslatef(this.getMinX().getValue(), this.getMinY().getValue(), -3.0F);
@@ -58,6 +86,14 @@ public interface HUDObject extends Render2D {
     }
 
     default void finishScale() {
+        this.finishScale(false);
+    }
+
+    default void finishScale(boolean scissor) {
+        if (scissor) {
+            GL11.glDisable(GL11.GL_SCISSOR_TEST);
+        }
+
         GL11.glPopMatrix();
     }
 
