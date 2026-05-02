@@ -112,9 +112,9 @@ public final class Radar extends Hack implements HUDObject {
         double playerY = this.getPlayer().posY;
         double playerZ = this.getPlayer().posZ;
 
-        if (this.freecamMode.getValue().equals(Freecam.Player)) {
-            HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
 
+        if (this.freecamMode.getValue().equals(Freecam.Player)) {
             if (freecam != null && freecam.isEnabled()) {
                 playerX = freecam.oldX;
                 playerY = freecam.oldY;
@@ -156,7 +156,21 @@ public final class Radar extends Hack implements HUDObject {
                 continue;
             }
 
-            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + ((entity.posX - playerX)) * 100 / radius), (int) (((double) this.getHeight() / 2) + ((entity.posZ - playerZ)) * 100 / radius), color, (int) (entity.posY - playerY)));
+            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (entity.posX - playerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (entity.posZ - playerZ) * 100 / radius), color, (int) (entity.posY - playerY)));
+        }
+
+        if (this.freecamMode.getValue().equals(Freecam.Camera)) {
+            if (freecam != null && freecam.isEnabled()) {
+                double freeX = freecam.oldX;
+                double freeY = freecam.oldZ;
+
+                double dX = freeX - playerX;
+                double dY = freeY - playerZ;
+
+                if (Math.pow(dX, 2) <= radiusSq && Math.pow(dY, 2) <= radiusSq) {
+                    this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValue().getRGB(), (int) (freecam.oldY - playerY)));
+                }
+            }
         }
 
         this.pointsToRender.sort(Comparator.comparing(EntityPoint::getWorldYDiff));
