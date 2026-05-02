@@ -35,7 +35,7 @@ public final class Radar extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2);
-    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera);
     public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100);
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
