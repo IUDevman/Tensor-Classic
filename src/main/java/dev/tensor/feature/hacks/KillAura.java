@@ -172,7 +172,7 @@ public final class KillAura extends Render3DHack {
     }
 
     private boolean shouldAttackEntity(Entity entity) {
-        if (!entity.isEntityAlive()) {
+        if (entity instanceof EntityLiving && !entity.isEntityAlive()) {
             return false;
         }
 

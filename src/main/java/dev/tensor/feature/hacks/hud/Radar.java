@@ -13,6 +13,7 @@ import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
+import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityOtherPlayerMP;
 import org.lwjgl.opengl.GL11;
 
@@ -155,12 +156,14 @@ public final class Radar extends Hack implements HUDObject {
                 continue;
             }
 
-            if (entity.ticksExisted < 1) {
-                continue;
-            }
+            if (entity instanceof EntityLiving) {
+                if (entity.ticksExisted < 1) {
+                    continue;
+                }
 
-            if (!entity.isEntityAlive()) {
-                continue;
+                if (!entity.isEntityAlive()) {
+                    continue;
+                }
             }
 
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
