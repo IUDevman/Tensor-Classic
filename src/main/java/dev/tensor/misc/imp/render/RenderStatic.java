@@ -1,5 +1,6 @@
 package dev.tensor.misc.imp.render;
 
+import net.minecraft.src.Frustrum;
 import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.RenderItem;
 
@@ -12,4 +13,6 @@ public final class RenderStatic {
 
     public static final RenderItem tensor_renderItem = new RenderItem();
     public static final RenderBlocks tensor_renderBlocks = new RenderBlocks();
+
+    public static Frustrum tensor_playerFrustrum = null;
 }

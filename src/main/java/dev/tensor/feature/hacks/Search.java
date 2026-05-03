@@ -10,10 +10,8 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
-import dev.tensor.misc.imp.setting.settings.BlockListSetting;
-import dev.tensor.misc.imp.setting.settings.ColorSetting;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import dev.tensor.misc.imp.render.RenderStatic;
+import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
 import java.awt.*;
@@ -62,6 +60,7 @@ public final class Search extends Render3DHack {
             }
         }
     };
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
@@ -92,6 +91,7 @@ public final class Search extends Render3DHack {
             this.resetSearch();
         } else {
             this.blockCoords.clear();
+            RenderStatic.tensor_playerFrustrum = null;
         }
     }
 
@@ -143,6 +143,7 @@ public final class Search extends Render3DHack {
     @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.blockCoords.clear();
+        RenderStatic.tensor_playerFrustrum = null;
     }
 
     @Override
@@ -162,7 +163,46 @@ public final class Search extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-        this.blockCoords.forEach(this::renderForBlock);
+        if (this.frustrum.getValue()) {
+            if (RenderStatic.tensor_playerFrustrum == null) {
+                RenderStatic.tensor_playerFrustrum = new Frustrum();
+            }
+
+            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+
+            switch ((TracerMode) this.tracers.getValue()) {
+                case None:
+                    this.blockCoords.forEach(blockCoords1 -> {
+                        if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                            this.renderForBlock(blockCoords1, false);
+                        }
+                    });
+                    break;
+                case All:
+                    this.blockCoords.forEach(blockCoords1 -> this.renderForBlock(blockCoords1, true));
+                    break;
+                case Portal:
+                    this.blockCoords.forEach(blockCoords1 -> {
+                        if (blockCoords1.block.blockID == Block.portal.blockID) {
+                            this.renderForBlock(blockCoords1, true);
+                        } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                            this.renderForBlock(blockCoords1, false);
+                        }
+                    });
+                    break;
+                case Custom:
+                    this.blockCoords.forEach(blockCoords1 -> {
+                        if (this.customTracers.containsBlock(blockCoords1.block.blockID)) {
+                            this.renderForBlock(blockCoords1, true);
+                        } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                            this.renderForBlock(blockCoords1, false);
+                        }
+                    });
+            }
+
+        } else {
+            this.blockCoords.forEach(blockCoords1 -> this.renderForBlock(blockCoords1, false));
+        }
     }
 
     private boolean shouldRenderForBlock(int blockID) {
@@ -185,7 +225,7 @@ public final class Search extends Render3DHack {
         }
     }
 
-    private void renderForBlock(BlockCoords blockCoords) {
+    private void renderForBlock(BlockCoords blockCoords, boolean frustrum) {
         blockCoords.block.setBlockBoundsBasedOnState(this.getWorld(), blockCoords.x, blockCoords.y, blockCoords.z);
 
         double rx = blockCoords.x - RenderManager.renderPosX + blockCoords.block.minX;
@@ -359,6 +399,10 @@ public final class Search extends Render3DHack {
             }
         }
 
+        if (frustrum && !blockCoords.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+            return;
+        }
+
         switch ((Render) this.render.getValue()) {
             case None:
                 break;
@@ -377,6 +421,7 @@ public final class Search extends Render3DHack {
 
     public void resetSearch() {
         this.blockCoords.clear();
+        RenderStatic.tensor_playerFrustrum = null;
         this.resetWorld();
     }
 

@@ -1,10 +1,13 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
+import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
+import dev.tensor.misc.imp.render.RenderStatic;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
@@ -40,6 +43,7 @@ public final class EntityESP extends Render3DHack {
     public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED);
     public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
     public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
     public final EnumSetting mode = new EnumSetting("Render", Mode.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
@@ -49,6 +53,7 @@ public final class EntityESP extends Render3DHack {
     @Override
     public void onDisable(boolean isNull) {
         this.entitiesWithColorToRender.clear();
+        RenderStatic.tensor_playerFrustrum = null;
     }
 
     @SuppressWarnings("rawtypes")
@@ -118,7 +123,28 @@ public final class EntityESP extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-        this.entitiesWithColorToRender.forEach((entity, color) -> this.renderESPForEntity(entity, color, renderPartialTicks));
+        if (this.frustrum.getValue()) {
+            if (RenderStatic.tensor_playerFrustrum == null) {
+                RenderStatic.tensor_playerFrustrum = new Frustrum();
+            }
+
+            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+
+            this.entitiesWithColorToRender.forEach((entity, color) -> {
+                if (RenderStatic.tensor_playerFrustrum.isBoundingBoxInFrustum(entity.boundingBox)) {
+                    this.renderESPForEntity(entity, color, renderPartialTicks);
+                }
+            });
+
+        } else {
+            this.entitiesWithColorToRender.forEach((entity, color) -> this.renderESPForEntity(entity, color, renderPartialTicks));
+        }
+    }
+
+    @SuppressWarnings("unused")
+    @EventTarget
+    public void onChangeWorldEvent(ChangeWorldEvent event) {
+        RenderStatic.tensor_playerFrustrum = null;
     }
 
     private void renderESPForEntity(Entity entity, Color color, float renderPartialTicks) {
