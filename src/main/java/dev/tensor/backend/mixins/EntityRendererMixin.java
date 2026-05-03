@@ -2,10 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.CameraClipEvent;
-import dev.tensor.backend.events.constant.HurtCameraEvent;
-import dev.tensor.backend.events.constant.Render3DEvent;
-import dev.tensor.backend.events.constant.ViewBobEvent;
+import dev.tensor.backend.events.constant.*;
 import dev.tensor.backend.events.variable.FOVModifierEvent;
 import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
@@ -40,7 +37,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        FOVModifierEvent event = EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(par1).call();
+        FOVModifierEvent event = EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(70.0F).call();
 
         if (event.isCancelled()) {
             cir.setReturnValue(event.FOV);
@@ -100,7 +97,6 @@ public abstract class EntityRendererMixin implements Globals {
         }
     }
 
-    //Slick redirect
     @Redirect(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityLiving;isInsideOfMaterial(Lnet/minecraft/src/Material;)Z"))
     public boolean tensor_onSetUpFogInvokeIsInsideOfMaterial(EntityLiving instance, Material material) {
         if (this.failsNullCheck()) {
@@ -144,5 +140,20 @@ public abstract class EntityRendererMixin implements Globals {
         }
 
         return instance.distanceTo(vec3D);
+    }
+
+    @Redirect(method = "updateCameraAndRender", at = @At(value = "FIELD", target = "Lnet/minecraft/src/GameSettings;smoothCamera:Z"))
+    public boolean tensor_onUpdateCameraAndRenderSmoothCamera(GameSettings instance) {
+        if (this.failsNullCheck()) {
+            return instance.smoothCamera;
+        }
+
+        SmoothCameraEvent event = EventCache.getCachedEvent(SmoothCameraEvent.class).call();
+
+        if (event.isCancelled()) {
+            return true;
+        } else {
+            return instance.smoothCamera;
+        }
     }
 }
