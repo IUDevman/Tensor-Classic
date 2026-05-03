@@ -121,14 +121,17 @@ public final class CapeManager implements Manager {
 
     public void clearCapedPlayers() {
         this.getCapedPlayers().clear();
+        this.refreshCapeRenders();
     }
 
     public void addCapedPlayer(String name) {
         this.getCapedPlayers().add(name.toLowerCase());
+        this.refreshCapeRenders();
     }
 
     public void removeCapedPlayer(String name) {
         this.getCapedPlayers().remove(name.toLowerCase());
+        this.refreshCapeRenders();
     }
 
     public boolean isCapedPlayer(EntityOtherPlayerMP entity) {
@@ -147,5 +150,17 @@ public final class CapeManager implements Manager {
         Capes capes = this.getHackManager().getHack(Capes.class);
 
         return capes != null && capes.isEnabled();
+    }
+
+    private void refreshCapeRenders() {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        Capes capes = this.getHackManager().getHack(Capes.class);
+
+        if (capes != null && capes.isEnabled()) {
+            capes.refreshCapes();
+        }
     }
 }

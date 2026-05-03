@@ -21,7 +21,7 @@ public final class Capes extends Hack {
             return;
         }
 
-        this.updateCapes();
+        this.refreshCapes();
     }
 
     @Override
@@ -30,10 +30,10 @@ public final class Capes extends Hack {
             return;
         }
 
-        this.updateCapes();
+        this.refreshCapes();
     }
 
-    private void updateCapes() {
+    public void refreshCapes() {
         List entities = this.getWorld().loadedEntityList;
 
         for (Object object : entities) {
