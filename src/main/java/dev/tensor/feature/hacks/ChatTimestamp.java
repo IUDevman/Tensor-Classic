@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -47,10 +48,10 @@ public final class ChatTimestamp extends Hack {
 
             String rightSeparator = this.getSeparator(false);
 
-            this.sendMessageWithLinesColor(this.getColor((ChatColor) this.separatorColor.getValue())
-                    + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
-                    + timeStamp + this.getColor((ChatColor) this.separatorColor.getValue())
-                    + rightSeparator + (this.space.getValue() ? " " : "") + this.getColor(ChatColor.DEFAULT)
+            this.sendMessageWithLinesColor(((ChatColor) this.separatorColor.getValue()).text()
+                    + leftSeparator + ((ChatColor) this.dateColor.getValue()).text()
+                    + timeStamp + ((ChatColor) this.separatorColor.getValue()).text()
+                    + rightSeparator + (this.space.getValue() ? " " : "") + ChatColor.DEFAULT.text()
                     + this.colorPrev + this.messageCutPrev);
 
             this.messageCutPrev = "";
@@ -107,10 +108,10 @@ public final class ChatTimestamp extends Hack {
             }
         }
 
-        event.message = this.getColor((ChatColor) this.separatorColor.getValue())
-                + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
-                + timeStamp + this.getColor((ChatColor) this.separatorColor.getValue())
-                + rightSeparator + (this.space.getValue() ? " " : "") + this.getColor(ChatColor.DEFAULT)
+        event.message = ((ChatColor) this.separatorColor.getValue()).text()
+                + leftSeparator + ((ChatColor) this.dateColor.getValue()).text()
+                + timeStamp + ((ChatColor) this.separatorColor.getValue()).text()
+                + rightSeparator + (this.space.getValue() ? " " : "") + ChatColor.DEFAULT.text()
                 + event.message;
 
         if (this.getFontRenderer().getStringWidth(event.message) > 320) {

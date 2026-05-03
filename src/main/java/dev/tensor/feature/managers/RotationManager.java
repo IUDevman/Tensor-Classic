@@ -52,7 +52,7 @@ public final class RotationManager implements Manager {
             case None:
                 break;
             case Intercept:
-                this.rotationQueue.put(priority.getValue(), rotation);
+                this.rotationQueue.put(priority.value(), rotation);
                 break;
             case Packet:
                 this.sendPacketBypass(new Packet12PlayerLook(rotation.yaw, rotation.pitch, true));

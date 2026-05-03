@@ -223,7 +223,7 @@ public final class Platform extends Render3DHack {
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
-                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.Platform);
+                    this.getRotationManager().addToRotationQueue(this.getRotationTo(dirX, dirY, dirZ), RotationPriority.Platform);
                 }
 
                 if (this.swing.getValue()) {

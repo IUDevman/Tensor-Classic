@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -55,7 +56,7 @@ public final class BooleanSettingElement extends SettingElement {
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.booleanSetting.getName() + " (" + (this.booleanSetting.getValue() ? this.getColor(ChatColor.GREEN) + "True" : this.getColor(ChatColor.RED) + "False") + this.getColor(ChatColor.DEFAULT) + ")";
+        String text = this.booleanSetting.getName() + " (" + (this.booleanSetting.getValue() ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False") + ChatColor.DEFAULT.text() + ")";
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 

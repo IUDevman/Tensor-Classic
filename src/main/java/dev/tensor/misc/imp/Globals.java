@@ -9,6 +9,7 @@ import dev.tensor.feature.hacks.HephFreecam;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
@@ -162,82 +163,8 @@ public interface Globals {
         this.getMinecraft().renderGlobal.loadRenderers();
     }
 
-    default String getServerIP() {
-        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostName();
-
-        if (hostName == null) {
-            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostAddress();
-        }
-
-        if (hostName == null) {
-            return "Penis";
-        }
-
-        return hostName;
-    }
-
-    default String getColor(ChatColor COLOR) {
-        switch (COLOR) {
-            case DARK_RED:
-                return "§4";
-            case RED:
-                return "§c";
-            case GOLD:
-                return "§6";
-            case YELLOW:
-                return "§e";
-            case DARK_GREEN:
-                return "§2";
-            case GREEN:
-                return "§a";
-            case AQUA:
-                return "§b";
-            case DARK_AQUA:
-                return "§3";
-            case BLUE:
-                return "§9";
-            case DARK_BLUE:
-                return "§1";
-            case PINK:
-                return "§d";
-            case PURPLE:
-                return "§5";
-            case LIGHT_GRAY:
-                return "§7";
-            case GRAY:
-                return "§8";
-            case DARK_GRAY:
-                return "§9";
-            case BLACK:
-                return "§0";
-            default:
-                return "§f";
-        }
-    }
-
-    enum ChatColor {
-        DARK_RED,
-        RED,
-        GOLD,
-        YELLOW,
-        DARK_GREEN,
-        GREEN,
-        AQUA,
-        DARK_AQUA,
-        BLUE,
-        DARK_BLUE,
-        PINK,
-        PURPLE,
-        LIGHT_GRAY,
-        GRAY,
-        DARK_GRAY,
-        BLACK,
-        WHITE,
-        DEFAULT
-    }
-
     default String getHeader() {
-        return this.getColor(ChatColor.LIGHT_GRAY) + "[" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_NAME + this.getColor(ChatColor.LIGHT_GRAY) + "] " + this.getColor(ChatColor.DEFAULT);
+        return ChatColor.LIGHT_GRAY.text() + "[" + ChatColor.YELLOW.text() + TensorClassic.MOD_NAME + ChatColor.LIGHT_GRAY.text() + "] " + ChatColor.DEFAULT.text();
     }
 
     default void sendClientMessageWithHeader(String message) {
@@ -283,11 +210,11 @@ public interface Globals {
         }
     }
 
-    default Rotation pitchAndYawTo(Entity entity) {
-        return this.pitchAndYawTo(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
+    default Rotation getRotationTo(Entity entity) {
+        return this.getRotationTo(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ);
     }
 
-    default Rotation pitchAndYawTo(double x, double y, double z) {
+    default Rotation getRotationTo(double x, double y, double z) {
         double[] deltas = this.returnDeltas(x, y, z);
 
         double angle = 180 / Math.PI;
@@ -327,7 +254,7 @@ public interface Globals {
         return Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2);
     }
 
-    default double getDistanceSqWithFreecam(double x, double y, double z) {
+    default double getDistanceSqWithFreecam(double targetX, double targetY, double targetZ) {
         double pX = this.getPlayer().posX;
         double pY = this.getPlayer().posY;
         double pZ = this.getPlayer().posZ;
@@ -340,9 +267,9 @@ public interface Globals {
             pZ = freecam.oldZ;
         }
 
-        double dX = x - pX;
-        double dY = y - pY;
-        double dZ = z - pZ;
+        double dX = targetX - pX;
+        double dY = targetY - pY;
+        double dZ = targetZ - pZ;
 
         return this.getDistanceSq(dX, dY, dZ);
     }
@@ -356,6 +283,28 @@ public interface Globals {
                 {startX + 1, startY, startZ, 4},
                 {startX - 1, startY, startZ, 5}
         };
+    }
+
+    default String getWaypointServerName() {
+        if (!this.isMultiplayer()) {
+            return "Singleplayer";
+        }
+
+        return this.getServerIP();
+    }
+
+    default String getServerIP() {
+        String hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostName();
+
+        if (hostName == null) {
+            hostName = ((NetworkManagerAccessor) ((NetClientHandlerAccessor) this.getMinecraft().getSendQueue()).tensor_getNetManager()).tensor_getNetworkSocket().getInetAddress().getHostAddress();
+        }
+
+        if (hostName == null) {
+            return "Penis";
+        }
+
+        return hostName;
     }
 
     default boolean isBlockOnBullshitListForSwap(int blockID) {

@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import net.minecraft.src.GuiGameOver;
@@ -25,10 +26,10 @@ public final class DeathCoords extends Hack {
         if (this.getMinecraft().currentScreen instanceof GuiGameOver) {
 
             if (!this.messaged) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "You died at x = " + this.getColor(ChatColor.AQUA)
-                        + ((int) this.getPlayer().posX) + this.getColor(ChatColor.RED) + ", y = " + this.getColor(ChatColor.AQUA)
-                        + ((int) this.getPlayer().posY) + this.getColor(ChatColor.RED) + ", z = " + this.getColor(ChatColor.AQUA)
-                        + ((int) this.getPlayer().posZ) + this.getColor(ChatColor.RED) + "!");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + "You died at x = " + ChatColor.AQUA.text()
+                        + ((int) this.getPlayer().posX) + ChatColor.RED.text() + ", y = " + ChatColor.AQUA.text()
+                        + ((int) this.getPlayer().posY) + ChatColor.RED.text() + ", z = " + ChatColor.AQUA.text()
+                        + ((int) this.getPlayer().posZ) + ChatColor.RED.text() + "!");
             }
 
             this.messaged = true;

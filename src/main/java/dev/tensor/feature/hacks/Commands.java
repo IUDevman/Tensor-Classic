@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
@@ -18,7 +19,7 @@ public final class Commands extends Hack {
         public void setValue(String VALUE) {
             if (VALUE.length() > 1) {
 
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "Prefix: Failed to set prefix '" + this.getColor(ChatColor.AQUA) + VALUE + this.getColor(ChatColor.RED) + "' (Length > 1)!");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + "Prefix: Failed to set prefix '" + ChatColor.AQUA.text() + VALUE + ChatColor.RED.text() + "' (Length > 1)!");
                 return;
             }
 

@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -16,14 +17,14 @@ public final class TCPNoDelay extends Hack {
     @Override
     public void onEnable(boolean isNull) {
         if (!isNull && this.isMultiplayer()) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "TCPNoDelay: Relog to fully enable hack!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + "TCPNoDelay: Relog to fully enable hack!");
         }
     }
 
     @Override
     public void onDisable(boolean isNull) {
         if (!isNull && this.isMultiplayer()) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "TCPNoDelay: Relog to fully disable hack!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + "TCPNoDelay: Relog to fully disable hack!");
         }
     }
 

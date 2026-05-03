@@ -335,7 +335,7 @@ public final class Nuker extends Render3DHack {
     private void breakBlock(BlockCoords blockCoords) {
         if (this.INSTANT_BLOCKS.containsBlock(blockCoords.block)) {
             if (this.rotate.getValue()) {
-                this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                this.getRotationManager().addToRotationQueue(this.getRotationTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
             }
 
             this.swapPacket14BlockDigStatus(new Packet14BlockDig(0, blockCoords.x, blockCoords.y, blockCoords.z, 0), blockCoords.block.blockID);
@@ -365,7 +365,7 @@ public final class Nuker extends Render3DHack {
                     double timeMS = timeSeconds * 1000;
 
                     if (this.rotate.getValue()) {
-                        this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                        this.getRotationManager().addToRotationQueue(this.getRotationTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                     }
 
                     boolean shears = false;
@@ -392,7 +392,7 @@ public final class Nuker extends Render3DHack {
 
                     if (!shears) {
                         if (this.rotate.getValue()) {
-                            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                            this.getRotationManager().addToRotationQueue(this.getRotationTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                         }
 
                         int prevItem1 = this.getInventory().currentItem;
@@ -418,7 +418,7 @@ public final class Nuker extends Render3DHack {
                 break;
             case Instant:
                 if (this.rotate.getValue()) {
-                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
+                    this.getRotationManager().addToRotationQueue(this.getRotationTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
                 }
 
                 int prevItem = this.getInventory().currentItem;

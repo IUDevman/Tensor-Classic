@@ -5,6 +5,7 @@ import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.gui.TabGUIEntry;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
@@ -62,7 +63,7 @@ public final class TabGUI extends Hack implements HUDObject {
         this.page.setValue(page);
     }
 
-    private final String clientMessage = TensorClassic.MOD_NAME + " " + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + " >>> By Hoosiers :)";
+    private final String clientMessage = TensorClassic.MOD_NAME + " " + ChatColor.YELLOW.text() + TensorClassic.MOD_VERSION + ChatColor.DEFAULT.text() + " >>> By Hoosiers :)";
 
     private final ArrayList<TabGUIEntry> tabGUIEntries = new ArrayList<>();
 

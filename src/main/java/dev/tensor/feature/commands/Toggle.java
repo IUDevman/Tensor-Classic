@@ -1,5 +1,6 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -38,27 +39,27 @@ public final class Toggle implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle hack (no name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to toggle hack (no name inputted)!");
             return;
         }
 
         String firstEntry = ARGS[0];
 
         if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to toggle hack (no name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to toggle hack (no name inputted)!");
             return;
         }
 
         Hack hack = this.getHackManager().getHack(firstEntry);
 
         if (hack == null) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to find hack '" + this.getColor(ChatColor.AQUA) + firstEntry + this.getColor(ChatColor.RED) + "' to toggle!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to find hack '" + ChatColor.AQUA.text() + firstEntry + ChatColor.RED.text() + "' to toggle!");
             return;
         }
 
         hack.toggle();
 
-        String enabled = (hack.isEnabled() ? this.getColor(ChatColor.GREEN) + "Enabled" : this.getColor(ChatColor.RED) + "Disabled");
-        this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Toggled hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "' to " + enabled + this.getColor(ChatColor.DEFAULT) + "!");
+        String enabled = (hack.isEnabled() ? ChatColor.GREEN.text() + "Enabled" : ChatColor.RED.text() + "Disabled");
+        this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Toggled hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "' to " + enabled + ChatColor.DEFAULT.text() + "!");
     }
 }

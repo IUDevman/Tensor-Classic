@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.setting.Setting;
 import net.minecraft.src.Block;
@@ -42,7 +43,7 @@ public class BlockListSetting implements Setting<BlockList> {
 
     @Override
     public String getValueString(boolean color) {
-        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue().saveBlockListToString();
+        return (color ? ChatColor.AQUA.text() : "") + this.getValue().saveBlockListToString();
     }
 
     @Deprecated

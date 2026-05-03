@@ -5,6 +5,7 @@ import dev.tensor.backend.events.variable.Packet7UseEntityEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -109,7 +110,7 @@ public final class InfiniteDurability extends Hack {
 
         if (mainInventoryItem < 9) {
             if (this.errorMessage.getValue() && System.currentTimeMillis() - this.prevTime > 5000) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "InfiniteDurability: Will not work without a tool of the same type (and >= level) in slot 9 (top left inventory slot)! Disable this message in settings.");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + "InfiniteDurability: Will not work without a tool of the same type (and >= level) in slot 9 (top left inventory slot)! Disable this message in settings.");
                 this.prevTime = System.currentTimeMillis();
             }
 

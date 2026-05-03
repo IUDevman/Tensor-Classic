@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.MouseEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -44,13 +45,13 @@ public final class MiddleClickFriend extends Hack {
 
         if (!isFriend) {
             this.getFriendManager().addFriend(playerMP);
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + "Added friend '" + this.getColor(ChatColor.GREEN) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' to the friends list!");
+            this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + "Added friend '" + ChatColor.GREEN.text() + playerMP.username + ChatColor.DEFAULT.text() + "' to the friends list!");
             return;
         }
 
         if (!this.onlyAdd.getValue()) {
             this.getFriendManager().removeFriend(playerMP);
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + "Removed friend '" + this.getColor(ChatColor.RED) + playerMP.username + this.getColor(ChatColor.DEFAULT) + "' from the friends list!");
+            this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + "Removed friend '" + ChatColor.RED.text() + playerMP.username + ChatColor.DEFAULT.text() + "' from the friends list!");
         }
     }
 }

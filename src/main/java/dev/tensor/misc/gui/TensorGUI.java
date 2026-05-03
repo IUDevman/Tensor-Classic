@@ -9,6 +9,7 @@ import dev.tensor.misc.gui.imp.elements.CategoryElement;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -129,7 +130,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + 1, clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + 1, clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + this.titleHeight, clickGUI.fillColor.getValue().getRGB());
 
-        String name = TensorClassic.MOD_NAME + " (" + this.getColor(ChatColor.YELLOW) + TensorClassic.MOD_VERSION + this.getColor(ChatColor.DEFAULT) + ")";
+        String name = TensorClassic.MOD_NAME + " (" + ChatColor.YELLOW.text() + TensorClassic.MOD_VERSION + ChatColor.DEFAULT.text() + ")";
         this.drawCenteredString(name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue()));

@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.NumberSetting;
 import dev.tensor.misc.imp.setting.Setting;
 
@@ -50,7 +51,7 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
 
     @Override
     public String getValueString(boolean color) {
-        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getFormattedFromValue(this.getValue());
+        return (color ? ChatColor.AQUA.text() : "") + this.getFormattedFromValue(this.getValue());
     }
 
     @Override

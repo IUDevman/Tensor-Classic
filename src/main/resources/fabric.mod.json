@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "tensorclassic",
   "version": "${version}",
-
   "name": "Tensor Classic",
   "description": "Hacked Client for b1.7.3 using Babric.",
   "authors": [
@@ -12,10 +11,8 @@
     "homepage": "https://github.com/IUDevman",
     "sources": "https://github.com/IUDevman/Tensor-Classic"
   },
-
   "license": "Closed_Source",
   "icon": "assets/tensorclassic/icon.png",
-
   "environment": "*",
   "entrypoints": {
     "main": [

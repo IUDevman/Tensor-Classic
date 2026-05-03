@@ -21,7 +21,6 @@ public interface Render3D extends Render2D {
         GL11.glPushMatrix();
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        //GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_LINE_SMOOTH);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -33,7 +32,6 @@ public interface Render3D extends Render2D {
         GL11.glDisable(GL11.GL_LINE_SMOOTH);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_FOG);
-        //GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
         GL11.glDisable(GL11.GL_BLEND);
@@ -149,9 +147,6 @@ public interface Render3D extends Render2D {
         Tessellator.instance.draw();
     }
 
-    RenderItem renderItem = new RenderItem();
-    RenderBlocks renderBlocks = new RenderBlocks();
-
     default void renderItem3D(ItemStack itemStack, int startX, int startY, double scale) {
         int itemID = itemStack.itemID;
         int itemIcon = itemStack.getIconIndex();
@@ -177,15 +172,15 @@ public interface Render3D extends Render2D {
             float g = (float) (damageColor >> 8 & 255) / 255.0F;
             float b = (float) (damageColor & 255) / 255.0F;
 
-            if (renderItem.field_27004_a) {
+            if (RenderStatic.tensor_renderItem.field_27004_a) {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 
-            renderBlocks.field_31088_b = renderItem.field_27004_a;
-            renderBlocks.renderBlockOnInventory(Block.blocksList[itemID], itemStack.getItemDamage(), 1.0F);
-            renderBlocks.field_31088_b = true;
+            RenderStatic.tensor_renderBlocks.field_31088_b = RenderStatic.tensor_renderItem.field_27004_a;
+            RenderStatic.tensor_renderBlocks.renderBlockOnInventory(Block.blocksList[itemID], itemStack.getItemDamage(), 1.0F);
+            RenderStatic.tensor_renderBlocks.field_31088_b = true;
 
             GL11.glEnable(GL11.GL_LIGHTING);
 
@@ -210,11 +205,11 @@ public interface Render3D extends Render2D {
             float g = (float) (damageColor >> 8 & 255) / 255.0F;
             float b = (float) (damageColor & 255) / 255.0F;
 
-            if (renderItem.field_27004_a) {
+            if (RenderStatic.tensor_renderItem.field_27004_a) {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
-            renderItem.renderTexturedQuad(startX, startY + (itemID < 256 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
+            RenderStatic.tensor_renderItem.renderTexturedQuad(startX, startY + (itemID < 256 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
 
             GL11.glEnable(GL11.GL_LIGHTING);
         }

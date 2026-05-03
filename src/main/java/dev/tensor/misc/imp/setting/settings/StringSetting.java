@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.Setting;
 
 /**
@@ -41,7 +42,7 @@ public class StringSetting implements Setting<String> {
 
     @Override
     public String getValueString(boolean color) {
-        return (color ? this.getColor(ChatColor.AQUA) : "") + this.getValue();
+        return (color ? ChatColor.AQUA.text() : "") + this.getValue();
     }
 
     @Override

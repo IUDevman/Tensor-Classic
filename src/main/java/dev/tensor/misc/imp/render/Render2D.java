@@ -69,12 +69,6 @@ public interface Render2D extends Globals {
         GL11.glPopMatrix();
     }
 
-    RenderItem renderItem = new RenderItem();
-    RenderBlocks renderBlocks = new RenderBlocks();
-
-    /*
-    EXTREME JANK BELOW!!! Scaling this is HARD!
-     */
     default void renderItem(ItemStack itemStack, int startX, int startY, int itemX, int itemY, double scale, double itemScale) {
         int itemID = itemStack.itemID;
         int itemIcon = itemStack.getIconIndex();
@@ -98,15 +92,15 @@ public interface Render2D extends Globals {
             float g = (float) (damageColor >> 8 & 255) / 255.0F;
             float b = (float) (damageColor & 255) / 255.0F;
 
-            if (renderItem.field_27004_a) {
+            if (RenderStatic.tensor_renderItem.field_27004_a) {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 
-            renderBlocks.field_31088_b = renderItem.field_27004_a;
-            renderBlocks.renderBlockOnInventory(Block.blocksList[itemID], itemStack.getItemDamage(), 1.0F);
-            renderBlocks.field_31088_b = true;
+            RenderStatic.tensor_renderBlocks.field_31088_b = RenderStatic.tensor_renderItem.field_27004_a;
+            RenderStatic.tensor_renderBlocks.renderBlockOnInventory(Block.blocksList[itemID], itemStack.getItemDamage(), 1.0F);
+            RenderStatic.tensor_renderBlocks.field_31088_b = true;
 
             GL11.glPopMatrix();
 
@@ -131,11 +125,11 @@ public interface Render2D extends Globals {
             float g = (float) (damageColor >> 8 & 255) / 255.0F;
             float b = (float) (damageColor & 255) / 255.0F;
 
-            if (renderItem.field_27004_a) {
+            if (RenderStatic.tensor_renderItem.field_27004_a) {
                 GL11.glColor4f(r, g, b, 1.0F);
             }
 
-            renderItem.renderTexturedQuad(0, 0, itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
+            RenderStatic.tensor_renderItem.renderTexturedQuad(0, 0, itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
 
             GL11.glEnable(GL11.GL_LIGHTING);
         }

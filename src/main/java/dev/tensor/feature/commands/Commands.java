@@ -1,5 +1,6 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public final class Commands implements Command {
         ArrayList<Command> COMMANDS = this.getCommandManager().getCommands();
 
         if (COMMANDS.isEmpty()) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to list commands (no commands found)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to list commands (no commands found)!");
         }
 
         int pageToSend = 1;
@@ -54,12 +55,12 @@ public final class Commands implements Command {
                     pageToSend = Integer.parseInt(pageText);
 
                 } catch (Exception ignored) {
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to list commands (invalid page value inputted)!");
+                    this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to list commands (invalid page value inputted)!");
                     return;
                 }
 
                 if (pageToSend < 1) {
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to list commands (page value less than 1)!");
+                    this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to list commands (page value less than 1)!");
                     return;
                 }
             }
@@ -74,7 +75,7 @@ public final class Commands implements Command {
         int maxPages = (int) Math.ceil(pages);
 
         if (pageToSend > maxPages) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to list commands (page value greater than max page '" + this.getColor(ChatColor.AQUA) + maxPages + this.getColor(ChatColor.RED) + "'!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to list commands (page value greater than max page '" + ChatColor.AQUA.text() + maxPages + ChatColor.RED.text() + "'!");
             return;
         }
 
@@ -94,10 +95,10 @@ public final class Commands implements Command {
                     continue;
                 }
 
-                String commandString = this.getColor(ChatColor.YELLOW) + command.getName() +
-                        this.getColor(ChatColor.DEFAULT) + ": " + command.getDescription() + this.getColor(ChatColor.RED) + " Regex: " +
+                String commandString = ChatColor.YELLOW.text() + command.getName() +
+                        ChatColor.DEFAULT.text() + ": " + command.getDescription() + ChatColor.RED.text() + " Regex: " +
                         command.getRegex().replace("$", " ").replace("{name}", this.getHackManager().getHack(dev.tensor.feature.hacks.Commands.class).prefix.getValue() + command.getName()) +
-                        this.getColor(ChatColor.DEFAULT);
+                        ChatColor.DEFAULT.text();
 
                 COMMANDS_FOR_PAGE.add(commandString);
             }
@@ -106,13 +107,13 @@ public final class Commands implements Command {
         }
 
         if (pageToSend - 1 > COMMAND_PAGES.size()) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to list commands (page value greater than max page '" + this.getColor(ChatColor.AQUA) + maxPages + this.getColor(ChatColor.RED) + "'!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to list commands (page value greater than max page '" + ChatColor.AQUA.text() + maxPages + ChatColor.RED.text() + "'!");
             return;
         }
 
-        String MESSAGE_PRE = this.getName() + " (" + this.getColor(ChatColor.AQUA) +
-                COMMANDS.size() + this.getColor(ChatColor.DEFAULT) + ") (" + this.getColor(ChatColor.YELLOW) +
-                "Page " + pageToSend + "/" + maxPages + this.getColor(ChatColor.DEFAULT) + "): ";
+        String MESSAGE_PRE = this.getName() + " (" + ChatColor.AQUA.text() +
+                COMMANDS.size() + ChatColor.DEFAULT.text() + ") (" + ChatColor.YELLOW.text() +
+                "Page " + pageToSend + "/" + maxPages + ChatColor.DEFAULT.text() + "): ";
 
         this.sendClientMessageWithHeader(MESSAGE_PRE + COMMAND_PAGES.get(pageToSend - 1));
     }

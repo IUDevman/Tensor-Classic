@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -105,10 +106,10 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
 
         this.drawCenteredString(name, midX + 3, minY + 3, (Color.WHITE.getRGB()));
 
-        this.drawCenteredString("  > Red (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
-        this.drawCenteredString("  > Green (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
-        this.drawCenteredString("  > Blue (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
-        this.drawCenteredString("  > Alpha (0 -> 255) : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.disabledAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]")), midX + 3, minY + 63, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Red (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getRed() + "]"), midX + 3, minY + 18, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Green (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getGreen() + "]"), midX + 3, minY + 33, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Blue (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getBlue() + "]"), midX + 3, minY + 48, Color.WHITE.getRGB());
+        this.drawCenteredString("  > Alpha (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.disabledAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSetting.getValue().getAlpha() + "]")), midX + 3, minY + 63, Color.WHITE.getRGB());
     }
 
     @Override

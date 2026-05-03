@@ -1,6 +1,7 @@
 package dev.tensor.feature.commands;
 
 import dev.tensor.feature.hacks.Commands;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 import org.lwjgl.input.Keyboard;
@@ -44,62 +45,62 @@ public final class Options implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option (no hack name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option (no hack name inputted)!");
             return;
         }
 
         String firstEntry = ARGS[0];
 
         if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option (no hack name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option (no hack name inputted)!");
             return;
         }
 
         Hack hack = this.getHackManager().getHack(firstEntry);
 
         if (hack == null) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option for hack '" + this.getColor(ChatColor.AQUA) + firstEntry + "' (no such hack found)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option for hack '" + ChatColor.AQUA.text() + firstEntry + "' (no such hack found)!");
             return;
         }
 
         if (ARGS.length == 1) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (no option name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option for '" + ChatColor.AQUA.text() + hack.NAME + "' (no option name inputted)!");
             return;
         }
 
         String secondEntry = ARGS[1];
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (no option name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option for '" + ChatColor.AQUA.text() + hack.NAME + "' (no option name inputted)!");
             return;
         }
 
         if (secondEntry.equalsIgnoreCase("list")) {
             ArrayList<String> options = new ArrayList<>();
 
-            options.add((hack.isEnabled() ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Enabled" + this.getColor(ChatColor.DEFAULT));
-            options.add((hack.DRAWN ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Drawn" + this.getColor(ChatColor.DEFAULT));
-            options.add((hack.MESSAGES ? this.getColor(ChatColor.GREEN) : this.getColor(ChatColor.RED)) + "Messages" + this.getColor(ChatColor.DEFAULT));
-            options.add("Bind = [" + this.getColor(ChatColor.AQUA) + Keyboard.getKeyName(hack.BIND) + this.getColor(ChatColor.DEFAULT) + "]");
+            options.add((hack.isEnabled() ? ChatColor.GREEN.text() : ChatColor.RED.text()) + "Enabled" + ChatColor.DEFAULT.text());
+            options.add((hack.DRAWN ? ChatColor.GREEN.text() : ChatColor.RED.text()) + "Drawn" + ChatColor.DEFAULT.text());
+            options.add((hack.MESSAGES ? ChatColor.GREEN.text() : ChatColor.RED.text()) + "Messages" + ChatColor.DEFAULT.text());
+            options.add("Bind = [" + ChatColor.AQUA.text() + Keyboard.getKeyName(hack.BIND) + ChatColor.DEFAULT.text() + "]");
 
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "' options list: " + options);
+            this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "' options list: " + options);
             return;
         }
 
         if (!this.acceptedOptions().contains(secondEntry.toLowerCase())) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (invalid option name inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option '" + ChatColor.AQUA.text() + secondEntry + "' for '" + ChatColor.AQUA.text() + hack.NAME + "' (invalid option name inputted)!");
             return;
         }
 
         if (ARGS.length == 2) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (no option value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option '" + ChatColor.AQUA.text() + secondEntry + "' for '" + ChatColor.AQUA.text() + hack.NAME + "' (no option value inputted)!");
             return;
         }
 
         String thirdEntry = ARGS[2];
 
         if (thirdEntry == null || thirdEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + "' (no option value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option '" + ChatColor.AQUA.text() + secondEntry + "' for '" + ChatColor.AQUA.text() + hack.NAME + "' (no option value inputted)!");
             return;
         }
 
@@ -107,24 +108,24 @@ public final class Options implements Command {
             switch (secondEntry.toLowerCase()) {
                 case "enabled":
                     hack.setEnabled(Boolean.parseBoolean(thirdEntry));
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Enabled" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.isEnabled() ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Set option '" + ChatColor.AQUA.text() + "Enabled" + ChatColor.DEFAULT.text() + "' to '" + (hack.isEnabled() ? ChatColor.GREEN.text() + "true" : ChatColor.RED.text() + "false") + ChatColor.DEFAULT.text() + "' for hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
                     break;
                 case "drawn":
                     hack.DRAWN = Boolean.parseBoolean(thirdEntry);
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Drawn" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.DRAWN ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Set option '" + ChatColor.AQUA.text() + "Drawn" + ChatColor.DEFAULT.text() + "' to '" + (hack.DRAWN ? ChatColor.GREEN.text() + "true" : ChatColor.RED.text() + "false") + ChatColor.DEFAULT.text() + "' for hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
                     break;
                 case "messages":
                     hack.MESSAGES = Boolean.parseBoolean(thirdEntry);
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Messages" + this.getColor(ChatColor.DEFAULT) + "' to '" + (hack.MESSAGES ? this.getColor(ChatColor.GREEN) + "true" : this.getColor(ChatColor.RED) + "false") + this.getColor(ChatColor.DEFAULT) + "' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Set option '" + ChatColor.AQUA.text() + "Messages" + ChatColor.DEFAULT.text() + "' to '" + (hack.MESSAGES ? ChatColor.GREEN.text() + "true" : ChatColor.RED.text() + "false") + ChatColor.DEFAULT.text() + "' for hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
                     break;
                 case "bind":
                     hack.BIND = Integer.parseInt(thirdEntry);
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Set option '" + this.getColor(ChatColor.AQUA) + "Bind" + this.getColor(ChatColor.DEFAULT) + "' to '[" + this.getColor(ChatColor.AQUA) + Keyboard.getKeyName(hack.BIND) + this.getColor(ChatColor.DEFAULT) + "]' for hack '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.DEFAULT) + "'!");
+                    this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Set option '" + ChatColor.AQUA.text() + "Bind" + ChatColor.DEFAULT.text() + "' to '[" + ChatColor.AQUA.text() + Keyboard.getKeyName(hack.BIND) + ChatColor.DEFAULT.text() + "]' for hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
                     break;
             }
 
         } catch (Exception ignored) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to set hack option '" + this.getColor(ChatColor.AQUA) + secondEntry + "' for '" + this.getColor(ChatColor.AQUA) + hack.NAME + this.getColor(ChatColor.RED) + "' (invalid option value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack option '" + ChatColor.AQUA.text() + secondEntry + "' for '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (invalid option value inputted)!");
         }
     }
 

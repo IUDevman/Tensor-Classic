@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -99,7 +100,7 @@ public final class VisualRange extends Hack {
 
     private void sendVRMessage(boolean friend, String name, BlockPos position, boolean firstSeen) {
         String player = (friend ? "Friend" : "Player") + " ";
-        String seen = " has " + (firstSeen ? this.getColor(ChatColor.GREEN) + "entered" : this.getColor(ChatColor.RED) + "left") + this.getColor(ChatColor.DEFAULT) + " your visual range ";
+        String seen = " has " + (firstSeen ? ChatColor.GREEN.text() + "entered" : ChatColor.RED.text() + "left") + ChatColor.DEFAULT.text() + " your visual range ";
 
         double playerX = this.getPlayer().posX;
         double playerY = this.getPlayer().posY;
@@ -115,12 +116,12 @@ public final class VisualRange extends Hack {
 
         int distance = (int) this.getDistance(position.x - playerX, position.y - playerY, position.z - playerZ);
 
-        String coords = "at [" + this.getColor(ChatColor.YELLOW) + position.x + this.getColor(ChatColor.DEFAULT) +
-                ", " + this.getColor(ChatColor.YELLOW) + position.y + this.getColor(ChatColor.DEFAULT) + ", " +
-                this.getColor(ChatColor.YELLOW) + position.z + this.getColor(ChatColor.DEFAULT) + "; d = " +
-                this.getColor(ChatColor.YELLOW) + distance + this.getColor(ChatColor.DEFAULT) + "]";
+        String coords = "at [" + ChatColor.YELLOW.text() + position.x + ChatColor.DEFAULT.text() +
+                ", " + ChatColor.YELLOW.text() + position.y + ChatColor.DEFAULT.text() + ", " +
+                ChatColor.YELLOW.text() + position.z + ChatColor.DEFAULT.text() + "; d = " +
+                ChatColor.YELLOW.text() + distance + ChatColor.DEFAULT.text() + "]";
 
-        String toSend = player + (friend ? this.getColor((ChatColor) this.friendColor.getValue()) : this.getColor((ChatColor) this.playerColor.getValue())) + name + this.getColor(ChatColor.DEFAULT) + seen + coords + "!";
+        String toSend = player + (friend ? ((ChatColor) this.friendColor.getValue()).text() : ((ChatColor) this.playerColor.getValue()).text()) + name + ChatColor.DEFAULT.text() + seen + coords + "!";
 
         this.sendClientMessageWithHeader(toSend);
     }

@@ -1,5 +1,6 @@
 package dev.tensor.feature.hacks.hud;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
@@ -81,9 +82,9 @@ public final class Time extends Hack implements HUDObject {
 
         String rightSeparator = this.getSeparator(false);
 
-        String value = this.getColor((ChatColor) this.separatorColor.getValue())
-                + leftSeparator + this.getColor((ChatColor) this.dateColor.getValue())
-                + timeStamp + this.getColor((ChatColor) this.separatorColor.getValue())
+        String value = ((ChatColor) this.separatorColor.getValue()).text()
+                + leftSeparator + ((ChatColor) this.dateColor.getValue()).text()
+                + timeStamp + ((ChatColor) this.separatorColor.getValue()).text()
                 + rightSeparator;
 
         this.drawString(value, this.getOffSetX(value), 1, Color.WHITE.getRGB());

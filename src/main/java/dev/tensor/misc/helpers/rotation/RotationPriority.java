@@ -6,7 +6,6 @@ package dev.tensor.misc.helpers.rotation;
  */
 
 public enum RotationPriority {
-
     Platform(1),
     Scaffold(2),
     Nuker(3),
@@ -18,7 +17,7 @@ public enum RotationPriority {
         this.value = value;
     }
 
-    public int getValue() {
+    public int value() {
         return this.value;
     }
 }

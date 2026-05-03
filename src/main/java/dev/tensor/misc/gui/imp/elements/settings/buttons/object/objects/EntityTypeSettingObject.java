@@ -3,6 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.EntityTypeListSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -63,7 +64,7 @@ public final class EntityTypeSettingObject implements ButtonSettingObject {
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
 
-        this.drawString(this.value + " (" + (this.isEnabled() ? this.getColor(ChatColor.GREEN) + "True" : this.getColor(ChatColor.RED) + "False") + this.getColor(ChatColor.DEFAULT) + ")", this.getPosX() + 1, this.getPosY() + 3, Color.WHITE.getRGB());
+        this.drawString(this.value + " (" + (this.isEnabled() ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False") + ChatColor.DEFAULT.text() + ")", this.getPosX() + 1, this.getPosY() + 3, Color.WHITE.getRGB());
     }
 
     @Override

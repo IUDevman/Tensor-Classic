@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.LightValueEvent;
 import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -30,7 +31,7 @@ public final class Xray extends Hack {
                 this.resetWorld();
 
                 if (this.getMinecraft().gameSettings.advancedOpengl && value) {
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+                    this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
                 }
             }
         }
@@ -55,7 +56,7 @@ public final class Xray extends Hack {
                 this.resetWorld();
 
                 if (this.getMinecraft().gameSettings.advancedOpengl && value) {
-                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+                    this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
                 }
             }
         }
@@ -96,7 +97,7 @@ public final class Xray extends Hack {
             this.resetWorld();
 
             if (this.getMinecraft().gameSettings.advancedOpengl && this.opacity.getValue()) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
             }
         }
     }

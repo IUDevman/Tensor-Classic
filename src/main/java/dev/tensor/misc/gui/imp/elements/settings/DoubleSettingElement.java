@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
@@ -68,7 +69,7 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMin()) + " -> " + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()) + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValueString(false));
+        String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMin()) + " -> " + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()) + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValueString(false));
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 

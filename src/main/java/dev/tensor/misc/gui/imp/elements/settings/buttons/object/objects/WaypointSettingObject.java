@@ -3,6 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.WaypointListSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.waypoint.Waypoint;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -69,9 +70,9 @@ public final class WaypointSettingObject implements ButtonSettingObject {
         this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY() + 25, this.getPosX() + this.getWidth(), this.getPosY() + 27, outLineColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY() + 27, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB());
 
-        this.drawString("Name : " + this.getColor(ChatColor.LIGHT_GRAY) + this.waypoint.getName(), this.getPosX() + 3, this.getPosY() + 3, Color.WHITE.getRGB());
-        this.drawString("Coordinates : X = " + this.getColor(ChatColor.YELLOW) + this.waypoint.getX() + this.getColor(ChatColor.DEFAULT) + ", Y = " + this.getColor(ChatColor.YELLOW) + this.waypoint.getY() + this.getColor(ChatColor.DEFAULT) + ", Z = " + this.getColor(ChatColor.YELLOW) + this.waypoint.getZ(), this.getPosX() + 3, this.getPosY() + 15, Color.WHITE.getRGB());
-        this.drawString("Dimension : " + (!this.waypoint.isOverworld() ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld"), this.getPosX() + 3, this.getPosY() + 27, Color.WHITE.getRGB());
+        this.drawString("Name : " + ChatColor.LIGHT_GRAY.text() + this.waypoint.getName(), this.getPosX() + 3, this.getPosY() + 3, Color.WHITE.getRGB());
+        this.drawString("Coordinates : X = " + ChatColor.YELLOW.text() + this.waypoint.getX() + ChatColor.DEFAULT.text() + ", Y = " + ChatColor.YELLOW.text() + this.waypoint.getY() + ChatColor.DEFAULT.text() + ", Z = " + ChatColor.YELLOW.text() + this.waypoint.getZ(), this.getPosX() + 3, this.getPosY() + 15, Color.WHITE.getRGB());
+        this.drawString("Dimension : " + (!this.waypoint.isOverworld() ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 3, this.getPosY() + 27, Color.WHITE.getRGB());
         this.drawString("Server : " + this.waypoint.getServer(), this.getPosX() + 3, this.getPosY() + 39, Color.WHITE.getRGB());
 
         this.drawCenteredString(this.waypoint.isEnabled() ? ">> Enabled <<" : ">> Disabled <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 8, Color.YELLOW.getRGB());

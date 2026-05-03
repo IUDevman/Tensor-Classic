@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.ButtonSetting;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.WaypointSettingObject;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.waypoint.Waypoint;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.WaypointListSetting;
@@ -121,14 +122,14 @@ public final class WaypointListSettingButton implements ButtonSetting {
         this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleHeight + 55, this.alreadyHasWaypointName ? this.hoveredOnAdd ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB() : this.hoveredOnAdd ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB());
         this.drawRectangle(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleHeight + 55, outLineColor.getRGB());
         this.drawCenteredString(">> Add <<", this.getPosX() + 50 - (this.getFontRenderer().getStringWidth(">> Add <<") / 2), this.getPosY() + this.tensorGUI.titleHeight + 24, Color.YELLOW.getRGB());
-        this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? this.getColor(ChatColor.RED) : this.getColor(ChatColor.LIGHT_GRAY)) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Dimension : " + (this.getWorld().worldProvider.isHellWorld ? this.getColor(ChatColor.RED) + "Nether" : this.getColor(ChatColor.GREEN) + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.WHITE.getRGB());
-        this.drawString("Server : " + (this.isMultiplayer() ? this.getServerIP() : "Singleplayer"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.WHITE.getRGB());
-        this.drawString("Enabled : " + (this.enabledValue ? this.getColor(ChatColor.GREEN) + "True" : this.getColor(ChatColor.RED) + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 41, Color.WHITE.getRGB());
+        this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? ChatColor.RED.text() : ChatColor.LIGHT_GRAY.text()) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
+        this.drawString("Dimension : " + (this.getWorld().worldProvider.isHellWorld ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.WHITE.getRGB());
+        this.drawString("Server : " + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.WHITE.getRGB());
+        this.drawString("Enabled : " + (this.enabledValue ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 41, Color.WHITE.getRGB());
 
-        this.drawString("X : " + this.getColor(ChatColor.LIGHT_GRAY) + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Y : " + this.getColor(ChatColor.LIGHT_GRAY) + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.YELLOW.getRGB());
-        this.drawString("Z : " + this.getColor(ChatColor.LIGHT_GRAY) + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.YELLOW.getRGB());
+        this.drawString("X : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
+        this.drawString("Y : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.YELLOW.getRGB());
+        this.drawString("Z : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.YELLOW.getRGB());
         this.drawString("Current Position", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 41, Color.YELLOW.getRGB());
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -553,7 +554,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
             this.nameValue = "New Waypoint";
         }
 
-        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer").stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
+        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName()).stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
 
         if (waypointFound != null) {
             this.alreadyHasWaypointName = true;
@@ -565,7 +566,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         int y = Integer.parseInt(this.yValue);
         int z = Integer.parseInt(this.zValue);
 
-        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.getWorld().worldProvider.isHellWorld, this.isMultiplayer() ? this.getServerIP() : "Singleplayer");
+        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName());
         waypoint.setEnabled(enabledValue);
 
         int size = this.waypointSettingObjects.size();

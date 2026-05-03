@@ -1,5 +1,6 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 
 /**
@@ -37,27 +38,27 @@ public final class Config implements Command {
     public void onCommand(String[] ARGS) {
 
         if (ARGS == null || ARGS.length == 0) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (no value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to save or reload config (no value inputted)!");
             return;
         }
 
         String firstEntry = ARGS[0];
 
         if (firstEntry == null || firstEntry.equalsIgnoreCase(" ")) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (no value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to save or reload config (no value inputted)!");
             return;
         }
 
         if (firstEntry.equalsIgnoreCase("save")) {
             this.getTensor().saveManagers();
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Saved config!");
+            this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Saved config!");
 
         } else if (firstEntry.equalsIgnoreCase("reload")) {
             this.getTensor().restartManagers(false);
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.DEFAULT) + this.getName() + ": Reloaded config!");
+            this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Reloaded config!");
 
         } else {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to save or reload config (unknown value inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to save or reload config (unknown value inputted)!");
         }
     }
 }

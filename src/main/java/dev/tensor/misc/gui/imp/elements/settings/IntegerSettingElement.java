@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
 
@@ -67,7 +68,7 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String text = this.integerSetting.getName() + " (" + this.integerSetting.getMin() + " -> " + this.integerSetting.getMax() + ") : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.integerSetting.getValue());
+        String text = this.integerSetting.getName() + " (" + this.integerSetting.getMin() + " -> " + this.integerSetting.getMax() + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.integerSetting.getValue());
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 

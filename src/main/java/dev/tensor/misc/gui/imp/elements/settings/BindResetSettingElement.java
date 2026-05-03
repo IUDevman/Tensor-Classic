@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -70,10 +71,10 @@ public final class BindResetSettingElement extends SettingElement implements Key
         this.drawRectangle(maxX - 1, minY + 1, maxX, maxY, outLineColor.getRGB());
         this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
 
-        String text = "Keybind : " + this.getColor(ChatColor.LIGHT_GRAY) + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
+        String text = "Keybind : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
         this.drawCenteredString(text, midX, minY + 3, Color.YELLOW.getRGB());
 
-        this.drawCenteredString(this.getColor(ChatColor.LIGHT_GRAY) + "Reset", midX, minY + 18, Color.WHITE.getRGB());
+        this.drawCenteredString(ChatColor.LIGHT_GRAY.text() + "Reset", midX, minY + 18, Color.WHITE.getRGB());
     }
 
     @Override

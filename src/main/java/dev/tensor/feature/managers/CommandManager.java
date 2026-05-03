@@ -5,6 +5,7 @@ import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.command.Command;
 import org.slf4j.Logger;
@@ -118,7 +119,7 @@ public final class CommandManager implements Manager {
         if (ARGS.startsWith(PREFIX)) {
 
             if (ARGS.equalsIgnoreCase(PREFIX)) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command name inputted)!");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to dispatch command (no command name inputted)!");
                 return true;
             }
 
@@ -157,10 +158,10 @@ public final class CommandManager implements Manager {
                                 if (!message.isEmpty()) {
                                     command.onCommand(message);
                                 } else {
-                                    this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command '" + this.getColor(ChatColor.AQUA) + command.getName() + this.getColor(ChatColor.RED) + "' (no message inputted)!");
+                                    this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to dispatch command '" + ChatColor.AQUA.text() + command.getName() + ChatColor.RED.text() + "' (no message inputted)!");
                                 }
                             } else {
-                                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command '" + this.getColor(ChatColor.AQUA) + command.getName() + this.getColor(ChatColor.RED) + "' (no message inputted)!");
+                                this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to dispatch command '" + ChatColor.AQUA.text() + command.getName() + ChatColor.RED.text() + "' (no message inputted)!");
                             }
 
                             HAS_DISPATCHED.set(true);
@@ -177,7 +178,7 @@ public final class CommandManager implements Manager {
             });
 
             if (!HAS_DISPATCHED.get()) {
-                this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to dispatch command (no command found for '" + this.getColor(ChatColor.AQUA) + ARGS_1[0] + this.getColor(ChatColor.RED) + "')!");
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to dispatch command (no command found for '" + ChatColor.AQUA.text() + ARGS_1[0] + ChatColor.RED.text() + "')!");
             }
 
             return true;

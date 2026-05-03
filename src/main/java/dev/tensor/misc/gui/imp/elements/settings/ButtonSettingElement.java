@@ -6,6 +6,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.*;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.*;
 
@@ -77,7 +78,7 @@ public final class ButtonSettingElement extends SettingElement {
             click = "N/A";
         }
 
-        String text = this.getColor(ChatColor.YELLOW) + setting.getName() + "§r : (" + click + ")";
+        String text = ChatColor.YELLOW.text() + setting.getName() + "§r : (" + click + ")";
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
     }
 

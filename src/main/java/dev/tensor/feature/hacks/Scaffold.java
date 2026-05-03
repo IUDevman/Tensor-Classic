@@ -191,7 +191,7 @@ public final class Scaffold extends Render3DHack {
                 this.getMinecraft().playerController.sendPlaceBlock(this.getPlayer(), this.getWorld(), itemStack, dirX, dirY, dirZ, dirSide);
 
                 if (this.rotate.getValue()) {
-                    this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(dirX, dirY, dirZ), RotationPriority.Scaffold);
+                    this.getRotationManager().addToRotationQueue(this.getRotationTo(dirX, dirY, dirZ), RotationPriority.Scaffold);
                 }
 
                 if (this.swing.getValue()) {

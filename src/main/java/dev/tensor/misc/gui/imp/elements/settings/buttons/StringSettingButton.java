@@ -3,6 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.ButtonSetting;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 import net.minecraft.src.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;
@@ -95,13 +96,13 @@ public final class StringSettingButton implements ButtonSetting {
                 split1--;
             }
 
-            toWrite = "..." + this.getColor(ChatColor.LIGHT_GRAY) + this.value.substring(split1, this.value.length() - 1);
+            toWrite = "..." + ChatColor.LIGHT_GRAY.text() + this.value.substring(split1, this.value.length() - 1);
 
         } else {
-            toWrite = this.getColor(ChatColor.LIGHT_GRAY) + this.value;
+            toWrite = ChatColor.LIGHT_GRAY.text() + this.value;
         }
 
-        this.drawString("'" + toWrite + this.getColor(ChatColor.YELLOW) + (strobe ? "|" : "") + "'", this.getPosX() + 10, this.getPosY() + this.tensorGUI.titleHeight + 4 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
+        this.drawString("'" + toWrite + ChatColor.YELLOW.text() + (strobe ? "|" : "") + "'", this.getPosX() + 10, this.getPosY() + this.tensorGUI.titleHeight + 4 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
     }
 
     @Override

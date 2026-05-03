@@ -2,6 +2,7 @@ package dev.tensor.feature.commands;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.Commands;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
 
 /**
@@ -38,10 +39,10 @@ public final class Help extends SimpleCallableCommand {
         //todo: include ClickGUI bind once we make it
         String helpString = this.getName() + ": Welcome to " + TensorClassic.MOD_NAME +
                 " " + TensorClassic.MOD_VERSION + "! The default command prefix is '" +
-                this.getColor(ChatColor.AQUA) + clientPrefix +
-                this.getColor(ChatColor.DEFAULT) + "'. Type " + this.getColor(ChatColor.AQUA) +
-                clientPrefix + "Hacks" + this.getColor(ChatColor.DEFAULT) + " for the list of available hacks and " +
-                this.getColor(ChatColor.AQUA) + clientPrefix + "Commands" + this.getColor(ChatColor.DEFAULT) +
+                ChatColor.AQUA.text() + clientPrefix +
+                ChatColor.DEFAULT.text() + "'. Type " + ChatColor.AQUA.text() +
+                clientPrefix + "Hacks" + ChatColor.DEFAULT.text() + " for the list of available hacks and " +
+                ChatColor.AQUA.text() + clientPrefix + "Commands" + ChatColor.DEFAULT.text() +
                 " for the list of available commands!";
 
         this.sendClientMessageWithHeader(helpString);

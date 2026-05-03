@@ -1,5 +1,6 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 import net.minecraft.src.Packet3Chat;
 
@@ -48,7 +49,7 @@ public final class TellRaw implements Command {
     @Override
     public void onCommand(String message) {
         if (message == null) {
-            this.sendClientMessageWithHeader(this.getColor(ChatColor.RED) + this.getName() + ": Failed to send raw message (no message inputted)!");
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to send raw message (no message inputted)!");
             return;
         }
 

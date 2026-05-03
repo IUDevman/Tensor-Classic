@@ -248,7 +248,7 @@ public final class KillAura extends Render3DHack {
     private void attackEntity(Entity entity) {
 
         if (this.rotate.getValue()) {
-            this.getRotationManager().addToRotationQueue(this.pitchAndYawTo(entity), RotationPriority.KillAura);
+            this.getRotationManager().addToRotationQueue(this.getRotationTo(entity), RotationPriority.KillAura);
         }
 
         if (this.swing.getValue()) {

@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.hack;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.setting.Setting;
 import org.lwjgl.input.Keyboard;
@@ -138,9 +139,9 @@ public abstract class Hack implements Globals {
         String MESSAGE = this.NAME + " ";
 
         if (ENABLED) {
-            MESSAGE += this.getColor(ChatColor.GREEN) + "Enabled!";
+            MESSAGE += ChatColor.GREEN.text() + "Enabled!";
         } else {
-            MESSAGE += this.getColor(ChatColor.RED) + "Disabled!";
+            MESSAGE += ChatColor.RED.text() + "Disabled!";
         }
 
         this.sendClientMessageWithHeader(MESSAGE);
