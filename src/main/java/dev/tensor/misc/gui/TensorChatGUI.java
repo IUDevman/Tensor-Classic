@@ -87,9 +87,7 @@ public final class TensorChatGUI implements Render2D {
             return;
         }
 
-        String regex = command.getRegex();
-
-        String[] regexArray = regex.split(" ");
+        String[] regexArray = command.getRegexInArray();
 
         regexArray[0] = command.getName();
 
