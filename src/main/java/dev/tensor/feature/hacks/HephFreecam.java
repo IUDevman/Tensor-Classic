@@ -41,6 +41,7 @@ public final class HephFreecam extends Hack {
     public double oldZ;
     public float oldYaw;
     private float oldPitch;
+    private boolean isThirdPerson;
 
     private EntityPlayer fakePlayer = null;
 
@@ -52,6 +53,7 @@ public final class HephFreecam extends Hack {
             this.oldZ = this.getPlayer().posZ;
             this.oldYaw = this.getPlayer().rotationYaw;
             this.oldPitch = this.getPlayer().rotationPitch;
+            this.isThirdPerson = this.getMinecraft().gameSettings.thirdPersonView;
 
             if (this.copyPlayer.getValue()) {
                 this.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
@@ -83,6 +85,7 @@ public final class HephFreecam extends Hack {
             this.getPlayer().motionY = 0;
             this.getPlayer().motionZ = 0;
             this.getPlayer().setPositionAndRotation(this.oldX, this.oldY, this.oldZ, this.oldYaw, this.oldPitch);
+            this.getMinecraft().gameSettings.thirdPersonView = this.isThirdPerson;
 
             if (this.fakePlayer != null) {
                 this.getWorld().setEntityDead(fakePlayer);
@@ -100,6 +103,8 @@ public final class HephFreecam extends Hack {
             this.fakePlayer.motionY = 0;
             this.fakePlayer.motionZ = 0;
         }
+
+        this.getMinecraft().gameSettings.thirdPersonView = false;
 
         this.getPlayer().noClip = true;
         this.getPlayer().onGround = true;
