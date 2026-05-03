@@ -12,7 +12,7 @@ import java.util.List;
  * @since 05-02-2026
  */
 
-@Hack.Info(name = "Capes", category = Category.Client)
+@Hack.Info(name = "Capes", category = Category.Client, enabled = true)
 public final class Capes extends Hack {
 
     @Override
