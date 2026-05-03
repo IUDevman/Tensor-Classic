@@ -80,6 +80,8 @@ public final class AutoTool extends Hack {
         if (packet.status == 2) {
             this.status = 2;
             return;
+        } else {
+            this.status = 0;
         }
 
         int blockId = this.getWorld().getBlockId(packet.xPosition, packet.yPosition, packet.zPosition);
