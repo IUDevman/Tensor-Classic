@@ -22,10 +22,10 @@ public final class BlockCoords {
         this.y = y;
         this.z = z;
 
-        this.quickFrustrumBox = new int[]{x, y, z, x + 1, y + 1, z + 1};
+        this.quickFrustrumBox = new int[]{x + 1, y + 1, z + 1};
     }
 
     public boolean isInFrustrum(Frustrum frustrum) {
-        return frustrum.isBoxInFrustum(this.quickFrustrumBox[0], this.quickFrustrumBox[1], this.quickFrustrumBox[2], this.quickFrustrumBox[3], this.quickFrustrumBox[4], this.quickFrustrumBox[5]);
+        return frustrum.isBoxInFrustum(this.x, this.y, this.z, this.quickFrustrumBox[0], this.quickFrustrumBox[1], this.quickFrustrumBox[2]);
     }
 }
