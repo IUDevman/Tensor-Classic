@@ -38,7 +38,7 @@ public final class MiddleClickZoom extends Hack {
             return;
         }
 
-        if (Mouse.isButtonDown(2)) {
+        if (Mouse.isButtonDown(2) && this.getMinecraft().currentScreen == null) {
             this.isZoomed = true;
 
         } else {
