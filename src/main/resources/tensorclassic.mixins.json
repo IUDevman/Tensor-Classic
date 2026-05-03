@@ -8,6 +8,7 @@
     "BlockSoulSandMixin",
     "ChunkMixin",
     "EntityMixin",
+    "EntityPlayerMixin",
     "NetworkManagerMixin",
     "WorldMixin",
     "accessors.EntityAccessor",

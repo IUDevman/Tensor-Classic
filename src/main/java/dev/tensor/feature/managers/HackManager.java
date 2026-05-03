@@ -65,6 +65,7 @@ public final class HackManager implements Manager {
         this.addHack(new BreadCrumbs());
         this.addHack(new BreakProgress());
         this.addHack(new CameraClip());
+        this.addHack(new Capes());
         this.addHack(new ChatTimestamp());
         this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());

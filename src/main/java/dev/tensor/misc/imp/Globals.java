@@ -70,6 +70,10 @@ public interface Globals {
         return (FriendManager) this.getTensor().MANAGERS.get(FriendManager.class);
     }
 
+    default CapeManager getCapeManager() {
+        return (CapeManager) this.getTensor().MANAGERS.get(CapeManager.class);
+    }
+
     default RotationManager getRotationManager() {
         return (RotationManager) this.getTensor().MANAGERS.get(RotationManager.class);
     }
