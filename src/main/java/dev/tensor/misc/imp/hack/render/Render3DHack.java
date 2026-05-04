@@ -19,7 +19,7 @@ public abstract class Render3DHack extends Hack implements Render3D {
         return false;
     }
 
-    public void onRender3D(float renderPartialTicks) {
+    protected void onRender3D(float renderPartialTicks) {
 
     }
 
