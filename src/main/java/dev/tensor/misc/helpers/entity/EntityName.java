@@ -1,89 +1,49 @@
 package dev.tensor.misc.helpers.entity;
 
-/**
- * @author Hoosiers
- * @since 03-31-2026
- */
+import net.minecraft.src.*;
+
+import java.util.HashMap;
 
 public final class EntityName {
 
-    public static String convert(String original) {
+    public static final EntityName CONVERTER = new EntityName();
 
-        if (original.startsWith("Entity")) {
+    private final HashMap<Class<? extends Entity>, String> nameMap = new HashMap<>();
 
-            String replace = original.replace("Entity", "");
+    private EntityName() {
+        this.nameMap.put(EntityChicken.class, "Chicken");
+        this.nameMap.put(EntityCow.class, "Cow");
+        this.nameMap.put(EntityPig.class, "Pig");
+        this.nameMap.put(EntitySheep.class, "Sheep");
+        this.nameMap.put(EntitySquid.class, "Squid");
+        this.nameMap.put(EntityWolf.class, "Wolf");
+        this.nameMap.put(EntityCreeper.class, "Creeper");
+        this.nameMap.put(EntityGhast.class, "Ghast");
+        this.nameMap.put(EntityGiantZombie.class, "Giant");
+        this.nameMap.put(EntitySkeleton.class, "Skeleton");
+        this.nameMap.put(EntitySlime.class, "Slime");
+        this.nameMap.put(EntitySpider.class, "Spider");
+        this.nameMap.put(EntityZombie.class, "Zombie");
+        this.nameMap.put(EntityPigZombie.class, "Zombie Pigman");
+        this.nameMap.put(EntityArrow.class, "Arrow");
+        this.nameMap.put(EntityBoat.class, "Boat");
+        this.nameMap.put(EntityEgg.class, "Egg");
+        this.nameMap.put(EntityFallingSand.class, "Falling Sand");
+        this.nameMap.put(EntityFireball.class, "Fireball");
+        this.nameMap.put(EntityFish.class, "Fish");
+        this.nameMap.put(EntityMinecart.class, "Minecart");
+        this.nameMap.put(EntityPainting.class, "Painting");
+        this.nameMap.put(EntitySnowball.class, "Snowball");
+        this.nameMap.put(EntityTNTPrimed.class, "TNT Primed");
+    }
 
-            if (replace.equalsIgnoreCase("PigZombie")) {
-                return "Zombie Pigman";
-            }
+    public String convert(Class<? extends Entity> toConvert) {
+        String result = this.nameMap.get(toConvert);
 
-            if (replace.equalsIgnoreCase("TNTPrimed")) {
-                return "TNT Primed";
-            }
-
-            if (replace.equalsIgnoreCase("FallingSand")) {
-                return "Falling Sand";
-            }
-
-            if (replace.equalsIgnoreCase("GiantZombie")) {
-                return "Giant";
-            }
-
-            return replace;
-
-        } else {
-            switch (original) {
-                case "class_313":
-                    return "Chicken";
-                case "class_466":
-                    return "Cow";
-                case "class_443":
-                    return "Pig";
-                case "class_613":
-                    return "Sheep";
-                case "class_151":
-                    return "Squid";
-                case "class_121":
-                    return "Wolf";
-                case "class_114":
-                    return "Creeper";
-                case "class_364":
-                    return "Ghast";
-                case "class_311":
-                    return "Giant";
-                case "class_535":
-                    return "Zombie Pigman";
-                case "class_90":
-                    return "Skeleton";
-                case "class_451":
-                    return "Slime";
-                case "class_558":
-                    return "Spider";
-                case "class_480":
-                    return "Zombie";
-                case "class_410":
-                    return "Arrow";
-                case "class_113":
-                    return "Boat";
-                case "class_499":
-                    return "Egg";
-                case "class_226":
-                    return "Falling Sand";
-                case "class_372":
-                    return "Fireball";
-                case "class_135":
-                    return "Fish";
-                case "class_549":
-                    return "Minecart";
-                case "class_107":
-                    return "Painting";
-                case "class_484":
-                    return "Snowball";
-                case "class_365":
-                    return "TNT Primed";
-            }
-
-            return original;
+        if (result == null || result.isEmpty()) {
+            return toConvert.getSimpleName();
         }
+
+        return result;
     }
 }

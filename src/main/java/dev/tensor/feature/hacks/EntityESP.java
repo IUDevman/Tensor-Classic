@@ -98,14 +98,14 @@ public final class EntityESP extends Render3DHack {
                 continue;
             }
 
-            String entityName = entity.getClass().getSimpleName();
+            Class<? extends Entity> entityClass = entity.getClass();
 
-            if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
+            if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
                 this.entitiesWithColorToRender.put(entity, this.animalsColor.getValue());
                 continue;
             }
 
-            if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
+            if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
                 this.entitiesWithColorToRender.put(entity, this.hostilesColor.getValue());
                 continue;
             }
@@ -115,7 +115,7 @@ public final class EntityESP extends Render3DHack {
                 continue;
             }
 
-            if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
+            if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
                 this.entitiesWithColorToRender.put(entity, this.miscColor.getValue());
             }
         }

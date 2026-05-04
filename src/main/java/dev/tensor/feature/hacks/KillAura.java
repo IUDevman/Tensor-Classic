@@ -180,30 +180,32 @@ public final class KillAura extends Render3DHack {
             return (!this.ignoreFriends.getValue() || !this.getFriendManager().isFriend((EntityOtherPlayerMP) entity));
         }
 
-        if (this.hostilesCustom.getFullValue().containsEntity(entity)) {
+        Class<? extends Entity> entityClass = entity.getClass();
+
+        if (this.hostilesCustom.getFullValue().containsEntity(entityClass)) {
 
             switch ((Attack) this.hostiles.getValue()) {
                 case All:
                     return true;
                 case Custom:
-                    return this.hostilesCustom.containsEntity(entity);
+                    return this.hostilesCustom.containsEntity(entityClass);
                 case None:
                     return false;
             }
         }
 
-        if (this.animalsCustom.getFullValue().containsEntity(entity)) {
+        if (this.animalsCustom.getFullValue().containsEntity(entityClass)) {
 
             if (entity instanceof EntityWolf) {
 
                 String owner = ((EntityWolf) entity).getWolfOwner();
 
                 if (owner.isEmpty()) {
-                    return this.shouldAttackAnimal(entity);
+                    return this.shouldAttackAnimal(entityClass);
                 }
 
                 if (owner.equalsIgnoreCase(this.getPlayer().username)) {
-                    return !this.ignoreOwnPet.getValue() && this.shouldAttackAnimal(entity);
+                    return !this.ignoreOwnPet.getValue() && this.shouldAttackAnimal(entityClass);
                 }
 
                 if (this.getFriendManager().isFriend(owner)) {
@@ -213,17 +215,17 @@ public final class KillAura extends Render3DHack {
                 return this.players.getValue();
 
             } else {
-                return this.shouldAttackAnimal(entity);
+                return this.shouldAttackAnimal(entityClass);
             }
         }
 
-        if (this.miscCustom.getFullValue().containsEntity(entity)) {
+        if (this.miscCustom.getFullValue().containsEntity(entityClass)) {
 
             switch ((Attack) this.misc.getValue()) {
                 case All:
                     return true;
                 case Custom:
-                    return this.miscCustom.getValue().containsEntity(entity);
+                    return this.miscCustom.getValue().containsEntity(entityClass);
                 case None:
                     return false;
             }
@@ -232,12 +234,12 @@ public final class KillAura extends Render3DHack {
         return false;
     }
 
-    private boolean shouldAttackAnimal(Entity entity) {
+    private boolean shouldAttackAnimal(Class<? extends Entity> entityClass) {
         switch ((Attack) this.animals.getValue()) {
             case All:
                 return true;
             case Custom:
-                return this.animalsCustom.containsEntity(entity);
+                return this.animalsCustom.containsEntity(entityClass);
             case None:
                 return false;
         }

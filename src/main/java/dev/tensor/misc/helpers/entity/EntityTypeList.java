@@ -26,25 +26,33 @@ public final class EntityTypeList implements Globals {
     }
 
     public void addToEntityList(Entity entity) {
-        this.addToEntityList(entity.getClass().getSimpleName());
+        this.addToEntityList(entity.getClass());
     }
 
-    public void addToEntityList(String entity) {
-        entity = EntityName.convert(entity);
+    public void addToEntityList(Class<? extends Entity> entity) {
+        String name = EntityName.CONVERTER.convert(entity);
 
-        if (!this.entityList.contains(entity)) {
-            this.entityList.add(entity);
+        this.addToEntityList(name);
+    }
+
+    public void addToEntityList(String convertedName) {
+        if (!this.entityList.contains(convertedName)) {
+            this.entityList.add(convertedName);
         }
     }
 
     public void removeFromEntityList(Entity entity) {
-        this.removeFromEntityList(entity.getClass().getSimpleName());
+        this.removeFromEntityList(entity.getClass());
     }
 
-    public void removeFromEntityList(String entity) {
-        entity = EntityName.convert(entity);
+    public void removeFromEntityList(Class<? extends Entity> entity) {
+        String name = EntityName.CONVERTER.convert(entity);
 
-        this.entityList.remove(entity);
+        this.removeFromEntityList(name);
+    }
+
+    public void removeFromEntityList(String convertedName) {
+        this.entityList.remove(convertedName);
     }
 
     public void clearEntityList() {
@@ -57,13 +65,17 @@ public final class EntityTypeList implements Globals {
     }
 
     public boolean containsEntity(Entity entity) {
-        return this.containsEntity(entity.getClass().getSimpleName());
+        return this.containsEntity(entity.getClass());
     }
 
-    public boolean containsEntity(String entity) {
-        entity = EntityName.convert(entity);
+    public boolean containsEntity(Class<? extends Entity> entity) {
+        String name = EntityName.CONVERTER.convert(entity);
 
-        return this.entityList.contains(entity);
+        return this.containsEntity(name);
+    }
+
+    public boolean containsEntity(String convertedName) {
+        return this.entityList.contains(convertedName);
     }
 
     public void loadEntityListFromString(String string) {
@@ -97,12 +109,12 @@ public final class EntityTypeList implements Globals {
 
     public static ArrayList<String> ANIMALS() {
         if (ANIMALS.isEmpty()) {
-            ANIMALS.add(EntityName.convert(EntityChicken.class.getSimpleName()));
-            ANIMALS.add(EntityName.convert(EntityCow.class.getSimpleName()));
-            ANIMALS.add(EntityName.convert(EntityPig.class.getSimpleName()));
-            ANIMALS.add(EntityName.convert(EntitySheep.class.getSimpleName()));
-            ANIMALS.add(EntityName.convert(EntitySquid.class.getSimpleName()));
-            ANIMALS.add(EntityName.convert(EntityWolf.class.getSimpleName()));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntityChicken.class));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntityCow.class));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntityPig.class));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntitySheep.class));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntitySquid.class));
+            ANIMALS.add(EntityName.CONVERTER.convert(EntityWolf.class));
         }
 
         return new ArrayList<>(ANIMALS);
@@ -112,14 +124,14 @@ public final class EntityTypeList implements Globals {
 
     public static ArrayList<String> HOSTILES() {
         if (HOSTILES.isEmpty()) {
-            HOSTILES.add(EntityName.convert(EntityCreeper.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntityGhast.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntityGiantZombie.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntitySkeleton.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntitySlime.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntitySpider.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntityZombie.class.getSimpleName()));
-            HOSTILES.add(EntityName.convert(EntityPigZombie.class.getSimpleName()));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntityCreeper.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntityGhast.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntityGiantZombie.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntitySkeleton.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntitySlime.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntitySpider.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntityZombie.class));
+            HOSTILES.add(EntityName.CONVERTER.convert(EntityPigZombie.class));
         }
 
         return new ArrayList<>(HOSTILES);
@@ -129,10 +141,10 @@ public final class EntityTypeList implements Globals {
 
     public static ArrayList<String> MISC_KA() {
         if (MISC_KA.isEmpty()) {
-            MISC_KA.add(EntityName.convert(EntityBoat.class.getSimpleName()));
-            MISC_KA.add(EntityName.convert(EntityFireball.class.getSimpleName()));
-            MISC_KA.add(EntityName.convert(EntityMinecart.class.getSimpleName()));
-            MISC_KA.add(EntityName.convert(EntityPainting.class.getSimpleName()));
+            MISC_KA.add(EntityName.CONVERTER.convert(EntityBoat.class));
+            MISC_KA.add(EntityName.CONVERTER.convert(EntityFireball.class));
+            MISC_KA.add(EntityName.CONVERTER.convert(EntityMinecart.class));
+            MISC_KA.add(EntityName.CONVERTER.convert(EntityPainting.class));
         }
 
         return new ArrayList<>(MISC_KA);
@@ -142,16 +154,16 @@ public final class EntityTypeList implements Globals {
 
     public static ArrayList<String> MISC() {
         if (MISC.isEmpty()) {
-            MISC.add(EntityName.convert(EntityArrow.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityBoat.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityEgg.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityFallingSand.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityFireball.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityFish.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityMinecart.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityPainting.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntitySnowball.class.getSimpleName()));
-            MISC.add(EntityName.convert(EntityTNTPrimed.class.getSimpleName()));
+            MISC.add(EntityName.CONVERTER.convert(EntityArrow.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityBoat.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityEgg.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityFallingSand.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityFireball.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityFish.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityMinecart.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityPainting.class));
+            MISC.add(EntityName.CONVERTER.convert(EntitySnowball.class));
+            MISC.add(EntityName.CONVERTER.convert(EntityTNTPrimed.class));
         }
 
         return new ArrayList<>(MISC);

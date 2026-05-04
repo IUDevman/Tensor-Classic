@@ -68,8 +68,13 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
         this.hasChanged();
     }
 
-    public void addEntity(String entity) {
+    public void addEntity(Class<? extends Entity> entity) {
         this.getValue().addToEntityList(entity);
+        this.hasChanged();
+    }
+
+    public void addEntity(String convertedName) {
+        this.getValue().addToEntityList(convertedName);
         this.hasChanged();
     }
 
@@ -78,17 +83,25 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
         this.hasChanged();
     }
 
-    public void removeEntity(String entity) {
+    public void removeEntity(Class<? extends Entity> entity) {
         this.getValue().removeFromEntityList(entity);
         this.hasChanged();
+    }
+
+    public void removeEntity(String convertedName) {
+        this.getValue().removeFromEntityList(convertedName);
     }
 
     public boolean containsEntity(Entity entity) {
         return this.getValue().containsEntity(entity);
     }
 
-    public boolean containsEntity(String entity) {
+    public boolean containsEntity(Class<? extends Entity> entity) {
         return this.getValue().containsEntity(entity);
+    }
+
+    public boolean containsEntity(String convertedName) {
+        return this.getValue().containsEntity(convertedName);
     }
 
     public void hasChanged() {

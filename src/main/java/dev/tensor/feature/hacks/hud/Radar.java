@@ -339,13 +339,13 @@ public final class Radar extends Hack implements HUDObject {
             return -1;
         }
 
-        String entityName = entity.getClass().getSimpleName();
+        Class<? extends Entity> entityClass = entity.getClass();
 
-        if (this.animals.getValue() && this.customAnimals.containsEntity(entityName)) {
+        if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
             return this.animalsColor.getValue().getRGB();
         }
 
-        if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityName)) {
+        if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
             return this.hostilesColor.getValue().getRGB();
         }
 
@@ -353,7 +353,7 @@ public final class Radar extends Hack implements HUDObject {
             return this.itemColor.getValue().getRGB();
         }
 
-        if (this.misc.getValue() && this.customMisc.containsEntity(entityName)) {
+        if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
             return this.miscColor.getValue().getRGB();
         }
 
