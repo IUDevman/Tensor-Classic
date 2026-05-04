@@ -5,8 +5,6 @@ import dev.tensor.misc.imp.hack.Hack;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 
-import java.util.List;
-
 /**
  * @author Hoosiers
  * @since 05-02-2026
@@ -34,16 +32,7 @@ public final class Capes extends Hack {
     }
 
     public void refreshCapes() {
-        List entities = this.getWorld().loadedEntityList;
-
-        for (Object object : entities) {
-
-            Entity entity = (Entity) object;
-
-            if (entity == null) {
-                continue;
-            }
-
+        for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity instanceof EntityPlayer) {
                 entity.updateCloak();
             }

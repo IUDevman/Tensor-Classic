@@ -15,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author Hoosiers
@@ -52,24 +51,7 @@ public final class WolfOwner extends Render3DHack {
     public void onClientTick() {
         this.wolvesWithColorToRender.clear();
 
-        List entities = this.getWorld().loadedEntityList;
-
-        for (int i = 0; i < entities.size(); i++) {
-
-            Entity entity = (Entity) entities.get(i);
-
-            if (entity == null) {
-                continue;
-            }
-
-            if (entity.ticksExisted < 1) {
-                continue;
-            }
-
-            if (!entity.isEntityAlive()) {
-                continue;
-            }
-
+        for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity instanceof EntityWolf) {
 
                 EntityWolf entityWolf = (EntityWolf) entity;

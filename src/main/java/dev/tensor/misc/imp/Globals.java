@@ -16,6 +16,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+
 /**
  * @author Hoosiers
  * @since 03-18-2026
@@ -79,6 +81,10 @@ public interface Globals {
         return (RotationManager) this.getTensor().MANAGERS.get(RotationManager.class);
     }
 
+    default EntityListManager getEntityListManager() {
+        return (EntityListManager) this.getTensor().MANAGERS.get(EntityListManager.class);
+    }
+
     default HackManager getHackManager() {
         return (HackManager) this.getTensor().MANAGERS.get(HackManager.class);
     }
@@ -123,6 +129,10 @@ public interface Globals {
         }
 
         return autoReconnect.isEnabled();
+    }
+
+    default ArrayList<Entity> getFilteredLoadedEntities() {
+        return this.getEntityListManager().getFilteredEntities();
     }
 
     default boolean failsNullCheck() {

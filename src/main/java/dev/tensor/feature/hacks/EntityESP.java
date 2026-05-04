@@ -13,7 +13,6 @@ import net.minecraft.src.*;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * @author Hoosiers
@@ -61,26 +60,7 @@ public final class EntityESP extends Render3DHack {
     public void onClientTick() {
         this.entitiesWithColorToRender.clear();
 
-        List entities = this.getWorld().loadedEntityList;
-
-        for (int i = 0; i < entities.size(); i++) {
-
-            Entity entity = (Entity) entities.get(i);
-
-            if (entity == null) {
-                continue;
-            }
-
-            if (entity instanceof EntityLiving) {
-                if (entity.ticksExisted < 1) {
-                    continue;
-                }
-
-                if (!entity.isEntityAlive()) {
-                    continue;
-                }
-            }
-
+        for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity instanceof EntityOtherPlayerMP) {
 
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;

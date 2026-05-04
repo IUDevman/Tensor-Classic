@@ -43,7 +43,7 @@ public final class KillAura extends Render3DHack {
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
-    public final EnumSetting type = new EnumSetting("Hit Type", HitType.Vanilla);
+    public final EnumSetting type = new EnumSetting("Hit Type", HitType.Packet);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
@@ -98,13 +98,7 @@ public final class KillAura extends Render3DHack {
 
         LinkedHashMap<Entity, Double> entitiesToKill = new LinkedHashMap<>();
 
-        for (int i = 0; i < this.getWorld().loadedEntityList.size(); i++) {
-            Entity entity = (Entity) this.getWorld().loadedEntityList.get(i);
-
-            if (entity == null) {
-                continue;
-            }
-
+        for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
                 continue;
             }

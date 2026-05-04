@@ -13,14 +13,12 @@ import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityOtherPlayerMP;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 /**
  * @author Hoosiers
@@ -147,25 +145,7 @@ public final class Radar extends Hack implements HUDObject {
         int radius = this.radius.getValue();
         int radiusSq = (int) Math.pow(radius * 1.05, 2);
 
-        List entities = this.getWorld().loadedEntityList;
-
-        for (Object object : entities) {
-            Entity entity = (Entity) object;
-
-            if (entity == null) {
-                continue;
-            }
-
-            if (entity instanceof EntityLiving) {
-                if (entity.ticksExisted < 1) {
-                    continue;
-                }
-
-                if (!entity.isEntityAlive()) {
-                    continue;
-                }
-            }
-
+        for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
                 continue;
             }
