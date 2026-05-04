@@ -25,13 +25,13 @@ import java.util.ArrayList;
 public final class LogoutSpots extends Render3DHack {
 
     @Override
-    public boolean overridesBlockGL() {
-        return true;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.LogoutSpots;
     }
 
     @Override
-    public RenderOrder getRenderOrder() {
-        return RenderOrder.LogoutSpots;
+    public boolean overridesBlockGL() {
+        return true;
     }
 
     public final BooleanSetting title = new BooleanSetting("Title", true);

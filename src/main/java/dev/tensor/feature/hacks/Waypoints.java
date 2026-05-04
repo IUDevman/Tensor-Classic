@@ -21,13 +21,13 @@ import java.util.ArrayList;
 public final class Waypoints extends Render3DHack {
 
     @Override
-    public boolean overridesBlockGL() {
-        return true;
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.Waypoints;
     }
 
     @Override
-    public RenderOrder getRenderOrder() {
-        return RenderOrder.Waypoints;
+    public boolean overridesBlockGL() {
+        return true;
     }
 
     public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "");

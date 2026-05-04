@@ -26,14 +26,15 @@ import java.util.List;
 public final class WolfOwner extends Render3DHack {
 
     @Override
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.WolfOwner;
+    }
+
+    @Override
     public boolean overridesBlockGL() {
         return true;
     }
 
-    @Override
-    public RenderOrder getRenderOrder() {
-        return RenderOrder.WolfOwner;
-    }
 
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
