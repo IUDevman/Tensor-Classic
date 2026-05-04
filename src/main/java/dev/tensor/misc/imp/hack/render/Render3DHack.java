@@ -2,6 +2,7 @@ package dev.tensor.misc.imp.hack.render;
 
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.render.Render3D;
+import dev.tensor.misc.imp.render.task.RenderTask;
 
 /**
  * @author Hoosiers
@@ -21,7 +22,15 @@ public abstract class Render3DHack extends Hack implements Render3D {
     public void renderIn3D(float renderPartialTicks) {
         this.startBlockGL();
 
+        if (RenderTask.RENDER_TASK == null) {
+            RenderTask.RENDER_TASK = new RenderTask();
+        }
+
         this.onRender3D(renderPartialTicks);
+
+        RenderTask.RENDER_TASK.render();
+
+        RenderTask.RENDER_TASK.clear();
 
         this.finishBlockGL();
     }

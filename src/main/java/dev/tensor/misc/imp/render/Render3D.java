@@ -1,5 +1,7 @@
 package dev.tensor.misc.imp.render;
 
+import dev.tensor.misc.imp.render.task.RenderTask;
+import dev.tensor.misc.imp.render.task.context.BasicRenderContext;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
@@ -39,91 +41,79 @@ public interface Render3D extends Render2D {
     }
 
     default void drawOutlineBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color) {
-        GL11.glLineWidth(lineWidth);
-        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+        BasicRenderContext strip = new BasicRenderContext(lineWidth, color);
 
-        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.addVertex(maxX, minY, minZ);
-        Tessellator.instance.addVertex(maxX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.draw();
+        strip.addVertex(minX, minY, minZ);
+        strip.addVertex(maxX, minY, minZ);
+        strip.addVertex(maxX, minY, maxZ);
+        strip.addVertex(minX, minY, maxZ);
+        strip.addVertex(minX, minY, minZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.draw();
+        strip.addVertex(minX, maxY, minZ);
+        strip.addVertex(maxX, maxY, minZ);
+        strip.addVertex(maxX, maxY, maxZ);
+        strip.addVertex(minX, maxY, maxZ);
+        strip.addVertex(minX, maxY, minZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_LINES);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, minY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, minY, maxZ);
-        Tessellator.instance.addVertex(maxX, maxY, maxZ);
-        Tessellator.instance.addVertex(minX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, maxZ);
-        Tessellator.instance.draw();
+        RenderTask.RENDER_TASK.loadStrip(strip);
+
+        BasicRenderContext line = new BasicRenderContext(lineWidth, color);
+
+        line.addVertex(minX, minY, minZ);
+        line.addVertex(minX, maxY, minZ);
+        line.addVertex(maxX, minY, minZ);
+        line.addVertex(maxX, maxY, minZ);
+        line.addVertex(maxX, minY, maxZ);
+        line.addVertex(maxX, maxY, maxZ);
+        line.addVertex(minX, minY, maxZ);
+        line.addVertex(minX, maxY, maxZ);
+
+        RenderTask.RENDER_TASK.loadLine(line);
     }
 
     default void drawFillBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color) {
-        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
+        BasicRenderContext quad = new BasicRenderContext(0, color);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(maxX, minY, maxZ);
-        Tessellator.instance.addVertex(maxX, minY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, maxZ);
-        Tessellator.instance.draw();
+        quad.addVertex(maxX, minY, maxZ);
+        quad.addVertex(maxX, minY, minZ);
+        quad.addVertex(maxX, maxY, minZ);
+        quad.addVertex(maxX, maxY, maxZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.addVertex(minX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.draw();
+        quad.addVertex(minX, minY, minZ);
+        quad.addVertex(minX, minY, maxZ);
+        quad.addVertex(minX, maxY, maxZ);
+        quad.addVertex(minX, maxY, minZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(maxX, minY, minZ);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.addVertex(maxX, maxY, minZ);
-        Tessellator.instance.draw();
+        quad.addVertex(maxX, minY, minZ);
+        quad.addVertex(minX, minY, minZ);
+        quad.addVertex(minX, maxY, minZ);
+        quad.addVertex(maxX, maxY, minZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(minX, minY, maxZ);
-        Tessellator.instance.addVertex(maxX, minY, maxZ);
-        Tessellator.instance.addVertex(maxX, maxY, maxZ);
-        Tessellator.instance.addVertex(minX, maxY, maxZ);
-        Tessellator.instance.draw();
+        quad.addVertex(minX, minY, maxZ);
+        quad.addVertex(maxX, minY, maxZ);
+        quad.addVertex(maxX, maxY, maxZ);
+        quad.addVertex(minX, maxY, maxZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(maxX, maxY, minZ);
-        Tessellator.instance.addVertex(minX, maxY, minZ);
-        Tessellator.instance.addVertex(minX, maxY, maxZ);
-        Tessellator.instance.addVertex(maxX, maxY, maxZ);
-        Tessellator.instance.draw();
+        quad.addVertex(maxX, maxY, minZ);
+        quad.addVertex(minX, maxY, minZ);
+        quad.addVertex(minX, maxY, maxZ);
+        quad.addVertex(maxX, maxY, maxZ);
 
-        Tessellator.instance.startDrawing(GL11.GL_QUADS);
-        Tessellator.instance.addVertex(maxX, minY, minZ);
-        Tessellator.instance.addVertex(maxX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, minY, maxZ);
-        Tessellator.instance.addVertex(minX, minY, minZ);
-        Tessellator.instance.draw();
+        quad.addVertex(maxX, minY, minZ);
+        quad.addVertex(maxX, minY, maxZ);
+        quad.addVertex(minX, minY, maxZ);
+        quad.addVertex(minX, minY, minZ);
+
+        RenderTask.RENDER_TASK.loadQuad(quad);
     }
 
     default void drawTracer(double targetX, double targetY, double targetZ, int lineWidth, Color color, int alpha) {
-        GL11.glLineWidth(lineWidth);
-        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, alpha / 255F);
+        BasicRenderContext line = new BasicRenderContext(lineWidth, new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha));
 
-        Tessellator.instance.startDrawing(GL11.GL_LINES);
-        Tessellator.instance.addVertex(0, 0, 0);
-        Tessellator.instance.addVertex(targetX, targetY, targetZ);
-        Tessellator.instance.draw();
+        line.addVertex(0, 0, 0);
+        line.addVertex(targetX, targetY, targetZ);
+
+        RenderTask.RENDER_TASK.loadLine(line);
     }
 
     default void drawBreadCrumbs(ArrayList<double[]> positions, double renderPosX, double renderPosY, double renderPosZ, int lineWidth, Color color) {
@@ -131,20 +121,17 @@ public interface Render3D extends Render2D {
             return;
         }
 
-        GL11.glLineWidth(lineWidth);
-        GL11.glColor4f(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, color.getAlpha() / 255F);
-
-        Tessellator.instance.startDrawing(GL11.GL_LINE_STRIP);
+        BasicRenderContext strip = new BasicRenderContext(lineWidth, color);
 
         for (double[] position : positions) {
             if (position == null) {
                 continue;
             }
 
-            Tessellator.instance.addVertex(position[0] - renderPosX, position[1] - renderPosY, position[2] - renderPosZ);
+            strip.addVertex(position[0] - renderPosX, position[1] - renderPosY, position[2] - renderPosZ);
         }
 
-        Tessellator.instance.draw();
+        RenderTask.RENDER_TASK.loadStrip(strip);
     }
 
     default void renderItem3D(ItemStack itemStack, int startX, int startY, double scale) {
