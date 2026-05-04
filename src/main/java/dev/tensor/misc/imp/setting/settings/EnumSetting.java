@@ -54,7 +54,7 @@ public class EnumSetting implements Setting<Enum<?>> {
 
     @Override
     public void setValueFromString(String string) throws Exception {
-        Enum<?>[] array = this.getValue().getDeclaringClass().getEnumConstants();
+        Enum<?>[] array = this.getEnumConstants();
 
         Arrays.stream(array).forEach(anEnum -> {
             if (anEnum.name().equalsIgnoreCase(string)) {
@@ -68,7 +68,7 @@ public class EnumSetting implements Setting<Enum<?>> {
     }
 
     public void increment() {
-        Enum<?>[] array = getValue().getDeclaringClass().getEnumConstants();
+        Enum<?>[] array = this.getEnumConstants();
         int index = getValue().ordinal() + 1;
 
         if (index >= array.length) index = 0;
