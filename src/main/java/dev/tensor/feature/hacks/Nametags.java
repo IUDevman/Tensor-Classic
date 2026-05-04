@@ -31,6 +31,11 @@ public final class Nametags extends Render3DHack {
         return RenderOrder.Nametags;
     }
 
+    @Override
+    public boolean overridesBlockGL() {
+        return true;
+    }
+
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting darkenSneak = new BooleanSetting("Darken Sneak", false);
     public final BooleanSetting showHealth = new BooleanSetting("Show Health", false);
