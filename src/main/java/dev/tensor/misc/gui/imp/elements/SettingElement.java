@@ -28,27 +28,27 @@ public abstract class SettingElement implements Element {
         this.posY = posY;
     }
 
-    public HackElement getHackElement() {
+    public final HackElement getHackElement() {
         return this.hackElement;
     }
 
-    public IntegerSetting getX() {
+    public final IntegerSetting getX() {
         return this.x;
     }
 
-    public IntegerSetting getY() {
+    public final IntegerSetting getY() {
         return this.y;
     }
 
-    public IntegerSetting getScrollY() {
+    public final IntegerSetting getScrollY() {
         return this.scrollY;
     }
 
-    public int getXPos() {
+    public final int getXPos() {
         return this.posX;
     }
 
-    public int getYPos() {
+    public final int getYPos() {
         return this.posY;
     }
 }

@@ -23,7 +23,7 @@ public abstract class Render3DHack extends Hack implements Render3D {
 
     }
 
-    public void renderIn3D(float renderPartialTicks) {
+    public final void renderIn3D(float renderPartialTicks) {
         this.startBlockGL();
 
         if (RenderTask.RENDER_TASK == null) {

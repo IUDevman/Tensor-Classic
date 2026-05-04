@@ -55,7 +55,7 @@ public abstract class Hack implements Globals {
 
     private boolean ENABLED = this.getInfo().enabled();
 
-    public ArrayList<Setting<?>> getSettings() {
+    public final ArrayList<Setting<?>> getSettings() {
         ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
 
         Arrays.stream(this.getClass().getDeclaredFields()).forEach(field -> {
@@ -79,11 +79,11 @@ public abstract class Hack implements Globals {
         return SETTINGS;
     }
 
-    public boolean isEnabled() {
+    public final boolean isEnabled() {
         return this.ENABLED;
     }
 
-    public void setEnabled(boolean ENABLED) {
+    public final void setEnabled(boolean ENABLED) {
         if (ENABLED) {
             this.enable();
             return;
@@ -92,11 +92,11 @@ public abstract class Hack implements Globals {
         this.disable();
     }
 
-    public void toggle() {
+    public final void toggle() {
         this.setEnabled(!this.isEnabled());
     }
 
-    public void reset() {
+    public final void reset() {
         this.BIND = this.getInfo().bind();
 
         this.DRAWN = this.getInfo().drawn();
@@ -108,7 +108,7 @@ public abstract class Hack implements Globals {
         this.getSettings().forEach(Setting::reset);
     }
 
-    protected void enable() {
+    private void enable() {
         this.ENABLED = true;
 
         this.getEventManager().register(this);
@@ -159,7 +159,7 @@ public abstract class Hack implements Globals {
 
     }
 
-    public void load(String modulePath) throws Exception {
+    public final void load(String modulePath) throws Exception {
         Path path = Paths.get(modulePath + this.NAME + ".json");
 
         if (!Files.exists(path)) {
@@ -196,7 +196,7 @@ public abstract class Hack implements Globals {
         });
     }
 
-    public void save(String modulePath) throws Exception {
+    public final void save(String modulePath) throws Exception {
         Path path = Paths.get(modulePath + this.NAME + ".json");
         this.getConfigManager().registerFile(path);
 
