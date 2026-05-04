@@ -1,6 +1,7 @@
 package dev.tensor.misc.helpers.logoutspot;
 
 import dev.tensor.misc.imp.render.Render3D;
+import dev.tensor.misc.imp.render.task.RenderTask;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.RenderManager;
 import org.lwjgl.opengl.GL11;
@@ -76,6 +77,9 @@ public final class LogoutSpotRenderer implements Render3D {
                     this.drawOutlineBox(rX, rY, rZ, mX, mY, mZ, lineWidth, boxColor);
                     break;
             }
+
+            RenderTask.RENDER_TASK.render();
+            RenderTask.RENDER_TASK.clear();
 
             GL11.glDisable(GL11.GL_BLEND);
         }

@@ -21,6 +21,11 @@ import java.util.ArrayList;
 public final class Waypoints extends Render3DHack {
 
     @Override
+    public boolean overridesBlockGL() {
+        return true;
+    }
+
+    @Override
     public RenderOrder getRenderOrder() {
         return RenderOrder.Waypoints;
     }

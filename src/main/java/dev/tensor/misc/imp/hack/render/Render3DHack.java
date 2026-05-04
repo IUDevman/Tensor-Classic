@@ -15,6 +15,10 @@ public abstract class Render3DHack extends Hack implements Render3D {
         return RenderOrder.Default;
     }
 
+    public boolean overridesBlockGL() {
+        return false;
+    }
+
     public void onRender3D(float renderPartialTicks) {
 
     }
@@ -28,7 +32,9 @@ public abstract class Render3DHack extends Hack implements Render3D {
 
         this.onRender3D(renderPartialTicks);
 
-        RenderTask.RENDER_TASK.render();
+        if (!this.overridesBlockGL()) {
+            RenderTask.RENDER_TASK.render();
+        }
 
         RenderTask.RENDER_TASK.clear();
 

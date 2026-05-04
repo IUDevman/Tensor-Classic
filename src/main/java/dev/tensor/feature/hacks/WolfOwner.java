@@ -26,6 +26,11 @@ import java.util.List;
 public final class WolfOwner extends Render3DHack {
 
     @Override
+    public boolean overridesBlockGL() {
+        return true;
+    }
+
+    @Override
     public RenderOrder getRenderOrder() {
         return RenderOrder.WolfOwner;
     }
