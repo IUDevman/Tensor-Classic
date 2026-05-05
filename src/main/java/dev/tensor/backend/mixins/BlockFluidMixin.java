@@ -27,11 +27,12 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        FluidCollisionEvent event = EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call();
+        EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
+            }
+        });
     }
 
     @Inject(method = "canCollideCheck", at = @At("HEAD"), cancellable = true)
@@ -40,10 +41,11 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        FluidBlockEvent event = EventCache.getCachedEvent(FluidBlockEvent.class).call();
+        EventCache.getCachedEvent(FluidBlockEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(true);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(true);
+            }
+        });
     }
 }

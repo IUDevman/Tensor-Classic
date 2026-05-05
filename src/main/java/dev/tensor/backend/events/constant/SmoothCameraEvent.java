@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 05-03-2026
  */
 
-public final class SmoothCameraEvent extends EventConstantCancellable {
+public final class SmoothCameraEvent extends EventConstantCancellable<SmoothCameraEvent> {
 }

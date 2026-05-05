@@ -8,14 +8,14 @@ import dev.tensor.misc.helpers.block.BlockCoords;
  * @since 03-18-2026
  */
 
-public final class RenderBlockEvent implements EventVariable {
+public final class RenderBlockEvent extends EventVariable<RenderBlockEvent> {
 
     public BlockCoords blockCoords;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public RenderBlockEvent withVariables(Object... args) {
         this.blockCoords = (BlockCoords) args[0];
 
-        return EventVariable.super.withVariables(args);
+        return super.withVariables(args);
     }
 }

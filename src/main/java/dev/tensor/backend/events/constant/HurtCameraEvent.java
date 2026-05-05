@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 03-20-2026
  */
 
-public final class HurtCameraEvent extends EventConstantCancellable {
+public final class HurtCameraEvent extends EventConstantCancellable<HurtCameraEvent> {
 }

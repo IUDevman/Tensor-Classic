@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-01-2026
  */
 
-public final class CloseInventoryEvent extends EventConstantCancellable {
+public final class CloseInventoryEvent extends EventConstantCancellable<CloseInventoryEvent> {
 }

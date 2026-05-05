@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 03-28-2026
  */
 
-public final class ViewBobEvent extends EventConstantCancellable {
+public final class ViewBobEvent extends EventConstantCancellable<ViewBobEvent> {
 }

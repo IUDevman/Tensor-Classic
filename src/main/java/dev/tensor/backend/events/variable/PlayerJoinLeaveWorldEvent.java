@@ -1,6 +1,5 @@
 package dev.tensor.backend.events.variable;
 
-import dev.tensor.misc.event.imp.modifiers.EventVariable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 import net.minecraft.src.EntityOtherPlayerMP;
 
@@ -9,13 +8,13 @@ import net.minecraft.src.EntityOtherPlayerMP;
  * @since 04-24-2026
  */
 
-public final class PlayerJoinLeaveWorldEvent extends EventVariableCancellable {
+public final class PlayerJoinLeaveWorldEvent extends EventVariableCancellable<PlayerJoinLeaveWorldEvent> {
 
     public Type type;
     public EntityOtherPlayerMP otherPlayerMP;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public PlayerJoinLeaveWorldEvent withVariables(Object... args) {
         this.type = (Type) args[0];
         this.otherPlayerMP = (EntityOtherPlayerMP) args[1];
 

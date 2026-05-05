@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-06-2026
  */
 
-public final class NameTagEvent extends EventConstantCancellable {
+public final class NameTagEvent extends EventConstantCancellable<NameTagEvent> {
 }

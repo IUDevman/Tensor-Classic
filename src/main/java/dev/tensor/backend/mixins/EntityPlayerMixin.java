@@ -43,12 +43,13 @@ public abstract class EntityPlayerMixin extends Entity implements Globals {
             return;
         }
 
-        UpdateCapeEvent event = EventCache.getCachedEvent(UpdateCapeEvent.class).withVariables(username).call();
+        EventCache.getCachedEvent(UpdateCapeEvent.class).withVariables(username).call(event -> {
 
-        if (event.isCancelled()) {
-            this.playerCloakUrl = event.playerCloakUrl;
-            this.cloakUrl = this.playerCloakUrl;
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                this.playerCloakUrl = event.playerCloakUrl;
+                this.cloakUrl = this.playerCloakUrl;
+                ci.cancel();
+            }
+        });
     }
 }

@@ -65,8 +65,7 @@ public abstract class MinecraftMixin implements Globals {
 
         if (Keyboard.getEventKeyState()) {
 
-            @SuppressWarnings("unused")
-            KeyPressedEvent event = EventCache.getCachedEvent(KeyPressedEvent.class).withVariables(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
+            EventCache.getCachedEvent(KeyPressedEvent.class).withVariables(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
         }
     }
 
@@ -77,8 +76,7 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        @SuppressWarnings("unused")
-        MouseEvent event = EventCache.getCachedEvent(MouseEvent.class).withVariables(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call();
+        EventCache.getCachedEvent(MouseEvent.class).withVariables(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call();
     }
 
     @Inject(method = "changeWorld", at = @At("HEAD"))
@@ -87,8 +85,7 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        @SuppressWarnings("unused")
-        ChangeWorldEvent event = EventCache.getCachedEvent(ChangeWorldEvent.class).call();
+        EventCache.getCachedEvent(ChangeWorldEvent.class).call();
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;isButtonDown(I)Z", ordinal = 1, remap = false))
@@ -109,13 +106,14 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        BlockClickToPlaceEvent event = EventCache.getCachedEvent(BlockClickToPlaceEvent.class).withVariables(1).call();
+        EventCache.getCachedEvent(BlockClickToPlaceEvent.class).withVariables(1).call(event -> {
 
-        if (event.isCancelled()) {
-            for (int i = 0; i < event.count; i++) {
-                this.tensor_runMouseClick();
+            if (event.isCancelled()) {
+                for (int i = 0; i < event.count; i++) {
+                    this.tensor_runMouseClick();
+                }
             }
-        }
+        });
     }
 
     @Unique

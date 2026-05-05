@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.EventConstant;
  * @since 03-18-2026
  */
 
-public final class ClientTickEvent implements EventConstant {
+public final class ClientTickEvent extends EventConstant<ClientTickEvent> {
 }

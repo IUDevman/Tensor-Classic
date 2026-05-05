@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.Event;
  * @since 04-20-2026
  */
 
-public interface EventConstant extends Event {
+public abstract class EventConstant<T> extends Event<T> {
 }

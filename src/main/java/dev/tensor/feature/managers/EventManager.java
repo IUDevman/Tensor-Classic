@@ -21,6 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 03-18-2026
  */
 
+@SuppressWarnings({"rawtypes", "unchecked", "SameParameterValue"})
 public final class EventManager implements Manager {
 
     private final HashMap<Class<? extends Event>, List<MethodData>> REGISTRY_MAP = new HashMap<>();
@@ -58,7 +59,7 @@ public final class EventManager implements Manager {
         this.cleanMap(true);
     }
 
-    public Event call(final Event event) {
+    public void call(final Event event) {
         List<MethodData> dataList = this.REGISTRY_MAP.get(event.getClass());
 
         if (dataList != null) {
@@ -66,11 +67,8 @@ public final class EventManager implements Manager {
                 this.invoke(data, event);
             }
         }
-
-        return event;
     }
 
-    @SuppressWarnings("unchecked")
     private void register(Method method, Object object) {
         Class<? extends Event> indexClass = (Class<? extends Event>) method.getParameterTypes()[0];
 
@@ -96,7 +94,6 @@ public final class EventManager implements Manager {
         }
     }
 
-    @SuppressWarnings("SameParameterValue")
     private void cleanMap(boolean onlyEmptyEntries) {
         Iterator<Map.Entry<Class<? extends Event>, List<MethodData>>> mapIterator = this.REGISTRY_MAP.entrySet().iterator();
 

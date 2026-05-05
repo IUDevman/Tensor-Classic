@@ -31,14 +31,15 @@ public abstract class EntityClientPlayerMPMixin implements Globals {
             return;
         }
 
-        UpdateClientPlayerActionEvent event = EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).call();
+        EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            if (this.field_9380_bx++ == 20) {
-                this.sendInventoryChanged();
-                this.field_9380_bx = 0;
+            if (event.isCancelled()) {
+                if (this.field_9380_bx++ == 20) {
+                    this.sendInventoryChanged();
+                    this.field_9380_bx = 0;
+                }
+                ci.cancel();
             }
-            ci.cancel();
-        }
+        });
     }
 }

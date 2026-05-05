@@ -25,8 +25,7 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        @SuppressWarnings("unused")
-        Render2DEvent event = EventCache.getCachedEvent(Render2DEvent.class).call();
+        EventCache.getCachedEvent(Render2DEvent.class).call();
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
@@ -35,11 +34,12 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call();
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "renderPumpkinBlur", at = @At("HEAD"), cancellable = true)
@@ -48,11 +48,12 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call();
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
@@ -61,10 +62,10 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call();
-
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call(event -> {
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 }

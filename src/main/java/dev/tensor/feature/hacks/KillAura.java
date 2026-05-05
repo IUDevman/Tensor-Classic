@@ -256,8 +256,7 @@ public final class KillAura extends Render3DHack {
                 this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
                 break;
             case Packet:
-                @SuppressWarnings("unused")
-                AttackEntityEvent event = EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(entity).call();
+                EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(entity).call();
 
                 this.sendPacket(new Packet7UseEntity(this.getPlayer().entityId, entity.entityId, 1));
                 break;

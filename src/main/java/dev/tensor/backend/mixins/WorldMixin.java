@@ -32,11 +32,12 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        LightValueEvent event = EventCache.getCachedEvent(LightValueEvent.class).call();
+        EventCache.getCachedEvent(LightValueEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(1F);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(1F);
+            }
+        });
     }
 
     @Inject(method = "func_27163_E", at = @At("HEAD"), cancellable = true)
@@ -45,11 +46,12 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
+        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "func_27166_f", at = @At("HEAD"), cancellable = true)
@@ -58,11 +60,12 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
+        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(0.0F);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(0.0F);
+            }
+        });
     }
 
     @Inject(method = "func_27162_g", at = @At("HEAD"), cancellable = true)
@@ -71,11 +74,12 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
+        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(0.0F);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(0.0F);
+            }
+        });
     }
 
     @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
@@ -100,11 +104,12 @@ public abstract class WorldMixin implements Globals {
         }
 
         if (f.equalsIgnoreCase("mob.wolf.shake")) {
-            WeatherEvent event = EventCache.getCachedEvent(WeatherEvent.class).call();
+            EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
         }
     }
 
@@ -117,8 +122,7 @@ public abstract class WorldMixin implements Globals {
         if (par1 instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
 
-            @SuppressWarnings("unused")
-            PlayerJoinLeaveWorldEvent event = EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call();
+            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call();
         }
     }
 
@@ -131,8 +135,7 @@ public abstract class WorldMixin implements Globals {
         if (par1 instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
 
-            @SuppressWarnings("unused")
-            PlayerJoinLeaveWorldEvent event = EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call();
+            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call();
         }
     }
 }

@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.EventConstant;
  * @since 03-29-2026
  */
 
-public final class Render3DEvent implements EventConstant {
+public final class Render3DEvent extends EventConstant<Render3DEvent> {
 }

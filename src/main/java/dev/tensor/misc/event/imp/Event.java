@@ -2,22 +2,31 @@ package dev.tensor.misc.event.imp;
 
 import dev.tensor.misc.imp.Globals;
 
+import java.util.function.Consumer;
+
 /**
- * @author DarkMagician6
- * @since 07-30-2013
+ * @author Hoosiers
+ * @since 05-04-2026
  */
 
-public interface Event extends Globals {
+public abstract class Event<T> implements Globals {
 
     @SuppressWarnings("unchecked")
-    default <T extends Event> T call() {
-
+    public final T call() {
         this.getEventManager().call(this);
 
         return (T) this;
     }
 
-    default void reset() {
+    public final T call(Consumer<? super T> action) {
+        T event = this.call();
+
+        action.accept(event);
+
+        return event;
+    }
+
+    public void reset() {
 
     }
 }

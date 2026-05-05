@@ -7,7 +7,7 @@ import dev.tensor.misc.event.imp.modifiers.EventVariable;
  * @since 03-15-2026
  */
 
-public final class GuiChatScreenEvent implements EventVariable {
+public final class GuiChatScreenEvent extends EventVariable<GuiChatScreenEvent> {
 
     public String message;
     public int minX;
@@ -16,7 +16,7 @@ public final class GuiChatScreenEvent implements EventVariable {
     public int maxY;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public GuiChatScreenEvent withVariables(Object... args) {
         this.message = (String) args[0];
         this.minX = (int) args[1];
         this.maxX = (int) args[2];
@@ -24,6 +24,6 @@ public final class GuiChatScreenEvent implements EventVariable {
         this.maxY = (int) args[4];
 
 
-        return EventVariable.super.withVariables(args);
+        return super.withVariables(args);
     }
 }

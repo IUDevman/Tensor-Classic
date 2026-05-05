@@ -26,11 +26,12 @@ public final class EntityMixin implements Globals {
             return;
         }
 
-        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call();
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Redirect(method = "moveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isSneaking()Z"))

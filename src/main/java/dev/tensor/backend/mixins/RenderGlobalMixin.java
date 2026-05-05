@@ -34,11 +34,12 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "renderClouds", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
@@ -55,13 +56,14 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
 
-        if (event.isUpdated()) {
-            Color color = event.getNewColor();
+            if (event.isUpdated()) {
+                Color color = event.getNewColor();
 
-            Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.8F);
-        }
+                Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.8F);
+            }
+        });
     }
 
     @Inject(method = "renderCloudsFancy", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
@@ -74,13 +76,14 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call();
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
 
-        if (event.isUpdated()) {
-            Color color = event.getNewColor();
+            if (event.isUpdated()) {
+                Color color = event.getNewColor();
 
-            Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.8F);
-        }
+                Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 0.8F);
+            }
+        });
     }
 
     @Inject(method = "renderCloudsFancy", at = @At("HEAD"))
@@ -100,11 +103,12 @@ public final class RenderGlobalMixin implements Globals {
         }
 
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            RenderSelectionBoxEvent event = EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call();
+            EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
         }
     }
 
@@ -115,11 +119,12 @@ public final class RenderGlobalMixin implements Globals {
         }
 
         if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            RenderBlockBreakEvent event = EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call();
+            EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
         }
     }
 }

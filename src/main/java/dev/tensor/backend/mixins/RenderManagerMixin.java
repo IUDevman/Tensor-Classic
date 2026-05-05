@@ -27,11 +27,12 @@ public final class RenderManagerMixin implements Globals {
         }
 
         if (f instanceof EntityItem) {
-            RenderItemEvent event = EventCache.getCachedEvent(RenderItemEvent.class).call();
+            EventCache.getCachedEvent(RenderItemEvent.class).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
         }
     }
 }

@@ -1,6 +1,5 @@
 package dev.tensor.backend.events.variable;
 
-import dev.tensor.misc.event.imp.modifiers.EventVariable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 
 import java.awt.*;
@@ -10,7 +9,7 @@ import java.awt.*;
  * @since 04-01-2026
  */
 
-public final class RenderSkyEvent extends EventVariableCancellable {
+public final class RenderSkyEvent extends EventVariableCancellable<RenderSkyEvent> {
 
     public Type type;
 
@@ -18,7 +17,7 @@ public final class RenderSkyEvent extends EventVariableCancellable {
     private boolean updated;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public RenderSkyEvent withVariables(Object... args) {
         this.type = (Type) args[0];
 
         this.newColor = new Color(255, 255, 255, 255);

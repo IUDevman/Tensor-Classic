@@ -40,13 +40,18 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            ChatSentEvent event = EventCache.getCachedEvent(ChatSentEvent.class).withVariables(packet.message).call();
+            EventCache.getCachedEvent(ChatSentEvent.class).withVariables(packet.message).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            } else if (!event.ARGS.equals(packet.message)) {
-                packet.message = event.ARGS;
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+
+                } else if (!event.ARGS.equals(packet.message)) {
+                    packet.message = event.ARGS;
+
+                    this.sendPacketBypass(packet);
+                    ci.cancel();
+                }
+            });
 
             return;
         }
@@ -54,12 +59,12 @@ public final class NetClientHandlerMixin implements Globals {
         if (arg instanceof Packet14BlockDig) {
             Packet14BlockDig packet = (Packet14BlockDig) arg;
 
-            @SuppressWarnings("unused")
-            BlockBreakEvent event = EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call();
+            EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
 
             return;
         }
@@ -67,14 +72,17 @@ public final class NetClientHandlerMixin implements Globals {
         if (arg instanceof Packet10Flying) {
             Packet10Flying packet = (Packet10Flying) arg;
 
-            Packet10FlyingEvent event = EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call();
+            EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call(event1 -> {
 
-            if (event.isCancelled()) {
+                if (event1.isCancelled()) {
+                    ci.cancel();
+                    return;
+                }
+
+                this.sendPacketBypass(event1.packet);
                 ci.cancel();
-                return;
-            }
+            });
 
-            arg = event.packet;
             return;
         }
 
@@ -83,11 +91,12 @@ public final class NetClientHandlerMixin implements Globals {
 
             if (packet.windowId == this.getPlayer().craftingInventory.windowId) {
 
-                CloseInventoryEvent event = EventCache.getCachedEvent(CloseInventoryEvent.class).call();
+                EventCache.getCachedEvent(CloseInventoryEvent.class).call(event -> {
 
-                if (event.isCancelled()) {
-                    ci.cancel();
-                }
+                    if (event.isCancelled()) {
+                        ci.cancel();
+                    }
+                });
             }
 
             return;
@@ -100,11 +109,12 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            Packet7UseEntityEvent event = EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call();
+            EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call(event -> {
 
-            if (event.isCancelled()) {
-                ci.cancel();
-            }
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
+            });
         }
     }
 
@@ -114,12 +124,13 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        ChatReceivedEvent event = EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call();
+        EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call(event -> {
 
-        if (event.isCancelled()) {
-            this.sendMessageWithLinesColor(event.message);
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                this.sendMessageWithLinesColor(event.message);
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "handleKickDisconnect", at = @At("HEAD"), cancellable = true)

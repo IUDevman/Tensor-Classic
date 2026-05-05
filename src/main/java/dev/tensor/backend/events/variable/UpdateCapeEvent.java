@@ -1,6 +1,5 @@
 package dev.tensor.backend.events.variable;
 
-import dev.tensor.misc.event.imp.modifiers.EventVariable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 
 /**
@@ -8,13 +7,13 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
  * @since 05-02-2026
  */
 
-public final class UpdateCapeEvent extends EventVariableCancellable {
+public final class UpdateCapeEvent extends EventVariableCancellable<UpdateCapeEvent> {
 
     public String username;
     public String playerCloakUrl;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public UpdateCapeEvent withVariables(Object... args) {
         this.username = (String) args[0];
         this.playerCloakUrl = null;
 

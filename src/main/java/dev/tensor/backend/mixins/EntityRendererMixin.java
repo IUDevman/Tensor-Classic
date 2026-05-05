@@ -37,11 +37,12 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        FOVModifierEvent event = EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(70.0F).call();
+        EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(70.0F).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(event.FOV);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(event.FOV);
+            }
+        });
     }
 
     @Inject(method = "hurtCameraEffect", at = @At("HEAD"), cancellable = true)
@@ -50,11 +51,12 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        HurtCameraEvent event = EventCache.getCachedEvent(HurtCameraEvent.class).call();
+        EventCache.getCachedEvent(HurtCameraEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "setupViewBobbing", at = @At("HEAD"), cancellable = true)
@@ -63,11 +65,12 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        ViewBobEvent event = EventCache.getCachedEvent(ViewBobEvent.class).call();
+        EventCache.getCachedEvent(ViewBobEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 
     @Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderGlobal;renderClouds(F)V", shift = At.Shift.AFTER))
@@ -76,8 +79,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        @SuppressWarnings("unused")
-        Render3DEvent event = EventCache.getCachedEvent(Render3DEvent.class).call();
+        EventCache.getCachedEvent(Render3DEvent.class).call();
     }
 
     @Inject(method = "setupFog", at = @At("TAIL"))
@@ -86,15 +88,17 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call();
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call(event -> {
 
-        if (event.isCancelled()) {
-            GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
-        } else if (event.isUpdated()) {
-            Color color = event.getNewColor();
+            if (event.isCancelled()) {
+                GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
 
-            GL11.glFog(GL11.GL_FOG_COLOR, this.func_908_a(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue(), 1.0F));
-        }
+            } else if (event.isUpdated()) {
+                Color color = event.getNewColor();
+
+                GL11.glFog(GL11.GL_FOG_COLOR, this.func_908_a(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue(), 1.0F));
+            }
+        });
     }
 
     @Redirect(method = "setupFog", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/EntityLiving;isInsideOfMaterial(Lnet/minecraft/src/Material;)Z"))

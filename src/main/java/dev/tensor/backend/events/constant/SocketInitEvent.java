@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-18-2026
  */
 
-public final class SocketInitEvent extends EventConstantCancellable {
+public final class SocketInitEvent extends EventConstantCancellable<SocketInitEvent> {
 }

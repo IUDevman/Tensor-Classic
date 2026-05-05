@@ -1,6 +1,5 @@
 package dev.tensor.backend.events.variable;
 
-import dev.tensor.misc.event.imp.modifiers.EventVariable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 
 /**
@@ -8,12 +7,12 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
  * @since 04-02-2026
  */
 
-public final class VelocityEvent extends EventVariableCancellable {
+public final class VelocityEvent extends EventVariableCancellable<VelocityEvent> {
 
     public Type type;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public VelocityEvent withVariables(Object... args) {
         this.type = (Type) args[0];
 
         return super.withVariables(args);

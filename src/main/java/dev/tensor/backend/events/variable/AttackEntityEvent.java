@@ -8,14 +8,14 @@ import net.minecraft.src.Entity;
  * @since 04-23-2026
  */
 
-public final class AttackEntityEvent implements EventVariable {
+public final class AttackEntityEvent extends EventVariable<AttackEntityEvent> {
 
     public Entity entityHit;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public AttackEntityEvent withVariables(Object... args) {
         this.entityHit = (Entity) args[0];
 
-        return EventVariable.super.withVariables(args);
+        return super.withVariables(args);
     }
 }

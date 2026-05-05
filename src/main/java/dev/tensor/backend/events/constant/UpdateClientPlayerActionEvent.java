@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-11-2026
  */
 
-public final class UpdateClientPlayerActionEvent extends EventConstantCancellable {
+public final class UpdateClientPlayerActionEvent extends EventConstantCancellable<UpdateClientPlayerActionEvent> {
 }

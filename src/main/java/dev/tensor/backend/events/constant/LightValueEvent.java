@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 03-20-2026
  */
 
-public final class LightValueEvent extends EventConstantCancellable {
+public final class LightValueEvent extends EventConstantCancellable<LightValueEvent> {
 }

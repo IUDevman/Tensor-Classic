@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-02-2026
  */
 
-public final class KnockbackEvent extends EventConstantCancellable {
+public final class KnockbackEvent extends EventConstantCancellable<KnockbackEvent> {
 }

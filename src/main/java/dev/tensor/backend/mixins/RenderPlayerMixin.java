@@ -25,10 +25,11 @@ public final class RenderPlayerMixin implements Globals {
             return;
         }
 
-        NameTagEvent event = EventCache.getCachedEvent(NameTagEvent.class).call();
+        EventCache.getCachedEvent(NameTagEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 }

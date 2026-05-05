@@ -31,21 +31,24 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call();
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(false);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(false);
+            }
+        });
     }
 
     @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/src/GuiScreen;)V"))
     public void tensor_onLivingUpdateInvokeGuiScreen(Minecraft instance, GuiScreen guiScreen) {
         if (guiScreen == null) {
-            PortalCloseGUIEvent event = EventCache.getCachedEvent(PortalCloseGUIEvent.class).call();
+            EventCache.getCachedEvent(PortalCloseGUIEvent.class).call(event -> {
 
-            if (!event.isCancelled()) {
-                instance.displayGuiScreen(null);
-            }
+                if (!event.isCancelled()) {
+                    instance.displayGuiScreen(null);
+                }
+            });
+
         } else {
             instance.displayGuiScreen(guiScreen);
         }
@@ -57,10 +60,11 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        SignEvent event = EventCache.getCachedEvent(SignEvent.class).withVariables(par1).call();
+        EventCache.getCachedEvent(SignEvent.class).withVariables(par1).call(event -> {
 
-        if (event.isCancelled()) {
-            ci.cancel();
-        }
+            if (event.isCancelled()) {
+                ci.cancel();
+            }
+        });
     }
 }

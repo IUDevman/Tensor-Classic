@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.EventConstant;
  * @since 04-11-2026
  */
 
-public final class ChangeWorldEvent implements EventConstant {
+public final class ChangeWorldEvent extends EventConstant<ChangeWorldEvent> {
 }

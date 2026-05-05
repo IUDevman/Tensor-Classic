@@ -7,10 +7,10 @@ import dev.tensor.misc.event.imp.Event;
  * @since 04-20-2026
  */
 
-public interface EventVariable extends Event {
+public abstract class EventVariable<T> extends Event<T> {
 
     @SuppressWarnings("unchecked")
-    default <T extends EventVariable> T withVariables(Object... variables) {
+    public T withVariables(Object... variables) {
         return (T) this;
     }
 }

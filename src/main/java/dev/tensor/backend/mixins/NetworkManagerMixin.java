@@ -39,12 +39,13 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            KnockbackEvent event = EventCache.getCachedEvent(KnockbackEvent.class).call();
+            EventCache.getCachedEvent(KnockbackEvent.class).call(event -> {
 
-            if (event.isCancelled()) {
-                cir.setReturnValue(false);
-                cir.cancel();
-            }
+                if (event.isCancelled()) {
+                    cir.setReturnValue(false);
+                    cir.cancel();
+                }
+            });
         }
     }
 
@@ -58,16 +59,17 @@ public final class NetworkManagerMixin implements Globals {
             return;
         }
 
-        SocketInitEvent event = EventCache.getCachedEvent(SocketInitEvent.class).call();
+        EventCache.getCachedEvent(SocketInitEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            try {
-                string.setTcpNoDelay(true);
-                this.getTensorLogger().info("TCP set to : {}!", string.getTcpNoDelay());
+            if (event.isCancelled()) {
+                try {
+                    string.setTcpNoDelay(true);
+                    this.getTensorLogger().info("TCP set to : {}!", string.getTcpNoDelay());
 
-            } catch (Exception ignored) {
-                this.getTensorLogger().info("TCP Failed to set!");
+                } catch (Exception ignored) {
+                    this.getTensorLogger().info("TCP Failed to set!");
+                }
             }
-        }
+        });
     }
 }

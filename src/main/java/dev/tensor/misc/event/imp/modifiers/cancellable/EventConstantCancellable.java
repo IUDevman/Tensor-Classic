@@ -7,28 +7,28 @@ import dev.tensor.misc.event.imp.modifiers.EventConstant;
  * @since 04-20-2026
  */
 
-public class EventConstantCancellable implements EventConstant, Cancellable {
+public abstract class EventConstantCancellable<T> extends EventConstant<T> implements Cancellable {
 
     private boolean cancelled;
 
     @Override
-    public boolean isCancelled() {
+    public final boolean isCancelled() {
         return this.cancelled;
     }
 
     @Override
-    public void setCancelled(boolean cancelled) {
+    public final void setCancelled(boolean cancelled) {
         this.cancelled = cancelled;
     }
 
     @Override
-    public void cancel() {
+    public final void cancel() {
         this.setCancelled(true);
     }
 
     @Override
-    public void reset() {
+    public final void reset() {
         this.setCancelled(false);
-        EventConstant.super.reset();
+        super.reset();
     }
 }

@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 03-29-2026
  */
 
-public final class RenderItemEvent extends EventConstantCancellable {
+public final class RenderItemEvent extends EventConstantCancellable<RenderItemEvent> {
 }

@@ -24,10 +24,11 @@ public final class ChunkMixin implements Globals {
             return;
         }
 
-        LightValueEvent event = EventCache.getCachedEvent(LightValueEvent.class).call();
+        EventCache.getCachedEvent(LightValueEvent.class).call(event -> {
 
-        if (event.isCancelled()) {
-            cir.setReturnValue(15);
-        }
+            if (event.isCancelled()) {
+                cir.setReturnValue(15);
+            }
+        });
     }
 }

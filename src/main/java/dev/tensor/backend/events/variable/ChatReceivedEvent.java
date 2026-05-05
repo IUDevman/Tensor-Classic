@@ -1,6 +1,5 @@
 package dev.tensor.backend.events.variable;
 
-import dev.tensor.misc.event.imp.modifiers.EventVariable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 
 /**
@@ -8,12 +7,12 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
  * @since 03-21-2026
  */
 
-public final class ChatReceivedEvent extends EventVariableCancellable {
+public final class ChatReceivedEvent extends EventVariableCancellable<ChatReceivedEvent> {
 
     public String message;
 
     @Override
-    public <T extends EventVariable> T withVariables(Object... args) {
+    public ChatReceivedEvent withVariables(Object... args) {
         this.message = (String) args[0];
 
         return super.withVariables(args);
