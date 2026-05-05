@@ -55,7 +55,6 @@ public final class EntityESP extends Render3DHack {
         RenderStatic.tensor_playerFrustrum = null;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void onClientTick() {
         this.entitiesWithColorToRender.clear();

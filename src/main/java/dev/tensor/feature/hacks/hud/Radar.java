@@ -106,7 +106,6 @@ public final class Radar extends Hack implements HUDObject {
         this.playerYaw = 0;
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void onClientTick() {
         this.pointsToRender.clear();

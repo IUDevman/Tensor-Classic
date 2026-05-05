@@ -53,7 +53,6 @@ public final class Nametags extends Render3DHack {
         this.playersToRender.clear();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void onClientTick() {
         this.playersToRender.clear();

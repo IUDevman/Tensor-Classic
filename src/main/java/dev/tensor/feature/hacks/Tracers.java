@@ -53,7 +53,6 @@ public final class Tracers extends Render3DHack {
         this.entitiesWithColorToTrace.clear();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public void onClientTick() {
         this.entitiesWithColorToTrace.clear();
