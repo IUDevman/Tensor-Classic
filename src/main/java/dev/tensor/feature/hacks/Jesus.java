@@ -87,11 +87,7 @@ public final class Jesus extends Hack {
             return true;
         }
 
-        if (Math.pow(fluidZ - z, 2) > 1) {
-            return true;
-        }
-
-        return false;
+        return Math.pow(fluidZ - z, 2) > 1;
     }
 
     private enum Denomination {

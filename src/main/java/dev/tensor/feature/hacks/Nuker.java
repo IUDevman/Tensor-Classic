@@ -469,11 +469,7 @@ public final class Nuker extends Render3DHack {
         if (newItem != -1) {
             ItemStack itemStack = this.getInventory().getStackInSlot(newItem);
 
-            if (itemStack != null && itemStack.getItem() instanceof ItemShears) {
-                return true;
-            }
-
-            return false;
+            return itemStack != null && itemStack.getItem() instanceof ItemShears;
         }
 
         ItemStack prevItemStack = this.getInventory().getStackInSlot(prevItem);
