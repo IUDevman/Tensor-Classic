@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.gui.TabGUIEntry;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
@@ -175,12 +175,11 @@ public final class TabGUI extends Hack implements HUDObject {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onKeyPressedEvent(KeyPressedEvent event) {
+    EventAction<KeyPressedEvent> keyPressedAction = this.addEventAction(new EventAction<>(KeyPressedEvent.class, event -> {
         if (event.KEY_CODE == Keyboard.KEY_LEFT) {
             this.setPage(this.getPage() - 1);
         } else if (event.KEY_CODE == Keyboard.KEY_RIGHT) {
             this.setPage(this.getPage() + 1);
         }
-    }
+    }));
 }

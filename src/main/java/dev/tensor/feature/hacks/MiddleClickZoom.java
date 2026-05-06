@@ -3,8 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.SmoothCameraEvent;
 import dev.tensor.backend.events.variable.FOVModifierEvent;
 import dev.tensor.backend.events.variable.MouseEvent;
-import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -47,7 +45,6 @@ public final class MiddleClickZoom extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onMouseEvent(MouseEvent event) {
         if (!this.isZoomed) {
             return;
@@ -66,7 +63,6 @@ public final class MiddleClickZoom extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Lowest)
     public void onFovModifierEvent(FOVModifierEvent event) {
         if (this.isZoomed) {
             float fov = (float) (event.FOV * this.multiplier.getValue());
@@ -81,7 +77,6 @@ public final class MiddleClickZoom extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onSmoothCameraEvent(SmoothCameraEvent event) {
         if (this.smoothCamera.getValue() && this.isZoomed) {
             event.cancel();

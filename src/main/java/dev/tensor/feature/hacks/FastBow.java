@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockClickToPlaceEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -19,7 +18,6 @@ public final class FastBow extends Hack {
     public final IntegerSetting arrowsPerClick = new IntegerSetting("Arrows Per Click", 1, 1, 64);
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onBlockClickToPlaceEvent(BlockClickToPlaceEvent event) {
         ItemStack currentItem = this.getInventory().getCurrentItem();
 

@@ -2,8 +2,7 @@ package dev.tensor.misc.event.imp;
 
 /**
  * @author Hoosiers
- * @author DarkMagician6
- * @since 08-03-2013
+ * @since 04-28-2026
  */
 
 public enum EventPriority {

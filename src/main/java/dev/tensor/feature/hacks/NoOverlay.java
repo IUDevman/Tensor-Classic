@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderOverlayEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -25,7 +24,6 @@ public final class NoOverlay extends Hack {
     public final BooleanSetting water = new BooleanSetting("Water", false);
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderOverlayEvent(RenderOverlayEvent event) {
         if (this.mode.getValue().equals(Mode.All)) {
             event.cancel();

@@ -2,7 +2,7 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ClientTickEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Entity;
@@ -37,14 +37,10 @@ public final class EntityListManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
-        this.FILTERED_LOADED_ENTITIES.clear();
-    }
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> this.FILTERED_LOADED_ENTITIES.clear()));
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onClientTick(ClientTickEvent event) {
+    EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, EventPriority.Highest, event -> {
         this.FILTERED_LOADED_ENTITIES.clear();
 
         if (this.failsNullCheck()) {
@@ -72,7 +68,7 @@ public final class EntityListManager implements Manager {
 
             this.FILTERED_LOADED_ENTITIES.add(entity);
         }
-    }
+    }));
 
     public ArrayList<Entity> getFilteredEntities() {
         return this.FILTERED_LOADED_ENTITIES;

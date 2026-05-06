@@ -3,8 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.events.variable.Packet7UseEntityEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
-import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
@@ -49,7 +47,6 @@ public final class InfiniteDurability extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onPacket7UseEntityEvent(Packet7UseEntityEvent event) {
         if (event.packet.isLeftClick != 1) {
             ItemStack currentItem = this.getInventory().getCurrentItem();
@@ -77,7 +74,6 @@ public final class InfiniteDurability extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Lowest)
     public void onBlockBreakEvent(BlockBreakEvent event) {
         int blockId = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
 

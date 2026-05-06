@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.NameTagEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -70,7 +69,6 @@ public final class Nametags extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onNameTagEvent(NameTagEvent event) {
         event.cancel();
     }

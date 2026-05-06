@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.LightValueEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import org.lwjgl.input.Keyboard;
@@ -24,7 +23,6 @@ public final class Fullbright extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onLightValueEvent(LightValueEvent event) {
         event.cancel();
     }

@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ViewBobEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -104,7 +103,6 @@ public final class Tracers extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onViewBobEvent(ViewBobEvent event) {
         event.cancel();
     }

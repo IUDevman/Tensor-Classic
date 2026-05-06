@@ -66,7 +66,6 @@ public final class TensorClassic implements ModInitializer, Globals {
     }
 
     private void loadManagers() {
-
         this.addManager(this.returnLoadedManager(new EventManager()));
         this.addManager(this.returnLoadedManager(new ConfigManager()));
         this.addManager(this.returnLoadedManager(new FriendManager()));
@@ -84,11 +83,6 @@ public final class TensorClassic implements ModInitializer, Globals {
     }
 
     private <T extends Manager> T returnLoadedManager(T manager) {
-
-        if (!(manager instanceof EventManager)) {
-            this.getEventManager().register(manager);
-        }
-
         manager.load(LOGGER);
 
         return manager;

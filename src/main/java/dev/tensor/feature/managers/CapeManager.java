@@ -4,7 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.tensor.backend.events.variable.UpdateCapeEvent;
 import dev.tensor.feature.hacks.Capes;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
 import org.slf4j.Logger;
@@ -52,8 +52,7 @@ public final class CapeManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onUpdateCapeEvent(UpdateCapeEvent event) {
+    EventAction<UpdateCapeEvent> updateCapeEventAction = this.addEventAction(new EventAction<>(UpdateCapeEvent.class, event -> {
         if (!this.shouldRenderCapes()) {
             return;
         }
@@ -62,7 +61,7 @@ public final class CapeManager implements Manager {
             event.playerCloakUrl = this.CAPE_URL;
             event.cancel();
         }
-    }
+    }));
 
     private void checkCapeURL(Logger LOGGER) {
         try {

@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.SocketInitEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -29,7 +28,6 @@ public final class TCPNoDelay extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onSocketInitEvent(SocketInitEvent event) {
         event.cancel();
     }

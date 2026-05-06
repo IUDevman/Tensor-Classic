@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.PortalCloseGUIEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -9,7 +8,6 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class PortalInventory extends Hack {
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onPortalCloseGUIEvent(PortalCloseGUIEvent event) {
         event.cancel();
     }

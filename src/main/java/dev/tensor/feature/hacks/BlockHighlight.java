@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -132,7 +131,6 @@ public final class BlockHighlight extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
         if (!event.isCancelled()) {
             int x = event.positionToRender.blockX;

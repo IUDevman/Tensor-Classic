@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.VelocityEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -22,7 +21,6 @@ public final class Velocity extends Hack {
     public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false);
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onVelocityEvent(VelocityEvent event) {
         if (this.mode.getValue().equals(Mode.All)) {
             event.cancel();

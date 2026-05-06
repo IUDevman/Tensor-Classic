@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.SignEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
@@ -21,7 +20,6 @@ public final class AutoSign extends Hack {
     public final StringSetting lineFour = new StringSetting("Line 4", "Tensor :D");
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onSignEvent(SignEvent event) {
         event.tileEntitySign.signText[0] = this.lineOne.getValue();
         event.tileEntitySign.signText[1] = this.lineTwo.getValue();

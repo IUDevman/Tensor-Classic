@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ViewBobEvent;
 import dev.tensor.backend.events.variable.RenderBlockEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
@@ -96,7 +95,6 @@ public final class Search extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderBlockEvent(RenderBlockEvent event) {
 
         BlockCoords blockCoords1 = event.blockCoords;
@@ -132,7 +130,6 @@ public final class Search extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onViewBobEvent(ViewBobEvent event) {
         if (!this.tracers.getValue().equals(TracerMode.None)) {
             event.cancel();
@@ -140,7 +137,6 @@ public final class Search extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.blockCoords.clear();
         RenderStatic.tensor_playerFrustrum = null;

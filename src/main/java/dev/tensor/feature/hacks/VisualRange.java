@@ -2,7 +2,6 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.imp.hack.Category;
@@ -49,13 +48,11 @@ public final class VisualRange extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.loadedEntityNames.clear();
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
         String name = event.otherPlayerMP.username;
 

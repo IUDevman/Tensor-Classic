@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.CameraClipEvent;
 import dev.tensor.backend.events.variable.MouseEvent;
 import dev.tensor.backend.mixins.accessors.EntityRendererAccessor;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -51,7 +50,6 @@ public final class CameraClip extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onCameraClipEvent(CameraClipEvent event) {
         if (this.clipThroughWalls.getValue()) {
             event.cancel();
@@ -59,7 +57,6 @@ public final class CameraClip extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onMouseEvent(MouseEvent event) {
         if (event.dWheel == 0) {
             return;

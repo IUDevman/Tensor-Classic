@@ -2,7 +2,6 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.FluidCollisionEvent;
 import dev.tensor.backend.mixins.accessors.EntityAccessor;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
@@ -42,7 +41,6 @@ public final class Jesus extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onFluidCollisionEvent(FluidCollisionEvent event) {
         boolean inWater = this.getPlayer().isInWater();
         boolean inLava = this.getPlayer().isInsideOfMaterial(Material.lava);

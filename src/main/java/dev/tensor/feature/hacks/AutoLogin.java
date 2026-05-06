@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.EncryptedStringSetting;
@@ -13,7 +12,6 @@ public final class AutoLogin extends Hack {
     public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!");
 
     @SuppressWarnings("unused")
-    @EventTarget()
     public void onChatReceivedEvent(ChatReceivedEvent event) {
         if (this.password.getValue().equals(this.password.getDefaultValue())) {
             return;

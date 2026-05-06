@@ -3,8 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
-import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -139,13 +137,11 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
     public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
         event.cancel();
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderOverlayEvent(RenderOverlayEvent event) {
         if (event.type.equals(RenderOverlayEvent.Type.blocks) || event.type.equals(RenderOverlayEvent.Type.water)) {
             event.cancel();
@@ -153,7 +149,6 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onVelocityEvent(VelocityEvent event) {
         if (event.type.equals(VelocityEvent.Type.Block) || event.type.equals(VelocityEvent.Type.Fluid)) {
             event.cancel();
@@ -161,20 +156,17 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onUpdateClientPlayerActionEvent(UpdateClientPlayerActionEvent event) {
         this.sendPacket(new Packet0KeepAlive());
         event.cancel();
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.setEnabled(false);
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
     public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
         switch ((Highlight) this.highlight.getValue()) {
             case None:
@@ -191,7 +183,6 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
     public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
         if (!this.showBreakProgress.getValue()) {
             event.cancel();

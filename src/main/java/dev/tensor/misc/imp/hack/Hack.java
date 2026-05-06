@@ -3,6 +3,8 @@ package dev.tensor.misc.imp.hack;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.Event;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.setting.Setting;
@@ -54,6 +56,14 @@ public abstract class Hack implements Globals {
     public boolean MESSAGES = this.getInfo().messages();
 
     private boolean ENABLED = this.getInfo().enabled();
+
+    private final ArrayList<EventAction<?>> actions = new ArrayList<>();
+
+    @Override
+    public final <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {
+        this.actions.add(action);
+        return action;
+    }
 
     public final ArrayList<Setting<?>> getSettings() {
         ArrayList<Setting<?>> SETTINGS = new ArrayList<>();
@@ -111,7 +121,8 @@ public abstract class Hack implements Globals {
     private void enable() {
         this.ENABLED = true;
 
-        this.getEventManager().register(this);
+        this.actions.forEach(action -> this.getNewEventManager().addAction(action));
+
         this.getHackManager().onHackToggled(this, true);
         this.onEnable(this.failsNullCheck());
         this.sendToggleMessage(true);
@@ -120,7 +131,8 @@ public abstract class Hack implements Globals {
     private void disable() {
         this.ENABLED = false;
 
-        this.getEventManager().unregister(this);
+        this.actions.forEach(action -> this.getNewEventManager().removeAction(action));
+
         this.getHackManager().onHackToggled(this, false);
         this.onDisable(this.failsNullCheck());
         this.sendToggleMessage(false);

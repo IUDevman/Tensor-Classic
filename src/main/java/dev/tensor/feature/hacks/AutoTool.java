@@ -2,7 +2,6 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -73,7 +72,6 @@ public final class AutoTool extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onBlockBreakEvent(BlockBreakEvent event) {
         Packet14BlockDig packet = event.packet;
 

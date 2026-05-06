@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -121,7 +120,6 @@ public final class EntityESP extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         RenderStatic.tensor_playerFrustrum = null;
     }

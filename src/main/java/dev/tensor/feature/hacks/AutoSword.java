@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.AttackEntityEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -63,7 +62,6 @@ public final class AutoSword extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onAttackEntityEvent(AttackEntityEvent event) {
 
         int swapSlot = this.getInventory().currentItem;

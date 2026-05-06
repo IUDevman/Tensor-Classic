@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -52,14 +51,12 @@ public final class AutoGG extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.targets.clear();
         this.lastHitName = "";
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
         if (!event.type.equals(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave)) {
             return;
@@ -107,7 +104,6 @@ public final class AutoGG extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onAttackEntityEvent(AttackEntityEvent event) {
         if (event.entityHit instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) event.entityHit;

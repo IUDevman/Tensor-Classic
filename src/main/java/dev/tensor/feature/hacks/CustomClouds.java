@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderSkyEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -22,7 +21,6 @@ public final class CustomClouds extends Hack {
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", new Color(255, 0, 0, 255));
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderSkyEvent(RenderSkyEvent event) {
         if (!event.type.equals(RenderSkyEvent.Type.Clouds)) {
             return;

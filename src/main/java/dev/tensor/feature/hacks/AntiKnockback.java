@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.KnockbackEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -14,7 +13,6 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class AntiKnockback extends Hack {
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onKnockbackEvent(KnockbackEvent event) {
         event.cancel();
     }

@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -144,7 +143,6 @@ public final class BreakProgress extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
         if (this.getMinecraft().renderGlobal.damagePartialTime == 0F) {
             return;

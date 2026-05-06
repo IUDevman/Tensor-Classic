@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpot;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpotRenderer;
@@ -101,7 +100,6 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChangeWorldEvent(ChangeWorldEvent event) {
         this.playersLogged.clear();
         this.playersLoggedQueue.clear();
@@ -109,7 +107,6 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
         if (event.otherPlayerMP == null) {
             return;
@@ -146,7 +143,6 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onChatReceivedEvent(ChatReceivedEvent event) {
         String message = event.message;
 

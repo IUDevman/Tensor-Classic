@@ -1,8 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
-import dev.tensor.misc.event.EventTarget;
-import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -61,7 +59,6 @@ public final class ChatTimestamp extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Lowest)
     public void onChatReceivedEvent(ChatReceivedEvent event) {
         this.prevLength = this.getFontRenderer().getStringWidth(event.message);
 

@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.MouseEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -17,7 +16,6 @@ public final class MiddleClickFriend extends Hack {
     public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true);
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onMouseEvent(MouseEvent event) {
         if (!event.eventButtonState || event.eventButton != 2) {
             return;

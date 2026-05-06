@@ -1,7 +1,6 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.LightValueEvent;
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
@@ -110,7 +109,6 @@ public final class Xray extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
     public void onLightValueEvent(LightValueEvent event) {
         event.cancel();
     }
