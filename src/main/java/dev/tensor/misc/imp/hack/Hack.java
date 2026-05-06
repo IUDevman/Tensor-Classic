@@ -243,4 +243,12 @@ public abstract class Hack implements Globals {
     public boolean shouldDisableOnDisconnect() {
         return false;
     }
+
+    public boolean shouldDisableOnDeath() {
+        return false;
+    }
+
+    public boolean shouldDisableOnWorldChange() {
+        return false;
+    }
 }

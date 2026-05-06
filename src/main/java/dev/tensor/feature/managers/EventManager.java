@@ -80,12 +80,7 @@ public final class EventManager implements Manager {
                 actions.forEach(action -> action.getAction().accept(event));
 
             } catch (Exception ignored) {
-                this.getTensorLogger().info("D:< Failed to call event '" + event.getClass().getSimpleName() + "' (Did you die?)!");
-                //This will prevent edge-case exceptions from crashing the client.
-                //An example would be a crash if the called consumer removes itself from the hashmap.
-                //This can happen with ChangeWorldEvent since it will disable the hack (which clears consumers) when called.
-                //Now the best case scenario would be to obviously not do that.
-                //But this is the lesser of two evils when it comes to best practice.
+                this.getTensorLogger().info("D:< Failed to call event '" + event.getClass().getSimpleName() + "'!");
             }
         }
     }

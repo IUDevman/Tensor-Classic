@@ -1,5 +1,6 @@
 package dev.tensor.feature.managers;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ClientTickEvent;
 import dev.tensor.backend.events.constant.Render2DEvent;
 import dev.tensor.backend.events.constant.Render3DEvent;
@@ -8,11 +9,13 @@ import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.*;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
+import net.minecraft.src.GuiGameOver;
 import org.slf4j.Logger;
 
 import java.nio.file.Files;
@@ -258,9 +261,21 @@ public final class HackManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, event -> {
+    EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, EventPriority.High, event -> {
         if (this.failsNullCheck()) {
             return;
+        }
+
+        if (this.getMinecraft().currentScreen instanceof GuiGameOver) {
+            ArrayList<Hack> toDisable = new ArrayList<>();
+
+            this.getEnabledHacks().forEach(hack -> {
+                if (hack.shouldDisableOnDeath()) {
+                    toDisable.add(hack);
+                }
+            });
+
+            toDisable.forEach(hack -> hack.setEnabled(false));
         }
 
         this.getEnabledHacks().forEach(Hack::onClientTick);
@@ -299,5 +314,18 @@ public final class HackManager implements Manager {
                 hack.toggle();
             }
         });
+    }));
+
+    @SuppressWarnings("unused")
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
+        ArrayList<Hack> toDisable = new ArrayList<>();
+
+        this.getEnabledHacks().forEach(hack -> {
+            if (hack.shouldDisableOnWorldChange()) {
+                toDisable.add(hack);
+            }
+        });
+
+        toDisable.forEach(hack -> hack.setEnabled(false));
     }));
 }

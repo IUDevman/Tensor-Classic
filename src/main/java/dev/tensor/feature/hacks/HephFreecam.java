@@ -1,6 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.event.EventAction;
@@ -12,7 +11,6 @@ import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.GuiGameOver;
 import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.Packet0KeepAlive;
 import org.lwjgl.input.Keyboard;
@@ -29,6 +27,16 @@ public final class HephFreecam extends Hack {
 
     @Override
     public boolean shouldDisableOnDisconnect() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldDisableOnDeath() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldDisableOnWorldChange() {
         return true;
     }
 
@@ -115,11 +123,6 @@ public final class HephFreecam extends Hack {
         this.getPlayer().motionY = 0;
 
         if (this.getMinecraft().currentScreen != null) {
-            if (this.getMinecraft().currentScreen instanceof GuiGameOver) {
-                this.setEnabled(false);
-                return;
-            }
-
             InventoryMove inventoryMove = this.getHackManager().getHack(InventoryMove.class);
 
             if (!(inventoryMove.isEnabled() && !inventoryMove.shouldNotMove())) {
@@ -163,9 +166,6 @@ public final class HephFreecam extends Hack {
         this.sendPacket(new Packet0KeepAlive());
         event.cancel();
     }));
-
-    @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.setEnabled(false)));
 
     @SuppressWarnings("unused")
     EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, EventPriority.Highest, event -> {

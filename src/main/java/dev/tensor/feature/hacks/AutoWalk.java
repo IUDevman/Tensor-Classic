@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
-import net.minecraft.src.GuiGameOver;
 import org.lwjgl.input.Keyboard;
 
 /**
@@ -13,6 +12,11 @@ import org.lwjgl.input.Keyboard;
 
 @Hack.Info(name = "AutoWalk", category = Category.Movement)
 public final class AutoWalk extends Hack {
+
+    @Override
+    public boolean shouldDisableOnDeath() {
+        return this.toggleOnDeath.getValue();
+    }
 
     public final BooleanSetting toggleOnDeath = new BooleanSetting("Toggle On Death", true);
 
@@ -41,11 +45,6 @@ public final class AutoWalk extends Hack {
 
 
         if (this.getMinecraft().currentScreen != null) {
-            if (this.toggleOnDeath.getValue() && this.getMinecraft().currentScreen instanceof GuiGameOver) {
-                this.setEnabled(false);
-                return;
-            }
-
             this.updateMove(true);
             return;
         }

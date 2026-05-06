@@ -1,7 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.ChangeWorldEvent;
-import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -20,6 +18,16 @@ public final class FakePlayer extends Hack {
 
     @Override
     public boolean shouldDisableOnDisconnect() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldDisableOnDeath() {
+        return true;
+    }
+
+    @Override
+    public boolean shouldDisableOnWorldChange() {
         return true;
     }
 
@@ -66,8 +74,4 @@ public final class FakePlayer extends Hack {
             this.fakePlayer.motionZ = 0;
         }
     }
-
-    @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.setEnabled(false)));
-
 }
