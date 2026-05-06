@@ -121,7 +121,7 @@ public abstract class Hack implements Globals {
     private void enable() {
         this.ENABLED = true;
 
-        this.actions.forEach(action -> this.getNewEventManager().addAction(action));
+        this.actions.forEach(action -> this.getEventManager().addAction(action));
 
         this.getHackManager().onHackToggled(this, true);
         this.onEnable(this.failsNullCheck());
@@ -131,7 +131,7 @@ public abstract class Hack implements Globals {
     private void disable() {
         this.ENABLED = false;
 
-        this.actions.forEach(action -> this.getNewEventManager().removeAction(action));
+        this.actions.forEach(action -> this.getEventManager().removeAction(action));
 
         this.getHackManager().onHackToggled(this, false);
         this.onDisable(this.failsNullCheck());

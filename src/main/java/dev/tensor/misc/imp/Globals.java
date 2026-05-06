@@ -63,7 +63,7 @@ public interface Globals {
         return TensorClassic.getLogger();
     }
 
-    default EventManager getNewEventManager() {
+    default EventManager getEventManager() {
         return (EventManager) this.getTensor().MANAGERS.get(EventManager.class);
     }
 
@@ -134,7 +134,7 @@ public interface Globals {
     }
 
     default <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {
-        this.getNewEventManager().addAction(action);
+        this.getEventManager().addAction(action);
         return action;
     }
 
