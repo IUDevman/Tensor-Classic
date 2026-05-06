@@ -13,21 +13,13 @@ public enum EventPriority {
     Low(3),
     Lowest(4);
 
-    public static final byte[] STANDARD_VALUES_ARRAY = new byte[]{
-            Highest.getValue(),
-            High.getValue(),
-            Medium.getValue(),
-            Low.getValue(),
-            Lowest.getValue()
-    };
-
     private final byte priority;
 
     EventPriority(int priority) {
         this.priority = (byte) priority;
     }
 
-    public byte getValue() {
+    public byte value() {
         return this.priority;
     }
 }

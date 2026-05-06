@@ -30,7 +30,7 @@ public final class EventAction<T extends Event<T>> implements Globals {
     }
 
     public byte getPriority() {
-        return this.priority.getValue();
+        return this.priority.value();
     }
 
     public Consumer<? super T> getAction() {
