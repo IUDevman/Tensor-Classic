@@ -40,22 +40,27 @@ public final class RenderTask {
 
         if (!this.quads.isEmpty()) {
 
+            Tessellator.instance.startDrawing(GL11.GL_QUADS);
+
             this.quads.forEach(context -> {
 
                 boolean color = context.getColor() != prevColor.get();
 
+                if (color) {
+                    Tessellator.instance.draw();
+                    Tessellator.instance.startDrawing(GL11.GL_QUADS);
+                }
+
                 context.preload(false, color);
 
-                Tessellator.instance.startDrawing(GL11.GL_QUADS);
-
                 context.draw();
-
-                Tessellator.instance.draw();
 
                 if (color) {
                     prevColor.set(context.getColor());
                 }
             });
+
+            Tessellator.instance.draw();
         }
 
         if (!this.strips.isEmpty()) {
@@ -85,18 +90,21 @@ public final class RenderTask {
 
         if (!this.lines.isEmpty()) {
 
+            Tessellator.instance.startDrawing(GL11.GL_LINES);
+
             this.lines.forEach(context -> {
 
                 boolean lines = context.getLineWidth() != prevLineWidth.get();
                 boolean color = context.getColor() != prevColor.get();
 
+                if (lines || color) {
+                    Tessellator.instance.draw();
+                    Tessellator.instance.startDrawing(GL11.GL_LINES);
+                }
+
                 context.preload(lines, color);
 
-                Tessellator.instance.startDrawing(GL11.GL_LINES);
-
                 context.draw();
-
-                Tessellator.instance.draw();
 
                 if (lines) {
                     prevLineWidth.set(context.getLineWidth());
@@ -106,6 +114,8 @@ public final class RenderTask {
                     prevColor.set(context.getColor());
                 }
             });
+
+            Tessellator.instance.draw();
         }
     }
 
