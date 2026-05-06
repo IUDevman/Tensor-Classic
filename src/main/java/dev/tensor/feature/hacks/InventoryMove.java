@@ -1,6 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.misc.event.EventTarget;
 import dev.tensor.misc.gui.TensorHUDEditor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -28,8 +27,7 @@ public final class InventoryMove extends Hack {
         }
     }
 
-    @SuppressWarnings("unused")
-    @EventTarget
+    @Override
     public void onClientTick() {
         if (this.getMinecraft().currentScreen == null) {
             return;

@@ -3,8 +3,9 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -39,8 +40,10 @@ public final class HephFreecam extends Hack {
     public double oldX;
     public double oldY;
     public double oldZ;
+
     public float oldYaw;
     private float oldPitch;
+
     private boolean isThirdPerson;
 
     private EntityPlayer fakePlayer = null;
@@ -139,43 +142,33 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        event.cancel();
-    }
+    EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, EventPriority.Highest, EventVariableCancellable::cancel));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRenderOverlayEvent(RenderOverlayEvent event) {
+    EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
         if (event.type.equals(RenderOverlayEvent.Type.blocks) || event.type.equals(RenderOverlayEvent.Type.water)) {
             event.cancel();
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onVelocityEvent(VelocityEvent event) {
+    EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
         if (event.type.equals(VelocityEvent.Type.Block) || event.type.equals(VelocityEvent.Type.Fluid)) {
             event.cancel();
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onUpdateClientPlayerActionEvent(UpdateClientPlayerActionEvent event) {
+    EventAction<UpdateClientPlayerActionEvent> updateClientPlayerActionEventAction = this.addEventAction(new EventAction<>(UpdateClientPlayerActionEvent.class, event -> {
         this.sendPacket(new Packet0KeepAlive());
         event.cancel();
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
-        this.setEnabled(false);
-    }
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.setEnabled(false)));
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
+    EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, EventPriority.Highest, event -> {
         switch ((Highlight) this.highlight.getValue()) {
             case None:
                 event.cancel();
@@ -188,15 +181,14 @@ public final class HephFreecam extends Hack {
                 }
                 break;
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
+    EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addEventAction(new EventAction<>(RenderBlockBreakEvent.class, EventPriority.Highest, event -> {
         if (!this.showBreakProgress.getValue()) {
             event.cancel();
         }
-    }
+    }));
 
     private boolean isInSelectionResult(MovingObjectPosition position) {
         boolean inX = false;

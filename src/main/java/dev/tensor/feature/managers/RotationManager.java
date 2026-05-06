@@ -1,7 +1,7 @@
 package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.variable.Packet10FlyingEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.Manager;
@@ -61,8 +61,7 @@ public final class RotationManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
+    EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> {
         if (this.rotationQueue.isEmpty()) {
             return;
         }
@@ -82,7 +81,7 @@ public final class RotationManager implements Manager {
 
             this.rotationQueue.clear();
         }
-    }
+    }));
 
     public enum Mode {
         None,

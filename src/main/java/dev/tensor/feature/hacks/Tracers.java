@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ViewBobEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -104,10 +104,11 @@ public final class Tracers extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onViewBobEvent(ViewBobEvent event) {
-        event.cancel();
-    }
+    EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
+        if (!this.entitiesWithColorToTrace.isEmpty()) {
+            event.cancel();
+        }
+    }));
 
     private void renderTracerForEntity(Entity entity, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;

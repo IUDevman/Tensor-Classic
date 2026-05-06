@@ -2,8 +2,7 @@ package dev.tensor.misc.event.imp;
 
 /**
  * @author Hoosiers
- * @author DarkMagician6
- * @since 08-03-2013
+ * @since 04-28-2026
  */
 
 public enum EventPriority {
@@ -14,21 +13,13 @@ public enum EventPriority {
     Low(3),
     Lowest(4);
 
-    public static final byte[] STANDARD_VALUES_ARRAY = new byte[]{
-            Highest.getValue(),
-            High.getValue(),
-            Medium.getValue(),
-            Low.getValue(),
-            Lowest.getValue()
-    };
-
     private final byte priority;
 
     EventPriority(int priority) {
         this.priority = (byte) priority;
     }
 
-    public byte getValue() {
+    public byte value() {
         return this.priority;
     }
 }

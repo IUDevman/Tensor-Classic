@@ -3,7 +3,7 @@ package dev.tensor.feature.managers;
 import dev.tensor.backend.events.variable.ChatSentEvent;
 import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.Manager;
@@ -96,8 +96,7 @@ public final class CommandManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Highest)
-    public void onChatSentEvent(ChatSentEvent event) {
+    EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
         Commands COMMANDS = this.getHackManager().getHack(Commands.class);
 
         if (!COMMANDS.isEnabled()) {
@@ -109,7 +108,7 @@ public final class CommandManager implements Manager {
         if (runCommand) {
             event.cancel();
         }
-    }
+    }));
 
     private boolean runCommand(String PREFIX, String ARGS) {
         if (ARGS == null) {

@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -52,15 +52,13 @@ public final class AutoGG extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.targets.clear();
         this.lastHitName = "";
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
+    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         if (!event.type.equals(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave)) {
             return;
         }
@@ -104,11 +102,10 @@ public final class AutoGG extends Hack {
                 this.messageDelay = 0;
             }
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onAttackEntityEvent(AttackEntityEvent event) {
+    EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
         if (event.entityHit instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) event.entityHit;
 
@@ -120,5 +117,5 @@ public final class AutoGG extends Hack {
                 this.targets.add(username);
             }
         }
-    }
+    }));
 }

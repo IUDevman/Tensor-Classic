@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.GuiChatScreenEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.gui.TensorChatGUI;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -24,8 +24,7 @@ public final class CommandPreview extends Hack {
     private final TensorChatGUI tensorChatGUI = new TensorChatGUI();
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onGuiChatScreenEvent(GuiChatScreenEvent event) {
+    EventAction<GuiChatScreenEvent> guiChatScreenEventAction = this.addEventAction(new EventAction<>(GuiChatScreenEvent.class, event -> {
         if (!this.getHackManager().getHack(Commands.class).isEnabled()) {
             return;
         }
@@ -43,5 +42,5 @@ public final class CommandPreview extends Hack {
         }
 
         tensorChatGUI.render(prefix, event.message, event.minX, event.minY, event.maxX, event.maxY, this.fillColor.getValue().getRGB(), this.outlineColor.getValue().getRGB(), this.textColor.getValue().getRGB());
-    }
+    }));
 }

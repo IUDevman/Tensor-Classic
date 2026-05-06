@@ -13,7 +13,7 @@ public abstract class Event<T> implements Globals {
 
     @SuppressWarnings("unchecked")
     public final T call() {
-        this.getEventManager().call(this);
+        this.getNewEventManager().callEvent(this);
 
         return (T) this;
     }

@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -132,8 +132,7 @@ public final class BlockHighlight extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRenderSelectionBoxEvent(RenderSelectionBoxEvent event) {
+    EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, event -> {
         if (!event.isCancelled()) {
             int x = event.positionToRender.blockX;
             int y = event.positionToRender.blockY;
@@ -154,7 +153,7 @@ public final class BlockHighlight extends Render3DHack {
             this.positionToRender = new BlockCoords(block, x, y, z);
             event.cancel();
         }
-    }
+    }));
 
     private boolean hasSameCoords(MovingObjectPosition position) {
         if (this.positionToRender == null) {

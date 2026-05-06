@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -68,8 +68,6 @@ public final class FakePlayer extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
-        this.setEnabled(false);
-    }
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.setEnabled(false)));
+
 }

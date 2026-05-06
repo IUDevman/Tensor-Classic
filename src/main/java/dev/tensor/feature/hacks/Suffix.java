@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.variable.ChatSentEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -21,8 +21,7 @@ public final class Suffix extends Hack {
 
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Lowest)
-    public void onChatSentEvent(ChatSentEvent event) {
+    EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
         String message = event.ARGS;
 
         if (!message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
@@ -35,7 +34,7 @@ public final class Suffix extends Hack {
 
             event.ARGS = messageSuffix;
         }
-    }
+    }));
 
     private String getClientName() {
         if (this.clientName.getValue().equals(Clients.Tensor)) {

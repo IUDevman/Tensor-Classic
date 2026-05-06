@@ -1,7 +1,8 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ViewBobEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -14,8 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoViewBob extends Hack {
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onViewBobEvent(ViewBobEvent event) {
-        event.cancel();
-    }
+    EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, EventConstantCancellable::cancel));
 }

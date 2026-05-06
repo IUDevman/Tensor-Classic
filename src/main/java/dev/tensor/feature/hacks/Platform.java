@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.MovementClipEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -136,12 +136,11 @@ public final class Platform extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onMovementClipEvent(MovementClipEvent event) {
+    EventAction<MovementClipEvent> movementClipEventAction = this.addEventAction(new EventAction<>(MovementClipEvent.class, event -> {
         if (this.safeWalk.getValue()) {
             event.cancel();
         }
-    }
+    }));
 
     private ArrayList<BlockPos> getBlocksToPlace(double playerX, double playerY, double playerZ) {
         ArrayList<BlockPos> blockPos = new ArrayList<>();

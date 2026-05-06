@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpot;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpotRenderer;
@@ -101,16 +101,14 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.playersLogged.clear();
         this.playersLoggedQueue.clear();
         this.loggedNames.clear();
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
+    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         if (event.otherPlayerMP == null) {
             return;
         }
@@ -143,11 +141,10 @@ public final class LogoutSpots extends Render3DHack {
                 this.playersLoggedQueue.add(logoutSpot);
             }
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChatReceivedEvent(ChatReceivedEvent event) {
+    EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
         String message = event.message;
 
         if (message.toLowerCase().contains("joined the game")) {
@@ -197,7 +194,7 @@ public final class LogoutSpots extends Render3DHack {
                 this.loggedNames.add(username);
             }
         }
-    }
+    }));
 
     private boolean isLoggedName(String username) {
         return this.loggedNames.stream().filter(name -> name.equalsIgnoreCase(username)).findFirst().orElse(null) != null;

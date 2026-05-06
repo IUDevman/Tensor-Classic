@@ -1,35 +1,28 @@
 package dev.tensor.feature.managers;
 
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
-import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * @author DarkMagician6
  * @author Hoosiers
- * @since 02-02-2014
- * @since 03-18-2026
+ * @since 05-05-2026
  */
 
-@SuppressWarnings({"rawtypes", "unchecked", "SameParameterValue"})
+@SuppressWarnings({"rawtypes", "unchecked"})
 public final class EventManager implements Manager {
-
-    private final HashMap<Class<? extends Event>, List<MethodData>> REGISTRY_MAP = new HashMap<>();
 
     @Override
     public String getName() {
         return "EventManager";
     }
+
+    private final HashMap<Class<? extends Event>, ArrayList<EventAction>> ACTION_MAP = new HashMap<>();
 
     @Override
     public void load(Logger LOGGER) {
@@ -41,117 +34,59 @@ public final class EventManager implements Manager {
         LOGGER.info("Saved: " + this.getName());
     }
 
-    public void register(Object object) {
-        for (final Method method : object.getClass().getDeclaredMethods()) {
-            if (this.isMethodBad(method)) {
-                continue;
+    public void addAction(EventAction eventAction) {
+        Class<? extends Event> eventClass = eventAction.getEventClass();
+        boolean hasClass = this.ACTION_MAP.containsKey(eventClass);
+
+        if (hasClass) {
+            ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
+
+            if (!actions.contains(eventAction)) {
+                actions.add(eventAction);
             }
 
-            this.register(method, object);
+            actions.sort(Comparator.comparing(EventAction::getPriority));
+            return;
+        }
+
+        ArrayList<EventAction> actions = new ArrayList<>();
+        actions.add(eventAction);
+
+        this.ACTION_MAP.put(eventClass, actions);
+    }
+
+    public void removeAction(EventAction eventAction) {
+        Class<? extends Event> eventClass = eventAction.getEventClass();
+        boolean hasClass = this.ACTION_MAP.containsKey(eventClass);
+
+        if (hasClass) {
+            ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
+            actions.remove(eventAction);
         }
     }
 
-    public void unregister(Object object) {
-        for (final List<MethodData> dataList : this.REGISTRY_MAP.values()) {
-            dataList.removeIf(data -> data.getSource().equals(object));
-        }
+    public void callEvent(Event event) {
+        Class<? extends Event> eventClass = event.getClass();
+        boolean hasEvent = this.ACTION_MAP.containsKey(eventClass);
 
-        this.cleanMap(true);
-    }
+        if (hasEvent) {
+            try {
+                ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
 
-    public void call(final Event event) {
-        List<MethodData> dataList = this.REGISTRY_MAP.get(event.getClass());
-
-        if (dataList != null) {
-            for (final MethodData data : dataList) {
-                this.invoke(data, event);
-            }
-        }
-    }
-
-    private void register(Method method, Object object) {
-        Class<? extends Event> indexClass = (Class<? extends Event>) method.getParameterTypes()[0];
-
-        final MethodData data = new MethodData(object, method, method.getAnnotation(EventTarget.class).priority().getValue());
-
-        if (!data.getTarget().isAccessible()) {
-            data.getTarget().setAccessible(true);
-        }
-
-        if (this.REGISTRY_MAP.containsKey(indexClass)) {
-            if (!this.REGISTRY_MAP.get(indexClass).contains(data)) {
-                this.REGISTRY_MAP.get(indexClass).add(data);
-                this.sortListValue(indexClass);
-            }
-        } else {
-            this.REGISTRY_MAP.put(indexClass, new CopyOnWriteArrayList<MethodData>() {
-                private static final long serialVersionUID = 666L;
-
-                {
-                    add(data);
+                if (actions.isEmpty()) {
+                    return;
                 }
-            });
-        }
-    }
 
-    private void cleanMap(boolean onlyEmptyEntries) {
-        Iterator<Map.Entry<Class<? extends Event>, List<MethodData>>> mapIterator = this.REGISTRY_MAP.entrySet().iterator();
+                actions.forEach(action -> action.getAction().accept(event));
 
-        while (mapIterator.hasNext()) {
-            if (!onlyEmptyEntries || mapIterator.next().getValue().isEmpty()) {
-                mapIterator.remove();
+            } catch (Exception ignored) {
+                this.getTensorLogger().info("D:< Failed to call event '" + event.getClass().getSimpleName() + "' (Did you die?)!");
+                //This will prevent edge-case exceptions from crashing the client.
+                //An example would be a crash if the called consumer removes itself from the hashmap.
+                //This can happen with ChangeWorldEvent since it will disable the hack (which clears consumers) when called.
+                //Now the best case scenario would be to obviously not do that.
+                //But this is the lesser of two evils when it comes to best practice.
             }
-        }
-    }
-
-    private void invoke(MethodData data, Event argument) {
-        try {
-            data.getTarget().invoke(data.getSource(), argument);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ignored) {
-            this.getTensorLogger().info(this.getName() + ": Failed to invoke event '" + argument.getClass().getSimpleName() + "'!");
-        }
-    }
-
-    private void sortListValue(Class<? extends Event> indexClass) {
-        List<MethodData> sortedList = new CopyOnWriteArrayList<>();
-
-        for (final byte priority : EventPriority.STANDARD_VALUES_ARRAY) {
-            for (final MethodData data : this.REGISTRY_MAP.get(indexClass)) {
-                if (data.getPriority() == priority) {
-                    sortedList.add(data);
-                }
-            }
-        }
-
-        this.REGISTRY_MAP.put(indexClass, sortedList);
-    }
-
-    private boolean isMethodBad(Method method) {
-        return method.getParameterTypes().length != 1 || !method.isAnnotationPresent(EventTarget.class);
-    }
-
-    private static final class MethodData {
-
-        private final Object source;
-        private final Method target;
-        private final byte priority;
-
-        public MethodData(Object source, Method target, byte priority) {
-            this.source = source;
-            this.target = target;
-            this.priority = priority;
-        }
-
-        public Object getSource() {
-            return this.source;
-        }
-
-        public Method getTarget() {
-            return this.target;
-        }
-
-        public byte getPriority() {
-            return this.priority;
         }
     }
 }

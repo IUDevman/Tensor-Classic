@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.backend.mixins.accessors.EntityAccessor;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -22,8 +22,5 @@ public final class NoFall extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPacket10FlyingEvent(Packet10FlyingEvent event) {
-        event.packet.onGround = true;
-    }
+    EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> event.packet.onGround = true));
 }

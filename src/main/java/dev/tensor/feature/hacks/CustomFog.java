@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderSkyEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -23,8 +23,7 @@ public final class CustomFog extends Hack {
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", new Color(255, 105, 180, 255));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRenderSkyEvent(RenderSkyEvent event) {
+    EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
         if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids) && !this.renderFluidFog.getValue()) {
             event.cancel();
             return;
@@ -40,5 +39,5 @@ public final class CustomFog extends Hack {
                 event.setNewColor(this.color.getValue());
             }
         }
-    }
+    }));
 }

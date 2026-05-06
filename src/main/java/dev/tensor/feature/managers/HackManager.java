@@ -7,7 +7,7 @@ import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.*;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -258,18 +258,16 @@ public final class HackManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onClientTickEvent(ClientTickEvent event) {
+    EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
 
         this.getEnabledHacks().forEach(Hack::onClientTick);
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRender2DEvent(Render2DEvent event) {
+    EventAction<Render2DEvent> render2DEventAction = this.addEventAction(new EventAction<>(Render2DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -281,11 +279,10 @@ public final class HackManager implements Manager {
         }
 
         this.getEnabledHudObjects().forEach(hack -> ((HUDObject) hack).render());
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRender3DEvent(Render3DEvent event) {
+    EventAction<Render3DEvent> render3DEventAction = this.addEventAction(new EventAction<>(Render3DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -293,15 +290,14 @@ public final class HackManager implements Manager {
         float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().renderPartialTicks;
 
         this.getEnabledRender3DObjectHacks().forEach(hack -> hack.renderIn3D(renderPartialTicks));
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onKeyPressedEvent(KeyPressedEvent event) {
+    EventAction<KeyPressedEvent> keyPressedEventAction = this.addEventAction(new EventAction<>(KeyPressedEvent.class, event -> {
         this.getHacks().forEach(hack -> {
             if (hack.BIND == event.KEY_CODE) {
                 hack.toggle();
             }
         });
-    }
+    }));
 }

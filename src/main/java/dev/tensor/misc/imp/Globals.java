@@ -9,6 +9,8 @@ import dev.tensor.feature.hacks.HephFreecam;
 import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.Event;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
@@ -61,7 +63,7 @@ public interface Globals {
         return TensorClassic.getLogger();
     }
 
-    default EventManager getEventManager() {
+    default EventManager getNewEventManager() {
         return (EventManager) this.getTensor().MANAGERS.get(EventManager.class);
     }
 
@@ -129,6 +131,11 @@ public interface Globals {
         }
 
         return autoReconnect.isEnabled();
+    }
+
+    default <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {
+        this.getNewEventManager().addAction(action);
+        return action;
     }
 
     default ArrayList<Entity> getFilteredLoadedEntities() {

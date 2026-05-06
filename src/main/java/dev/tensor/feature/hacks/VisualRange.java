@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockPos;
 import dev.tensor.misc.imp.hack.Category;
@@ -49,14 +49,10 @@ public final class VisualRange extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
-        this.loadedEntityNames.clear();
-    }
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loadedEntityNames.clear()));
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPlayerJoinLeaveWorldEvent(PlayerJoinLeaveWorldEvent event) {
+    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         String name = event.otherPlayerMP.username;
 
         if (event.otherPlayerMP.isDead || event.otherPlayerMP.health <= 0) {
@@ -88,7 +84,7 @@ public final class VisualRange extends Hack {
                 }
                 break;
         }
-    }
+    }));
 
     private boolean shouldMessage() {
         if (!this.antiSpam.getValue()) {

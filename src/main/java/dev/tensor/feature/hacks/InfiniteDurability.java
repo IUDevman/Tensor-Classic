@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.events.variable.Packet7UseEntityEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -49,8 +49,7 @@ public final class InfiniteDurability extends Hack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onPacket7UseEntityEvent(Packet7UseEntityEvent event) {
+    EventAction<Packet7UseEntityEvent> packet7UseEntityEventAction = this.addEventAction(new EventAction<>(Packet7UseEntityEvent.class, event -> {
         if (event.packet.isLeftClick != 1) {
             ItemStack currentItem = this.getInventory().getCurrentItem();
 
@@ -74,11 +73,10 @@ public final class InfiniteDurability extends Hack {
         if (hasDispatched) {
             event.cancel();
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    @EventTarget(priority = EventPriority.Lowest)
-    public void onBlockBreakEvent(BlockBreakEvent event) {
+    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, EventPriority.Lowest, event -> {
         int blockId = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
 
         if (blockId == 0 || this.BLOCKED_BLOCKS.containsBlock(blockId)) {
@@ -90,7 +88,7 @@ public final class InfiniteDurability extends Hack {
         if (hasDispatched) {
             event.cancel();
         }
-    }
+    }));
 
     public boolean runSwapProtocol(Packet packet, boolean shears) {
         ItemStack currentStack = this.getInventory().getCurrentItem();

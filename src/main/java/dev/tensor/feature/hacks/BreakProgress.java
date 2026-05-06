@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
-import dev.tensor.misc.event.EventTarget;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -144,8 +144,7 @@ public final class BreakProgress extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    @EventTarget
-    public void onRenderBlockBreakEvent(RenderBlockBreakEvent event) {
+    EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addEventAction(new EventAction<>(RenderBlockBreakEvent.class, event -> {
         if (this.getMinecraft().renderGlobal.damagePartialTime == 0F) {
             return;
         }
@@ -170,7 +169,7 @@ public final class BreakProgress extends Render3DHack {
             this.positionToRender = new BlockCoords(block, x, y, z);
             event.cancel();
         }
-    }
+    }));
 
     private Color getPercentageColor(float current, float max) {
         int dColor = Math.round(255.0F - (max - current) * 255.0F / max);
