@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatSentEvent;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -13,7 +14,7 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class GreenText extends Hack {
 
     @SuppressWarnings("unused")
-    public void onChatSentEvent(ChatSentEvent event) {
+    EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, event -> {
         String message = event.ARGS;
 
         if (!message.startsWith(">") && !message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {
@@ -23,5 +24,5 @@ public final class GreenText extends Hack {
 
             event.ARGS = ">" + event.ARGS;
         }
-    }
+    }));
 }

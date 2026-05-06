@@ -45,7 +45,7 @@ public final class EventManager implements Manager {
                 actions.add(eventAction);
             }
 
-            actions.sort(Comparator.comparing(eventAction1 -> ((EventAction) eventAction1).getPriority()).reversed());
+            actions.sort(Comparator.comparing(EventAction::getPriority));
             return;
         }
 

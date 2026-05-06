@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.MouseEvent;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -16,7 +17,7 @@ public final class MiddleClickFriend extends Hack {
     public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true);
 
     @SuppressWarnings("unused")
-    public void onMouseEvent(MouseEvent event) {
+    EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
         if (!event.eventButtonState || event.eventButton != 2) {
             return;
         }
@@ -51,5 +52,5 @@ public final class MiddleClickFriend extends Hack {
             this.getFriendManager().removeFriend(playerMP);
             this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + "Removed friend '" + ChatColor.RED.text() + playerMP.username + ChatColor.DEFAULT.text() + "' from the friends list!");
         }
-    }
+    }));
 }

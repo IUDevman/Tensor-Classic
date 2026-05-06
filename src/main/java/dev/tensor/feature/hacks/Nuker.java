@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -269,7 +270,7 @@ public final class Nuker extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blocksToMine.clear();
         this.blocksBreakingVanilla.clear();
         this.queueToRemove.clear();
@@ -278,10 +279,10 @@ public final class Nuker extends Render3DHack {
 
         this.activeThreads.forEach(Thread::interrupt);
         this.activeThreads.clear();
-    }
+    }));
 
     @SuppressWarnings("unused")
-    public void onBlockBreakEvent(BlockBreakEvent event) {
+    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, event -> {
         if (!this.target.getValue().equals(Target.Click)) {
             return;
         }
@@ -307,7 +308,7 @@ public final class Nuker extends Render3DHack {
         }
 
         this.customToggleID = blockId;
-    }
+    }));
 
     private boolean isBlockOnBreakList(Block block) {
 

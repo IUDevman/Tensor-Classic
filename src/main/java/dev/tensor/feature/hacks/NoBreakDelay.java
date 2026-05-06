@@ -15,7 +15,6 @@ public final class NoBreakDelay extends Hack {
 
     @Override
     public void onClientTick() {
-
         if (this.getMinecraft().playerController instanceof PlayerControllerMP) {
 
             PlayerControllerMP controllerMP = (PlayerControllerMP) this.getMinecraft().playerController;

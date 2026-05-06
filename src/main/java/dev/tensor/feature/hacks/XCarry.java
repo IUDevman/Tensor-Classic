@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.CloseInventoryEvent;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -13,7 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class XCarry extends Hack {
 
     @SuppressWarnings("unused")
-    public void onCloseInventoryEvent(CloseInventoryEvent event) {
-        event.cancel();
-    }
+    EventAction<CloseInventoryEvent> closeInventoryEventAction = this.addEventAction(new EventAction<>(CloseInventoryEvent.class, EventConstantCancellable::cancel));
 }

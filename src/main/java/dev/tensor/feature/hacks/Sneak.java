@@ -27,7 +27,6 @@ public final class Sneak extends Hack {
 
     @Override
     public void onClientTick() {
-
         if (this.limitSpeed.getValue()) {
 
             //Vanilla multiplier is 0.3; Max multiplier on NoCheat servers is 0.5.

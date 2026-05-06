@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -72,7 +73,7 @@ public final class AutoTool extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onBlockBreakEvent(BlockBreakEvent event) {
+    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, event -> {
         Packet14BlockDig packet = event.packet;
 
         if (packet.status == 2) {
@@ -146,7 +147,7 @@ public final class AutoTool extends Hack {
             this.prevItem = oldSlot;
             this.getInventory().currentItem = swapSlot;
         }
-    }
+    }));
 
     public void resetPrevSlot() {
         this.status = 0;

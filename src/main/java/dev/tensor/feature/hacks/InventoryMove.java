@@ -27,7 +27,7 @@ public final class InventoryMove extends Hack {
         }
     }
 
-    @SuppressWarnings("unused")
+    @Override
     public void onClientTick() {
         if (this.getMinecraft().currentScreen == null) {
             return;

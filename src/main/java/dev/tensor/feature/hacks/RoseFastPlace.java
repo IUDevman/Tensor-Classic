@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockClickToPlaceEvent;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import net.minecraft.src.EnumMovingObjectType;
@@ -16,7 +17,7 @@ import net.minecraft.src.EnumMovingObjectType;
 public final class RoseFastPlace extends Hack {
 
     @SuppressWarnings("unused")
-    public void onBlockClickToPlaceEvent(BlockClickToPlaceEvent event) {
+    EventAction<BlockClickToPlaceEvent> blockClickToPlaceEventAction = this.addEventAction(new EventAction<>(BlockClickToPlaceEvent.class, event -> {
         if (this.getMinecraft().objectMouseOver == null) {
             return;
         }
@@ -26,5 +27,5 @@ public final class RoseFastPlace extends Hack {
         }
 
         event.cancel();
-    }
+    }));
 }

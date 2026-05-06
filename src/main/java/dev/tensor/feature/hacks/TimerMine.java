@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.MinecraftAccessor;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -40,7 +41,7 @@ public final class TimerMine extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onBlockBreakEvent(BlockBreakEvent event) {
+    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, event -> {
         int status = event.packet.status;
 
         if (status == 0) {
@@ -56,7 +57,7 @@ public final class TimerMine extends Hack {
         }
 
         this.ticksSinceBreakStart = 0;
-    }
+    }));
 
     private float getDefaultTPS() {
         Timer timer = this.getHackManager().getHack(Timer.class);

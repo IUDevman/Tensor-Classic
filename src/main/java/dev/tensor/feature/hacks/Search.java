@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ViewBobEvent;
 import dev.tensor.backend.events.variable.RenderBlockEvent;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
@@ -95,8 +96,7 @@ public final class Search extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    public void onRenderBlockEvent(RenderBlockEvent event) {
-
+    EventAction<RenderBlockEvent> renderBlockEventAction = this.addEventAction(new EventAction<>(RenderBlockEvent.class, event -> {
         BlockCoords blockCoords1 = event.blockCoords;
 
         if (this.shouldRenderForBlock(blockCoords1.block.blockID)) {
@@ -127,20 +127,20 @@ public final class Search extends Render3DHack {
                 this.blockCoords.add(blockCoords1);
             }
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    public void onViewBobEvent(ViewBobEvent event) {
+    EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
         if (!this.tracers.getValue().equals(TracerMode.None)) {
             event.cancel();
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    public void onChangeWorldEvent(ChangeWorldEvent event) {
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blockCoords.clear();
         RenderStatic.tensor_playerFrustrum = null;
-    }
+    }));
 
     @Override
     public void onClientTick() {

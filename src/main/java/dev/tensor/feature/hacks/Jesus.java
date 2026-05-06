@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.FluidCollisionEvent;
 import dev.tensor.backend.mixins.accessors.EntityAccessor;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
@@ -41,7 +42,7 @@ public final class Jesus extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onFluidCollisionEvent(FluidCollisionEvent event) {
+    EventAction<FluidCollisionEvent> fluidCollisionEventAction = this.addEventAction(new EventAction<>(FluidCollisionEvent.class, event -> {
         boolean inWater = this.getPlayer().isInWater();
         boolean inLava = this.getPlayer().isInsideOfMaterial(Material.lava);
 
@@ -63,7 +64,7 @@ public final class Jesus extends Hack {
         if (!(((EntityAccessor) this.getPlayer()).tensor_getFallDistance() >= 3)) {
             event.cancel();
         }
-    }
+    }));
 
     private enum Denomination {
         Baptist,

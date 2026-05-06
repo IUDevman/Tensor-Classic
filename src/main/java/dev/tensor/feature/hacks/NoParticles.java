@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ParticleEvent;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 
@@ -13,7 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoParticles extends Hack {
 
     @SuppressWarnings("unused")
-    public void onParticleEvent(ParticleEvent event) {
-        event.cancel();
-    }
+    EventAction<ParticleEvent> particleEventAction = this.addEventAction(new EventAction<>(ParticleEvent.class, EventConstantCancellable::cancel));
 }

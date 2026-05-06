@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.NameTagEvent;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -69,9 +71,7 @@ public final class Nametags extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    public void onNameTagEvent(NameTagEvent event) {
-        event.cancel();
-    }
+    EventAction<NameTagEvent> nameTagEventAction = this.addEventAction(new EventAction<>(NameTagEvent.class, EventConstantCancellable::cancel));
 
     private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks) {
         String username = entity.username;

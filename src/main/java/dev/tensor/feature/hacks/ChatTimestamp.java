@@ -1,6 +1,8 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -59,7 +61,7 @@ public final class ChatTimestamp extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onChatReceivedEvent(ChatReceivedEvent event) {
+    EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, EventPriority.Lowest, event -> {
         this.prevLength = this.getFontRenderer().getStringWidth(event.message);
 
         if (this.messageCutPrev != "") {
@@ -127,7 +129,7 @@ public final class ChatTimestamp extends Hack {
         }
 
         event.cancel();
-    }
+    }));
 
     private String getDateFormat() {
         switch ((Format) this.format.getValue()) {

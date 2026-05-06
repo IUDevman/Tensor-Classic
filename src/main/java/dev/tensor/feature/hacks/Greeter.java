@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -37,7 +38,7 @@ public final class Greeter extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onChatReceivedEvent(ChatReceivedEvent event) {
+    EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
         if (this.shouldStopForSpammer()) {
             return;
         }
@@ -92,7 +93,7 @@ public final class Greeter extends Hack {
 
             this.messageDelay = 0;
         }
-    }
+    }));
 
     private boolean shouldStopForSpammer() {
         if (!this.stopForSpammer.getValue()) {

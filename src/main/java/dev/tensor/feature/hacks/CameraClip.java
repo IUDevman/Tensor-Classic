@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.CameraClipEvent;
 import dev.tensor.backend.events.variable.MouseEvent;
 import dev.tensor.backend.mixins.accessors.EntityRendererAccessor;
+import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -50,14 +51,14 @@ public final class CameraClip extends Hack {
     }
 
     @SuppressWarnings("unused")
-    public void onCameraClipEvent(CameraClipEvent event) {
+    EventAction<CameraClipEvent> cameraClipEventAction = this.addEventAction(new EventAction<>(CameraClipEvent.class, event -> {
         if (this.clipThroughWalls.getValue()) {
             event.cancel();
         }
-    }
+    }));
 
     @SuppressWarnings("unused")
-    public void onMouseEvent(MouseEvent event) {
+    EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
         if (event.dWheel == 0) {
             return;
         }
@@ -72,7 +73,7 @@ public final class CameraClip extends Hack {
 
         double newDistance = this.distanceValue.getValue() + ((this.scrollSensitivity.getValue() / 100) * event.dWheel);
         this.distanceValue.setValue(newDistance);
-    }
+    }));
 
     private float getNewDistance() {
         double distance = this.distanceValue.getValue();
