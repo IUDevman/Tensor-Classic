@@ -1,4 +1,4 @@
-package dev.tensor.misc.event;
+package dev.tensor.misc.helpers.extensions;
 
 import dev.firstdark.rpc.handlers.RPCEventHandler;
 import dev.tensor.misc.imp.Globals;

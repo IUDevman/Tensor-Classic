@@ -28,7 +28,7 @@ public final class CapeManager implements Manager {
         return "CapeManager";
     }
 
-    private String CAPE_URL = "https://raw.githubusercontent.com/IUDevman/gamesense-assets/refs/heads/main/files/tensor/cape_lowres.png";
+    private String CAPE_URL = "https://raw.githubusercontent.com/IUDevman/gamesense-assets/refs/heads/main/files/tensor/cape.png";
 
     private final ArrayList<String> CAPED_PLAYERS = new ArrayList<>();
 

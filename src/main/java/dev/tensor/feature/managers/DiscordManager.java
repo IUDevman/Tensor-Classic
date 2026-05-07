@@ -7,7 +7,7 @@ import dev.firstdark.rpc.handlers.RPCEventHandler;
 import dev.firstdark.rpc.models.DiscordRichPresence;
 import dev.firstdark.rpc.models.User;
 import dev.tensor.TensorClassic;
-import dev.tensor.misc.event.TensorRPCEventHandler;
+import dev.tensor.misc.helpers.extensions.TensorRPCEventHandler;
 import dev.tensor.misc.imp.Manager;
 import org.slf4j.Logger;
 
