@@ -76,12 +76,15 @@ public final class Search extends Render3DHack {
 
     private final ArrayList<BlockCoords> blockCoords = new ArrayList<>();
 
+    private boolean hasTracers = false;
+
     @Override
     public void onEnable(boolean isNull) {
         if (!isNull) {
             this.resetSearch();
         } else {
             this.blockCoords.clear();
+            this.hasTracers = false;
         }
     }
 
@@ -91,6 +94,7 @@ public final class Search extends Render3DHack {
             this.resetSearch();
         } else {
             this.blockCoords.clear();
+            this.hasTracers = false;
             RenderStatic.tensor_playerFrustrum = null;
         }
     }
@@ -131,7 +135,7 @@ public final class Search extends Render3DHack {
 
     @SuppressWarnings("unused")
     EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
-        if (!this.tracers.getValue().equals(TracerMode.None)) {
+        if (!this.tracers.getValue().equals(TracerMode.None) && this.hasTracers) {
             event.cancel();
         }
     }));
@@ -139,6 +143,7 @@ public final class Search extends Render3DHack {
     @SuppressWarnings("unused")
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blockCoords.clear();
+        this.hasTracers = false;
         RenderStatic.tensor_playerFrustrum = null;
     }));
 
@@ -159,6 +164,8 @@ public final class Search extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
+        this.hasTracers = false;
+
         if (this.frustrum.getValue()) {
             if (RenderStatic.tensor_playerFrustrum == null) {
                 RenderStatic.tensor_playerFrustrum = new Frustrum();
@@ -175,11 +182,13 @@ public final class Search extends Render3DHack {
                     });
                     break;
                 case All:
+                    this.hasTracers = true;
                     this.blockCoords.forEach(blockCoords1 -> this.renderForBlock(blockCoords1, true));
                     break;
                 case Portal:
                     this.blockCoords.forEach(blockCoords1 -> {
                         if (blockCoords1.block.blockID == Block.portal.blockID) {
+                            this.hasTracers = true;
                             this.renderForBlock(blockCoords1, true);
                         } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
                             this.renderForBlock(blockCoords1, false);
@@ -189,6 +198,7 @@ public final class Search extends Render3DHack {
                 case Custom:
                     this.blockCoords.forEach(blockCoords1 -> {
                         if (this.customTracers.containsBlock(blockCoords1.block.blockID)) {
+                            this.hasTracers = true;
                             this.renderForBlock(blockCoords1, true);
                         } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
                             this.renderForBlock(blockCoords1, false);
@@ -417,6 +427,7 @@ public final class Search extends Render3DHack {
 
     public void resetSearch() {
         this.blockCoords.clear();
+        this.hasTracers = false;
         RenderStatic.tensor_playerFrustrum = null;
         this.resetWorld();
     }
