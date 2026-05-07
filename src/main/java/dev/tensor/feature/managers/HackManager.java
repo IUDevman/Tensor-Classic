@@ -78,6 +78,7 @@ public final class HackManager implements Manager {
         this.addHack(new CustomClouds());
         this.addHack(new CustomFog());
         this.addHack(new DeathCoords());
+        this.addHack(new DiscordRPC());
         this.addHack(new EntityESP());
         this.addHack(new FakePlayer());
         this.addHack(new FastBow());

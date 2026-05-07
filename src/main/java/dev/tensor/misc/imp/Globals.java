@@ -79,6 +79,10 @@ public interface Globals {
         return (CapeManager) this.getTensor().MANAGERS.get(CapeManager.class);
     }
 
+    default DiscordManager getDiscordManager() {
+        return (DiscordManager) this.getTensor().MANAGERS.get(DiscordManager.class);
+    }
+
     default RotationManager getRotationManager() {
         return (RotationManager) this.getTensor().MANAGERS.get(RotationManager.class);
     }
