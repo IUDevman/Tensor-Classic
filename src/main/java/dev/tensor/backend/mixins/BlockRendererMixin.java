@@ -29,6 +29,9 @@ public final class BlockRendererMixin implements Globals {
     @Unique
     public boolean pre = false;
 
+    @Unique
+    public boolean broken = false;
+
     @Inject(method = "renderBlockByRenderType", at = @At("HEAD"), cancellable = true)
     public void tensor_onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
@@ -56,15 +59,17 @@ public final class BlockRendererMixin implements Globals {
             return;
         }
 
-        if (this.getXray().isOnXrayList(i.blockID)) {
+        if (this.getXray().isOnXrayList(i.blockID) || this.getXray().isOpacityBlacklisted(i.blockID)) {
             this.renderAllFaces = true;
             this.getXray().setShouldOpacity(false);
-            GL11.glEnable(GL11.GL_DEPTH_TEST);
-            GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
         } else {
+            if (this.getXray().isBrokenOpacity(i.blockID)) {
+                GL11.glEnable(GL11.GL_BLEND);
+                GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+                this.broken = true;
+            }
+
             this.getXray().setShouldOpacity(true);
-            GL11.glEnable(GL11.GL_BLEND);
-            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
             this.pre = true;
         }
     }
@@ -77,15 +82,18 @@ public final class BlockRendererMixin implements Globals {
 
         if (!this.isXrayEnabled()) {
             this.pre = false;
+            this.broken = false;
             return;
         }
 
         if (this.pre) {
-            GL11.glDisable(GL11.GL_BLEND);
             this.getXray().setShouldOpacity(false);
             this.pre = false;
-        } else {
-            GL11.glDisable(GL11.GL_DEPTH_TEST);
+        }
+
+        if (this.broken) {
+            GL11.glDisable(GL11.GL_BLEND);
+            this.broken = false;
         }
     }
 }

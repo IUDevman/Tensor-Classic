@@ -98,16 +98,26 @@ public final class BlockList implements Globals {
         return list.get();
     }
 
+    private static final ArrayList<String> OPACITY_BLACKLIST = new ArrayList<>();
+
+    public static ArrayList<String> OPACITY_BLACKLIST() {
+        if (OPACITY_BLACKLIST.isEmpty()) {
+            OPACITY_BLACKLIST.add(String.valueOf(Block.waterStill.blockID));
+            OPACITY_BLACKLIST.add(String.valueOf(Block.waterMoving.blockID));
+            OPACITY_BLACKLIST.add(String.valueOf(Block.lavaStill.blockID));
+            OPACITY_BLACKLIST.add(String.valueOf(Block.lavaMoving.blockID));
+        }
+
+        return new ArrayList<>(OPACITY_BLACKLIST);
+    }
+
     private static final ArrayList<String> DIAMOND = new ArrayList<>();
 
     public static ArrayList<String> DIAMOND() {
         if (DIAMOND.isEmpty()) {
             DIAMOND.add(String.valueOf(Block.oreDiamond.blockID));
             DIAMOND.add(String.valueOf(Block.blockDiamond.blockID));
-            DIAMOND.add(String.valueOf(Block.waterStill.blockID));
-            DIAMOND.add(String.valueOf(Block.waterMoving.blockID));
-            DIAMOND.add(String.valueOf(Block.lavaStill.blockID));
-            DIAMOND.add(String.valueOf(Block.lavaMoving.blockID));
+            DIAMOND.addAll(OPACITY_BLACKLIST());
         }
 
         return new ArrayList<>(DIAMOND);
@@ -138,10 +148,7 @@ public final class BlockList implements Globals {
 
     public static ArrayList<String> ORES() {
         if (ORES.isEmpty()) {
-            ORES.add(String.valueOf(Block.waterStill.blockID));
-            ORES.add(String.valueOf(Block.waterMoving.blockID));
-            ORES.add(String.valueOf(Block.lavaStill.blockID));
-            ORES.add(String.valueOf(Block.lavaMoving.blockID));
+            ORES.addAll(OPACITY_BLACKLIST());
 
             ORES.addAll(ORES_SEARCH());
         }
@@ -188,10 +195,6 @@ public final class BlockList implements Globals {
     public static ArrayList<String> UTILITY() {
         if (UTILITY.isEmpty()) {
             UTILITY.add(String.valueOf(Block.sapling.blockID));
-            UTILITY.add(String.valueOf(Block.waterStill.blockID));
-            UTILITY.add(String.valueOf(Block.waterMoving.blockID));
-            UTILITY.add(String.valueOf(Block.lavaStill.blockID));
-            UTILITY.add(String.valueOf(Block.lavaMoving.blockID));
             UTILITY.add(String.valueOf(Block.glowStone.blockID));
             UTILITY.add(String.valueOf(Block.sponge.blockID));
             UTILITY.add(String.valueOf(Block.glass.blockID));
@@ -231,6 +234,7 @@ public final class BlockList implements Globals {
             UTILITY.add(String.valueOf(Block.trapdoor.blockID));
 
             UTILITY.addAll(UTILITY_SEARCH());
+            UTILITY.addAll(OPACITY_BLACKLIST());
         }
 
         return new ArrayList<>(UTILITY);
@@ -264,11 +268,9 @@ public final class BlockList implements Globals {
     public static ArrayList<String> NUKER_BLOCKLIST() {
         if (NUKER_BLOCKLIST.isEmpty()) {
             NUKER_BLOCKLIST.add(String.valueOf(Block.bedrock.blockID));
-            NUKER_BLOCKLIST.add(String.valueOf(Block.waterStill.blockID));
-            NUKER_BLOCKLIST.add(String.valueOf(Block.waterMoving.blockID));
-            NUKER_BLOCKLIST.add(String.valueOf(Block.lavaStill.blockID));
-            NUKER_BLOCKLIST.add(String.valueOf(Block.lavaMoving.blockID));
             NUKER_BLOCKLIST.add(String.valueOf(Block.portal.blockID));
+
+            NUKER_BLOCKLIST.addAll(OPACITY_BLACKLIST());
         }
 
         return new ArrayList<>(NUKER_BLOCKLIST);
@@ -278,10 +280,6 @@ public final class BlockList implements Globals {
 
     public static ArrayList<String> SCAFFOLD_BLOCKLIST() {
         if (SCAFFOLD_BLOCKLIST.isEmpty()) {
-            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.waterStill.blockID));
-            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.waterMoving.blockID));
-            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.lavaStill.blockID));
-            SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.lavaMoving.blockID));
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchWood.blockID));
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchRedstoneIdle.blockID));
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.torchRedstoneActive.blockID));
@@ -312,6 +310,8 @@ public final class BlockList implements Globals {
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.button.blockID));
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.fence.blockID));
             SCAFFOLD_BLOCKLIST.add(String.valueOf(Block.ladder.blockID));
+
+            SCAFFOLD_BLOCKLIST.addAll(OPACITY_BLACKLIST());
         }
 
         return new ArrayList<>(SCAFFOLD_BLOCKLIST);

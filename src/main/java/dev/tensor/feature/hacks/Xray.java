@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.LightValueEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
-import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -30,14 +29,10 @@ public final class Xray extends Hack {
 
             if (!this.failsNullCheck() && this.isXrayEnabled()) {
                 this.resetWorld();
-
-                if (this.getMinecraft().gameSettings.advancedOpengl && value) {
-                    this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
-                }
             }
         }
     };
-    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 50, 30, 120) {
+    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 30, 200) {
         @Override
         public void setValue(Integer value) {
             super.setValue(value);
@@ -55,10 +50,6 @@ public final class Xray extends Hack {
 
             if (!this.failsNullCheck() && this.isXrayEnabled()) {
                 this.resetWorld();
-
-                if (this.getMinecraft().gameSettings.advancedOpengl && value) {
-                    this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
-                }
             }
         }
     };
@@ -89,6 +80,7 @@ public final class Xray extends Hack {
     private final BlockList DIAMOND = new BlockList(BlockList.DIAMOND());
     private final BlockList GLOWSTONE = new BlockList(BlockList.GLOWSTONE());
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY());
+    private final BlockList OPACITY_BLOCKED = new BlockList(BlockList.OPACITY_BLACKLIST());
 
     private boolean shouldOpacity = false;
 
@@ -96,10 +88,6 @@ public final class Xray extends Hack {
     public void onEnable(boolean isNull) {
         if (!isNull) {
             this.resetWorld();
-
-            if (this.getMinecraft().gameSettings.advancedOpengl && this.opacity.getValue()) {
-                this.sendClientMessageWithHeader(ChatColor.RED.text() + "Xray: Opacity will have glitches with Advanced OpenGL enabled!");
-            }
         }
     }
 
@@ -115,9 +103,9 @@ public final class Xray extends Hack {
 
     public boolean isOnXrayList(int blockID) {
 
-        if (!fluids.getValue() || this.opacity.getValue()) {
+        if (!this.fluids.getValue() || this.opacity.getValue()) {
 
-            if (blockID == Block.waterStill.blockID || blockID == Block.waterMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.lavaMoving.blockID) {
+            if (this.OPACITY_BLOCKED.containsBlock(blockID)) {
                 return false;
             }
         }
@@ -148,6 +136,14 @@ public final class Xray extends Hack {
 
     public void setShouldOpacity(boolean shouldOpacity) {
         this.shouldOpacity = shouldOpacity;
+    }
+
+    public boolean isOpacityBlacklisted(int blockID) {
+        return this.OPACITY_BLOCKED.containsBlock(blockID);
+    }
+
+    public boolean isBrokenOpacity(int blockID) {
+        return blockID == Block.glass.blockID || blockID == Block.signPost.blockID || blockID == Block.signWall.blockID;
     }
 
     public enum Mode {
