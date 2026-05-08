@@ -82,7 +82,7 @@ public final class Xray extends Hack {
     private final BlockList DIAMOND = new BlockList(BlockList.DIAMOND());
     private final BlockList GLOWSTONE = new BlockList(BlockList.GLOWSTONE());
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY());
-    private final BlockList OPACITY_BLOCKED = new BlockList(BlockList.OPACITY_BLACKLIST());
+    private final BlockList OPACITY_BLOCKED = new BlockList(BlockList.WATER_LAVA());
 
     private boolean shouldOpacity = false;
 
