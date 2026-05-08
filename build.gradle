@@ -21,6 +21,10 @@ repositories {
         name = 'Babric'
         url = 'https://maven.glass-launcher.net/babric'
     }
+    maven {
+        name = "FDD Maven"
+        url = "https://maven.firstdark.dev/releases"
+    }
     maven { url = 'https://jitpack.io' }
     maven { url = 'https://github.com/FreeCliff/maven/raw/master' }
 }
@@ -36,6 +40,9 @@ dependencies {
 
     implementation "com.github.jasypt:jasypt:jasypt-1.9.3"
     shadow "com.github.jasypt:jasypt:jasypt-1.9.3"
+
+    implementation "dev.firstdark.discordrpc:discord-rpc:1.0.4:legacy"
+    shadow "dev.firstdark.discordrpc:discord-rpc:1.0.4:legacy"
 }
 
 processResources {

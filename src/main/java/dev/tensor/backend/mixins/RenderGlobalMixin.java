@@ -5,12 +5,15 @@ import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
 import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
+import dev.tensor.misc.helpers.extensions.TensorImageBuffer;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
@@ -22,6 +25,9 @@ import java.awt.*;
 
 @Mixin(value = RenderGlobal.class, priority = MixinPriority.VALUE)
 public final class RenderGlobalMixin implements Globals {
+
+    @Shadow
+    private RenderEngine renderEngine;
 
     @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
     public void tensor_onRenderClouds(float par1, CallbackInfo ci) {
@@ -125,6 +131,16 @@ public final class RenderGlobalMixin implements Globals {
                     ci.cancel();
                 }
             });
+        }
+    }
+
+    @Redirect(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
+    public ThreadDownloadImageData test(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
+        if (arg.endsWith("files/tensor/cape.png")) {
+            return this.renderEngine.obtainImageData(arg, new TensorImageBuffer());
+
+        } else {
+            return this.renderEngine.obtainImageData(arg, new ImageBufferDownload());
         }
     }
 }
