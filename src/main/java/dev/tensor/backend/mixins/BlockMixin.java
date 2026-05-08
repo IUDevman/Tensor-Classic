@@ -11,6 +11,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+/**
+ * @author Hoosiers
+ * @since 05-08-2026
+ */
+
 @Mixin(value = Block.class, priority = MixinPriority.VALUE)
 public final class BlockMixin implements Globals {
 

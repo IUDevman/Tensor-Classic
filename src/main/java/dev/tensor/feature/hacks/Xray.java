@@ -143,7 +143,7 @@ public final class Xray extends Hack {
     }
 
     public boolean isBrokenOpacity(int blockID) {
-        return blockID == Block.glass.blockID || blockID == Block.signPost.blockID || blockID == Block.signWall.blockID;
+        return blockID == Block.signPost.blockID || blockID == Block.signWall.blockID;
     }
 
     public enum Mode {

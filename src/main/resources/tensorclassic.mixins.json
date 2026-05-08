@@ -5,8 +5,12 @@
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "BlockFluidMixin",
+    "BlockGlassMixin",
+    "BlockIceMixin",
     "BlockMixin",
+    "BlockPortalMixin",
     "BlockSoulSandMixin",
+    "BlockStairsMixin",
     "ChunkMixin",
     "EntityMixin",
     "EntityPlayerMixin",
