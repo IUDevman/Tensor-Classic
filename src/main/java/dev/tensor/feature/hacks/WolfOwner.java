@@ -34,7 +34,6 @@ public final class WolfOwner extends Render3DHack {
         return true;
     }
 
-
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
     public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.RED);
