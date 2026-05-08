@@ -56,7 +56,7 @@ public final class BlockRendererMixin implements Globals {
             return;
         }
 
-        if (this.getXray().isOnXrayList(i.blockID) || this.getXray().isOpacityBlacklisted(i.blockID)) {
+        if (this.getXray().isOnXrayList(i.blockID) || this.getXray().isOpacityBlacklisted(i.blockID, true)) {
             this.renderAllFaces = true;
             this.getXray().setShouldOpacity(false);
         } else {

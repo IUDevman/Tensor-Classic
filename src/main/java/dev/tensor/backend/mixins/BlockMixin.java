@@ -54,7 +54,7 @@ public final class BlockMixin implements Globals {
             return;
         }
 
-        if (this.getXray().isOpacityBlacklisted(this.blockID) || this.getXray().isBrokenOpacity(this.blockID)) {
+        if (this.getXray().isOpacityBlacklisted(this.blockID, false) || this.getXray().isBrokenOpacity(this.blockID)) {
             return;
         }
 

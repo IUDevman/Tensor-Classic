@@ -1,6 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.LightValueEvent;
+import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -33,7 +34,7 @@ public final class Xray extends Hack {
         }
     };
     public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 30, 200) {
-        
+
         @Override
         public void setValue(Integer value) {
             super.setValue(value);
@@ -102,6 +103,13 @@ public final class Xray extends Hack {
     @SuppressWarnings("unused")
     EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, EventConstantCancellable::cancel));
 
+    @SuppressWarnings("unused")
+    EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
+        if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids)) {
+            event.cancel();
+        }
+    }));
+
     public boolean isOnXrayList(int blockID) {
 
         if (!this.fluids.getValue() || this.opacity.getValue()) {
@@ -139,10 +147,21 @@ public final class Xray extends Hack {
         this.shouldOpacity = shouldOpacity;
     }
 
-    public boolean isOpacityBlacklisted(int blockID) {
+    //General idea:
+    //Applying opacity to water/lava messes up their texture.
+    //We always want to generate lava as an xray block with opacity.
+    //In order to prevent the weird glitch where only the top face of the top block
+    //is rendered.
+    //Water is on a different render pass, so we want to exclude water in some cases.
+    public boolean isOpacityBlacklisted(int blockID, boolean lavaOnly) {
+        if (lavaOnly) {
+            return blockID == Block.lavaStill.blockID || blockID == Block.lavaMoving.blockID;
+        }
+
         return this.OPACITY_BLOCKED.containsBlock(blockID);
     }
 
+    //Opacity breaks if sign blocks are moved to the first render pass
     public boolean isBrokenOpacity(int blockID) {
         return blockID == Block.signPost.blockID || blockID == Block.signWall.blockID;
     }
