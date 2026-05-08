@@ -33,7 +33,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 30, 200) {
+    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 50, 200) {
 
         @Override
         public void setValue(Integer value) {
