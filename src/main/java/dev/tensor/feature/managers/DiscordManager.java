@@ -27,10 +27,11 @@ public final class DiscordManager implements Manager {
     private RPCEventHandler handler = null;
     private Thread presence = null;
 
-    private long updateTimeMS = 10000L;
+    private long updateTimeMS = 15000L;
 
+    private boolean usernameCheck = false;
     private boolean serverCheck = false;
-    private String icon = "gear";
+    private String icon = "logo_tensor1_upscale";
 
     @Override
     public void load(Logger LOGGER) {
@@ -50,7 +51,8 @@ public final class DiscordManager implements Manager {
         this.presence = null;
     }
 
-    public void startInstance(boolean serverCheck, String icon, long updateTimeMS) {
+    public void startInstance(boolean usernameCheck, boolean serverCheck, String icon, long updateTimeMS) {
+        this.updateUsernameCheck(usernameCheck);
         this.updateServerCheck(serverCheck);
         this.updateIcon(icon);
         this.setUpdateTimeMS(updateTimeMS);
@@ -90,9 +92,11 @@ public final class DiscordManager implements Manager {
             return;
         }
 
-        this.getTensorLogger().info("Update");
-
         this.rpc.updatePresence(this.buildNewPresence());
+    }
+
+    public void updateUsernameCheck(boolean usernameCheck) {
+        this.usernameCheck = usernameCheck;
     }
 
     public void updateServerCheck(boolean serverCheck) {
@@ -103,10 +107,23 @@ public final class DiscordManager implements Manager {
         this.icon = icon;
     }
 
+    public long getUpdateTimeMS() {
+        return this.updateTimeMS;
+    }
+
+    public void setUpdateTimeMS(long updateTimeMS) {
+        if (updateTimeMS < 10000L) {
+            this.updateTimeMS = 10000L;
+            return;
+        }
+
+        this.updateTimeMS = updateTimeMS;
+    }
+
     private void loadInstance() {
         this.rpc = new DiscordRpc();
 
-        this.rpc.setDebugMode(true);
+        //this.rpc.setDebugMode(true);
 
         this.handler = new TensorRPCEventHandler() {
 
@@ -126,6 +143,10 @@ public final class DiscordManager implements Manager {
             }
         };
 
+        if (this.presence != null && !this.presence.isInterrupted()) {
+            this.presence.interrupt();
+        }
+
         this.presence = new Thread(() -> {
             while (true) {
                 try {
@@ -143,37 +164,56 @@ public final class DiscordManager implements Manager {
 
     private DiscordRichPresence buildNewPresence() {
         String name = TensorClassic.MOD_NAME + " " + TensorClassic.MOD_VERSION;
-        String details = this.failsNullCheck() ? "In the Menus" : (!this.getWaypointServerName().equalsIgnoreCase("Singleplayer") ? (this.serverCheck ? this.getWaypointServerName() : "Multiplayer") : "Singleplayer");
+        String state = this.failsNullCheck() ? "In the Menus" : (!this.getWaypointServerName().equalsIgnoreCase("Singleplayer") ? (this.serverCheck ? "On " + this.getWaypointServerName() : "In Multiplayer") : "In Singleplayer");
+        String details = this.icon.equalsIgnoreCase("logo_lukflug") ? "Lukflug" : "{name}";
+
         ActivityType activityType = ActivityType.PLAYING;
 
-        if (this.icon.equalsIgnoreCase("Lukflug")) {
+        String largeImageKey = this.icon;
+        String largeImageUrl = "https://github.com/IUDevman/Tensor-Classic";
+        String largeText = "Click to download!";
+
+        String smallImageKey = "logo_iudevman";
+        String smallImageUrl = "https://github.com/IUDevman";
+        String smallImageText = "Made by IUDevman!";
+
+        if (this.icon.equalsIgnoreCase("logo_lukflug")) {
             name = "Lukflug";
-            details = "Lukflug Lukflug Lukflug";
+            state = "Lukflug Lukflug Lukflug";
             activityType = ActivityType.WATCHING;
+            largeText = "Lukflug!";
+            smallImageKey = this.icon;
+            smallImageText = "Lukflug!";
+        }
+
+        if (this.usernameCheck && !this.failsNullCheck()) {
+
+            details = details.replace("{name}", this.getPlayer().username);
+
+            return DiscordRichPresence.builder()
+                    .name(name)
+                    .state(state)
+                    .details(details)
+                    .activityType(activityType)
+                    .largeImageKey(largeImageKey)
+                    .largeImageText(largeText)
+                    .largeUrl(largeImageUrl)
+                    .smallImageKey(smallImageKey)
+                    .smallUrl(smallImageUrl)
+                    .smallImageText(smallImageText)
+                    .build();
         }
 
         return DiscordRichPresence.builder()
                 .name(name)
-                .details(details)
-                .largeImageKey(this.icon)
+                .state(state)
                 .activityType(activityType)
+                .largeImageKey(largeImageKey)
+                .largeImageText(largeText)
+                .largeUrl(largeImageUrl)
+                .smallImageKey(smallImageKey)
+                .smallUrl(smallImageUrl)
+                .smallImageText(smallImageText)
                 .build();
-    }
-
-    public long getUpdateTimeMS() {
-        return this.updateTimeMS;
-    }
-
-    public void setUpdateTimeMS(long updateTimeMS) {
-        if (updateTimeMS < 10000L) {
-            this.updateTimeMS = 10000L;
-            return;
-        }
-
-        this.updateTimeMS = updateTimeMS;
-    }
-
-    public void resetUpdateTimeMS() {
-        this.setUpdateTimeMS(500L);
     }
 }
