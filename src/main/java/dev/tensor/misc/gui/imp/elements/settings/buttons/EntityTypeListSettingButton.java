@@ -130,14 +130,14 @@ public final class EntityTypeListSettingButton implements ButtonSetting {
 
         int scrollAdjust = scroll;
 
-        if (scrollY.getValue() > -10 && scroll > 0) {
+        if (scrollY.getValue() > -this.tensorGUI.getScrollSpeed() && scroll > 0) {
 
             scrollAdjust = -scrollY.getValue();
         }
 
         int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 2;
 
-        if ((this.entityTypeObjects.size() * 15) + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
+        if ((this.entityTypeObjects.size() * 15) + (scroll < 0 ? this.scrollY.getValue() - this.tensorGUI.getScrollSpeed() : 0) <= maxHeight) {
             int test = (((this.entityTypeObjects.size() * 15) + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
 
             if (test >= scrollAdjust) {

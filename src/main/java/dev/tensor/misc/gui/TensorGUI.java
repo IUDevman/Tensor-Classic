@@ -277,9 +277,9 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             int dWheel = Mouse.getDWheel();
 
             if (dWheel > 0) {
-                scroll = -10;
+                scroll = this.getScrollSpeed();
             } else if (dWheel < 0) {
-                scroll = 10;
+                scroll = -this.getScrollSpeed();
             } else {
                 scroll = 0;
             }
@@ -384,12 +384,12 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                     int scrollAdjust = this.scroll;
 
-                    if (hackScrollY.getValue() > -10 && this.scroll > 0) {
+                    if (hackScrollY.getValue() > -this.getScrollSpeed() && this.scroll > 0) {
 
                         scrollAdjust = -hackScrollY.getValue();
                     }
 
-                    if (hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
+                    if (hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
                         int test = ((hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
 
                         if (test >= scrollAdjust) {
@@ -423,12 +423,12 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                             int scrollAdjust = this.scroll;
 
-                            if (settingScrollY.getValue() > -10 && this.scroll > 0) {
+                            if (settingScrollY.getValue() > -this.getScrollSpeed() && this.scroll > 0) {
 
                                 scrollAdjust = -settingScrollY.getValue();
                             }
 
-                            if (settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() - 10 : 0) <= this.guiHeight.get() - 22) {
+                            if (settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
                                 int test = ((settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
 
                                 if (test >= scrollAdjust) {
@@ -477,6 +477,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         });
 
         return isSearching.get();
+    }
+
+    public int getScrollSpeed() {
+        return this.buttonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
     }
 
     private enum Scroll {

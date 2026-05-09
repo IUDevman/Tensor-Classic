@@ -263,14 +263,14 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
         int scrollAdjust = scroll;
 
-        if (scrollY.getValue() > -10 && scroll > 0) {
+        if (scrollY.getValue() > -this.tensorGUI.getScrollSpeed() && scroll > 0) {
 
             scrollAdjust = -scrollY.getValue();
         }
 
         int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 57;
 
-        if ((this.waypointSettingObjects.size() * 55) + (scroll < 0 ? this.scrollY.getValue() - 10 : 0) <= maxHeight) {
+        if ((this.waypointSettingObjects.size() * 55) + (scroll < 0 ? this.scrollY.getValue() - this.tensorGUI.getScrollSpeed() : 0) <= maxHeight) {
             int test = (((this.waypointSettingObjects.size() * 55) + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
 
             if (test >= scrollAdjust) {
