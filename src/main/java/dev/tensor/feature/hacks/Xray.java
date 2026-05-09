@@ -24,7 +24,7 @@ import org.lwjgl.input.Keyboard;
 public final class Xray extends Hack {
 
     public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);
-    public final BooleanSetting opacity = new BooleanSetting("Opacity", false) {
+    public final BooleanSetting opacity = new BooleanSetting("Opacity", true) {
 
         @Override
         public void setValue(Boolean value) {
