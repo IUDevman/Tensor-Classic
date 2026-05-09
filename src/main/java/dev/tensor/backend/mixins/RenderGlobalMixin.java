@@ -35,7 +35,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        if (this.isXrayEnabled() && this.getXray().opacity.getValue()) {
+        if (this.isXrayEnabled() && !this.getXray().clouds.getValue()) {
             ci.cancel();
             return;
         }
