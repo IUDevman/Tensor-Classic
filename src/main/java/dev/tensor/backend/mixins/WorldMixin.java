@@ -2,7 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.LightValueEvent;
+import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.constant.WeatherEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
@@ -32,10 +32,10 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(LightValueEvent.class).call(event -> {
+        EventCache.getCachedEvent(LightValueEvent.class).withVariables(false).call(event -> {
 
             if (event.isCancelled()) {
-                cir.setReturnValue(1F);
+                cir.setReturnValue(event.darkMode ? 0F : 1F);
             }
         });
     }

@@ -2,7 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.LightValueEvent;
+import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Chunk;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,10 +24,10 @@ public final class ChunkMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(LightValueEvent.class).call(event -> {
+        EventCache.getCachedEvent(LightValueEvent.class).withVariables(false).call(event -> {
 
             if (event.isCancelled()) {
-                cir.setReturnValue(15);
+                cir.setReturnValue(event.darkMode ? 0 : 15);
             }
         });
     }

@@ -1,9 +1,10 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.LightValueEvent;
+import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
+import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -102,7 +103,7 @@ public final class Xray extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, EventConstantCancellable::cancel));
+    EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, EventVariableCancellable::cancel));
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
