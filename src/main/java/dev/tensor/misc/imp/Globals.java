@@ -306,6 +306,52 @@ public interface Globals {
         };
     }
 
+    default boolean isPlayerMoving() {
+        return this.getPlayer().motionX != 0 || this.getPlayer().motionZ != 0;
+    }
+
+    default void setPlayerSpeed(double moveSpeed) {
+        float yaw = this.getPlayer().rotationYaw;
+
+        float strafeSpeed = this.getPlayer().movementInput.moveStrafe;
+        float forwardSpeed = this.getPlayer().movementInput.moveForward;
+
+        if (forwardSpeed != 0.0F) {
+
+            if (strafeSpeed > 0.0F) {
+                yaw += ((forwardSpeed > 0.0F) ? -45 : 45);
+
+            } else if (strafeSpeed < 0.0F) {
+                yaw += ((forwardSpeed > 0.0F) ? 45 : -45);
+
+            }
+
+            strafeSpeed = 0.0F;
+
+            if (forwardSpeed > 0.0F) {
+                forwardSpeed = 1.0F;
+
+            } else if (forwardSpeed < 0.0F) {
+                forwardSpeed = -1.0F;
+
+            }
+        }
+
+        if (strafeSpeed > 0.0F) {
+            strafeSpeed = 1.0F;
+
+        } else if (strafeSpeed < 0.0F) {
+            strafeSpeed = -1.0F;
+
+        }
+
+        double motionX = Math.cos(Math.toRadians((yaw + 90.0F)));
+        double motionZ = Math.sin(Math.toRadians((yaw + 90.0F)));
+
+        this.getPlayer().motionX = forwardSpeed * moveSpeed * motionX + strafeSpeed * moveSpeed * motionZ;
+        this.getPlayer().motionZ = forwardSpeed * moveSpeed * motionZ - strafeSpeed * moveSpeed * motionX;
+    }
+
     default String getWaypointServerName() {
         if (!this.isMultiplayer()) {
             return "Singleplayer";

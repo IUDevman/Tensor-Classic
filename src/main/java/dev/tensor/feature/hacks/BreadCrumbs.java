@@ -53,7 +53,7 @@ public final class BreadCrumbs extends Render3DHack {
             return;
         }
 
-        if (this.isPlayerMoving()) {
+        if (this.isPlayerMoving3D()) {
             this.addCurrentPlayerPosition();
         }
 
@@ -106,7 +106,7 @@ public final class BreadCrumbs extends Render3DHack {
     @SuppressWarnings("unused")
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loggedPositions.clear()));
 
-    private boolean isPlayerMoving() {
+    private boolean isPlayerMoving3D() {
         boolean motionX = true;
         boolean motionY = true;
         boolean motionZ = true;

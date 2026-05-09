@@ -8,9 +8,12 @@ import net.minecraft.src.EnumMovingObjectType;
 
 /**
  * @author Hoosiers
+ * @since 04-16-2026
+ */
+
+/**
  * @credit FreeCliff
  * @source https://github.com/FreeCliff/rose-babric
- * @since 04-16-2026
  */
 
 @Hack.Info(name = "RoseFastPlace", category = Category.Player)
