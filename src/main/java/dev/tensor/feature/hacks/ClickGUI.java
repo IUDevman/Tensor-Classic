@@ -21,7 +21,7 @@ public final class ClickGUI extends Hack {
     public final BooleanSetting renderHUD = new BooleanSetting("Render HUD", true);
     public final IntegerSetting x = new IntegerSetting("X", 265, 2, 5000);
     public final IntegerSetting y = new IntegerSetting("Y", 135, 2, 2000);
-    public final IntegerSetting scrollSpeedGUI = new IntegerSetting("GUI Scroll Speed", 15, 5, 30);
+    public final IntegerSetting scrollSpeedGUI = new IntegerSetting("Panel Scroll Speed", 15, 5, 30);
     public final IntegerSetting scrollSpeedWindow = new IntegerSetting("Window Scroll Speed", 20, 5, 30);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));
