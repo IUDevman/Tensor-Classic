@@ -22,6 +22,7 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X)
 public final class Xray extends Hack {
 
+    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);
     public final BooleanSetting opacity = new BooleanSetting("Opacity", false) {
 
         @Override
@@ -44,7 +45,6 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);
     public final BooleanSetting fluids = new BooleanSetting("Fluids", true) {
 
         @Override
