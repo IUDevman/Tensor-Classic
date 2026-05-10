@@ -322,9 +322,9 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         }
 
         if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
-            this.handleScroll(Scroll.Hack);
+            this.handleScroll(PanelType.Hack);
         } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
-            this.handleScroll(Scroll.Setting);
+            this.handleScroll(PanelType.Setting);
         }
     }
 
@@ -385,12 +385,12 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         return this.isHovered(element.getPosX(), element.getPosY(), element.getPosX() + element.getWidth(), element.getPosY() + element.getHeight(), mouseX, mouseY);
     }
 
-    private void handleScroll(Scroll scroll) {
+    private void handleScroll(PanelType panelType) {
         if (this.scrollingSpeed == 0) {
             return;
         }
 
-        if (scroll == Scroll.Hack) {
+        if (panelType == PanelType.Hack) {
 
             this.categoryElements.forEach(categoryElement -> {
 
@@ -423,7 +423,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                 }
             });
 
-        } else if (scroll == Scroll.Setting) {
+        } else if (panelType == PanelType.Setting) {
 
             this.categoryElements.forEach(categoryElement -> {
 
@@ -503,7 +503,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         return this.isButtonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
     }
 
-    private enum Scroll {
+    private enum PanelType {
         Hack,
         Setting
     }
