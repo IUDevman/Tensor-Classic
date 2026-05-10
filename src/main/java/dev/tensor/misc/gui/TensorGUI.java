@@ -202,11 +202,11 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             int newClickX = this.newX - i;
             int newClickY = this.newY - j;
 
-            if (newClickX + this.clickGUI.x.getValue() <= 0) {
+            if (newClickX + this.clickGUI.x.getValue() + this.guiWidth + 2 <= 0) {
                 newClickX = this.newX;
             }
 
-            if (newClickY + this.clickGUI.y.getValue() <= 0) {
+            if (newClickY + this.clickGUI.y.getValue() + this.guiHeight.get() + 2 <= 0) {
                 newClickY = this.newY;
             }
 

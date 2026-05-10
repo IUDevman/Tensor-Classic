@@ -108,11 +108,11 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
                     int newClickX = this.newX - i;
                     int newClickY = this.newY - j;
 
-                    if (newClickX + hudObject.getMinX().getValue() <= 0) {
+                    if (newClickX + hudObject.getMinX().getValue() + hudObject.getWidth() <= 0) {
                         newClickX = this.newX;
                     }
 
-                    if (newClickY + hudObject.getMinY().getValue() <= 0) {
+                    if (newClickY + hudObject.getMinY().getValue() + hudObject.getHeight() <= 0) {
                         newClickY = this.newY;
                     }
 
