@@ -44,6 +44,7 @@ public final class Nuker extends Render3DHack {
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
+    public final DoubleSetting vanillaMultiplier = new DoubleSetting("Vanilla Multiplier", 1.00, 0.60, 1.00, 2);
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
     public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
@@ -360,7 +361,7 @@ public final class Nuker extends Render3DHack {
                     double time = Math.ceil(1 / blockStrength);
 
                     double timeSeconds = time / 24;
-                    double timeMS = timeSeconds * 1000;
+                    double timeMS = (timeSeconds * 1000) * this.vanillaMultiplier.getValue();
 
                     if (this.rotate.getValue()) {
                         this.getRotationManager().addToRotationQueue(this.getRotationTo(blockCoords.x, blockCoords.y, blockCoords.z), RotationPriority.Nuker);
