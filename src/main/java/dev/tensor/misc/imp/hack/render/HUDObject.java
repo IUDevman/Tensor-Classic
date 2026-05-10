@@ -8,6 +8,10 @@ import org.lwjgl.opengl.GL11;
 
 /**
  * @author Hoosiers
+ * @since 03-24-2026
+ */
+
+/**
  * @scaling added on 04-04-2026
  * @ReadMe: Notice on creating HUD Objects:
  * 1. The HUDEditor uses getMinX(), getMinY(), getWidthScaled(), and getHeightScaled() to draw outlines in the editor, dragging, etc.
@@ -20,7 +24,6 @@ import org.lwjgl.opengl.GL11;
  * Scaling will set your posX and posY start to 0,0. No need to call the x or y IntegerSettings.
  * I know scaling works for boxes/text, but Minecraft render functions for items and blocks are weird,
  * so if you use them I would suggest to decouple your object from the default scaling like how I did for Armor and Inventory.
- * @since 03-24-2026
  */
 
 public interface HUDObject extends Render2D {
