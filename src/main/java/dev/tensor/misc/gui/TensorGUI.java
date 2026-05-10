@@ -44,7 +44,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     private int scrollingSpeed = 0;
 
-    private boolean dragging = false;
+    private boolean isDragging = false;
 
     private int dragOffsetX;
     private int dragOffsetY;
@@ -104,7 +104,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             return;
         }
 
-        if (this.dragging) {
+        if (this.isDragging) {
             this.dragXToSet = i + dragOffsetX;
             this.dragYToSet = j + dragOffsetY;
 
@@ -194,7 +194,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         }
 
         if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, i, j) && k == 0) {
-            this.dragging = true;
+            this.isDragging = true;
 
             this.dragXToSet = this.clickGUI.x.getValue();
             this.dragYToSet = this.clickGUI.y.getValue();
@@ -214,7 +214,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             this.dragOffsetY = newDragOffsetY;
 
         } else {
-            this.dragging = false;
+            this.isDragging = false;
         }
 
         if (k != 0) {
@@ -289,7 +289,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     public void handleMouseInput() {
 
         if (Mouse.getEventButton() == 0) {
-            this.dragging = false;
+            this.isDragging = false;
         }
 
         if (!Mouse.getEventButtonState()) {
