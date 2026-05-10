@@ -108,12 +108,16 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             this.newX = i + clickX;
             this.newY = j + clickY;
 
-            if (this.newX + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width) {
+            if (this.newX + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width && this.clickX != 0) {
                 this.clickGUI.x.setValue(newX);
+            } else {
+                this.newX = this.clickGUI.x.getValue();
             }
 
-            if (this.newY + this.guiHeight.get() + 2 <= this.getMinecraft().currentScreen.height) {
+            if (this.newY + this.guiHeight.get() + 2 <= this.getMinecraft().currentScreen.height && this.clickY != 0) {
                 this.clickGUI.y.setValue(newY);
+            } else {
+                this.newY = this.clickGUI.y.getValue();
             }
         }
 
@@ -191,8 +195,24 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
         if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleHeight + 2, i, j) && k == 0) {
             this.dragging = true;
-            this.clickX = this.newX - i;
-            this.clickY = this.newY - j;
+
+            this.newX = this.clickGUI.x.getValue();
+            this.newY = this.clickGUI.y.getValue();
+
+            int newClickX = this.newX - i;
+            int newClickY = this.newY - j;
+
+            if (newClickX + this.clickGUI.x.getValue() <= 0) {
+                newClickX = this.newX;
+            }
+
+            if (newClickY + this.clickGUI.y.getValue() <= 0) {
+                newClickY = this.newY;
+            }
+
+            this.clickX = newClickX;
+            this.clickY = newClickY;
+
         } else {
             this.dragging = false;
         }

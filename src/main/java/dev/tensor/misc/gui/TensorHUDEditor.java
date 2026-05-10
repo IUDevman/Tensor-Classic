@@ -47,12 +47,16 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
             this.newX = i + clickX;
             this.newY = j + clickY;
 
-            if (this.newX + this.draggedObject.getWidthScaled() <= this.getMinecraft().currentScreen.width) {
+            if (this.newX + this.draggedObject.getWidthScaled() <= this.getMinecraft().currentScreen.width && this.clickX != 0) {
                 this.draggedObject.getMinX().setValue(newX);
+            } else {
+                this.newX = this.draggedObject.getMinX().getValue();
             }
 
-            if (this.newY + this.draggedObject.getHeightScaled() <= this.getMinecraft().currentScreen.height) {
+            if (this.newY + this.draggedObject.getHeightScaled() <= this.getMinecraft().currentScreen.height && this.clickY != 0) {
                 this.draggedObject.getMinY().setValue(newY);
+            } else {
+                this.newY = this.draggedObject.getMinY().getValue();
             }
         }
 
@@ -92,13 +96,28 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
             boolean isHovered = this.isHovered(hudObject, i, j);
 
             if (isHovered) {
-
                 if (this.draggedObject == hudObject) {
                     this.draggedObject = null;
+
                 } else {
                     this.draggedObject = hudObject;
-                    this.clickX = this.newX - i;
-                    this.clickY = this.newY - j;
+
+                    this.newX = hudObject.getMinX().getValue();
+                    this.newY = hudObject.getMinY().getValue();
+
+                    int newClickX = this.newX - i;
+                    int newClickY = this.newY - j;
+
+                    if (newClickX + hudObject.getMinX().getValue() <= 0) {
+                        newClickX = this.newX;
+                    }
+
+                    if (newClickY + hudObject.getMinY().getValue() <= 0) {
+                        newClickY = this.newY;
+                    }
+
+                    this.clickX = newClickX;
+                    this.clickY = newClickY;
                 }
             }
         });
