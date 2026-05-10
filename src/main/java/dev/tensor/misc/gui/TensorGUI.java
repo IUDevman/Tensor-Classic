@@ -26,8 +26,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author IUDevman
  * @since 05-03-2021
- * <p>
- * A big thanks to qe7 for Hephastus-Babric. The source really helped troubleshoot parts that didn't port over well.
+ */
+
+/**
+ * A big thanks to qe7 for Hephastus-Babric.
+ * The source really helped troubleshoot parts that didn't port over well.
  * https://github.com/qe7/Hephaestus-Babric
  */
 
