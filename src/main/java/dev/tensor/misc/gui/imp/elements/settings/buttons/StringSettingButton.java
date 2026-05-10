@@ -62,22 +62,22 @@ public final class StringSettingButton implements ButtonSetting {
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
 
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawCenteredString("Setting (String) : " + this.stringSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawCenteredString("Setting (String) : " + this.stringSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
 
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
+        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
 
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 4 + this.tensorGUI.titleHeight, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 6 + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 6 + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 4 + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 6 + this.tensorGUI.titleHeight, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 4 + this.tensorGUI.titleBoxHeight, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 4 + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
 
         int maxWidth = this.getWidth() - 20;
 
@@ -102,16 +102,16 @@ public final class StringSettingButton implements ButtonSetting {
             toWrite = ChatColor.LIGHT_GRAY.text() + this.value;
         }
 
-        this.drawString("'" + toWrite + ChatColor.YELLOW.text() + (strobe ? "|" : "") + "'", this.getPosX() + 10, this.getPosY() + this.tensorGUI.titleHeight + 4 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
+        this.drawString("'" + toWrite + ChatColor.YELLOW.text() + (strobe ? "|" : "") + "'", this.getPosX() + 10, this.getPosY() + this.tensorGUI.titleBoxHeight + 4 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
     }
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY)) {
             this.close();
         }
 
-        if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + (2 * this.tensorGUI.titleHeight) + 4, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 4, mouseX, mouseY)) {
 
             if (this.isSearching()) {
                 this.stringSetting.setValue(this.value);
@@ -132,7 +132,7 @@ public final class StringSettingButton implements ButtonSetting {
 
     @Override
     public void onHovered(int mouseX, int mouseY) {
-        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY);
+        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY);
     }
 
     @Override

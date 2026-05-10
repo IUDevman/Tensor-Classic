@@ -38,22 +38,22 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     public final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
 
     public final int guiWidth = 388;
-    public final int titleHeight = 20;
+    public final AtomicInteger guiHeight = new AtomicInteger(0);
 
-    private int scroll = 0;
+    public final int titleBoxHeight = 20;
+
+    private int scrollingSpeed = 0;
 
     private boolean dragging = false;
 
-    private int clickX;
-    private int clickY;
+    private int dragOffsetX;
+    private int dragOffsetY;
 
-    private int newX;
-    private int newY;
+    private int dragXToSet;
+    private int dragYToSet;
 
-    private final AtomicBoolean buttonActive = new AtomicBoolean(false);
-    private ButtonSetting buttonSetting = null;
-
-    public final AtomicInteger guiHeight = new AtomicInteger(0);
+    private final AtomicBoolean isButtonActive = new AtomicBoolean(false);
+    private ButtonSetting activeButton = null;
 
     public TensorGUI(ClickGUI clickGUI) {
         this.clickGUI = clickGUI;
@@ -90,8 +90,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                                 if (element.button.isActive()) {
                                     element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue());
-                                    this.buttonSetting = element.button;
-                                    this.buttonActive.set(true);
+                                    this.activeButton = element.button;
+                                    this.isButtonActive.set(true);
                                 }
                             }
                         });
@@ -100,42 +100,42 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             }
         });
 
-        if (this.buttonActive.get()) {
+        if (this.isButtonActive.get()) {
             return;
         }
 
         if (this.dragging) {
-            this.newX = i + clickX;
-            this.newY = j + clickY;
+            this.dragXToSet = i + dragOffsetX;
+            this.dragYToSet = j + dragOffsetY;
 
-            if (this.newX + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width && this.clickX != 0) {
-                this.clickGUI.x.setValue(newX);
+            if (this.dragXToSet + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width && this.dragOffsetX != 0) {
+                this.clickGUI.x.setValue(dragXToSet);
             } else {
-                this.newX = this.clickGUI.x.getValue();
+                this.dragXToSet = this.clickGUI.x.getValue();
             }
 
-            if (this.newY + this.guiHeight.get() + 2 <= this.getMinecraft().currentScreen.height && this.clickY != 0) {
-                this.clickGUI.y.setValue(newY);
+            if (this.dragYToSet + this.guiHeight.get() + 2 <= this.getMinecraft().currentScreen.height && this.dragOffsetY != 0) {
+                this.clickGUI.y.setValue(dragYToSet);
             } else {
-                this.newY = this.clickGUI.y.getValue();
+                this.dragYToSet = this.clickGUI.y.getValue();
             }
         }
 
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
-        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, clickGUI.y.getValue() + this.titleHeight + 2, clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, clickGUI.y.getValue() + this.guiHeight.get() - 2, clickGUI.outlineColor.getValue().getRGB());
-        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.titleHeight, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleHeight + 2, clickGUI.outlineColor.getValue().getRGB());
+        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, clickGUI.y.getValue() + this.titleBoxHeight + 2, clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, clickGUI.y.getValue() + this.guiHeight.get() - 2, clickGUI.outlineColor.getValue().getRGB());
+        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.titleBoxHeight, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleBoxHeight + 2, clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() - 2, clickGUI.y.getValue() - 2, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue(), clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() - 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.x.getValue() + guiWidth + 2, clickGUI.y.getValue() + this.guiHeight.get() + 2, clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() - 2, clickGUI.y.getValue(), clickGUI.x.getValue(), clickGUI.y.getValue() + guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() - 2, clickGUI.x.getValue() + this.guiWidth + 2, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue() + this.guiHeight.get() - 2, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.guiHeight.get(), clickGUI.outlineColor.getValue().getRGB());
-        this.drawRectangle(clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleHeight, clickGUI.outlineColor.getValue().getRGB());
-        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + this.titleHeight, clickGUI.outlineColor.getValue().getRGB());
+        this.drawRectangle(clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.titleBoxHeight, clickGUI.outlineColor.getValue().getRGB());
+        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 2, clickGUI.y.getValue(), clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + this.titleBoxHeight, clickGUI.outlineColor.getValue().getRGB());
         this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + 1, clickGUI.outlineColor.getValue().getRGB());
-        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + 1, clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + this.titleHeight, clickGUI.fillColor.getValue().getRGB());
+        this.drawRectangle(clickGUI.x.getValue() + CategoryElement.width + 3, clickGUI.y.getValue() + 1, clickGUI.x.getValue() + this.guiWidth - 1, clickGUI.y.getValue() + this.titleBoxHeight, clickGUI.fillColor.getValue().getRGB());
 
         String name = TensorClassic.MOD_NAME + " (" + ChatColor.YELLOW.text() + TensorClassic.MOD_VERSION + ChatColor.DEFAULT.text() + ")";
-        this.drawCenteredString(name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawCenteredString(name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue()));
     }
@@ -147,10 +147,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             return;
         }
 
-        if (this.buttonActive.get()) {
+        if (this.isButtonActive.get()) {
 
-            if (this.buttonSetting != null) {
-                buttonSetting.onKeyPressed(c, i);
+            if (this.activeButton != null) {
+                activeButton.onKeyPressed(c, i);
             }
 
             return;
@@ -184,34 +184,34 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     @Override
     public void mouseClicked(int i, int j, int k) {
 
-        if (this.buttonActive.get()) {
+        if (this.isButtonActive.get()) {
 
-            if (this.buttonSetting != null && k == 0) {
-                this.buttonSetting.onClick(i, j);
+            if (this.activeButton != null && k == 0) {
+                this.activeButton.onClick(i, j);
             }
 
             return;
         }
 
-        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleHeight + 2, i, j) && k == 0) {
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, i, j) && k == 0) {
             this.dragging = true;
 
-            this.newX = this.clickGUI.x.getValue();
-            this.newY = this.clickGUI.y.getValue();
+            this.dragXToSet = this.clickGUI.x.getValue();
+            this.dragYToSet = this.clickGUI.y.getValue();
 
-            int newClickX = this.newX - i;
-            int newClickY = this.newY - j;
+            int newDragOffsetX = this.dragXToSet - i;
+            int newDragOffsetY = this.dragYToSet - j;
 
-            if (newClickX + this.clickGUI.x.getValue() + this.guiWidth + 2 <= 0) {
-                newClickX = this.newX;
+            if (newDragOffsetX + this.clickGUI.x.getValue() + this.guiWidth + 2 <= 0) {
+                newDragOffsetX = this.dragXToSet;
             }
 
-            if (newClickY + this.clickGUI.y.getValue() + this.guiHeight.get() + 2 <= 0) {
-                newClickY = this.newY;
+            if (newDragOffsetY + this.clickGUI.y.getValue() + this.guiHeight.get() + 2 <= 0) {
+                newDragOffsetY = this.dragYToSet;
             }
 
-            this.clickX = newClickX;
-            this.clickY = newClickY;
+            this.dragOffsetX = newDragOffsetX;
+            this.dragOffsetY = newDragOffsetY;
 
         } else {
             this.dragging = false;
@@ -297,11 +297,11 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             int dWheel = Mouse.getDWheel();
 
             if (dWheel > 0) {
-                scroll = this.getScrollSpeed();
+                scrollingSpeed = this.getScrollSpeed();
             } else if (dWheel < 0) {
-                scroll = -this.getScrollSpeed();
+                scrollingSpeed = -this.getScrollSpeed();
             } else {
-                scroll = 0;
+                scrollingSpeed = 0;
             }
         }
 
@@ -311,19 +311,19 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     @Override
     protected void mouseMovedOrUp(int i, int j, int k) {
 
-        if (this.buttonActive.get()) {
+        if (this.isButtonActive.get()) {
 
-            if (this.buttonSetting != null) {
-                this.buttonSetting.onHovered(i, j);
-                buttonSetting.handleScroll(this.scroll);
+            if (this.activeButton != null) {
+                this.activeButton.onHovered(i, j);
+                activeButton.handleScroll(this.scrollingSpeed);
             }
 
             return;
         }
 
-        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
             this.handleScroll(Scroll.Hack);
-        } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+        } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
             this.handleScroll(Scroll.Setting);
         }
     }
@@ -336,7 +336,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     @Override
     public void onGuiClosed() {
         this.categoryElements.forEach(categoryElement -> {
-            this.scroll = 0;
+            this.scrollingSpeed = 0;
 
             categoryElement.mScrollY.reset();
             categoryElement.hackElements.forEach(hackElement -> hackElement.sScrollY.reset());
@@ -366,14 +366,14 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     public void closeButton() {
-        this.buttonActive.set(false);
-        this.buttonSetting = null;
+        this.isButtonActive.set(false);
+        this.activeButton = null;
     }
 
     private boolean isHovered(Element element, double mouseX, double mouseY) {
 
         if (!(element instanceof CategoryElement)) {
-            if (mouseY < this.clickGUI.y.getValue() + this.titleHeight + 2) {
+            if (mouseY < this.clickGUI.y.getValue() + this.titleBoxHeight + 2) {
                 return false;
             }
 
@@ -386,7 +386,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     private void handleScroll(Scroll scroll) {
-        if (this.scroll == 0) {
+        if (this.scrollingSpeed == 0) {
             return;
         }
 
@@ -402,15 +402,15 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                     categoryElement.hackElements.forEach(hackElement -> hackHeight.getAndAdd(hackElement.getHeight()));
 
-                    int scrollAdjust = this.scroll;
+                    int scrollAdjust = this.scrollingSpeed;
 
-                    if (hackScrollY.getValue() > -this.getScrollSpeed() && this.scroll > 0) {
+                    if (hackScrollY.getValue() > -this.getScrollSpeed() && this.scrollingSpeed > 0) {
 
                         scrollAdjust = -hackScrollY.getValue();
                     }
 
-                    if (hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
-                        int test = ((hackHeight.get() + (this.scroll < 0 ? hackScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
+                    if (hackHeight.get() + (this.scrollingSpeed < 0 ? hackScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
+                        int test = ((hackHeight.get() + (this.scrollingSpeed < 0 ? hackScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
 
                         if (test >= scrollAdjust) {
                             scrollAdjust = -test;
@@ -441,15 +441,15 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                             hackElement.settingElements.forEach(settingElement -> settingHeight.getAndAdd(settingElement.getHeight()));
 
-                            int scrollAdjust = this.scroll;
+                            int scrollAdjust = this.scrollingSpeed;
 
-                            if (settingScrollY.getValue() > -this.getScrollSpeed() && this.scroll > 0) {
+                            if (settingScrollY.getValue() > -this.getScrollSpeed() && this.scrollingSpeed > 0) {
 
                                 scrollAdjust = -settingScrollY.getValue();
                             }
 
-                            if (settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
-                                int test = ((settingHeight.get() + (this.scroll < 0 ? settingScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
+                            if (settingHeight.get() + (this.scrollingSpeed < 0 ? settingScrollY.getValue() - this.getScrollSpeed() : 0) <= this.guiHeight.get() - 22) {
+                                int test = ((settingHeight.get() + (this.scrollingSpeed < 0 ? settingScrollY.getValue() : 0)) - (this.guiHeight.get() - 22));
 
                                 if (test >= scrollAdjust) {
                                     scrollAdjust = -test;
@@ -469,7 +469,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     public boolean isSearching() {
 
-        if (this.buttonActive.get() && this.buttonSetting != null && this.buttonSetting.isSearching()) {
+        if (this.isButtonActive.get() && this.activeButton != null && this.activeButton.isSearching()) {
             return true;
         }
 
@@ -500,7 +500,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     public int getScrollSpeed() {
-        return this.buttonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
+        return this.isButtonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
     }
 
     private enum Scroll {

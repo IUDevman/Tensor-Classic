@@ -74,7 +74,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
         this.waypointListSetting.getValue().getWaypointsAll().forEach(waypoint -> {
 
-            WaypointSettingObject object = new WaypointSettingObject(waypoint, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 0, this.tensorGUI.titleHeight + 57, offsetY.getAndAdd(1));
+            WaypointSettingObject object = new WaypointSettingObject(waypoint, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 0, this.tensorGUI.titleBoxHeight + 57, offsetY.getAndAdd(1));
             this.waypointSettingObjects.add(object);
         });
     }
@@ -101,43 +101,43 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawCenteredString(this.hackElement.hack.NAME + " : " + this.waypointListSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawCenteredString(this.hackElement.hack.NAME + " : " + this.waypointListSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
 
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
+        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
 
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
 
-        this.drawRectangle(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 55, this.hoveredOnAddWaypoint ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 55, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 57, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleHeight + 55, this.alreadyHasWaypointName ? this.hoveredOnAdd ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB() : this.hoveredOnAdd ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB());
-        this.drawRectangle(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleHeight + 55, outLineColor.getRGB());
-        this.drawCenteredString(">> Add <<", this.getPosX() + 50 - (this.getFontRenderer().getStringWidth(">> Add <<") / 2), this.getPosY() + this.tensorGUI.titleHeight + 24, Color.YELLOW.getRGB());
-        this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? ChatColor.RED.text() : ChatColor.LIGHT_GRAY.text()) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Dimension : " + (this.getWorld().worldProvider.isHellWorld ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.WHITE.getRGB());
-        this.drawString("Server : " + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.WHITE.getRGB());
-        this.drawString("Enabled : " + (this.enabledValue ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 41, Color.WHITE.getRGB());
+        this.drawRectangle(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 55, this.hoveredOnAddWaypoint ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 55, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 57, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 55, this.alreadyHasWaypointName ? this.hoveredOnAdd ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB() : this.hoveredOnAdd ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB());
+        this.drawRectangle(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 55, outLineColor.getRGB());
+        this.drawCenteredString(">> Add <<", this.getPosX() + 50 - (this.getFontRenderer().getStringWidth(">> Add <<") / 2), this.getPosY() + this.tensorGUI.titleBoxHeight + 24, Color.YELLOW.getRGB());
+        this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? ChatColor.RED.text() : ChatColor.LIGHT_GRAY.text()) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 5, Color.YELLOW.getRGB());
+        this.drawString("Dimension : " + (this.getWorld().worldProvider.isHellWorld ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());
+        this.drawString("Server : " + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 29, Color.WHITE.getRGB());
+        this.drawString("Enabled : " + (this.enabledValue ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 41, Color.WHITE.getRGB());
 
-        this.drawString("X : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Y : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 17, Color.YELLOW.getRGB());
-        this.drawString("Z : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 29, Color.YELLOW.getRGB());
-        this.drawString("Current Position", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 41, Color.YELLOW.getRGB());
+        this.drawString("X : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 5, Color.YELLOW.getRGB());
+        this.drawString("Y : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.YELLOW.getRGB());
+        this.drawString("Z : " + ChatColor.LIGHT_GRAY.text() + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 29, Color.YELLOW.getRGB());
+        this.drawString("Current Position", this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 41, Color.YELLOW.getRGB());
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
         int posX = this.getPosX();
-        int posY = this.getPosY() + this.tensorGUI.titleHeight + 57;
+        int posY = this.getPosY() + this.tensorGUI.titleBoxHeight + 57;
         int width1 = this.getWidth();
-        int height1 = this.getHeight() - this.tensorGUI.titleHeight - 57;
+        int height1 = this.getHeight() - this.tensorGUI.titleBoxHeight - 57;
 
         int windowHeight = this.getMinecraft().displayHeight;
         double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
@@ -151,8 +151,8 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
         this.waypointSettingObjects.forEach(waypointSettingObject -> waypointSettingObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 
-        if (this.waypointSettingObjects.size() * 55 < this.getHeight() - -this.tensorGUI.titleHeight - 57) {
-            this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 57 + (this.waypointSettingObjects.size() * 55), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
+        if (this.waypointSettingObjects.size() * 55 < this.getHeight() - -this.tensorGUI.titleBoxHeight - 57) {
+            this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 57 + (this.waypointSettingObjects.size() * 55), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
         }
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
@@ -160,20 +160,20 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY)) {
             this.close();
         }
 
-        if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 55, mouseX, mouseY)) {
-            if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 58, this.getPosY() + this.tensorGUI.titleHeight + 55, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 55, mouseX, mouseY)) {
+            if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 58, this.getPosY() + this.tensorGUI.titleBoxHeight + 55, mouseX, mouseY)) {
                 this.addNewWaypoint();
             }
 
-            if (this.isHovered(this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 41, this.getPosX() + 60 + this.getFontRenderer().getStringWidth("Enabled : " + (this.enabledValue ? "True" : "False")), this.getPosY() + this.tensorGUI.titleHeight + 51, mouseX, mouseY)) {
+            if (this.isHovered(this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 41, this.getPosX() + 60 + this.getFontRenderer().getStringWidth("Enabled : " + (this.enabledValue ? "True" : "False")), this.getPosY() + this.tensorGUI.titleBoxHeight + 51, mouseX, mouseY)) {
                 this.enabledValue = !this.enabledValue;
             }
 
-            if (this.isHovered(this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleHeight + 4, this.getPosX() + 60 + this.getFontRenderer().getStringWidth("Waypoint Name : " + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue)), this.getPosY() + this.tensorGUI.titleHeight + 12, mouseX, mouseY)) {
+            if (this.isHovered(this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 4, this.getPosX() + 60 + this.getFontRenderer().getStringWidth("Waypoint Name : " + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue)), this.getPosY() + this.tensorGUI.titleBoxHeight + 12, mouseX, mouseY)) {
                 this.searchingName = !this.searchingName;
                 this.searchingX = false;
                 this.searchingY = false;
@@ -185,28 +185,28 @@ public final class WaypointListSettingButton implements ButtonSetting {
                     this.badWaypointName = "";
                 }
 
-            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 4, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("X : " + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]"), this.getPosY() + this.tensorGUI.titleHeight + 12, mouseX, mouseY)) {
+            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 4, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("X : " + "[" + (this.searchingX ? this.xValue.equalsIgnoreCase("") ? "..." : this.xValue : this.xValue.equalsIgnoreCase("") ? "Click" : this.xValue) + "]"), this.getPosY() + this.tensorGUI.titleBoxHeight + 12, mouseX, mouseY)) {
                 this.searchingName = false;
                 this.searchingX = !this.searchingX;
                 this.searchingY = false;
                 this.searchingZ = false;
                 this.setBackSearchValues();
 
-            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 16, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Y : " + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]"), this.getPosY() + this.tensorGUI.titleHeight + 24, mouseX, mouseY)) {
+            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 16, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Y : " + "[" + (this.searchingY ? this.yValue.equalsIgnoreCase("") ? "..." : this.yValue : this.yValue.equalsIgnoreCase("") ? "Click" : this.yValue) + "]"), this.getPosY() + this.tensorGUI.titleBoxHeight + 24, mouseX, mouseY)) {
                 this.searchingName = false;
                 this.searchingX = false;
                 this.searchingY = !this.searchingY;
                 this.searchingZ = false;
                 this.setBackSearchValues();
 
-            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 28, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Z : " + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]"), this.getPosY() + this.tensorGUI.titleHeight + 36, mouseX, mouseY)) {
+            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 28, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Z : " + "[" + (this.searchingZ ? this.zValue.equalsIgnoreCase("") ? "..." : this.zValue : this.zValue.equalsIgnoreCase("") ? "Click" : this.zValue) + "]"), this.getPosY() + this.tensorGUI.titleBoxHeight + 36, mouseX, mouseY)) {
                 this.searchingName = false;
                 this.searchingX = false;
                 this.searchingY = false;
                 this.searchingZ = !this.searchingZ;
                 this.setBackSearchValues();
 
-            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleHeight + 40, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Current Position"), this.getPosY() + this.tensorGUI.titleHeight + 48, mouseX, mouseY)) {
+            } else if (this.isHovered(this.getPosX() + this.getWidth() - 97, this.getPosY() + this.tensorGUI.titleBoxHeight + 40, this.getPosX() + this.getWidth() - 97 + this.getFontRenderer().getStringWidth("Current Position"), this.getPosY() + this.tensorGUI.titleBoxHeight + 48, mouseX, mouseY)) {
                 this.xValue = String.valueOf((int) this.getPlayer().posX);
                 this.yValue = String.valueOf((int) this.getPlayer().posY);
                 this.zValue = String.valueOf((int) this.getPlayer().posZ);
@@ -217,7 +217,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
                 this.setBackSearchValues();
             }
 
-        } else if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 57, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
+        } else if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 57, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
 
             AtomicBoolean hasDispatched = new AtomicBoolean(false);
 
@@ -242,13 +242,13 @@ public final class WaypointListSettingButton implements ButtonSetting {
 
     @Override
     public void onHovered(int mouseX, int mouseY) {
-        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY);
+        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY);
 
-        this.hoveredOnAdd = this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleHeight + 55, mouseX, mouseY);
+        this.hoveredOnAdd = this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 55, mouseX, mouseY);
 
-        this.hoveredOnAddWaypoint = this.isHovered(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 55, mouseX, mouseY);
+        this.hoveredOnAddWaypoint = this.isHovered(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 55, mouseX, mouseY);
 
-        if (!this.hoveredOnBack && !this.hoveredOnAdd && !this.hoveredOnAddWaypoint && this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 57, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
+        if (!this.hoveredOnBack && !this.hoveredOnAdd && !this.hoveredOnAddWaypoint && this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 57, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
             this.waypointSettingObjects.forEach(object -> object.onHovered(mouseX, mouseY));
         } else {
             this.waypointSettingObjects.forEach(object -> object.setHovered(false));
@@ -268,7 +268,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
             scrollAdjust = -scrollY.getValue();
         }
 
-        int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 57;
+        int maxHeight = this.getHeight() - this.tensorGUI.titleBoxHeight - 57;
 
         if ((this.waypointSettingObjects.size() * 55) + (scroll < 0 ? this.scrollY.getValue() - this.tensorGUI.getScrollSpeed() : 0) <= maxHeight) {
             int test = (((this.waypointSettingObjects.size() * 55) + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
@@ -572,7 +572,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         int size = this.waypointSettingObjects.size();
 
         this.waypointListSetting.getValue().addToWaypointList(waypoint);
-        this.waypointSettingObjects.add(new WaypointSettingObject(waypoint, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 0, this.tensorGUI.titleHeight + 57, size));
+        this.waypointSettingObjects.add(new WaypointSettingObject(waypoint, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 0, this.tensorGUI.titleBoxHeight + 57, size));
 
         this.clearSearching();
         this.resetSearchValues();

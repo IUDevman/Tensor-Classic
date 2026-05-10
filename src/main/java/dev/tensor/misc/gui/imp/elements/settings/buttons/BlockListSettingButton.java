@@ -43,7 +43,7 @@ public final class BlockListSettingButton implements ButtonSetting {
             for (int ix = 0; ix < blockSideAdjust; ix++) {
 
                 int number = i + (ix * 9);
-                this.blockIDObjects.add(new BlockIDSettingObject(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleHeight + 2, i, ix));
+                this.blockIDObjects.add(new BlockIDSettingObject(number, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 5, this.tensorGUI.titleBoxHeight + 2, i, ix));
             }
         }
     }
@@ -72,31 +72,31 @@ public final class BlockListSettingButton implements ButtonSetting {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleHeight, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
-        this.drawCenteredString(this.hackElement.hack.NAME + " BlockList : Custom", this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.WHITE.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.drawCenteredString(this.hackElement.hack.NAME + " BlockList : Custom", this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
 
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleHeight, outLineColor.getRGB());
-        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleHeight - 12) / 2), Color.YELLOW.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
+        this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
 
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleHeight + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
 
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + 5, this.getPosY() + this.getHeight(), fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 5, this.getPosY() + this.getHeight(), fillColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 5, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), fillColor.getRGB());
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
         int posX = this.getPosX() + 5;
-        int posY = this.getPosY() + this.tensorGUI.titleHeight + 2;
+        int posY = this.getPosY() + this.tensorGUI.titleBoxHeight + 2;
         int width1 = this.getWidth() - 7;
-        int height1 = this.getHeight() - this.tensorGUI.titleHeight - 2;
+        int height1 = this.getHeight() - this.tensorGUI.titleBoxHeight - 2;
 
         int windowHeight = this.getMinecraft().displayHeight;
         double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
@@ -116,9 +116,9 @@ public final class BlockListSettingButton implements ButtonSetting {
 
     @Override
     public void onHovered(int mouseX, int mouseY) {
-        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY);
+        this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY);
 
-        if (!this.hoveredOnBack && this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
+        if (!this.hoveredOnBack && this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
             this.blockIDObjects.forEach(object -> object.onHovered(mouseX, mouseY));
         } else {
             this.blockIDObjects.forEach(object -> object.setHovered(false));
@@ -138,7 +138,7 @@ public final class BlockListSettingButton implements ButtonSetting {
             scrollAdjust = -scrollY.getValue();
         }
 
-        int maxHeight = this.getHeight() - this.tensorGUI.titleHeight - 2;
+        int maxHeight = this.getHeight() - this.tensorGUI.titleBoxHeight - 2;
 
         if (462 + (scroll < 0 ? this.scrollY.getValue() - this.tensorGUI.getScrollSpeed() : 0) <= maxHeight) {
             int test = ((462 + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
@@ -155,11 +155,11 @@ public final class BlockListSettingButton implements ButtonSetting {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleHeight, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY)) {
             this.close();
         }
 
-        if (this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + 5, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() - 7, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
 
             AtomicBoolean hasDispatched = new AtomicBoolean(false);
 

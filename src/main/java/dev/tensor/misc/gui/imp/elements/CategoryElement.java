@@ -110,9 +110,9 @@ public final class CategoryElement implements Element {
             GL11.glEnable(GL11.GL_SCISSOR_TEST);
 
             int posX = this.x.getValue();
-            int posY = this.y.getValue() + tensorGUI.titleHeight + 2;
+            int posY = this.y.getValue() + tensorGUI.titleBoxHeight + 2;
             int width1 = tensorGUI.guiWidth + 1;
-            int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleHeight - 4;
+            int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleBoxHeight - 4;
 
             int windowHeight = this.getMinecraft().displayHeight;
             double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
@@ -128,7 +128,7 @@ public final class CategoryElement implements Element {
 
             if (this.hackElements.isEmpty()) {
                 int barMinXX = this.x.getValue() + this.getWidth() + HackElement.width + 4;
-                int barMinYY = this.y.getValue() + tensorGUI.titleHeight;
+                int barMinYY = this.y.getValue() + tensorGUI.titleBoxHeight;
                 int barMaxXX = this.x.getValue() + this.getWidth() + HackElement.width + 4 + SettingElement.width;
                 int barMaxYY = this.y.getValue() + tensorGUI.guiHeight.get();
 
@@ -144,7 +144,7 @@ public final class CategoryElement implements Element {
             }
 
             int barMinX = this.x.getValue() + this.getWidth() + 2;
-            int barMinY = this.y.getValue() + (this.hackElements.size() * HackElement.height) + tensorGUI.titleHeight + 2;
+            int barMinY = this.y.getValue() + (this.hackElements.size() * HackElement.height) + tensorGUI.titleBoxHeight + 2;
             int barMaxX = this.x.getValue() + this.getWidth() + HackElement.width + 2;
             int barMaxY = this.y.getValue() + tensorGUI.guiHeight.get() - 1;
 

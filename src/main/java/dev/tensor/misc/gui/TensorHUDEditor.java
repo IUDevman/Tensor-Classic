@@ -20,13 +20,13 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
 
     private final ArrayList<HUDObject> hudObjects = new ArrayList<>();
 
-    private HUDObject draggedObject = null;
+    private HUDObject draggingObject = null;
 
-    private int clickX;
-    private int clickY;
+    private int dragOffsetX;
+    private int dragOffsetY;
 
-    private int newX;
-    private int newY;
+    private int dragXToSet;
+    private int dragYToSet;
 
     public TensorHUDEditor(HUDEditor hudEditor) {
 
@@ -43,20 +43,20 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
     @Override
     public void drawScreen(int i, int j, float f) {
 
-        if (this.draggedObject != null) {
-            this.newX = i + clickX;
-            this.newY = j + clickY;
+        if (this.draggingObject != null) {
+            this.dragXToSet = i + dragOffsetX;
+            this.dragYToSet = j + dragOffsetY;
 
-            if (this.newX + this.draggedObject.getWidthScaled() <= this.getMinecraft().currentScreen.width && this.clickX != 0) {
-                this.draggedObject.getMinX().setValue(newX);
+            if (this.dragXToSet + this.draggingObject.getWidthScaled() <= this.getMinecraft().currentScreen.width && this.dragOffsetX != 0) {
+                this.draggingObject.getMinX().setValue(dragXToSet);
             } else {
-                this.newX = this.draggedObject.getMinX().getValue();
+                this.dragXToSet = this.draggingObject.getMinX().getValue();
             }
 
-            if (this.newY + this.draggedObject.getHeightScaled() <= this.getMinecraft().currentScreen.height && this.clickY != 0) {
-                this.draggedObject.getMinY().setValue(newY);
+            if (this.dragYToSet + this.draggingObject.getHeightScaled() <= this.getMinecraft().currentScreen.height && this.dragOffsetY != 0) {
+                this.draggingObject.getMinY().setValue(dragYToSet);
             } else {
-                this.newY = this.draggedObject.getMinY().getValue();
+                this.dragYToSet = this.draggingObject.getMinY().getValue();
             }
         }
 
@@ -96,28 +96,28 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
             boolean isHovered = this.isHovered(hudObject, i, j);
 
             if (isHovered) {
-                if (this.draggedObject == hudObject) {
-                    this.draggedObject = null;
+                if (this.draggingObject == hudObject) {
+                    this.draggingObject = null;
 
                 } else {
-                    this.draggedObject = hudObject;
+                    this.draggingObject = hudObject;
 
-                    this.newX = hudObject.getMinX().getValue();
-                    this.newY = hudObject.getMinY().getValue();
+                    this.dragXToSet = hudObject.getMinX().getValue();
+                    this.dragYToSet = hudObject.getMinY().getValue();
 
-                    int newClickX = this.newX - i;
-                    int newClickY = this.newY - j;
+                    int newDragOffsetX = this.dragXToSet - i;
+                    int newDragOffsetY = this.dragYToSet - j;
 
-                    if (newClickX + hudObject.getMinX().getValue() + hudObject.getWidth() <= 0) {
-                        newClickX = this.newX;
+                    if (newDragOffsetX + hudObject.getMinX().getValue() + hudObject.getWidth() <= 0) {
+                        newDragOffsetX = this.dragXToSet;
                     }
 
-                    if (newClickY + hudObject.getMinY().getValue() + hudObject.getHeight() <= 0) {
-                        newClickY = this.newY;
+                    if (newDragOffsetY + hudObject.getMinY().getValue() + hudObject.getHeight() <= 0) {
+                        newDragOffsetY = this.dragYToSet;
                     }
 
-                    this.clickX = newClickX;
-                    this.clickY = newClickY;
+                    this.dragOffsetX = newDragOffsetX;
+                    this.dragOffsetY = newDragOffsetY;
                 }
             }
         });
@@ -127,7 +127,7 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
     public void handleMouseInput() {
 
         if (Mouse.getEventButton() == 0) {
-            this.draggedObject = null;
+            this.draggingObject = null;
         }
 
         super.handleMouseInput();
