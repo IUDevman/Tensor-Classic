@@ -2,8 +2,8 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.constant.WeatherEvent;
+import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;

@@ -3,7 +3,6 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.event.EventAction;
-import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
 import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;

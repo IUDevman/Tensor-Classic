@@ -7,7 +7,6 @@ import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;

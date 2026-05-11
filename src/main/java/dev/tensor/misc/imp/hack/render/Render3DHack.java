@@ -11,6 +11,10 @@ import dev.tensor.misc.imp.render.task.RenderTask;
 
 public abstract class Render3DHack extends Hack implements Render3D {
 
+    public int getRenderOrderInt() {
+        return this.getRenderOrder().value();
+    }
+
     public RenderOrder getRenderOrder() {
         return RenderOrder.Default;
     }

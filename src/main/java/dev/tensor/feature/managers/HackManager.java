@@ -185,12 +185,12 @@ public final class HackManager implements Manager {
         });
     }
 
-    private void postSortHacks() {
+    public void postSortHacks() {
         this.HACKS.sort(Comparator.comparing(hack -> hack.NAME));
 
-        this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrder().value()).reversed());
+        this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack -> ((Render3DHack) hack).getRenderOrderInt()).reversed());
 
-        this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack -> ((HUDObject) hack).getRenderOrder().value()).reversed());
+        this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack -> ((HUDObject) hack).getRenderOrderInt()).reversed());
     }
 
     public void onHackToggled(Hack hack, boolean enabled) {
@@ -201,12 +201,12 @@ public final class HackManager implements Manager {
 
             if (hack instanceof Render3DHack && !this.ENABLED_RENDER_3D_HACKS.contains((Render3DHack) hack)) {
                 this.ENABLED_RENDER_3D_HACKS.add((Render3DHack) hack);
-                this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack1 -> ((Render3DHack) hack1).getRenderOrder().value()).reversed());
+                this.ENABLED_RENDER_3D_HACKS.sort(Comparator.comparing(hack1 -> ((Render3DHack) hack1).getRenderOrderInt()).reversed());
             }
 
             if (hack instanceof HUDObject && !this.ENABLED_RENDER_HUD_HACKS.contains(hack)) {
                 this.ENABLED_RENDER_HUD_HACKS.add(hack);
-                this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack1 -> ((HUDObject) hack1).getRenderOrder().value()).reversed());
+                this.ENABLED_RENDER_HUD_HACKS.sort(Comparator.comparing(hack1 -> ((HUDObject) hack1).getRenderOrderInt()).reversed());
             }
 
             return;

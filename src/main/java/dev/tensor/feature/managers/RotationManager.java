@@ -48,11 +48,15 @@ public final class RotationManager implements Manager {
     }
 
     public void addToRotationQueue(Rotation rotation, RotationPriority priority) {
+        this.addToRotationQueue(rotation, priority.value());
+    }
+
+    public void addToRotationQueue(Rotation rotation, int priority) {
         switch (this.rotationMode) {
             case None:
                 break;
             case Intercept:
-                this.rotationQueue.put(priority.value(), rotation);
+                this.rotationQueue.put(priority, rotation);
                 break;
             case Packet:
                 this.sendPacketBypass(new Packet12PlayerLook(rotation.yaw, rotation.pitch, true));

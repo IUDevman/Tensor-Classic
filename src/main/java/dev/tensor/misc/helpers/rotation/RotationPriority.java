@@ -6,10 +6,12 @@ package dev.tensor.misc.helpers.rotation;
  */
 
 public enum RotationPriority {
-    Platform(1),
-    Scaffold(2),
-    Nuker(3),
-    KillAura(4);
+    Platform(10),
+    Scaffold(20),
+    Nuker(30),
+    KillAura(40);
+
+    public static final int PLUGIN_PRIORITY_DEFAULT = 25;
 
     private final int value;
 

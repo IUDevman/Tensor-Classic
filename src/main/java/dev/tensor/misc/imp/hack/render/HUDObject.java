@@ -103,4 +103,8 @@ public interface HUDObject extends Render2D {
     default RenderOrder getRenderOrder() {
         return RenderOrder.HUD_Default;
     }
+
+    default int getRenderOrderInt() {
+        return this.getRenderOrder().value();
+    }
 }

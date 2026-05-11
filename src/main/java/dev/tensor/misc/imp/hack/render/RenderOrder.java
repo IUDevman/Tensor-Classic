@@ -6,27 +6,30 @@ package dev.tensor.misc.imp.hack.render;
  */
 
 public enum RenderOrder {
-    Tracers(1),
-    Nametags(2),
-    WolfOwner(3),
-    LogoutSpots(4),
-    Waypoints(5),
-    KillAura(6),
-    EntityESP(7),
-    BreadCrumbs(8),
-    BreakProgress(9),
-    BlockHighlight(10),
-    Scaffold_or_Platform(11),
-    Nuker(12),
-    Search(13),
+    Tracers(10),
+    Nametags(20),
+    WolfOwner(30),
+    LogoutSpots(40),
+    Waypoints(50),
+    KillAura(60),
+    EntityESP(70),
+    BreadCrumbs(80),
+    BreakProgress(90),
+    BlockHighlight(100),
+    Scaffold_or_Platform(110),
+    Nuker(120),
+    Search(130),
 
-    Default(14),
+    Default(140),
 
-    HUD_Shading_and_Images(1),
-    HUD_Text(2),
-    Hud_Images_Only(3),
+    HUD_Shading_and_Images(10),
+    HUD_Text(20),
+    Hud_Images_Only(30),
 
-    HUD_Default(4);
+    HUD_Default(40);
+
+    public static final int DEFAULT_3D = 140;
+    public static final int DEFAULT_2D = 40;
 
     private final int value;
 

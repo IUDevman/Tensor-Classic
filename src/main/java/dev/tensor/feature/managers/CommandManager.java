@@ -86,7 +86,7 @@ public final class CommandManager implements Manager {
         return command.get();
     }
 
-    private void postSortCommands() {
+    public void postSortCommands() {
         this.COMMANDS.sort(Comparator.comparing(Command::getName));
     }
 
