@@ -3,6 +3,7 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
+import dev.tensor.backend.events.variable.RenderEntityEvent;
 import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.helpers.extensions.TensorImageBuffer;
@@ -135,12 +136,27 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Redirect(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
-    public ThreadDownloadImageData test(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
+    public ThreadDownloadImageData tensor_obtainEntitySkinImageBuffer(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
         if (arg.endsWith("files/tensor/cape.png")) {
             return this.renderEngine.obtainImageData(arg, new TensorImageBuffer());
 
         } else {
             return this.renderEngine.obtainImageData(arg, new ImageBufferDownload());
         }
+    }
+
+    @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isInRangeToRenderVec3D(Lnet/minecraft/src/Vec3D;)Z"))
+    public boolean tensor_renderEntitiesWithinRange(Entity instance, Vec3D vec3D) {
+        if (this.failsNullCheck()) {
+            return instance.isInRangeToRenderVec3D(vec3D);
+        }
+
+        RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(instance).call();
+
+        if (event.isCancelled()) {
+            return true;
+        }
+
+        return instance.isInRangeToRenderVec3D(vec3D);
     }
 }

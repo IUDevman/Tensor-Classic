@@ -1,16 +1,16 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.EntityLightValueEvent;
 import dev.tensor.backend.events.variable.RenderEntityEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.render.RenderStatic;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityOtherPlayerMP;
+import net.minecraft.src.*;
 
 /**
  * @author Hoosiers
@@ -29,6 +29,12 @@ public final class Chams extends Hack {
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Check", true);
+
+    @Override
+    public void onDisable(boolean isNull) {
+        RenderStatic.tensor_playerFrustrum = null;
+    }
 
     @SuppressWarnings("unused")
     EventAction<RenderEntityEvent> renderEntityEventAction = this.addEventAction(new EventAction<>(RenderEntityEvent.class, event -> {
@@ -44,32 +50,54 @@ public final class Chams extends Hack {
         }
     }));
 
+    @SuppressWarnings("unused")
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> RenderStatic.tensor_playerFrustrum = null));
+
     private boolean shouldRenderChams(Entity entity) {
         if (entity instanceof EntityOtherPlayerMP) {
 
             EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
             if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                return true;
+                return this.passesFrustrumCheck(entity, true);
             }
 
-            return this.players.getValue();
+            return this.passesFrustrumCheck(entity, this.players.getValue());
         }
 
         Class<? extends Entity> entityClass = entity.getClass();
 
         if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
-            return true;
+            return this.passesFrustrumCheck(entity, true);
         }
 
         if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
-            return true;
+            return this.passesFrustrumCheck(entity, true);
         }
 
         if (this.items.getValue() && entity instanceof EntityItem) {
-            return true;
+            return this.passesFrustrumCheck(entity, true);
         }
 
-        return this.misc.getValue() && this.customMisc.containsEntity(entityClass);
+        if (this.misc.getValue()) {
+            return this.passesFrustrumCheck(entity, this.customMisc.containsEntity(entityClass));
+
+        } else return false;
+    }
+
+    private boolean passesFrustrumCheck(Entity entity, boolean returnValue) {
+        if (returnValue && this.frustrum.getValue()) {
+            if (RenderStatic.tensor_playerFrustrum == null) {
+                RenderStatic.tensor_playerFrustrum = new Frustrum();
+            }
+
+            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+
+            if (!RenderStatic.tensor_playerFrustrum.isBoundingBoxInFrustum(entity.boundingBox)) {
+                return false;
+            }
+        }
+
+        return returnValue;
     }
 }
