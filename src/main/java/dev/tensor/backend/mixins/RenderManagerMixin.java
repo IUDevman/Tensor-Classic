@@ -4,11 +4,10 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.RenderItemEvent;
 import dev.tensor.backend.events.variable.RenderEntityEvent;
-import dev.tensor.misc.imp.Globals;
+import dev.tensor.misc.imp.render.Render3D;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.RenderManager;
-import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -21,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = RenderManager.class, priority = MixinPriority.VALUE)
-public final class RenderManagerMixin implements Globals {
+public final class RenderManagerMixin implements Render3D {
 
     @Unique
     private boolean hasChams = false;
@@ -53,9 +52,7 @@ public final class RenderManagerMixin implements Globals {
 
             if (event.isCancelled()) {
                 this.hasChams = true;
-                GL11.glDepthMask(true);
-                GL11.glEnable(GL11.GL_POLYGON_OFFSET_FILL);
-                GL11.glDepthRange(0.0, 0.01);
+                this.startChamsGL();
             }
         });
     }
@@ -67,9 +64,7 @@ public final class RenderManagerMixin implements Globals {
         }
 
         if (this.hasChams) {
-            GL11.glDepthMask(false);
-            GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);
-            GL11.glDepthRange(0.0, 1);
+            this.finishChamsGL();
             this.hasChams = false;
         }
     }
