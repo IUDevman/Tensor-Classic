@@ -151,6 +151,10 @@ public final class RenderGlobalMixin implements Globals {
             return instance.isInRangeToRenderVec3D(vec3D);
         }
 
+        if (this.isXrayEnabled()) {
+            return instance.isInRangeToRenderVec3D(vec3D);
+        }
+
         RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(instance).call();
 
         if (event.isCancelled()) {
