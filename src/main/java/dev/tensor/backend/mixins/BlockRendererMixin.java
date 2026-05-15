@@ -26,7 +26,7 @@ public final class BlockRendererMixin implements Globals {
     private boolean renderAllFaces;
 
     @Unique
-    public boolean pre = false;
+    public boolean hasOpacity = false;
 
     @Inject(method = "renderBlockByRenderType", at = @At("HEAD"), cancellable = true)
     public void tensor_onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
@@ -60,7 +60,7 @@ public final class BlockRendererMixin implements Globals {
             this.getXray().setShouldOpacity(false);
         } else {
             this.getXray().setShouldOpacity(true);
-            this.pre = true;
+            this.hasOpacity = true;
         }
     }
 
@@ -71,13 +71,13 @@ public final class BlockRendererMixin implements Globals {
         }
 
         if (!this.isXrayEnabled()) {
-            this.pre = false;
+            this.hasOpacity = false;
             return;
         }
 
-        if (this.pre) {
+        if (this.hasOpacity) {
             this.getXray().setShouldOpacity(false);
-            this.pre = false;
+            this.hasOpacity = false;
         }
     }
 }
