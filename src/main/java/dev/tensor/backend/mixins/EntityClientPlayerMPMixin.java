@@ -2,7 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
+import dev.tensor.backend.events.variable.UpdateClientPlayerActionEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.EntityClientPlayerMP;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,10 +31,10 @@ public abstract class EntityClientPlayerMPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).call(event -> {
+        EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).withVariables(false).call(event -> {
 
             if (event.isCancelled()) {
-                if (this.field_9380_bx++ == 20) {
+                if (event.shouldUpdateInventory && this.field_9380_bx++ == 20) {
                     this.sendInventoryChanged();
                     this.field_9380_bx = 0;
                 }

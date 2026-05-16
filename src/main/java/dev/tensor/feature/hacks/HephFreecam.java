@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.UpdateClientPlayerActionEvent;
+import dev.tensor.backend.events.variable.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
@@ -44,6 +44,7 @@ public final class HephFreecam extends Hack {
     }
 
     public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true);
+    public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true);
     public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
     public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
@@ -167,6 +168,7 @@ public final class HephFreecam extends Hack {
     @SuppressWarnings("unused")
     EventAction<UpdateClientPlayerActionEvent> updateClientPlayerActionEventAction = this.addEventAction(new EventAction<>(UpdateClientPlayerActionEvent.class, event -> {
         this.sendPacket(new Packet0KeepAlive());
+        event.shouldUpdateInventory = this.updateInventory.getValue();
         event.cancel();
     }));
 
