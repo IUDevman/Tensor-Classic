@@ -5,6 +5,7 @@ import dev.tensor.backend.events.variable.EntityLightValueEvent;
 import dev.tensor.backend.events.variable.RenderEntityEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
+import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.render.RenderStatic;
@@ -54,6 +55,10 @@ public final class Chams extends Hack {
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> RenderStatic.tensor_playerFrustrum = null));
 
     private boolean shouldRenderChams(Entity entity) {
+        if (entity instanceof FakePlayer) {
+            return this.passesFrustrumCheck(entity, this.players.getValue());
+        }
+
         if (entity instanceof EntityOtherPlayerMP) {
 
             EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;

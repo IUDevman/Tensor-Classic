@@ -48,6 +48,8 @@ public final class RenderManagerMixin implements Render3D {
             return;
         }
 
+        this.hasChams = false;
+
         EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(f).call(event -> {
 
             if (event.isCancelled()) {
