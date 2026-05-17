@@ -81,12 +81,18 @@ public final class Armor extends Hack implements HUDObject {
 
         ItemStack[] armor = this.getInventory().armorInventory;
         for (int i = armor.length - 1; i >= 0; --i) {
+            ItemStack itemStack = armor[i];
+
+            if (itemStack == null)  {
+                continue;
+            }
+
             int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (this.getScaledItemWidth() * (3 - i));
 
             this.startItemGL();
 
             try {
-                this.renderItem(armor[i], (int) (itemStartX - (1 * this.scale.getValue())), (int) (itemStartY + (3 * this.scale.getValue())), 1, 4, this.scale.getValue(), 0);
+                this.renderItem(itemStack, (int) (itemStartX - (1 * this.scale.getValue())), (int) (itemStartY + (3 * this.scale.getValue())), 1, 4, this.scale.getValue(), 0);
 
                 switch ((Durability) this.durability.getValue()) {
                     case None:

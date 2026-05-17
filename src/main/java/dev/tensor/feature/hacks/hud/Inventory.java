@@ -76,14 +76,20 @@ public final class Inventory extends Hack implements HUDObject {
 
         ItemStack[] items = this.getInventory().mainInventory;
         for (int size = items.length, item = 9; item < size; ++item) {
+            ItemStack itemStack = items[item];
+
+            if (itemStack == null)  {
+                continue;
+            }
+
             int itemStartX = this.getMinX().getValue() + this.getScaledOutline() + item % 9 * this.getScaledItemWidth();
             int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (item / 9 - 1) * this.getScaledItemWidth();
 
             this.startItemGL();
 
             try {
-                this.renderItem(items[item], (int) (itemStartX - (1 * this.scale.getValue())), (int) (itemStartY + (3 * this.scale.getValue())), 1, 4, this.scale.getValue(), 0);
-                this.renderItemOverlay(items[item], 0, 0, this.scale.getValue());
+                this.renderItem(itemStack, (int) (itemStartX - (1 * this.scale.getValue())), (int) (itemStartY + (3 * this.scale.getValue())), 1, 4, this.scale.getValue(), 0);
+                this.renderItemOverlay(itemStack, 0, 0, this.scale.getValue());
 
             } catch (Exception ignored) {
             }
