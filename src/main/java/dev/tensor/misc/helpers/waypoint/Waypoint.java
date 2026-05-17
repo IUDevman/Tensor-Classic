@@ -1,5 +1,6 @@
 package dev.tensor.misc.helpers.waypoint;
 
+import dev.tensor.feature.hacks.HephFreecam;
 import dev.tensor.misc.imp.Globals;
 
 /**
@@ -72,6 +73,22 @@ public final class Waypoint implements Globals {
 
     public WaypointRender getRender() {
         return this.render;
+    }
+
+    public int getDistance() {
+        double posX = this.getPlayer().posX;
+        double posY = this.getPlayer().posY;
+        double posZ = this.getPlayer().posZ;
+
+        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+        if (freecam != null && freecam.isEnabled()) {
+            posX = freecam.oldX;
+            posY = freecam.oldY;
+            posZ = freecam.oldZ;
+        }
+
+        return (int) this.getDistance(this.x - posX, this.y - posY, this.z - posZ);
     }
 
     private int clampCoord(int value, int min, int max) {

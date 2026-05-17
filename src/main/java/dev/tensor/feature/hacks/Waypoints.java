@@ -33,6 +33,7 @@ public final class Waypoints extends Render3DHack {
     public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "");
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true);
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
@@ -98,6 +99,7 @@ public final class Waypoints extends Render3DHack {
                 waypoint.getRender().render(
                         this.title.getValue(),
                         this.showCoords.getValue(),
+                        this.showDistance.getValue(),
                         this.tagBackground.getValue(),
                         this.tagScale.getValue(),
                         this.tagDistanceMultiplier.getValue(),

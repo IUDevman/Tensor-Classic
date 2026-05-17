@@ -52,7 +52,7 @@ public final class WaypointRender implements Render3D {
         return this.renderPos;
     }
 
-    public void render(boolean title, boolean showCoords, boolean tagBackground, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, boolean box, boolean monolith, boolean onlyCloseMonoliths, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha) {
+    public void render(boolean title, boolean showCoords, boolean showDistance, boolean tagBackground, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, boolean box, boolean monolith, boolean onlyCloseMonoliths, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha) {
 
         double originalX = this.instance.getX();
         double originalY = this.instance.getY() + (this.height / 2) + 0.7;
@@ -117,7 +117,7 @@ public final class WaypointRender implements Render3D {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDepthMask(false);
 
-        String toRender = (title ? "Waypoint: " : "") + this.instance.getName() + (showCoords ? " (" + this.instance.getX() + ", " + this.instance.getY() + ", " + this.instance.getZ() + ")" : "");
+        String toRender = (title ? "Waypoint: " : "") + this.instance.getName() + (showCoords ? " (" + this.instance.getX() + ", " + this.instance.getY() + ", " + this.instance.getZ() + ")" : "") + (showDistance ? " (" + this.instance.getDistance() + ")" : "");
         int toRenderWidth = this.getFontRenderer().getStringWidth(toRender);
 
         if (tagBackground) {
