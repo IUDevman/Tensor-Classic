@@ -52,7 +52,7 @@ public final class Jesus extends Hack {
             return;
         }
 
-        if (this.checkDistance.getValue() && this.isFluidToFarAway2D(event.x, event.z)) {
+        if (this.checkDistance.getValue() && this.isFluidTooFarAway2D(event.x, event.z)) {
             return;
         }
 
@@ -72,7 +72,7 @@ public final class Jesus extends Hack {
         }
     }));
 
-    private boolean isFluidToFarAway2D(int fluidX, int fluidZ) {
+    private boolean isFluidTooFarAway2D(int fluidX, int fluidZ) {
         double x = this.getPlayer().posX;
         double z = this.getPlayer().posZ;
 
