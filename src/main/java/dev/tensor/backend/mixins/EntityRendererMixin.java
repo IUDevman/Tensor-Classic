@@ -37,7 +37,11 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(70.0F).call(event -> {
+        if (!this.shouldCallEvent(FOVModifierEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(FOVModifierEvent.class).withVariables(70.0F).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(event.FOV);
@@ -51,7 +55,11 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(HurtCameraEvent.class).call(event -> {
+        if (!this.shouldCallEvent(HurtCameraEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(HurtCameraEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -65,7 +73,11 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(ViewBobEvent.class).call(event -> {
+        if (!this.shouldCallEvent(ViewBobEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(ViewBobEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -79,7 +91,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(Render3DEvent.class).call();
+        EventCache.getCachedEvent(Render3DEvent.class).call(false);
     }
 
     @Inject(method = "setupFog", at = @At("TAIL"))
@@ -88,7 +100,11 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call(event -> {
+        if (!this.shouldCallEvent(RenderSkyEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call(true, event -> {
 
             if (event.isCancelled()) {
                 GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
@@ -107,7 +123,11 @@ public abstract class EntityRendererMixin implements Globals {
             return false;
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog_Fluids).call();
+        if (!this.shouldCallEvent(RenderSkyEvent.class)) {
+            return instance.isInsideOfMaterial(material);
+        }
+
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog_Fluids).call(true);
 
         if (event.isCancelled()) {
             return false;
@@ -122,7 +142,11 @@ public abstract class EntityRendererMixin implements Globals {
             return -100;
         }
 
-        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vomit).call();
+        if (!this.shouldCallEvent(RenderOverlayEvent.class)) {
+            return instance.prevTimeInPortal;
+        }
+
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vomit).call(true);
 
         if (event.isCancelled()) {
             return -100;
@@ -137,7 +161,11 @@ public abstract class EntityRendererMixin implements Globals {
             return instance.distanceTo(vec3D);
         }
 
-        CameraClipEvent event = EventCache.getCachedEvent(CameraClipEvent.class).call();
+        if (!this.shouldCallEvent(CameraClipEvent.class)) {
+            return instance.distanceTo(vec3D);
+        }
+
+        CameraClipEvent event = EventCache.getCachedEvent(CameraClipEvent.class).call(true);
 
         if (event.isCancelled()) {
             return 100;
@@ -152,7 +180,11 @@ public abstract class EntityRendererMixin implements Globals {
             return instance.smoothCamera;
         }
 
-        SmoothCameraEvent event = EventCache.getCachedEvent(SmoothCameraEvent.class).call();
+        if (!this.shouldCallEvent(SmoothCameraEvent.class)) {
+            return instance.smoothCamera;
+        }
+
+        SmoothCameraEvent event = EventCache.getCachedEvent(SmoothCameraEvent.class).call(true);
 
         if (event.isCancelled()) {
             return true;

@@ -12,14 +12,14 @@ import java.util.function.Consumer;
 public abstract class Event<T> implements Globals {
 
     @SuppressWarnings("unchecked")
-    public final T call() {
-        this.getEventManager().callEvent(this);
+    public final T call(boolean ignoreChecks) {
+        this.getEventManager().callEvent(this, ignoreChecks);
 
         return (T) this;
     }
 
-    public final T call(Consumer<? super T> action) {
-        T event = this.call();
+    public final T call(boolean ignoreChecks, Consumer<? super T> action) {
+        T event = this.call(ignoreChecks);
 
         action.accept(event);
 

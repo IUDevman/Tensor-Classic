@@ -65,23 +65,33 @@ public final class EventManager implements Manager {
         }
     }
 
-    public void callEvent(Event event) {
+    /**
+     * For events that are called many times, we want to avoid going through the
+     * process of getting them from the cache, resetting variables, etc. just
+     * for it to not do anything when called (no target actions).
+     * So, we can do the checks beforehand using shouldCall() to ensure that we
+     * are not wasting time.
+     * But, we don't want to run the checks twice if an event has target actions,
+     * so we can set ignoreChecks to true to skip them.
+     */
+
+    public void callEvent(Event event, boolean ignoreChecks) {
         Class<? extends Event> eventClass = event.getClass();
-        boolean hasEvent = this.ACTION_MAP.containsKey(eventClass);
+        ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
 
-        if (hasEvent) {
+        if (ignoreChecks || (actions != null && !actions.isEmpty())) {
             try {
-                ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
-
-                if (actions.isEmpty()) {
-                    return;
-                }
-
                 actions.forEach(action -> action.getAction().accept(event));
 
             } catch (Exception ignored) {
                 this.getTensorLogger().info("D:< Failed to call event '" + event.getClass().getSimpleName() + "'!");
             }
         }
+    }
+
+    public boolean shouldCall(Class<? extends Event> eventClass) {
+        ArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
+
+        return actions != null && !actions.isEmpty();
     }
 }

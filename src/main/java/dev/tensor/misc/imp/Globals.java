@@ -6,7 +6,6 @@ import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
 import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
 import dev.tensor.feature.hacks.AutoReconnect;
 import dev.tensor.feature.hacks.HephFreecam;
-import dev.tensor.feature.hacks.Search;
 import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
 import dev.tensor.misc.event.EventAction;
@@ -117,16 +116,6 @@ public interface Globals {
         return xray.isEnabled();
     }
 
-    default boolean isSearchEnabled() {
-        Search search = this.getHackManager().getHack(Search.class);
-
-        if (search == null) {
-            return false;
-        }
-
-        return search.isEnabled();
-    }
-
     default boolean isAutoReconnectEnabled() {
         AutoReconnect autoReconnect = this.getAutoReconnect();
 
@@ -135,6 +124,10 @@ public interface Globals {
         }
 
         return autoReconnect.isEnabled();
+    }
+
+    default boolean shouldCallEvent(Class<? extends Event<?>> eventClass) {
+        return this.getEventManager().shouldCall(eventClass);
     }
 
     default <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {

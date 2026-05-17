@@ -40,7 +40,7 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(ChatSentEvent.class).withVariables(packet.message).call(event -> {
+            EventCache.getCachedEvent(ChatSentEvent.class).withVariables(packet.message).call(false, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -59,7 +59,11 @@ public final class NetClientHandlerMixin implements Globals {
         if (arg instanceof Packet14BlockDig) {
             Packet14BlockDig packet = (Packet14BlockDig) arg;
 
-            EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call(event -> {
+            if (!this.shouldCallEvent(BlockBreakEvent.class)) {
+                return;
+            }
+
+            EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -72,7 +76,7 @@ public final class NetClientHandlerMixin implements Globals {
         if (arg instanceof Packet10Flying) {
             Packet10Flying packet = (Packet10Flying) arg;
 
-            EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call(event1 -> {
+            EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call(false, event1 -> {
 
                 if (event1.isCancelled()) {
                     ci.cancel();
@@ -89,9 +93,9 @@ public final class NetClientHandlerMixin implements Globals {
         if (arg instanceof Packet101CloseWindow) {
             Packet101CloseWindow packet = (Packet101CloseWindow) arg;
 
-            if (packet.windowId == this.getPlayer().craftingInventory.windowId) {
+            if (packet.windowId == this.getPlayer().craftingInventory.windowId && this.shouldCallEvent(CloseInventoryEvent.class)) {
 
-                EventCache.getCachedEvent(CloseInventoryEvent.class).call(event -> {
+                EventCache.getCachedEvent(CloseInventoryEvent.class).call(true, event -> {
 
                     if (event.isCancelled()) {
                         ci.cancel();
@@ -109,7 +113,11 @@ public final class NetClientHandlerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call(event -> {
+            if (!this.shouldCallEvent(Packet7UseEntityEvent.class)) {
+                return;
+            }
+
+            EventCache.getCachedEvent(Packet7UseEntityEvent.class).withVariables(packet).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -124,7 +132,11 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call(event -> {
+        if (!this.shouldCallEvent(ChatReceivedEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call(true, event -> {
 
             if (event.isCancelled()) {
                 this.sendMessageWithLinesColor(event.message);

@@ -25,7 +25,11 @@ public final class EffectRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(ParticleEvent.class).call(event -> {
+        if (!this.shouldCallEvent(ParticleEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(ParticleEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();

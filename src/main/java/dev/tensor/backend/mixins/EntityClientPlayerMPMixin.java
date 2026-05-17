@@ -31,7 +31,11 @@ public abstract class EntityClientPlayerMPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).withVariables(false).call(event -> {
+        if (!this.shouldCallEvent(UpdateClientPlayerActionEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(UpdateClientPlayerActionEvent.class).withVariables(false).call(true, event -> {
 
             if (event.isCancelled()) {
                 if (event.shouldUpdateInventory && this.field_9380_bx++ == 20) {

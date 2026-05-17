@@ -39,7 +39,11 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(KnockbackEvent.class).call(event -> {
+            if (!this.shouldCallEvent(KnockbackEvent.class)) {
+                return;
+            }
+
+            EventCache.getCachedEvent(KnockbackEvent.class).call(true, event -> {
 
                 if (event.isCancelled()) {
                     cir.setReturnValue(false);
@@ -59,7 +63,11 @@ public final class NetworkManagerMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(SocketInitEvent.class).call(event -> {
+        if (!this.shouldCallEvent(SocketInitEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(SocketInitEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 try {

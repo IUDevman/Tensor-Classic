@@ -11,7 +11,6 @@ import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
-import net.minecraft.src.MovingObjectPosition;
 import net.minecraft.src.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -45,16 +44,13 @@ public abstract class MinecraftMixin implements Globals {
     @Shadow
     private int ticksRan;
 
-    @Shadow
-    public MovingObjectPosition objectMouseOver;
-
     @Inject(method = "runTick", at = @At("TAIL"))
     public void tensor_onRunTick(CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        EventCache.getCachedEvent(ClientTickEvent.class).call();
+        EventCache.getCachedEvent(ClientTickEvent.class).call(false);
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", shift = At.Shift.AFTER, ordinal = 1, remap = false))
@@ -65,7 +61,7 @@ public abstract class MinecraftMixin implements Globals {
 
         if (Keyboard.getEventKeyState()) {
 
-            EventCache.getCachedEvent(KeyPressedEvent.class).withVariables(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call();
+            EventCache.getCachedEvent(KeyPressedEvent.class).withVariables(Keyboard.getEventKey() == 0 ? Keyboard.getEventCharacter() + 256 : Keyboard.getEventKey()).call(false);
         }
     }
 
@@ -76,7 +72,11 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(MouseEvent.class).withVariables(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call();
+        if (!this.shouldCallEvent(MouseEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(MouseEvent.class).withVariables(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call(true);
     }
 
     @Inject(method = "changeWorld", at = @At("HEAD"))
@@ -85,7 +85,7 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(ChangeWorldEvent.class).call();
+        EventCache.getCachedEvent(ChangeWorldEvent.class).call(false);
     }
 
     @Inject(method = "runTick", at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;isButtonDown(I)Z", ordinal = 1, remap = false))
@@ -106,7 +106,11 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(BlockClickToPlaceEvent.class).withVariables(1).call(event -> {
+        if (!this.shouldCallEvent(BlockClickToPlaceEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(BlockClickToPlaceEvent.class).withVariables(1).call(true, event -> {
 
             if (event.isCancelled()) {
                 for (int i = 0; i < event.count; i++) {

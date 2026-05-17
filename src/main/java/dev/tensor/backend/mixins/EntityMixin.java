@@ -32,7 +32,11 @@ public final class EntityMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call(event -> {
+        if (!this.shouldCallEvent(VelocityEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -46,7 +50,11 @@ public final class EntityMixin implements Globals {
             return instance.isSneaking();
         }
 
-        MovementClipEvent event = EventCache.getCachedEvent(MovementClipEvent.class).call();
+        if (!this.shouldCallEvent(MovementClipEvent.class)) {
+            return instance.isSneaking();
+        }
+
+        MovementClipEvent event = EventCache.getCachedEvent(MovementClipEvent.class).call(true);
 
         if (event.isCancelled()) {
             return true;
@@ -65,13 +73,17 @@ public final class EntityMixin implements Globals {
             return;
         }
 
+        if (!this.shouldCallEvent(EntityLightValueEvent.class)) {
+            return;
+        }
+
         Entity entity = this.getFilteredLoadedEntities().stream().filter(entity1 -> entity1.entityId == this.entityId).findFirst().orElse(null);
 
         if (entity == null || entity == this.getPlayer()) {
             return;
         }
 
-        EventCache.getCachedEvent(EntityLightValueEvent.class).withVariables(entity).call(event -> {
+        EventCache.getCachedEvent(EntityLightValueEvent.class).withVariables(entity).call(true, event -> {
             if (event.isCancelled()) {
                 cir.setReturnValue(1F);
             }

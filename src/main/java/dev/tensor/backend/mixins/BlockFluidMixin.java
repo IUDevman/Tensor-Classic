@@ -27,7 +27,11 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call(event -> {
+        if (!this.shouldCallEvent(FluidCollisionEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
@@ -41,7 +45,11 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(FluidBlockEvent.class).call(event -> {
+        if (!this.shouldCallEvent(FluidBlockEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(FluidBlockEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(true);

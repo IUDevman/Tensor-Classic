@@ -34,6 +34,10 @@ public final class PlayerControllerMPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(par2).call();
+        if (!this.shouldCallEvent(AttackEntityEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(par2).call(true);
     }
 }

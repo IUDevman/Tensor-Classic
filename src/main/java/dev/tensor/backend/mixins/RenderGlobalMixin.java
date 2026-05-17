@@ -41,7 +41,11 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
+        if (!this.shouldCallEvent(RenderSkyEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -63,7 +67,11 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
+        if (!this.shouldCallEvent(RenderSkyEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
 
             if (event.isUpdated()) {
                 Color color = event.getNewColor();
@@ -83,7 +91,11 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(event -> {
+        if (!this.shouldCallEvent(RenderSkyEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
 
             if (event.isUpdated()) {
                 Color color = event.getNewColor();
@@ -109,8 +121,8 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call(event -> {
+        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderSelectionBoxEvent.class)) {
+            EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -125,8 +137,8 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE) {
-            EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call(event -> {
+        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderBlockBreakEvent.class)) {
+            EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -155,7 +167,11 @@ public final class RenderGlobalMixin implements Globals {
             return instance.isInRangeToRenderVec3D(vec3D);
         }
 
-        RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(instance).call();
+        if (!this.shouldCallEvent(RenderEntityEvent.class)) {
+            return instance.isInRangeToRenderVec3D(vec3D);
+        }
+
+        RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(instance).call(true);
 
         if (event.isCancelled()) {
             return true;

@@ -35,8 +35,8 @@ public final class RenderManagerMixin implements Render3D {
             return;
         }
 
-        if (f instanceof EntityItem) {
-            EventCache.getCachedEvent(RenderItemEvent.class).call(event -> {
+        if (f instanceof EntityItem && this.shouldCallEvent(RenderItemEvent.class)) {
+            EventCache.getCachedEvent(RenderItemEvent.class).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -50,7 +50,11 @@ public final class RenderManagerMixin implements Render3D {
 
         this.hasChams = false;
 
-        EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(f).call(event -> {
+        if (!this.shouldCallEvent(RenderEntityEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(f).call(true, event -> {
 
             if (event.isCancelled()) {
                 this.hasChams = true;

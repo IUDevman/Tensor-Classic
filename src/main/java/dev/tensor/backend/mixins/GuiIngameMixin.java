@@ -25,7 +25,7 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(Render2DEvent.class).call();
+        EventCache.getCachedEvent(Render2DEvent.class).call(false);
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
@@ -34,7 +34,11 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call(event -> {
+        if (!this.shouldCallEvent(RenderOverlayEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -48,7 +52,11 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call(event -> {
+        if (!this.shouldCallEvent(RenderOverlayEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -62,7 +70,11 @@ public final class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call(event -> {
+        if (!this.shouldCallEvent(RenderOverlayEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call(true, event -> {
             if (event.isCancelled()) {
                 ci.cancel();
             }

@@ -37,13 +37,17 @@ public abstract class EntityPlayerMixin extends Entity implements Globals {
             return;
         }
 
+        if (!this.shouldCallEvent(UpdateCapeEvent.class)) {
+            return;
+        }
+
         String username = this.username;
 
         if (username.isEmpty()) {
             return;
         }
 
-        EventCache.getCachedEvent(UpdateCapeEvent.class).withVariables(username).call(event -> {
+        EventCache.getCachedEvent(UpdateCapeEvent.class).withVariables(username).call(true, event -> {
 
             if (event.isCancelled()) {
                 this.playerCloakUrl = event.playerCloakUrl;

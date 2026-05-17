@@ -32,7 +32,11 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(LightValueEvent.class).withVariables(false).call(event -> {
+        if (!this.shouldCallEvent(LightValueEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(LightValueEvent.class).withVariables(false).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(event.darkMode ? 0F : 1F);
@@ -46,7 +50,11 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
+        if (!this.shouldCallEvent(WeatherEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(WeatherEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -60,7 +68,11 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
+        if (!this.shouldCallEvent(WeatherEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(WeatherEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(0.0F);
@@ -74,7 +86,11 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
+        if (!this.shouldCallEvent(WeatherEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(WeatherEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(0.0F);
@@ -88,7 +104,11 @@ public abstract class WorldMixin implements Globals {
             return instance.lengthVector();
         }
 
-        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Fluid).call();
+        if (!this.shouldCallEvent(VelocityEvent.class)) {
+            return instance.lengthVector();
+        }
+
+        VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Fluid).call(true);
 
         if (event.isCancelled()) {
             return 0;
@@ -103,8 +123,8 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        if (f.equalsIgnoreCase("mob.wolf.shake")) {
-            EventCache.getCachedEvent(WeatherEvent.class).call(event -> {
+        if (f.equalsIgnoreCase("mob.wolf.shake") && this.shouldCallEvent(WeatherEvent.class)) {
+            EventCache.getCachedEvent(WeatherEvent.class).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -119,10 +139,10 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        if (par1 instanceof EntityOtherPlayerMP) {
+        if (par1 instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
 
-            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call();
+            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call(true);
         }
     }
 
@@ -132,10 +152,10 @@ public abstract class WorldMixin implements Globals {
             return;
         }
 
-        if (par1 instanceof EntityOtherPlayerMP) {
+        if (par1 instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
 
-            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call();
+            EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call(true);
         }
     }
 }

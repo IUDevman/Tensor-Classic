@@ -31,7 +31,11 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call(event -> {
+        if (!this.shouldCallEvent(VelocityEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(false);
@@ -41,8 +45,8 @@ public final class EntityPlayerSPMixin implements Globals {
 
     @Redirect(method = "onLivingUpdate", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/src/GuiScreen;)V"))
     public void tensor_onLivingUpdateInvokeGuiScreen(Minecraft instance, GuiScreen guiScreen) {
-        if (guiScreen == null) {
-            EventCache.getCachedEvent(PortalCloseGUIEvent.class).call(event -> {
+        if (guiScreen == null && this.shouldCallEvent(PortalCloseGUIEvent.class)) {
+            EventCache.getCachedEvent(PortalCloseGUIEvent.class).call(true, event -> {
 
                 if (!event.isCancelled()) {
                     instance.displayGuiScreen(null);
@@ -60,7 +64,11 @@ public final class EntityPlayerSPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(SignEvent.class).withVariables(par1).call(event -> {
+        if (!this.shouldCallEvent(SignEvent.class)) {
+            return;
+        }
+
+        EventCache.getCachedEvent(SignEvent.class).withVariables(par1).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
