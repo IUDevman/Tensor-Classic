@@ -48,6 +48,8 @@ public final class Waypoints extends Render3DHack {
 
     public final ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
 
+    private int renderDistance = 256;
+
     @Override
     public void onDisable(boolean isNull) {
         this.waypointsToRender.clear();
@@ -57,6 +59,8 @@ public final class Waypoints extends Render3DHack {
     public void onClientTick() {
         this.waypointsToRender.clear();
         this.waypointsToRender.addAll(this.waypointList.getValue().getSortedWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName()));
+
+        this.renderDistance = this.getMaxXZForRenderDistance();
     }
 
     @Override
@@ -111,7 +115,8 @@ public final class Waypoints extends Render3DHack {
                         type,
                         this.boxLineWidth.getValue(),
                         this.boxColor.getValue(),
-                        this.boxFillAlpha.getValue());
+                        this.boxFillAlpha.getValue(),
+                        this.renderDistance);
             }
         });
     }

@@ -393,4 +393,17 @@ public interface Globals {
             return true;
         } else return blockID == Block.oreRedstoneGlowing.blockID;
     }
+
+    default int getMaxXZForRenderDistance() {
+        switch (this.getMinecraft().gameSettings.renderDistance) {
+            case 1:
+                return 128;
+            case 2:
+                return 64;
+            case 3:
+                return 32;
+            default:
+                return 256;
+        }
+    }
 }

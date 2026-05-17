@@ -52,7 +52,7 @@ public final class WaypointRender implements Render3D {
         return this.renderPos;
     }
 
-    public void render(boolean title, boolean showCoords, boolean showDistance, boolean tagBackground, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, boolean box, boolean monolith, boolean onlyCloseMonoliths, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha) {
+    public void render(boolean title, boolean showCoords, boolean showDistance, boolean tagBackground, double tagScale, int tagDistanceMultiplier, Color tagTextColor, Color tagBackgroundColor, boolean box, boolean monolith, boolean onlyCloseMonoliths, RenderType renderType, int lineWidth, Color boxColor, int boxFillAlpha, int renderDistance) {
 
         double originalX = this.instance.getX();
         double originalY = this.instance.getY() + (this.height / 2) + 0.7;
@@ -62,9 +62,9 @@ public final class WaypointRender implements Render3D {
             originalY = this.instance.getY();
         }
 
-        double maxedX = this.setMax(originalX, this.getPlayer().posX, 256);
+        double maxedX = this.setMax(originalX, this.getPlayer().posX, renderDistance);
         double maxedY = this.setMax(originalY, this.getPlayer().posY, 256);
-        double maxedZ = this.setMax(originalZ, this.getPlayer().posZ, 256);
+        double maxedZ = this.setMax(originalZ, this.getPlayer().posZ, renderDistance);
 
         boolean changedX = !(onlyCloseMonoliths ? originalX == maxedX : monolith) && originalX != maxedX;
         boolean changedY = !monolith && originalY != maxedY;
