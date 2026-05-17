@@ -9,6 +9,7 @@ import dev.firstdark.rpc.models.User;
 import dev.tensor.TensorClassic;
 import dev.tensor.misc.helpers.extensions.TensorRPCEventHandler;
 import dev.tensor.misc.imp.Manager;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.slf4j.Logger;
 
 /**
@@ -62,7 +63,7 @@ public final class DiscordManager implements Manager {
         }
 
         try {
-            this.rpc.init("1498857125869523004", this.handler, false); //debug app id is 1000773209924317265
+            this.rpc.init(this.getAppID(), this.handler, false);
 
             this.presence.start();
 
@@ -122,8 +123,6 @@ public final class DiscordManager implements Manager {
 
     private void loadInstance() {
         this.rpc = new DiscordRpc();
-
-        //this.rpc.setDebugMode(true);
 
         this.handler = new TensorRPCEventHandler() {
 
@@ -215,5 +214,15 @@ public final class DiscordManager implements Manager {
                 .smallUrl(smallImageUrl)
                 .smallImageText(smallImageText)
                 .build();
+    }
+
+    //Obviously easy to find but will prevent GitHub bots from scraping it.
+    private String getAppID() {
+        String encrypted = "YOLb1YT+eY85o1PwlNUX8+EtP8Cc4RO1Gb2NMKscEyQ=";
+
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setPassword("tensor1234");
+
+        return encryptor.decrypt(encrypted);
     }
 }
