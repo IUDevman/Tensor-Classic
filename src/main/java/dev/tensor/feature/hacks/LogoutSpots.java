@@ -93,10 +93,6 @@ public final class LogoutSpots extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-        if (this.playersLogged.isEmpty()) {
-            return;
-        }
-
         this.playersLogged.forEach(this::renderLogoutSpot);
     }
 

@@ -153,12 +153,7 @@ public final class KillAura extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-
         if (!this.esp.getValue()) {
-            return;
-        }
-
-        if (this.target_Entities.isEmpty()) {
             return;
         }
 
