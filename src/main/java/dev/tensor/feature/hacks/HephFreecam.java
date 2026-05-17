@@ -1,6 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.UpdateClientPlayerActionEvent;
 import dev.tensor.backend.events.variable.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;

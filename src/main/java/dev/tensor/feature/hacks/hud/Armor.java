@@ -83,7 +83,7 @@ public final class Armor extends Hack implements HUDObject {
         for (int i = armor.length - 1; i >= 0; --i) {
             ItemStack itemStack = armor[i];
 
-            if (itemStack == null)  {
+            if (itemStack == null) {
                 continue;
             }
 

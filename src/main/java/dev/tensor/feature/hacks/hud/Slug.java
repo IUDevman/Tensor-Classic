@@ -133,7 +133,7 @@ public final class Slug extends Hack implements HUDObject {
                 return;
             }
 
-            Path imagePath = modContainer.get().getPath("assets/tensorclassic/Slug.png");
+            Path imagePath = modContainer.get().getPath("assets/tensorclassic/slug.png");
 
             InputStream inputStream = Files.newInputStream(imagePath);
 

@@ -78,7 +78,7 @@ public final class Inventory extends Hack implements HUDObject {
         for (int size = items.length, item = 9; item < size; ++item) {
             ItemStack itemStack = items[item];
 
-            if (itemStack == null)  {
+            if (itemStack == null) {
                 continue;
             }
 
