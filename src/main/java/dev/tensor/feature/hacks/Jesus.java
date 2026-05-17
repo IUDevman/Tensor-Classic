@@ -83,11 +83,11 @@ public final class Jesus extends Hack {
             z = freecam.oldZ;
         }
 
-        if (Math.pow(fluidX - x, 2) > 1) {
+        if (this.squaredD(fluidX - x) > 1) {
             return true;
         }
 
-        return Math.pow(fluidZ - z, 2) > 1;
+        return this.squaredD(fluidZ - z) > 1;
     }
 
     private enum Denomination {

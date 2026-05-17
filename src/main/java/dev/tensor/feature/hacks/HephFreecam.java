@@ -129,7 +129,7 @@ public final class HephFreecam extends Hack {
             InventoryMove inventoryMove = this.getHackManager().getHack(InventoryMove.class);
 
             if (!(inventoryMove.isEnabled() && !inventoryMove.shouldNotMove())) {
-                this.setPlayerSpeed(0.0D);
+                this.setPlayerFlyingSpeed(0.0D);
                 return;
             }
         }
@@ -140,10 +140,10 @@ public final class HephFreecam extends Hack {
             this.getPlayer().motionY -= (this.speed.getValue() / 10.0D);
         }
 
-        if (this.isPlayerMoving()) {
-            this.setPlayerSpeed((this.speed.getValue() / 10.0D));
+        if (this.isPlayerMoving2D()) {
+            this.setPlayerFlyingSpeed((this.speed.getValue() / 10.0D));
         } else {
-            this.setPlayerSpeed(0.0D);
+            this.setPlayerFlyingSpeed(0.0D);
         }
     }
 

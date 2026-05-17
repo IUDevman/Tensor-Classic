@@ -272,7 +272,11 @@ public interface Globals {
     }
 
     default double getDistanceSq(double deltaX, double deltaY, double deltaZ) {
-        return Math.pow(deltaX, 2) + Math.pow(deltaY, 2) + Math.pow(deltaZ, 2);
+        return this.squaredD(deltaX) + this.squaredD(deltaY) + this.squaredD(deltaZ);
+    }
+
+    default double squaredD(double input) {
+        return input * input;
     }
 
     default double getDistanceSqWithFreecam(double targetX, double targetY, double targetZ) {
@@ -306,11 +310,11 @@ public interface Globals {
         };
     }
 
-    default boolean isPlayerMoving() {
+    default boolean isPlayerMoving2D() {
         return this.getPlayer().motionX != 0 || this.getPlayer().motionZ != 0;
     }
 
-    default void setPlayerSpeed(double moveSpeed) {
+    default void setPlayerFlyingSpeed(double moveSpeed) {
         float yaw = this.getPlayer().rotationYaw;
 
         float strafeSpeed = this.getPlayer().movementInput.moveStrafe;

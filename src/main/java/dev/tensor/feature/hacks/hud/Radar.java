@@ -142,7 +142,7 @@ public final class Radar extends Hack implements HUDObject {
         }
 
         int radius = this.radius.getValue();
-        int radiusSq = (int) Math.pow(radius * 1.05, 2);
+        int radiusSq = (int) this.squaredD(radius * 1.05);
 
         for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
@@ -223,7 +223,7 @@ public final class Radar extends Hack implements HUDObject {
                 double dX = freeX - playerX;
                 double dY = freeY - playerZ;
 
-                if (Math.pow(dX, 2) <= radiusSq && Math.pow(dY, 2) <= radiusSq) {
+                if (this.squaredD(dX) <= radiusSq && this.squaredD(dY) <= radiusSq) {
                     this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValue().getRGB(), (int) (freecam.oldY - playerY), true, sphereRadius));
                 }
             }
@@ -292,11 +292,11 @@ public final class Radar extends Hack implements HUDObject {
     }
 
     private boolean isWithinRange(double targetX, double targetZ, double playerX, double playerZ, int radiusSq) {
-        if (Math.pow(targetX - playerX, 2) > radiusSq) {
+        if (this.squaredD(targetX - playerX) > radiusSq) {
             return false;
         }
 
-        return Math.pow(targetZ - playerZ, 2) <= radiusSq;
+        return this.squaredD(targetZ - playerZ) <= radiusSq;
     }
 
     private boolean isEntityWithinRange(Entity entity, double playerX, double playerZ, int radiusSq) {
