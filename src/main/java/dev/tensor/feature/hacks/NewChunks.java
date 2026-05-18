@@ -44,6 +44,8 @@ public final class NewChunks extends Render3DHack {
 
     private final ArrayList<int[]> chunksToRender = new ArrayList<>();
 
+    private final int BLOCK_AIR = 0;
+
     @Override
     public void onDisable(boolean isNull) {
         if (this.deleteOnDisable.getValue()) {
@@ -144,7 +146,7 @@ public final class NewChunks extends Render3DHack {
 
             if (this.triggersNewChunk(x, y, z, chunk, type)) {
                 this.chunksToRender.add(chunk);
-                break;
+                break; /* We break here because the chunk is only added to the list once, so we don't care about the other changes. */
             }
         }
     }));
@@ -155,12 +157,13 @@ public final class NewChunks extends Render3DHack {
         RenderStatic.tensor_playerFrustrum = null;
     }));
 
+    //Ways to tell if a chunk is newly generated: sand/gravel falling and water/lava flowing.
     private boolean hasAcceptedType(int type) {
-        if (type == 0) {
+        if (type == this.BLOCK_AIR) {
             return true;
         }
 
-        return type >= 8 && type <= 11;
+        return type >= Block.waterMoving.blockID && type <= Block.lavaStill.blockID;
     }
 
     private boolean triggersNewChunk(int x, int y, int z, int[] chunk, int type) {
@@ -195,11 +198,13 @@ public final class NewChunks extends Render3DHack {
 
         int blockId = this.getWorld().getBlockId(x, y, z);
 
-        if (type == 0 && (blockId == Block.sand.blockID || blockId == Block.gravel.blockID)) {
+        //Previous blockID is sand or gravel, has fallen, so new blockID "type" is air.
+        if (type == this.BLOCK_AIR && (blockId == Block.sand.blockID || blockId == Block.gravel.blockID)) {
             return true;
         }
 
-        return type >= Block.waterMoving.blockID && type <= Block.lavaStill.blockID && blockId == 0;
+        //Previous blockID is air, water or lava has flowed, so new blockID "type" is water or lava.
+        return type >= Block.waterMoving.blockID && type <= Block.lavaStill.blockID && blockId == this.BLOCK_AIR;
     }
 
     @SuppressWarnings("SameParameterValue")
