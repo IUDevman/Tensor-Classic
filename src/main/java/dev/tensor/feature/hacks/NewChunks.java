@@ -13,6 +13,7 @@ import net.minecraft.src.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -42,7 +43,16 @@ public final class NewChunks extends Render3DHack {
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting renderColor = new ColorSetting("Color", Color.YELLOW);
 
-    private final ArrayList<int[]> chunksToRender = new ArrayList<>();
+    /**
+     * Switching from an ArrayList to a CopyOnWriteArrayList fixes some rare exceptions in the chunkChangeEventAction and onRender3D() methods.
+     * Not 100% sure still how the exceptions happen, but I think it has something to do with threading.
+     * Theory:
+     * The method we plug into to call inbound packets is on another thread.
+     * So, the event being called occurs at unpredictable times and while the other methods are being processed.
+     * So, if onClientTick() or onRender3D() is accessing/modifying the chunksToRender list, an exception is thrown.
+     * Would have never known since the EventHandler is pseudo-inherently thread safe for calling events.
+     */
+    private final CopyOnWriteArrayList<int[]> chunksToRender = new CopyOnWriteArrayList<>();
 
     private final int BLOCK_AIR = 0;
 
