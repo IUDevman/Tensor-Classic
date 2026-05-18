@@ -4,11 +4,9 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.KnockbackEvent;
 import dev.tensor.backend.events.constant.SocketInitEvent;
+import dev.tensor.backend.events.variable.ChunkChangeEvent;
 import dev.tensor.misc.imp.Globals;
-import net.minecraft.src.NetHandler;
-import net.minecraft.src.NetworkManager;
-import net.minecraft.src.Packet;
-import net.minecraft.src.Packet28EntityVelocity;
+import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -50,6 +48,29 @@ public final class NetworkManagerMixin implements Globals {
                     cir.cancel();
                 }
             });
+
+            return;
+        }
+
+        if (var2 instanceof Packet52MultiBlockChange) {
+            Packet52MultiBlockChange packet = (Packet52MultiBlockChange) var2;
+
+            if (!this.shouldCallEvent(ChunkChangeEvent.class)) {
+                return;
+            }
+
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.Multi, packet).call(false);
+            return;
+        }
+
+        if (var2 instanceof Packet53BlockChange) {
+            Packet53BlockChange packet = (Packet53BlockChange) var2;
+
+            if (!this.shouldCallEvent(ChunkChangeEvent.class)) {
+                return;
+            }
+
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.Single, packet).call(false);
         }
     }
 

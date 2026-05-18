@@ -19,8 +19,9 @@ public enum RenderOrder {
     Scaffold_or_Platform(110),
     Nuker(120),
     Search(130),
+    NewChunks(140),
 
-    Default(140),
+    Default(150),
 
     HUD_Shading_and_Images(10),
     HUD_Text(20),
@@ -28,7 +29,7 @@ public enum RenderOrder {
 
     HUD_Default(40);
 
-    public static final int DEFAULT_3D = 140;
+    public static final int DEFAULT_3D = 150;
     public static final int DEFAULT_2D = 40;
 
     private final int value;

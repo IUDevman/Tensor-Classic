@@ -103,6 +103,7 @@ public final class HackManager implements Manager {
         this.addHack(new MiddleClickZoom());
         this.addHack(new ModInfo());
         this.addHack(new Nametags());
+        this.addHack(new NewChunks());
         this.addHack(new NoBreakDelay());
         this.addHack(new NoFall());
         this.addHack(new NoHurtCam());
