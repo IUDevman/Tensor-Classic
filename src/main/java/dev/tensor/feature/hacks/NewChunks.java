@@ -30,7 +30,7 @@ public final class NewChunks extends Render3DHack {
     }
 
     public final IntegerSetting renderY = new IntegerSetting("Render at Y", 0, 0, 128);
-    public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 1.0, 0.1, 3.0, 1);
+    public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 0.1, 0.1, 3.0, 1);
     public final BooleanSetting limitRenderDistance = new BooleanSetting("Check Render Distance", true);
     public final IntegerSetting renderDistance = new IntegerSetting("Render Distance", 256, 32, 256);
     public final BooleanSetting deleteFarAway = new BooleanSetting("Delete Far Away", false);
