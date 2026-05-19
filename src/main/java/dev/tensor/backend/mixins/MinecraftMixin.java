@@ -79,7 +79,7 @@ public abstract class MinecraftMixin implements Globals {
         EventCache.getCachedEvent(MouseEvent.class).withVariables(Mouse.getDWheel(), Mouse.getEventButtonState(), Mouse.getEventButton()).call(true);
     }
 
-    @Inject(method = "changeWorld", at = @At("HEAD"))
+    @Inject(method = "changeWorld", at = @At("RETURN"))
     public void tensor_onChangeWorld(World string, String arg2, EntityPlayer par3, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;

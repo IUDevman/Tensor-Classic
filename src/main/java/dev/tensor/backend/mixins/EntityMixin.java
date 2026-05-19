@@ -5,6 +5,7 @@ import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.MovementClipEvent;
 import dev.tensor.backend.events.variable.EntityLightValueEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
+import dev.tensor.feature.hacks.Fullbright;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -74,6 +75,12 @@ public final class EntityMixin implements Globals {
         }
 
         if (!this.shouldCallEvent(EntityLightValueEvent.class)) {
+            return;
+        }
+
+        Fullbright fullbright = this.getHackManager().getHack(Fullbright.class);
+
+        if (fullbright != null && fullbright.isEnabled() && !fullbright.ugandaMode.getValue()) {
             return;
         }
 

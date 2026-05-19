@@ -1,10 +1,9 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.LightValueEvent;
+import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
-import dev.tensor.misc.event.imp.modifiers.cancellable.EventVariableCancellable;
 import dev.tensor.misc.helpers.block.BlockList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -88,22 +87,54 @@ public final class Xray extends Hack {
 
     private boolean shouldOpacity = false;
 
+    private boolean shouldTriggerLightMapUpdate = false;
+
     @Override
     public void onEnable(boolean isNull) {
         if (!isNull) {
+            this.fillLightMap(false);
             this.resetWorld();
+            return;
         }
+
+        this.shouldTriggerLightMapUpdate = true;
     }
 
     @Override
     public void onDisable(boolean isNull) {
         if (!isNull) {
+            Fullbright fullbright = this.getHackManager().getHack(Fullbright.class);
+
+            if (fullbright != null && fullbright.isEnabled()) {
+
+                if (fullbright.ugandaMode.getValue()) {
+                    this.fillLightMap(true);
+                }
+
+            } else {
+                this.resetLightMap();
+            }
+
             this.resetWorld();
+        }
+
+        this.shouldTriggerLightMapUpdate = false;
+    }
+
+    @Override
+    public void onClientTick() {
+        if (this.shouldTriggerLightMapUpdate) {
+            this.fillLightMap(false);
+            this.resetWorld();
+            this.shouldTriggerLightMapUpdate = false;
         }
     }
 
     @SuppressWarnings("unused")
-    EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, EventPriority.Highest, EventVariableCancellable::cancel));
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
+        this.fillLightMap(false);
+        this.resetWorld();
+    }));
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {

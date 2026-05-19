@@ -18,6 +18,7 @@ import net.minecraft.src.*;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Hoosiers
@@ -401,6 +402,23 @@ public interface Globals {
                 return 32;
             default:
                 return 256;
+        }
+    }
+
+    default void fillLightMap(boolean uganda) {
+        float brightness = uganda ? 0.0F : 1.0F;
+
+        Arrays.fill(this.getWorld().worldProvider.lightBrightnessTable, brightness);
+    }
+
+    default void resetLightMap() {
+        int size = this.getWorld().worldProvider.lightBrightnessTable.length;
+
+        for (int i = 0; i < size; i++) {
+
+            float brightness = 1.0F - i / 15.0F;
+
+            this.getWorld().worldProvider.lightBrightnessTable[i] = (1.0F - brightness) / (brightness * 3.0F + 1.0F) * 0.95F + 0.05F;
         }
     }
 }

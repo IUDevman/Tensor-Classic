@@ -3,7 +3,6 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.WeatherEvent;
-import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
@@ -25,24 +24,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(value = World.class, priority = MixinPriority.VALUE)
 public abstract class WorldMixin implements Globals {
-
-    @Inject(method = "getBrightness", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetBrightness(int i, int j, int k, int l, CallbackInfoReturnable<Float> cir) {
-        if (this.failsNullCheck()) {
-            return;
-        }
-
-        if (!this.shouldCallEvent(LightValueEvent.class)) {
-            return;
-        }
-
-        EventCache.getCachedEvent(LightValueEvent.class).withVariables(false).call(true, event -> {
-
-            if (event.isCancelled()) {
-                cir.setReturnValue(event.darkMode ? 0F : 1F);
-            }
-        });
-    }
 
     @Inject(method = "func_27163_E", at = @At("HEAD"), cancellable = true)
     public void tensor_onSetWeatherStrength(CallbackInfo ci) {
