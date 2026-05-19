@@ -13,6 +13,8 @@ import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
 import net.minecraft.src.*;
 
+import java.util.ArrayList;
+
 /**
  * @author Hoosiers
  * @since 05-14-2026
@@ -32,9 +34,12 @@ public final class Chams extends Hack {
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Check", true);
 
+    private final ArrayList<Integer> cached_Entity_IDs = new ArrayList<>();
+
     @Override
     public void onDisable(boolean isNull) {
         RenderStatic.tensor_playerFrustrum = null;
+        this.resetEntityCache();
     }
 
     @SuppressWarnings("unused")
@@ -45,16 +50,23 @@ public final class Chams extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<EntityLightValueEvent> entityLightValueEventEAction = this.addEventAction(new EventAction<>(EntityLightValueEvent.class, event -> {
+    EventAction<EntityLightValueEvent> entityLightValueEventAction = this.addEventAction(new EventAction<>(EntityLightValueEvent.class, event -> {
         if (this.shouldRenderChams(event.entity)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> RenderStatic.tensor_playerFrustrum = null));
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+        RenderStatic.tensor_playerFrustrum = null;
+        this.resetEntityCache();
+    }));
 
     private boolean shouldRenderChams(Entity entity) {
+        if (this.cached_Entity_IDs.contains(entity.entityId)) {
+            return true;
+        }
+
         if (entity instanceof FakePlayer) {
             return this.passesFrustrumCheck(entity, this.players.getValue());
         }
@@ -103,6 +115,14 @@ public final class Chams extends Hack {
             }
         }
 
+        if (returnValue) {
+            this.cached_Entity_IDs.add(entity.entityId);
+        }
+
         return returnValue;
+    }
+
+    public void resetEntityCache() {
+        this.cached_Entity_IDs.clear();
     }
 }

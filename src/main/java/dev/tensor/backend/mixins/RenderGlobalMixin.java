@@ -6,6 +6,7 @@ import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
 import dev.tensor.backend.events.variable.RenderEntityEvent;
 import dev.tensor.backend.events.variable.RenderSelectionBoxEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
+import dev.tensor.feature.hacks.Chams;
 import dev.tensor.misc.helpers.extensions.TensorImageBuffer;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
@@ -157,8 +158,21 @@ public final class RenderGlobalMixin implements Globals {
         }
     }
 
+    @Inject(method = "renderEntities", at = @At("HEAD"), cancellable = true)
+    public void tensor_onRenderEntities(Vec3D arg2, ICamera f, float par3, CallbackInfo ci) {
+        if (this.failsNullCheck()) {
+            return;
+        }
+
+        Chams chams = this.getHackManager().getHack(Chams.class);
+
+        if (chams != null && chams.isEnabled()) {
+            chams.resetEntityCache();
+        }
+    }
+
     @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isInRangeToRenderVec3D(Lnet/minecraft/src/Vec3D;)Z"))
-    public boolean tensor_renderEntitiesWithinRange(Entity instance, Vec3D vec3D) {
+    public boolean tensor_onRenderEntitiesWithinRange(Entity instance, Vec3D vec3D) {
         if (this.failsNullCheck()) {
             return instance.isInRangeToRenderVec3D(vec3D);
         }
