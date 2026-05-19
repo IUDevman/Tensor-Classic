@@ -273,24 +273,25 @@ public interface Globals {
         return input * input;
     }
 
-    default double getDistanceSqWithFreecam(double targetX, double targetY, double targetZ) {
-        double pX = this.getPlayer().posX;
-        double pY = this.getPlayer().posY;
-        double pZ = this.getPlayer().posZ;
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    default boolean isPositionWithinXZRange(double posX, double posZ, int distance) {
+        double distanceSq = this.squaredD(distance);
+
+        double playerX = this.getPlayer().posX;
+        double playerZ = this.getPlayer().posZ;
 
         HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
 
         if (freecam != null && freecam.isEnabled()) {
-            pX = freecam.oldX;
-            pY = freecam.oldY;
-            pZ = freecam.oldZ;
+            playerX = freecam.oldX;
+            playerZ = freecam.oldZ;
         }
 
-        double dX = targetX - pX;
-        double dY = targetY - pY;
-        double dZ = targetZ - pZ;
+        if (this.squaredD(playerX - posX) > distanceSq) {
+            return false;
+        }
 
-        return this.getDistanceSq(dX, dY, dZ);
+        return !(this.squaredD(playerZ - posZ) > distanceSq);
     }
 
     default int[][] getPlaceDirections(int startX, int startY, int startZ) {

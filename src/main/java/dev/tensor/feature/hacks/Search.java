@@ -154,7 +154,7 @@ public final class Search extends Render3DHack {
         this.blockCoords.forEach(blockCoords1 -> {
             if (this.getWorld().getBlockId(blockCoords1.x, blockCoords1.y, blockCoords1.z) != blockCoords1.block.blockID) {
                 toRemove.add(blockCoords1);
-            } else if (this.getDistanceSqWithFreecam(blockCoords1.x, blockCoords1.y, blockCoords1.z) >= 65536) {
+            } else if (!this.isPositionWithinXZRange(blockCoords1.x, blockCoords1.z, 256)) {
                 toRemove.add(blockCoords1);
             }
         });

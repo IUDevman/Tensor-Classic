@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 05-17-2026
  */
 
-@SuppressWarnings("BooleanMethodIsAlwaysInverted")
 @Hack.Info(name = "NewChunks", category = Category.Render)
 public final class NewChunks extends Render3DHack {
 
@@ -72,7 +71,7 @@ public final class NewChunks extends Render3DHack {
 
             this.chunksToRender.forEach(ints -> {
 
-                if (!this.isChunkWithinDistance(ints[0] * 16, ints[1] * 16, this.deleteDistance.getValue())) {
+                if (!this.isPositionWithinXZRange(ints[0] * 16, ints[1] * 16, this.deleteDistance.getValue())) {
                     toRemove.add(ints);
                 }
             });
@@ -168,6 +167,7 @@ public final class NewChunks extends Render3DHack {
     }));
 
     //Ways to tell if a chunk is newly generated: sand/gravel falling and water/lava flowing.
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     private boolean hasAcceptedType(int type) {
         if (type == this.BLOCK_AIR) {
             return true;
@@ -240,7 +240,7 @@ public final class NewChunks extends Render3DHack {
         int actualX = chunk[0] * 16;
         int actualZ = chunk[1] * 16;
 
-        if (this.limitRenderDistance.getValue() && !this.isChunkWithinDistance(actualX, actualZ, this.renderDistance.getValue())) {
+        if (this.limitRenderDistance.getValue() && !this.isPositionWithinXZRange(actualX, actualZ, this.renderDistance.getValue())) {
             return;
         }
 
@@ -266,26 +266,6 @@ public final class NewChunks extends Render3DHack {
                 this.drawOutlineBox(minX, minY, minZ, maxX, maxY, maxZ, this.lineWidth.getValue(), color);
                 break;
         }
-    }
-
-    private boolean isChunkWithinDistance(int chunkX, int chunkZ, int distance) {
-        double distanceSq = this.squaredD(distance);
-
-        double playerX = this.getPlayer().posX;
-        double playerZ = this.getPlayer().posZ;
-
-        HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
-
-        if (freecam != null && freecam.isEnabled()) {
-            playerX = freecam.oldX;
-            playerZ = freecam.oldZ;
-        }
-
-        if (this.squaredD(playerX - chunkX) > distanceSq) {
-            return false;
-        }
-
-        return !(this.squaredD(playerZ - chunkZ) > distanceSq);
     }
 
     private enum RenderMode {

@@ -83,7 +83,7 @@ public final class LogoutSpots extends Render3DHack {
 
         this.playersLogged.forEach(logoutSpot -> {
 
-            if (!this.isWithinRenderDistance(logoutSpot)) {
+            if (!this.isPositionWithinXZRange(logoutSpot.coords.x, logoutSpot.coords.z, 256)) {
                 toRemove.add(logoutSpot);
             }
         });
@@ -228,10 +228,6 @@ public final class LogoutSpots extends Render3DHack {
         });
 
         this.playersLogged.removeAll(toRemove);
-    }
-
-    private boolean isWithinRenderDistance(LogoutSpot logoutSpot) {
-        return this.getDistanceSqWithFreecam(logoutSpot.coords.x, logoutSpot.coords.y, logoutSpot.coords.z) < 65536;
     }
 
     private void renderLogoutSpot(LogoutSpot logoutSpot) {
