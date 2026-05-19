@@ -37,6 +37,8 @@ public final class HackList extends Hack implements HUDObject {
 
     private final ArrayList<Hack> hacksToRender = new ArrayList<>();
 
+    private int widthCache = -1;
+
     @Override
     public IntegerSetting getMinX() {
         return this.x;
@@ -54,15 +56,24 @@ public final class HackList extends Hack implements HUDObject {
 
     @Override
     public int getWidth() {
+        if (this.widthCache != -1) {
+            return this.widthCache;
+        }
+
         int width = 0;
 
         Optional<Hack> longest = this.getHackManager().getHacks().stream().max(Comparator.comparing(hack -> this.getFontRenderer().getStringWidth(hack.NAME)));
 
         if (longest.isPresent()) {
             width = this.getFontRenderer().getStringWidth(longest.get().NAME);
+        } else {
+            this.widthCache = -1;
+            return width + 2;
         }
 
-        return width + 2;
+        this.widthCache = width + 2;
+
+        return this.widthCache;
     }
 
     @Override
@@ -80,11 +91,18 @@ public final class HackList extends Hack implements HUDObject {
         return (int) (this.getHeight() * this.scale.getValue());
     }
 
+    @Override
+    public void onDisable(boolean isNull) {
+        this.widthCache = -1;
+    }
+
+    @Override
+    public void onClientTick() {
+        this.loadHacksToRender();
+    }
 
     @Override
     public void render() {
-        this.loadHacksToRender();
-
         this.prepareScale();
 
         for (int i = 0; i < this.hacksToRender.size(); i++) {

@@ -11,6 +11,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.ItemStack;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * @author Hoosiers
@@ -48,7 +49,6 @@ public final class Armor extends Hack implements HUDObject {
         return this.scale;
     }
 
-
     @Override
     public int getWidth() {
         return (int) (18 * this.scale.getValue());
@@ -69,15 +69,16 @@ public final class Armor extends Hack implements HUDObject {
         return this.getHeight();
     }
 
-    @Override
-    public void render() {
-        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+    private final HashMap<Integer, ItemStack> itemsToRender = new HashMap<>();
 
-        int itemStartX = this.getMinX().getValue() + this.getScaledOutline();
+    @Override
+    public void onDisable(boolean isNull) {
+        this.itemsToRender.clear();
+    }
+
+    @Override
+    public void onClientTick() {
+        this.itemsToRender.clear();
 
         ItemStack[] armor = this.getInventory().armorInventory;
         for (int i = armor.length - 1; i >= 0; --i) {
@@ -87,7 +88,27 @@ public final class Armor extends Hack implements HUDObject {
                 continue;
             }
 
-            int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (this.getScaledItemWidth() * (3 - i));
+            this.itemsToRender.put(i, itemStack);
+        }
+    }
+
+    @Override
+    public void render() {
+        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+
+        if (this.itemsToRender.isEmpty()) {
+            return;
+        }
+
+        int itemStartX = this.getMinX().getValue() + this.getScaledOutline();
+
+        this.itemsToRender.forEach((integer, itemStack) -> {
+
+            int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (this.getScaledItemWidth() * (3 - integer));
 
             this.startItemGL();
 
@@ -98,10 +119,10 @@ public final class Armor extends Hack implements HUDObject {
                     case None:
                         break;
                     case Vanilla:
-                        this.renderItemOverlay(armor[i], 0, 0, this.scale.getValue());
+                        this.renderItemOverlay(itemStack, 0, 0, this.scale.getValue());
                         break;
                     case Percentage:
-                        this.renderItemPercentage(armor[i], 14, 12);
+                        this.renderItemPercentage(itemStack, 14, 12);
                         break;
                 }
 
@@ -109,7 +130,7 @@ public final class Armor extends Hack implements HUDObject {
             }
 
             this.finishItemGL();
-        }
+        });
     }
 
     private int getScaledOutline() {

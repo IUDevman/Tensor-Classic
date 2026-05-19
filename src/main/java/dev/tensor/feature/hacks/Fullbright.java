@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.LightValueEvent;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -41,8 +42,12 @@ public final class Fullbright extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, event -> {
-        if (this.ugandaMode.getValue() && !this.isXrayEnabled()) {
+    EventAction<LightValueEvent> lightValueEventAction = this.addEventAction(new EventAction<>(LightValueEvent.class, EventPriority.Lowest, event -> {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (this.ugandaMode.getValue()) {
             event.darkMode = true;
         }
 

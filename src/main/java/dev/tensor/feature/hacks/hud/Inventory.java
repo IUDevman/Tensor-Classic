@@ -10,6 +10,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.ItemStack;
 
 import java.awt.*;
+import java.util.HashMap;
 
 /**
  * @author Hoosiers
@@ -66,13 +67,11 @@ public final class Inventory extends Hack implements HUDObject {
         return this.getHeight();
     }
 
+    private final HashMap<Integer, ItemStack> itemsToRender = new HashMap<>();
+
     @Override
-    public void render() {
-        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+    public void onClientTick() {
+        this.itemsToRender.clear();
 
         ItemStack[] items = this.getInventory().mainInventory;
         for (int size = items.length, item = 9; item < size; ++item) {
@@ -82,8 +81,26 @@ public final class Inventory extends Hack implements HUDObject {
                 continue;
             }
 
-            int itemStartX = this.getMinX().getValue() + this.getScaledOutline() + item % 9 * this.getScaledItemWidth();
-            int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (item / 9 - 1) * this.getScaledItemWidth();
+            this.itemsToRender.put(item, itemStack);
+        }
+    }
+
+    @Override
+    public void render() {
+        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+
+        if (this.itemsToRender.isEmpty()) {
+            return;
+        }
+
+        this.itemsToRender.forEach((integer, itemStack) -> {
+
+            int itemStartX = this.getMinX().getValue() + this.getScaledOutline() + integer % 9 * this.getScaledItemWidth();
+            int itemStartY = this.getMinY().getValue() + this.getScaledOutline() + (integer / 9 - 1) * this.getScaledItemWidth();
 
             this.startItemGL();
 
@@ -95,7 +112,7 @@ public final class Inventory extends Hack implements HUDObject {
             }
 
             this.finishItemGL();
-        }
+        });
     }
 
     private int getScaledOutline() {
