@@ -3,7 +3,6 @@ package dev.tensor.backend.mixins;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderBlockEvent;
-import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Block;
 import net.minecraft.src.RenderBlocks;
