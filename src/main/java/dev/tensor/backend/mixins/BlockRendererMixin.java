@@ -35,7 +35,7 @@ public final class BlockRendererMixin implements Globals {
         }
 
         if (this.shouldCallEvent(RenderBlockEvent.class)) {
-            EventCache.getCachedEvent(RenderBlockEvent.class).withVariables(new BlockCoords(i, j, k, par4)).call(true);
+            EventCache.getCachedEvent(RenderBlockEvent.class).withVariables(i, j, k, par4).call(true);
         }
 
         if (!this.isXrayEnabled()) {

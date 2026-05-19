@@ -101,25 +101,18 @@ public final class Search extends Render3DHack {
 
     @SuppressWarnings("unused")
     EventAction<RenderBlockEvent> renderBlockEventAction = this.addEventAction(new EventAction<>(RenderBlockEvent.class, event -> {
-        BlockCoords blockCoords1 = event.blockCoords;
 
-        if (this.shouldRenderForBlock(blockCoords1.block.blockID)) {
+        if (this.shouldRenderForBlock(event.block.blockID)) {
 
             AtomicBoolean shouldAdd = new AtomicBoolean(true);
 
-            for (int i = 0; i < this.blockCoords.size(); i++) {
+            for (BlockCoords blockCoords : this.blockCoords) {
 
-                BlockCoords blockCoords2 = this.blockCoords.get(i);
+                if (blockCoords.x == event.x) {
 
-                if (blockCoords2.equals(blockCoords1)) {
-                    shouldAdd.set(false);
-                    break;
+                    if (blockCoords.y == event.y) {
 
-                } else if (blockCoords2.x == blockCoords1.x) {
-
-                    if (blockCoords2.y == blockCoords1.y) {
-
-                        if (blockCoords2.z == blockCoords1.z) {
+                        if (blockCoords.z == event.z) {
                             shouldAdd.set(false);
                             break;
                         }
@@ -128,7 +121,7 @@ public final class Search extends Render3DHack {
             }
 
             if (shouldAdd.get()) {
-                this.blockCoords.add(blockCoords1);
+                this.blockCoords.add(new BlockCoords(event.block, event.x, event.y, event.z));
             }
         }
     }));
