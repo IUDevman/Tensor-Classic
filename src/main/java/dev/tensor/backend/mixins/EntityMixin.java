@@ -27,6 +27,9 @@ public final class EntityMixin implements Globals {
     @Shadow
     public int entityId;
 
+    @Shadow
+    public float entityBrightness;
+
     @Inject(method = "applyEntityCollision", at = @At("HEAD"), cancellable = true)
     public void tensor_onApplyEntityCollision(Entity par1, CallbackInfo ci) {
         if (this.failsNullCheck()) {
@@ -70,6 +73,10 @@ public final class EntityMixin implements Globals {
             return;
         }
 
+        if (this.entityBrightness == 1F) {
+            return;
+        }
+
         if (this.isXrayEnabled()) {
             return;
         }
@@ -84,13 +91,11 @@ public final class EntityMixin implements Globals {
             return;
         }
 
-        Entity entity = this.getFilteredLoadedEntities().stream().filter(entity1 -> entity1.entityId == this.entityId).findFirst().orElse(null);
-
-        if (entity == null || entity == this.getPlayer()) {
+        if (this.entityId == this.getPlayer().entityId) {
             return;
         }
 
-        EventCache.getCachedEvent(EntityLightValueEvent.class).withVariables(entity).call(true, event -> {
+        EventCache.getCachedEvent(EntityLightValueEvent.class).withVariables(this.entityId).call(true, event -> {
             if (event.isCancelled()) {
                 cir.setReturnValue(1F);
             }

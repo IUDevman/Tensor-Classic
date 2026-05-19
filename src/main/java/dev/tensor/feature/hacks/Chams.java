@@ -51,7 +51,7 @@ public final class Chams extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<EntityLightValueEvent> entityLightValueEventAction = this.addEventAction(new EventAction<>(EntityLightValueEvent.class, event -> {
-        if (this.shouldRenderChams(event.entity)) {
+        if (this.cached_Entity_IDs.contains(event.entityID)) {
             event.cancel();
         }
     }));
