@@ -2,6 +2,7 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.helpers.account.Account;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.EncryptedStringSetting;
@@ -14,14 +15,36 @@ public final class AutoLogin extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
-        if (this.password.getValue().equals(this.password.getDefaultValue())) {
+        if (!this.shouldAutoLogin()) {
             return;
         }
 
         String message = event.message;
 
         if (message.toLowerCase().contains("/login (your password)")) {
-            this.sendPacket(new Packet3Chat("/login " + this.password.getValue()));
+            this.sendPacket(new Packet3Chat("/login " + this.getPassword()));
         }
     }));
+
+    private boolean shouldAutoLogin() {
+        AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
+
+        if (altAccounts != null && altAccounts.isEnabled()) {
+            String altPassword = altAccounts.getPasswordOverrideForCurrentServer();
+
+            return !altPassword.equalsIgnoreCase(this.password.getDefaultValue()) && !altPassword.equalsIgnoreCase(Account.DEFAULT_PASSWORD);
+        }
+
+        return !this.password.getValue().equalsIgnoreCase(this.password.getDefaultValue());
+    }
+
+    private String getPassword() {
+        AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
+
+        if (altAccounts != null && altAccounts.isEnabled()) {
+            return altAccounts.getPasswordOverrideForCurrentServer();
+        }
+
+        return this.password.getValue();
+    }
 }

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public final class Account implements Globals {
 
-    public static final String DEFAULT_PASSWORD = "Password";
+    public static final String DEFAULT_PASSWORD = "Set your password here. Config is encrypted!";
 
     private boolean sessionAccount;
 

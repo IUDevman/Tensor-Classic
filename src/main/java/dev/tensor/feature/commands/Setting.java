@@ -6,6 +6,7 @@ import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BlockListSetting;
 import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
+import dev.tensor.misc.imp.setting.settings.GeneralButtonSetting;
 import dev.tensor.misc.imp.setting.settings.WaypointListSetting;
 
 import java.util.ArrayList;
@@ -113,6 +114,11 @@ public final class Setting implements Command {
 
         if (setting instanceof WaypointListSetting) {
             this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to modify setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' for hack'" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (can not modify WaypointListSetting with command - use ClickGUI)!");
+            return;
+        }
+
+        if (setting instanceof GeneralButtonSetting) {
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to modify setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' for hack'" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (can not modify ButtonSetting with command - use ClickGUI)!");
             return;
         }
 
