@@ -91,6 +91,10 @@ public interface Globals {
         return (EntityListManager) this.getTensor().MANAGERS.get(EntityListManager.class);
     }
 
+    default AccountManager getAccountManager() {
+        return (AccountManager) this.getTensor().MANAGERS.get(AccountManager.class);
+    }
+
     default HackManager getHackManager() {
         return (HackManager) this.getTensor().MANAGERS.get(HackManager.class);
     }
