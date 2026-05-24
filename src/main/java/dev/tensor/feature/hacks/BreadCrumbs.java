@@ -30,7 +30,7 @@ public final class BreadCrumbs extends Render3DHack {
         return RenderOrder.BreadCrumbs;
     }
 
-    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Positions", GeneralButtonSetting.ButtonType.CLEAR_BUTTON) {
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Positions", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
 
         @Override
         public void onTriggerChange() {

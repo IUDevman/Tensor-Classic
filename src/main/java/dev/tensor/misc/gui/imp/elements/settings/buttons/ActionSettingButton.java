@@ -11,11 +11,11 @@ import java.awt.*;
  * @since 05-24-2026
  */
 
-public final class ClearActionSettingButton implements ButtonSetting {
+public final class ActionSettingButton implements ButtonSetting {
 
     private final GeneralButtonSetting button;
 
-    public ClearActionSettingButton(GeneralButtonSetting button) {
+    public ActionSettingButton(GeneralButtonSetting button) {
         this.button = button;
     }
 

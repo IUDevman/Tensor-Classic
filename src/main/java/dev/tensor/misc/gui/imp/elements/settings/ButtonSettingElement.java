@@ -42,8 +42,8 @@ public final class ButtonSettingElement extends SettingElement {
             if (type.equals(GeneralButtonSetting.ButtonType.ACCOUNTS)) {
                 this.button = new AccountListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, generalButtonSetting);
 
-            } else if (type.equals(GeneralButtonSetting.ButtonType.CLEAR_BUTTON)) {
-                this.button = new ClearActionSettingButton(generalButtonSetting);
+            } else if (type.equals(GeneralButtonSetting.ButtonType.CLICK_ACTION)) {
+                this.button = new ActionSettingButton(generalButtonSetting);
 
             } else {
                 this.button = new DummySettingButton();

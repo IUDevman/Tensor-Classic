@@ -34,7 +34,7 @@ public final class LogoutSpots extends Render3DHack {
         return true;
     }
 
-    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Players", GeneralButtonSetting.ButtonType.CLEAR_BUTTON) {
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Players", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
 
         @Override
         public void onTriggerChange() {

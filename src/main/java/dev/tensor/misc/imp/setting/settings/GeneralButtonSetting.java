@@ -77,6 +77,6 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
 
     public enum ButtonType {
         ACCOUNTS,
-        CLEAR_BUTTON
+        CLICK_ACTION
     }
 }
