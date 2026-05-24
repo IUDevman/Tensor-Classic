@@ -37,14 +37,6 @@ public final class AccountObject implements ButtonSettingObject {
 
     private final ArrayList<AccountPasswordObject> passwordObjects = new ArrayList<>();
 
-    /**
-     * TODO:
-     * <p>
-     * 1. Addd delete account button (make in grey if session account)
-     * 2. Add set active button (Green for active, yellow for not)
-     * 3. Command to add/remove/list accounts with more detail
-     */
-
     public AccountObject(Account account, AccountListSettingButton button, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetX, int offsetY, int number) {
         this.account = account;
         this.button = button;
@@ -102,19 +94,39 @@ public final class AccountObject implements ButtonSettingObject {
 
     @Override
     public void onHovered(int mouseX, int mouseY) {
+        if (this.isHovered(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 110, this.getPosY() + getHeight() - 2, mouseX, mouseY)) {
+            this.button.resetHover(this);
+            this.clearHover(null);
+            this.hovered = true;
 
-        //todo
+        } else if (this.isHovered(this.getPosX() + this.getWidth() - 108, this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
+            this.button.resetHover(this);
+            this.clearHover(null);
+            this.hoveredActive = true;
 
-        if (this.isHovered(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + this.getPasswordHeight(), mouseX, mouseY)) {
+        } else if (this.isHovered(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, mouseX, mouseY)) {
+            this.button.resetHover(this);
+            this.clearHover(null);
+            this.hoveredDelete = true;
+
+        } else if (this.isHovered(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + this.getPasswordHeight(), mouseX, mouseY)) {
             this.passwordObjects.forEach(accountPasswordObject -> accountPasswordObject.onHovered(mouseX, mouseY));
             this.button.resetHover(this);
+        } else {
+            this.clearHover(null);
         }
     }
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 15, this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 110, this.getPosY() + this.getHeight() - 2, this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 110, this.getPosY(), this.getPosX() + this.getWidth() - 108, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 55, this.getPosY(), this.getPosX() + this.getWidth() - 53, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, this.account.isSessionAccount() ? this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB() : this.hoveredDelete ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB());
+        this.drawRectangle(this.getPosX() + this.getWidth() - 108, this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight() - 2, this.getAccountManager().isActiveAccount(this.account) ? this.hoveredActive ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB() : this.hoveredActive ? new Color(255, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 255, 0, fillColor.getAlpha()).getRGB());
 
+        this.drawString("> Active <", this.getPosX() + this.getWidth() - 55 - ((this.getFontRenderer().getStringWidth("> Active <") + 53) / 2), this.getPosY() + 3, Color.YELLOW.getRGB());
+        this.drawString(this.account.isSessionAccount() ? "> N/A <" : "> Delete <", this.getPosX() + this.getWidth() - ((this.getFontRenderer().getStringWidth(this.account.isSessionAccount() ? "> N/A <" : "> Delete <") + 53) / 2), this.getPosY() + 3, Color.YELLOW.getRGB());
         this.drawString("Account Username : " + ChatColor.LIGHT_GRAY.text() + this.account.getUsername(), this.getPosX() + 3, this.getPosY() + 3, Color.WHITE.getRGB());
 
         this.passwordObjects.forEach(accountPasswordObject -> accountPasswordObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
@@ -128,6 +140,7 @@ public final class AccountObject implements ButtonSettingObject {
     public void onClick(double mouseX, double mouseY) {
         if (this.hoveredActive && !this.getAccountManager().isActiveAccount(this.account)) {
             this.getAccountManager().setActiveAccount(this.account);
+            this.button.buttonSetting.onTriggerChange();
 
         } else if (this.hoveredDelete) {
             this.button.queueToRemoveAccount(account);
@@ -200,6 +213,7 @@ public final class AccountObject implements ButtonSettingObject {
     public void clearHover(AccountPasswordObject accountPasswordObject) {
         this.hovered = false;
         this.hoveredDelete = false;
+        this.hoveredActive = false;
 
         if (accountPasswordObject == null) {
             this.passwordObjects.forEach(accountPasswordObject1 -> accountPasswordObject1.setHovered(false));

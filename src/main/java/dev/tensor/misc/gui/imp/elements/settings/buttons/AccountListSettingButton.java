@@ -29,7 +29,7 @@ public final class AccountListSettingButton implements ButtonSetting {
     public final TensorGUI tensorGUI;
     private final ClickGUI clickGUI;
     private final HackElement hackElement;
-    private final GeneralButtonSetting buttonSetting;
+    public final GeneralButtonSetting buttonSetting;
 
     private boolean searchingUsername = false;
     private boolean searchingPassword = false;
@@ -293,7 +293,7 @@ public final class AccountListSettingButton implements ButtonSetting {
 
         this.hoveredOnMainBox = this.isHovered(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43, mouseX, mouseY);
 
-        if (!this.hoveredOnBack && !this.hoveredOnAdd && !this.hoveredOnMainBox && this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 45, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + this.getAccountListHeight(), mouseX, mouseY)) {
+        if (!this.hoveredOnBack && !this.hoveredOnAdd && !this.hoveredOnMainBox && this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 45, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
             this.accountObjects.forEach(object -> object.onHovered(mouseX, mouseY));
         } else {
             this.accountObjects.forEach(object -> object.setHovered(false));
@@ -314,6 +314,10 @@ public final class AccountListSettingButton implements ButtonSetting {
         }
 
         int maxHeight = this.getHeight() - this.tensorGUI.titleBoxHeight - 45;
+
+        if (this.getAccountListHeight() <= maxHeight) {
+            return;
+        }
 
         if (this.getAccountListHeight() + (scroll < 0 ? this.scrollY.getValue() - this.tensorGUI.getScrollSpeed() : 0) <= maxHeight) {
             int test = ((this.getAccountListHeight() + (scroll < 0 ? this.scrollY.getValue() : 0)) - maxHeight);
@@ -476,7 +480,7 @@ public final class AccountListSettingButton implements ButtonSetting {
 
             if (this.scrollY.getValue() < 0) {
 
-                int value = this.scrollY.getValue() + object.getHeight();
+                int value = this.scrollY.getValue() + object.getHeight() + object.getPasswordHeight();
 
                 if (value < 0) {
                     this.scrollY.setValue(value);

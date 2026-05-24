@@ -18,6 +18,7 @@ import java.util.HashMap;
  * @since 05-19-2026
  */
 
+@SuppressWarnings("unused")
 public final class AccountManager implements Manager {
 
     @Override
@@ -196,6 +197,10 @@ public final class AccountManager implements Manager {
 
     public void setActiveAccount(Account newActiveAccount) {
         this.activeAccount = newActiveAccount;
+
+        if (!this.getMinecraft().session.username.equalsIgnoreCase(newActiveAccount.getUsername())) {
+            this.getMinecraft().session.username = newActiveAccount.getUsername();
+        }
     }
 
     public String getPasswordForActiveAccount(String server) {

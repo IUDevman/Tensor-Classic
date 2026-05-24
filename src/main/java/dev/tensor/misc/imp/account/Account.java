@@ -10,6 +10,7 @@ import java.util.HashMap;
  * @since 05-19-2026
  */
 
+@SuppressWarnings("unused")
 public final class Account implements Globals {
 
     public static final String DEFAULT_PASSWORD = "Set your password here. Config is encrypted!";
