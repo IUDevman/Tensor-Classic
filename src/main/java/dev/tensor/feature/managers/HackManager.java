@@ -52,6 +52,7 @@ public final class HackManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.addHack(new AltAccounts());
         this.addHack(new AntiKnockback());
         this.addHack(new Armor());
         this.addHack(new AutoEat());

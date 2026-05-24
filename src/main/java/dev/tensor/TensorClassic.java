@@ -73,6 +73,7 @@ public final class TensorClassic implements ModInitializer, Globals {
         this.addManager(this.returnLoadedManager(new DiscordManager()));
         this.addManager(this.returnLoadedManager(new RotationManager()));
         this.addManager(this.returnLoadedManager(new EntityListManager()));
+        this.addManager(this.returnLoadedManager(new AccountManager()));
         this.addManager(this.returnLoadedManager(new HackManager()));
         this.addManager(this.returnLoadedManager(new CommandManager()));
         this.addManager(this.returnLoadedManager(new PluginManager()));
