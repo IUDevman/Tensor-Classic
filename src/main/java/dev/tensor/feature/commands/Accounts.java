@@ -151,12 +151,14 @@ public final class Accounts implements Command {
                     toAdd.addPassword(server, password);
 
                     this.getAccountManager().addAccount(toAdd);
+                    this.getAccountManager().setUpdated(true);
                     this.sendClientMessageWithHeader(this.getName() + ": Added account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' and password '" + ChatColor.YELLOW.text() + password + ChatColor.DEFAULT.text() + "' for server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' to the AltAccount list!");
 
                 } else {
                     Account toAdd = new Account(username);
 
                     this.getAccountManager().addAccount(toAdd);
+                    this.getAccountManager().setUpdated(true);
                     this.sendClientMessageWithHeader(this.getName() + ": Added account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' to the AltAccount list!");
                 }
 
@@ -165,11 +167,13 @@ public final class Accounts implements Command {
 
                 if (isUpdated && hasPassword) {
                     account.addPassword(server, password);
+                    this.getAccountManager().setUpdated(true);
                     this.sendClientMessageWithHeader(this.getName() + ": Updated server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' with password '" + ChatColor.AQUA.text() + password + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
                     return;
                 }
 
                 account.addPassword(server, password);
+                this.getAccountManager().setUpdated(true);
                 this.sendClientMessageWithHeader(this.getName() + ": Added password '" + ChatColor.AQUA.text() + password + ChatColor.DEFAULT.text() + "' for server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
             }
 
@@ -185,6 +189,7 @@ public final class Accounts implements Command {
 
             if (hasServer) {
                 account.removePasswordForServer(server);
+                this.getAccountManager().setUpdated(true);
                 this.sendClientMessageWithHeader(this.getName() + ": Deleted password for server '" + ChatColor.AQUA.text() + server + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
 
             } else {
@@ -198,6 +203,7 @@ public final class Accounts implements Command {
                 }
 
                 this.getAccountManager().deleteAccount(account);
+                this.getAccountManager().setUpdated(true);
                 this.sendClientMessageWithHeader(this.getName() + ": Deleted account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' from the AltAccount list!");
             }
 

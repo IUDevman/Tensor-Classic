@@ -32,6 +32,8 @@ public final class AccountManager implements Manager {
 
     private Account activeAccount = null;
 
+    private boolean updated = false;
+
     @Override
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
@@ -316,5 +318,14 @@ public final class AccountManager implements Manager {
         }
 
         this.accounts.remove(account);
+    }
+
+    public boolean hasUpdated() {
+        return this.updated;
+    }
+
+    //Must be called with updated = true in order to refresh the accounts list in the ClickGUI panel.
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 }

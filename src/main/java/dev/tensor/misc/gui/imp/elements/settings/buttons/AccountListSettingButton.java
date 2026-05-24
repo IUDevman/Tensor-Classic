@@ -89,6 +89,11 @@ public final class AccountListSettingButton implements ButtonSetting {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
+        if (this.getAccountManager().hasUpdated()) {
+            this.resetAccountObjects();
+            this.getAccountManager().setUpdated(false);
+        }
+
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
         this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
@@ -509,6 +514,19 @@ public final class AccountListSettingButton implements ButtonSetting {
             if (accountObject1 != accountObject) {
                 accountObject1.setHovered(false);
             }
+        });
+    }
+
+    public void resetAccountObjects() {
+        this.accountObjects.clear();
+        this.scrollY.setValue(this.scrollY.getDefaultValue());
+
+        AtomicInteger offsetY = new AtomicInteger(0);
+
+        this.getAccountManager().getAccounts().forEach(account -> {
+
+            AccountObject object = new AccountObject(account, this, this.clickGUI.x, this.clickGUI.y, this.scrollY, 0, this.tensorGUI.titleBoxHeight + 45, offsetY.getAndAdd(1));
+            this.accountObjects.add(object);
         });
     }
 }
