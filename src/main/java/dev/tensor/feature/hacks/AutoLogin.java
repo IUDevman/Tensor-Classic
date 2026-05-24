@@ -2,9 +2,10 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.misc.event.EventAction;
-import dev.tensor.misc.helpers.account.Account;
+import dev.tensor.misc.imp.account.Account;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EncryptedStringSetting;
 import net.minecraft.src.Packet3Chat;
 
@@ -12,6 +13,7 @@ import net.minecraft.src.Packet3Chat;
 public final class AutoLogin extends Hack {
 
     public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!");
+    public final BooleanSetting applyAll = new BooleanSetting("Try All Accounts", false);
 
     @SuppressWarnings("unused")
     EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
@@ -32,7 +34,13 @@ public final class AutoLogin extends Hack {
         if (altAccounts != null && altAccounts.isEnabled()) {
             String altPassword = altAccounts.getPasswordOverrideForCurrentServer();
 
-            return !altPassword.equalsIgnoreCase(this.password.getDefaultValue()) && !altPassword.equalsIgnoreCase(Account.DEFAULT_PASSWORD);
+            boolean altHasPassword = !altPassword.equalsIgnoreCase(this.password.getDefaultValue()) && !altPassword.equalsIgnoreCase(Account.DEFAULT_PASSWORD);
+
+            if (!altHasPassword && this.applyAll.getValue()) {
+                return !this.password.getValue().equalsIgnoreCase(this.password.getDefaultValue());
+            }
+
+            return altHasPassword;
         }
 
         return !this.password.getValue().equalsIgnoreCase(this.password.getDefaultValue());
@@ -42,7 +50,13 @@ public final class AutoLogin extends Hack {
         AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
 
         if (altAccounts != null && altAccounts.isEnabled()) {
-            return altAccounts.getPasswordOverrideForCurrentServer();
+            String password = altAccounts.getPasswordOverrideForCurrentServer();
+
+            if (password.equalsIgnoreCase(Account.DEFAULT_PASSWORD) && this.applyAll.getValue()) {
+                return this.password.getValue();
+            }
+
+            return password;
         }
 
         return this.password.getValue();

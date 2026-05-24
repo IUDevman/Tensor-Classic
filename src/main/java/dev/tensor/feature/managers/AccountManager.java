@@ -3,8 +3,8 @@ package dev.tensor.feature.managers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
-import dev.tensor.misc.helpers.account.Account;
 import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.account.Account;
 import org.slf4j.Logger;
 
 import java.nio.file.Files;
@@ -164,6 +164,10 @@ public final class AccountManager implements Manager {
         this.getConfigManager().createAndWrite(path, jsonArray);
     }
 
+    public ArrayList<Account> getAccounts() {
+        return this.accounts;
+    }
+
     public void addSessionAccount() {
         Account sessionAccount = new Account(true, this.getMinecraft().session.username);
 
@@ -174,6 +178,10 @@ public final class AccountManager implements Manager {
 
     public Account getSessionAccount() {
         return this.accounts.stream().filter(Account::isSessionAccount).findFirst().orElse(null);
+    }
+
+    public boolean isActiveAccount(Account account) {
+        return this.activeAccount == account;
     }
 
     public void setActiveAccount(String username) {
@@ -260,10 +268,20 @@ public final class AccountManager implements Manager {
         return this.getServerPasswordsMapForAccount(this.activeAccount);
     }
 
-    public void addAccount(String username) {
-        Account account = this.accounts.stream().filter(account1 -> account1.getUsername().equalsIgnoreCase(username)).findFirst().orElse(null);
+    public boolean hasAccount(String username) {
+        return this.accounts.stream().filter(account1 -> account1.getUsername().equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+    }
 
-        if (account == null) {
+    public Account getAccount(String username) {
+        return this.accounts.stream().filter(account1 -> account1.getUsername().equalsIgnoreCase(username)).findFirst().orElse(null);
+    }
+
+    public void addAccount(String username) {
+        if (username.length() > Account.MAX_USERNAME_LENGTH) {
+            return;
+        }
+
+        if (!this.hasAccount(username)) {
             this.addAccount(new Account(username));
         }
     }

@@ -1,4 +1,4 @@
-package dev.tensor.misc.helpers.account;
+package dev.tensor.misc.imp.account;
 
 import dev.tensor.misc.imp.Globals;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
@@ -13,6 +13,9 @@ import java.util.HashMap;
 public final class Account implements Globals {
 
     public static final String DEFAULT_PASSWORD = "Set your password here. Config is encrypted!";
+
+    public static final int MAX_USERNAME_LENGTH = 16;
+    public static final int MAX_PASSWORD_LENGTH = 32;
 
     private boolean sessionAccount;
 
@@ -62,11 +65,27 @@ public final class Account implements Globals {
     }
 
     public void addPassword(String server, String password) {
+        if (password.length() > MAX_PASSWORD_LENGTH) {
+            return;
+        }
+
         this.serverPasswordsMap.put(server, password);
     }
 
     public void addPasswordForCurrentServer(String password) {
+        if (password.length() > MAX_PASSWORD_LENGTH) {
+            return;
+        }
+
         this.serverPasswordsMap.put(this.getWaypointServerName(), password);
+    }
+
+    public void removePasswordForServer(String server) {
+        this.serverPasswordsMap.remove(server);
+    }
+
+    public void removePasswordForCurrentServer() {
+        this.removePasswordForServer(this.getWaypointServerName());
     }
 
     public void addEncryptedPassword(String server, String encryptedPassword) {
