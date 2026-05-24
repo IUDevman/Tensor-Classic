@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.*;
 import java.awt.*;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 05-04-2021
  */
 

@@ -9,7 +9,7 @@ import dev.tensor.misc.imp.setting.Setting;
 import java.awt.*;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 04-15-2021
  */
 

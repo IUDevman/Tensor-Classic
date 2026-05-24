@@ -2,6 +2,11 @@ package dev.tensor.misc.gui;
 
 import java.awt.*;
 
+/**
+ * @author Hoosiers
+ * @since 03/20/2026
+ */
+
 public final class TabGUIEntry {
 
     public final String entry;

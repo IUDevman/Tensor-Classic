@@ -4,7 +4,7 @@ import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.gui.imp.Hoverable;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 05-04-2021
  */
 

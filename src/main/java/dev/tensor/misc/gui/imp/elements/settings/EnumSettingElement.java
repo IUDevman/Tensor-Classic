@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import java.awt.*;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 05-04-2021
  */
 

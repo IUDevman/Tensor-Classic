@@ -6,7 +6,7 @@ import dev.tensor.misc.imp.render.Render2D;
 import java.awt.*;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 05-03-2021
  */
 

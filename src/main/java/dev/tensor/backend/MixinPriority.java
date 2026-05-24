@@ -1,7 +1,7 @@
 package dev.tensor.backend;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 07-22-2021
  */
 

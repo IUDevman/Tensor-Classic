@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 05-11-2021
  */
 

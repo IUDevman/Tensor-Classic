@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @author IUDevman
+ * @author Hoosiers
  * @since 09-03-2021
  */
 
