@@ -34,6 +34,7 @@ public final class CommandManager implements Manager {
     public void load(Logger LOGGER) {
         LOGGER.info("Loaded: " + this.getName());
 
+        this.addCommand(new Accounts());
         this.addCommand(new Capes());
         this.addCommand(new ClearChat());
         this.addCommand(new dev.tensor.feature.commands.Commands());
