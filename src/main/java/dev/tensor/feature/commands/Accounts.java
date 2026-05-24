@@ -1,9 +1,11 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.feature.hacks.AltAccounts;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.account.Account;
 import dev.tensor.misc.imp.command.Command;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -61,7 +63,11 @@ public final class Accounts implements Command {
         }
 
         if (firstEntry.equalsIgnoreCase("list")) {
-            //todo
+            ArrayList<String> accounts = new ArrayList<>();
+
+            this.getAccountManager().getAccounts().forEach(account -> accounts.add(this.generateAccountString(account)));
+
+            this.sendClientMessageWithHeader(this.getName() + " (" + ChatColor.AQUA.text() + accounts.size() + ChatColor.DEFAULT.text() + "): " + accounts);
             return;
         }
 
@@ -111,30 +117,60 @@ public final class Accounts implements Command {
         this.handleAccount(firstEntry, secondEntry, thirdEntry, fourthEntry);
     }
 
+    private String generateAccountString(Account account) {
+        String toReturn = "";
+
+        toReturn += "Username = " + ChatColor.YELLOW.text() + account.getUsername() + ChatColor.DEFAULT.text() + ", ";
+
+        toReturn += "Session = " + (account.isSessionAccount() ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False") + ChatColor.DEFAULT.text() + ", ";
+
+        toReturn += "Active = " + (this.getAccountManager().isActiveAccount(account) ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False") + ChatColor.DEFAULT.text() + ", ";
+
+        ArrayList<String> passwords = new ArrayList<>();
+
+        account.getServerPasswordsMap().forEach((s, s2) -> passwords.add(s + " - " + s2));
+
+        toReturn += "Passwords = " + passwords + ".";
+
+        return toReturn;
+    }
+
     private void handleAccount(String action, String username, String server, String password) {
         if (action.equalsIgnoreCase("add")) {
             Account account = this.getAccountManager().getAccount(username);
             boolean hasServer = !server.isEmpty() && !server.equalsIgnoreCase(" ");
+            boolean hasPassword = !password.isEmpty() && !password.equalsIgnoreCase(" ");
 
             if (account != null && !hasServer) {
                 this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to add account (account already exists)!");
 
             } else if (account == null) {
 
-                if (hasServer) {
-                    //create account  with server
+                if (hasServer && hasPassword) {
+                    Account toAdd = new Account(username);
+                    toAdd.addPassword(server, password);
+
+                    this.getAccountManager().addAccount(toAdd);
+                    this.sendClientMessageWithHeader(this.getName() + ": Added account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' and password '" + ChatColor.YELLOW.text() + password + ChatColor.DEFAULT.text() + "' for server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' to the AltAccount list!");
+
                 } else {
-                    //create account  no server
+                    Account toAdd = new Account(username);
+
+                    this.getAccountManager().addAccount(toAdd);
+                    this.sendClientMessageWithHeader(this.getName() + ": Added account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' to the AltAccount list!");
                 }
 
             } else {
                 boolean isUpdated = !account.getPasswordForServer(server).equalsIgnoreCase(Account.DEFAULT_PASSWORD);
 
-                if (isUpdated) {
-                    //update password
+                if (isUpdated && hasPassword) {
+                    account.addPassword(server, password);
+                    this.sendClientMessageWithHeader(this.getName() + ": Updated server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' with password '" + ChatColor.AQUA.text() + password + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
+                    return;
                 }
 
-                //add password for new server
+                account.addPassword(server, password);
+                this.sendClientMessageWithHeader(this.getName() + ": Added password '" + ChatColor.AQUA.text() + password + ChatColor.DEFAULT.text() + "' for server '" + ChatColor.YELLOW.text() + server + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
             }
 
         } else if (action.equalsIgnoreCase("remove")) {
@@ -148,9 +184,21 @@ public final class Accounts implements Command {
             boolean hasServer = !server.isEmpty() && !server.equalsIgnoreCase(" ");
 
             if (hasServer) {
-                //remove server
+                account.removePasswordForServer(server);
+                this.sendClientMessageWithHeader(this.getName() + ": Deleted password for server '" + ChatColor.AQUA.text() + server + ChatColor.DEFAULT.text() + "' for account '" + ChatColor.YELLOW.text() + username + ChatColor.DEFAULT.text() + "'!");
+
             } else {
-                //remove account
+                if (account.isSessionAccount()) {
+                    this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to remove account (is session account)!");
+                    return;
+                }
+
+                if (this.getAccountManager().isActiveAccount(account)) {
+                    this.triggerChangeMessage();
+                }
+
+                this.getAccountManager().deleteAccount(account);
+                this.sendClientMessageWithHeader(this.getName() + ": Deleted account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' from the AltAccount list!");
             }
 
         } else if (action.equalsIgnoreCase("active")) {
@@ -158,9 +206,20 @@ public final class Accounts implements Command {
 
             if (account == null) {
                 this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set active account (no account found for username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "')!");
+                return;
             }
 
-            //set active;
+            this.getAccountManager().setActiveAccount(account);
+            this.triggerChangeMessage();
+            this.sendClientMessageWithHeader(this.getName() + ": Set account with username '" + ChatColor.AQUA.text() + username + ChatColor.DEFAULT.text() + "' as the active account!");
+        }
+    }
+
+    private void triggerChangeMessage() {
+        AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
+
+        if (altAccounts != null && altAccounts.isEnabled()) {
+            altAccounts.buttonWindow.onTriggerChange();
         }
     }
 
