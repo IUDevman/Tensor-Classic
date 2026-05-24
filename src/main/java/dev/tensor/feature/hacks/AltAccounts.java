@@ -31,6 +31,18 @@ public final class AltAccounts extends Hack {
         }
     };
 
+    @Override
+    public void onDisable(boolean isNull) {
+        if (isNull) {
+            return;
+        }
+
+        if (!this.getAccountManager().isActiveAccount(this.getAccountManager().getSessionAccount())) {
+            this.getAccountManager().setActiveAccount(this.getAccountManager().getSessionAccount());
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + "AltAccounts: Relog to fully disable hack!");
+        }
+    }
+
     public String getPasswordOverrideForCurrentServer() {
         String password = this.getAccountManager().getPasswordForActiveAccountOnCurrentServer();
 
