@@ -121,18 +121,12 @@ public final class TensorChatGUI implements Render2D {
     }
 
     private void renderTip(String tip, int minX, int minY, int maxY, int fillColor, int outlineColor, int textColor) {
+        this.drawRectangle(minX - 2, minY - 3, minX + this.getFontRenderer().getStringWidth(tip) + 2, maxY - 2, fillColor);
+        this.drawRectangle(minX - 3, minY - 4, minX + this.getFontRenderer().getStringWidth(tip) + 3, minY - 3, outlineColor);
+        this.drawRectangle(minX - 3, minY + 10, minX + this.getFontRenderer().getStringWidth(tip) + 3, minY + 11, outlineColor);
+        this.drawRectangle(minX - 3, minY - 3, minX - 2, maxY - 2, outlineColor);
+        this.drawRectangle(minX + this.getFontRenderer().getStringWidth(tip) + 2, minY - 3, minX + this.getFontRenderer().getStringWidth(tip) + 3, maxY - 2, outlineColor);
 
-        //LAZY
-        minY -= 1;
-        maxY -= 1;
-
-        this.drawRectangle(minX - 2, minY - 2, minX + this.getFontRenderer().getStringWidth(tip) + 2, maxY - 1, fillColor);
-        this.drawRectangle(minX - 3, minY - 3, minX + this.getFontRenderer().getStringWidth(tip) + 3, minY - 2, outlineColor);
-        this.drawRectangle(minX - 3, minY + 11, minX + this.getFontRenderer().getStringWidth(tip) + 3, minY + 12, outlineColor);
-        this.drawRectangle(minX - 3, minY - 2, minX - 2, maxY - 1, outlineColor);
-        this.drawRectangle(minX + this.getFontRenderer().getStringWidth(tip) + 2, minY - 2, minX + this.getFontRenderer().getStringWidth(tip) + 3, maxY - 1, outlineColor);
-
-
-        this.drawString(tip, minX, minY, textColor);
+        this.drawString(tip, minX, minY - 1, textColor);
     }
 }
