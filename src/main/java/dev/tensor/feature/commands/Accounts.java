@@ -130,7 +130,7 @@ public final class Accounts implements Command {
 
         account.getServerPasswordsMap().forEach((s, s2) -> passwords.add(s + " - " + s2));
 
-        toReturn += "Passwords = " + passwords + ".";
+        toReturn += "Passwords = " + passwords;
 
         return toReturn;
     }
