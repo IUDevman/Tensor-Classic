@@ -199,6 +199,7 @@ public final class AccountManager implements Manager {
         this.activeAccount = newActiveAccount;
 
         if (!this.getMinecraft().session.username.equalsIgnoreCase(newActiveAccount.getUsername())) {
+            this.getTensorLogger().info("Session username changed from '" + this.getMinecraft().session.username + "' to '" + newActiveAccount.getUsername() + "'!");
             this.getMinecraft().session.username = newActiveAccount.getUsername();
         }
     }
