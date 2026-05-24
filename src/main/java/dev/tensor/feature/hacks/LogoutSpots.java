@@ -52,7 +52,7 @@ public final class LogoutSpots extends Render3DHack {
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
-    public final ColorSettingNoAlpha tagTextColor = new ColorSettingNoAlpha("Text Color", LogoutSpotRenderer.defaultTagTextColor);
+    public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor);
     public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", LogoutSpotRenderer.defaultBoxLineWidth, 1, 5);

@@ -50,14 +50,14 @@ public final class Radar extends Hack implements HUDObject {
     public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false);
     public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false);
     public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point);
-    public final ColorSettingNoAlpha playersColor = new ColorSettingNoAlpha("Player Color", Color.ORANGE);
-    public final ColorSettingNoAlpha friendsColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
-    public final ColorSettingNoAlpha animalsColor = new ColorSettingNoAlpha("Animal Color", Color.GREEN);
-    public final ColorSettingNoAlpha hostilesColor = new ColorSettingNoAlpha("Hostile Color", Color.RED);
-    public final ColorSettingNoAlpha itemColor = new ColorSettingNoAlpha("Item Color", Color.YELLOW);
-    public final ColorSettingNoAlpha miscColor = new ColorSettingNoAlpha("Misc Color", Color.PINK);
-    public final ColorSettingNoAlpha waypointColor = new ColorSettingNoAlpha("Waypoint Color", Color.LIGHT_GRAY);
-    public final ColorSettingNoAlpha markerColors = new ColorSettingNoAlpha("Marker Color", Color.WHITE);
+    public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE);
+    public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
+    public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN);
+    public final ColorNoAlphaSetting hostilesColor = new ColorNoAlphaSetting("Hostile Color", Color.RED);
+    public final ColorNoAlphaSetting itemColor = new ColorNoAlphaSetting("Item Color", Color.YELLOW);
+    public final ColorNoAlphaSetting miscColor = new ColorNoAlphaSetting("Misc Color", Color.PINK);
+    public final ColorNoAlphaSetting waypointColor = new ColorNoAlphaSetting("Waypoint Color", Color.LIGHT_GRAY);
+    public final ColorNoAlphaSetting markerColors = new ColorNoAlphaSetting("Marker Color", Color.WHITE);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 

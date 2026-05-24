@@ -7,9 +7,9 @@ import java.awt.*;
  * @since 04-01-2026
  */
 
-public class ColorSettingNoAlpha extends ColorSetting {
+public class ColorNoAlphaSetting extends ColorSetting {
 
-    public ColorSettingNoAlpha(String NAME, Color VALUE) {
+    public ColorNoAlphaSetting(String NAME, Color VALUE) {
         super(NAME, VALUE);
     }
 }

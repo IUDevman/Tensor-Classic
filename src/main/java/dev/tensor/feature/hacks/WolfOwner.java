@@ -4,7 +4,7 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
-import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
+import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.AxisAlignedBB;
@@ -36,8 +36,8 @@ public final class WolfOwner extends Render3DHack {
 
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
-    public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.RED);
-    public final ColorSettingNoAlpha friendColor = new ColorSettingNoAlpha("Friend Color", Color.CYAN);
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.RED);
+    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
 
     private final HashMap<EntityWolf, Color> wolvesWithColorToRender = new HashMap<>();
 

@@ -5,7 +5,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
-import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
+import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 
 import java.awt.*;
 
@@ -19,7 +19,7 @@ public final class CustomClouds extends Hack {
 
     public final BooleanSetting renderClouds = new BooleanSetting("Render Clouds", true);
     public final BooleanSetting customColor = new BooleanSetting("Custom Color", true);
-    public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255));
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {

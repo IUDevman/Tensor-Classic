@@ -4,7 +4,7 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
-import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
+import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -38,7 +38,7 @@ public final class Slug extends Hack implements HUDObject {
     public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2);
     public final EnumSetting mode = new EnumSetting("Mode", Mode.None);
-    public final ColorSettingNoAlpha color = new ColorSettingNoAlpha("Color", Color.WHITE);
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.WHITE);
 
     private int texture = -1;
 

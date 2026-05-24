@@ -6,7 +6,7 @@ import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
-import dev.tensor.misc.imp.setting.settings.ColorSettingNoAlpha;
+import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
 
@@ -32,7 +32,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         super(hackElement, x, y, scrollY, posX, posY);
         this.colorSetting = colorSetting;
 
-        if (colorSetting instanceof ColorSettingNoAlpha) {
+        if (colorSetting instanceof ColorNoAlphaSetting) {
             this.disabledAlpha = true;
         }
     }
