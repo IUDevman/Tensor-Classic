@@ -34,6 +34,17 @@ public final class LogoutSpots extends Render3DHack {
         return true;
     }
 
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Players", GeneralButtonSetting.ButtonType.CLEAR_BUTTON) {
+
+        @Override
+        public void onTriggerChange() {
+            LogoutSpots logoutSpots = this.getHackManager().getHack(LogoutSpots.class);
+
+            if (logoutSpots != null) {
+                logoutSpots.clearLogoutSpots();
+            }
+        }
+    };
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coords", true);
     public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);
@@ -54,9 +65,7 @@ public final class LogoutSpots extends Render3DHack {
 
     @Override
     public void onDisable(boolean isNull) {
-        this.playersLogged.clear();
-        this.playersLoggedQueue.clear();
-        this.loggedNames.clear();
+        this.clearLogoutSpots();
     }
 
     @Override
@@ -98,9 +107,7 @@ public final class LogoutSpots extends Render3DHack {
 
     @SuppressWarnings("unused")
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
-        this.playersLogged.clear();
-        this.playersLoggedQueue.clear();
-        this.loggedNames.clear();
+        this.clearLogoutSpots();
     }));
 
     @SuppressWarnings("unused")
@@ -259,6 +266,12 @@ public final class LogoutSpots extends Render3DHack {
                 this.boxLineWidth.getValue(),
                 this.boxColor.getValue(),
                 this.boxFillAlpha.getValue());
+    }
+
+    public void clearLogoutSpots() {
+        this.playersLogged.clear();
+        this.playersLoggedQueue.clear();
+        this.loggedNames.clear();
     }
 
     private enum Type {

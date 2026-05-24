@@ -29,6 +29,17 @@ public final class NewChunks extends Render3DHack {
         return RenderOrder.NewChunks;
     }
 
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLEAR_BUTTON) {
+
+        @Override
+        public void onTriggerChange() {
+            NewChunks newChunks = this.getHackManager().getHack(NewChunks.class);
+
+            if (newChunks != null) {
+                newChunks.clearLoggedChunks();
+            }
+        }
+    };
     public final IntegerSetting renderY = new IntegerSetting("Render at Y", 0, 0, 128);
     public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 0.1, 0.1, 3.0, 1);
     public final BooleanSetting limitRenderDistance = new BooleanSetting("Check Render Distance", true);
@@ -58,7 +69,7 @@ public final class NewChunks extends Render3DHack {
     @Override
     public void onDisable(boolean isNull) {
         if (this.deleteOnDisable.getValue()) {
-            this.chunksToRender.clear();
+            this.clearLoggedChunks();
         }
 
         RenderStatic.tensor_playerFrustrum = null;
@@ -162,7 +173,7 @@ public final class NewChunks extends Render3DHack {
 
     @SuppressWarnings("unused")
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
-        this.chunksToRender.clear();
+        this.clearLoggedChunks();
         RenderStatic.tensor_playerFrustrum = null;
     }));
 
@@ -266,6 +277,10 @@ public final class NewChunks extends Render3DHack {
                 this.drawOutlineBox(minX, minY, minZ, maxX, maxY, maxZ, this.lineWidth.getValue(), color);
                 break;
         }
+    }
+
+    public void clearLoggedChunks() {
+        this.chunksToRender.clear();
     }
 
     private enum RenderMode {

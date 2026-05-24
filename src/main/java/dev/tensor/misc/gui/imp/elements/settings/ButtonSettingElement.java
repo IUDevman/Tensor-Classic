@@ -35,8 +35,20 @@ public final class ButtonSettingElement extends SettingElement {
             this.button = new EntityTypeListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (EntityTypeListSetting) setting);
         } else if (this.setting instanceof WaypointListSetting) {
             this.button = new WaypointListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (WaypointListSetting) setting);
-        } else if (this.setting instanceof GeneralButtonSetting && ((GeneralButtonSetting) this.setting).getValue().equals(GeneralButtonSetting.ButtonType.ACCOUNTS)) {
-            this.button = new AccountListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (GeneralButtonSetting) setting);
+        } else if (this.setting instanceof GeneralButtonSetting) {
+            GeneralButtonSetting generalButtonSetting = ((GeneralButtonSetting) this.setting);
+            GeneralButtonSetting.ButtonType type = generalButtonSetting.getValue();
+
+            if (type.equals(GeneralButtonSetting.ButtonType.ACCOUNTS)) {
+                this.button = new AccountListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, generalButtonSetting);
+
+            } else if (type.equals(GeneralButtonSetting.ButtonType.CLEAR_BUTTON)) {
+                this.button = new ClearActionSettingButton(generalButtonSetting);
+
+            } else {
+                this.button = new DummySettingButton();
+            }
+
         } else {
             this.button = new DummySettingButton();
         }

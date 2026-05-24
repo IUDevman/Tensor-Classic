@@ -7,6 +7,7 @@ import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
+import dev.tensor.misc.imp.setting.settings.GeneralButtonSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.GuiGameOver;
 import net.minecraft.src.RenderManager;
@@ -29,6 +30,17 @@ public final class BreadCrumbs extends Render3DHack {
         return RenderOrder.BreadCrumbs;
     }
 
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Positions", GeneralButtonSetting.ButtonType.CLEAR_BUTTON) {
+
+        @Override
+        public void onTriggerChange() {
+            BreadCrumbs breadCrumbs = this.getHackManager().getHack(BreadCrumbs.class);
+
+            if (breadCrumbs != null) {
+                breadCrumbs.clearPositions();
+            }
+        }
+    };
     public final IntegerSetting maxPos = new IntegerSetting("Max Positions", 1200, 600, 12000);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final ColorSetting color = new ColorSetting("Color", Color.GREEN);
@@ -37,13 +49,13 @@ public final class BreadCrumbs extends Render3DHack {
 
     @Override
     public void onDisable(boolean isNull) {
-        this.loggedPositions.clear();
+        this.clearPositions();
     }
 
     @Override
     public void onClientTick() {
         if (this.getMinecraft().currentScreen instanceof GuiGameOver) {
-            this.loggedPositions.clear();
+            this.clearPositions();
             return;
         }
 
@@ -146,5 +158,9 @@ public final class BreadCrumbs extends Render3DHack {
         }
 
         this.loggedPositions.add(currentPosition);
+    }
+
+    public void clearPositions() {
+        this.loggedPositions.clear();
     }
 }
