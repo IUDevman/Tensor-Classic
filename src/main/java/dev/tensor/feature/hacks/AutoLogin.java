@@ -32,7 +32,7 @@ public final class AutoLogin extends Hack {
         AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
 
         if (altAccounts != null && altAccounts.isEnabled()) {
-            String altPassword = altAccounts.getPasswordOverrideForCurrentServer();
+            String altPassword = altAccounts.getPasswordOverrideForCurrentServer(this);
 
             boolean altHasPassword = !altPassword.equalsIgnoreCase(this.password.getDefaultValue()) && !altPassword.equalsIgnoreCase(Account.DEFAULT_PASSWORD);
 
@@ -50,7 +50,7 @@ public final class AutoLogin extends Hack {
         AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
 
         if (altAccounts != null && altAccounts.isEnabled()) {
-            String password = altAccounts.getPasswordOverrideForCurrentServer();
+            String password = altAccounts.getPasswordOverrideForCurrentServer(this);
 
             if (password.equalsIgnoreCase(Account.DEFAULT_PASSWORD) && this.applyAll.getValue()) {
                 return this.password.getValue();

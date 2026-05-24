@@ -5,7 +5,6 @@ import dev.tensor.misc.imp.account.Account;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.GeneralButtonSetting;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author Hoosiers
@@ -43,14 +42,10 @@ public final class AltAccounts extends Hack {
         }
     }
 
-    public String getPasswordOverrideForCurrentServer() {
+    public String getPasswordOverrideForCurrentServer(AutoLogin autoLogin) {
         String password = this.getAccountManager().getPasswordForActiveAccountOnCurrentServer();
 
         if (password.equalsIgnoreCase(Account.DEFAULT_PASSWORD)) {
-
-            @NotNull
-            AutoLogin autoLogin = this.getHackManager().getHack(AutoLogin.class);
-
             return autoLogin.password.getValue();
         }
 
