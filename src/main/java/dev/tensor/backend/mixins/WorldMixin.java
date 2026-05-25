@@ -44,7 +44,7 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Inject(method = "func_27166_f", at = @At("HEAD"), cancellable = true)
-    public void tensor_thunderStrength(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetThunderStrength(float par1, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -62,7 +62,7 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Inject(method = "func_27162_g", at = @At("HEAD"), cancellable = true)
-    public void tensor_rainStrength(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetRainStrength(float par1, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }

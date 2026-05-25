@@ -149,7 +149,7 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Redirect(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
-    public ThreadDownloadImageData tensor_obtainEntitySkinImageBuffer(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
+    public ThreadDownloadImageData tensor_onObtainEntitySkinImageBuffer(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
         if (arg.endsWith("files/tensor/cape.png")) {
             return this.renderEngine.obtainImageData(arg, new TensorImageBuffer());
 

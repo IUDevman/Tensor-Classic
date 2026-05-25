@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class BlockSoulSandMixin implements Globals {
 
     @Inject(method = "onEntityCollidedWithBlock", at = @At("HEAD"), cancellable = true)
-    public void tensor_onOnentityCollidedWithBlock(World i, int j, int k, int arg2, Entity par5, CallbackInfo ci) {
+    public void tensor_onOnEntityCollidedWithBlock(World i, int j, int k, int arg2, Entity par5, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
