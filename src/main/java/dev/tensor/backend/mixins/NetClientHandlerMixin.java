@@ -33,6 +33,15 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
+        if (this.shouldCallEvent(GeneralPacketEvent.class)) {
+            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.OUTBOUND, arg).call(true);
+
+            if (event.isCancelled()) {
+                ci.cancel();
+                return;
+            }
+        }
+
         if (arg instanceof Packet3Chat) {
             Packet3Chat packet = (Packet3Chat) arg;
 

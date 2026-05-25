@@ -4,6 +4,11 @@ import net.minecraft.src.*;
 
 import java.util.HashMap;
 
+/**
+ * @author Hoosiers
+ * @since 03-31-2026
+ */
+
 public final class EntityName {
 
     public static final EntityName CONVERTER = new EntityName();

@@ -61,7 +61,7 @@ public final class EntityTypeList implements Globals {
 
     public void resetEntityList() {
         this.clearEntityList();
-        this.entityList.addAll(entityListDefault);
+        this.entityList.addAll(this.entityListDefault);
     }
 
     public boolean containsEntity(Entity entity) {

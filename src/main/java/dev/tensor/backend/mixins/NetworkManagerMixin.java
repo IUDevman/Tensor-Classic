@@ -5,6 +5,7 @@ import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.KnockbackEvent;
 import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.backend.events.variable.ChunkChangeEvent;
+import dev.tensor.backend.events.variable.GeneralPacketEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,8 +27,18 @@ public final class NetworkManagerMixin implements Globals {
 
     @Inject(method = "readPacket", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     public void tensor_onReadPacket(CallbackInfoReturnable<Boolean> cir, int var1, Packet var2) {
-        if (this.failsNullCheck()) {
+        if (this.failsNullCheck() || var2 == null) {
             return;
+        }
+
+        if (this.shouldCallEvent(GeneralPacketEvent.class)) {
+            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.INBOUND, var2).call(true);
+
+            if (event.isCancelled()) {
+                cir.setReturnValue(false);
+                cir.cancel();
+                return;
+            }
         }
 
         if (var2 instanceof Packet28EntityVelocity) {
