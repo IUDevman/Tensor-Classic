@@ -2,7 +2,6 @@ package dev.tensor.feature.hacks;
 
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
-import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 
 /**
@@ -32,10 +31,10 @@ public final class Capes extends Hack {
     }
 
     public void refreshCapes() {
-        for (Entity entity : this.getFilteredLoadedEntities()) {
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity instanceof EntityPlayer) {
                 entity.updateCloak();
             }
-        }
+        });
     }
 }

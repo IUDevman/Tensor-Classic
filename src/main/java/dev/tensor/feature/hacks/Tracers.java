@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.*;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Hoosiers
@@ -46,7 +46,7 @@ public final class Tracers extends Render3DHack {
     public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
     public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
 
-    private final HashMap<Entity, Color> entitiesWithColorToTrace = new HashMap<>();
+    private final ConcurrentHashMap<Entity, Color> entitiesWithColorToTrace = new ConcurrentHashMap<>();
 
     @Override
     public void onDisable(boolean isNull) {
@@ -57,45 +57,45 @@ public final class Tracers extends Render3DHack {
     public void onClientTick() {
         this.entitiesWithColorToTrace.clear();
 
-        for (Entity entity : this.getFilteredLoadedEntities()) {
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity instanceof EntityOtherPlayerMP) {
 
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
                     this.entitiesWithColorToTrace.put(otherPlayer, this.friendsColor.getValue());
-                    continue;
+                    return;
                 }
 
                 if (this.players.getValue()) {
                     this.entitiesWithColorToTrace.put(otherPlayer, this.playersColor.getValue());
-                    continue;
+                    return;
                 }
 
-                continue;
+                return;
             }
 
             Class<? extends Entity> entityClass = entity.getClass();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
                 this.entitiesWithColorToTrace.put(entity, this.animalsColor.getValue());
-                continue;
+                return;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
                 this.entitiesWithColorToTrace.put(entity, this.hostilesColor.getValue());
-                continue;
+                return;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
                 this.entitiesWithColorToTrace.put(entity, this.itemColor.getValue());
-                continue;
+                return;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
                 this.entitiesWithColorToTrace.put(entity, this.miscColor.getValue());
             }
-        }
+        });
     }
 
     @Override

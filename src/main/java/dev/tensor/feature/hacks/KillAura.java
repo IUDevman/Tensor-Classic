@@ -14,8 +14,11 @@ import net.minecraft.src.*;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Hoosiers
@@ -96,7 +99,25 @@ public final class KillAura extends Render3DHack {
             }
         }
 
-        LinkedHashMap<Entity, Double> entitiesToKill = new LinkedHashMap<>();
+        ConcurrentHashMap<Entity, Double> entitiesToKill = new ConcurrentHashMap<>();
+
+        final double finalPlayerX = playerX;
+        final double finalPlayerY = playerY;
+        final double finalPlayerZ = playerZ;
+
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
+            if (entity == this.getPlayer() || entity instanceof FakePlayer) {
+                return;
+            }
+
+            if (this.shouldAttackEntity(entity)) {
+                double distance = this.getDistance(entity.posX - finalPlayerX, entity.posY - finalPlayerY, entity.posZ - finalPlayerZ);
+
+                if (distance <= this.range.getValue()) {
+                    entitiesToKill.put(entity, distance);
+                }
+            }
+        });
 
         for (Entity entity : this.getFilteredLoadedEntities()) {
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
@@ -105,7 +126,7 @@ public final class KillAura extends Render3DHack {
 
             if (this.shouldAttackEntity(entity)) {
 
-                if (!this.behindWalls.getValue() && !this.isEntityBehindWalls(entity, playerX, playerY, playerZ)) {
+                if (!this.behindWalls.getValue() && !this.isEntityVisible(entity, playerX, playerY, playerZ)) {
                     continue;
                 }
 
@@ -117,36 +138,44 @@ public final class KillAura extends Render3DHack {
             }
         }
 
-        if (!entitiesToKill.isEmpty()) {
+        if (entitiesToKill.isEmpty()) {
+            return;
+        }
 
-            List<Map.Entry<Entity, Double>> entryList = new ArrayList<>(entitiesToKill.entrySet());
+        if (!this.behindWalls.getValue()) {
+            entitiesToKill.entrySet().removeIf(entityDoubleEntry -> !this.isEntityVisible(entityDoubleEntry.getKey(), finalPlayerX, finalPlayerY, finalPlayerZ));
 
-            switch ((Sort) this.sort.getValue()) {
-                case Health:
-                    entryList.sort(Comparator.comparing(entityDoubleEntry -> 20 - entityDoubleEntry.getKey().heartsLife));
-                    break;
-                default:
-                    entryList.sort(Map.Entry.comparingByValue());
-                    break;
+            if (entitiesToKill.isEmpty()) {
+                return;
             }
+        }
 
-            if (this.sort.getValue().equals(Sort.Multi)) {
+        List<Map.Entry<Entity, Double>> entryList = new ArrayList<>(entitiesToKill.entrySet());
 
-                entitiesToKill.forEach((entity, aDouble) -> {
-                    this.target_Entities.add(entity);
-                    this.attackEntity(entity);
-                });
+        switch ((Sort) this.sort.getValue()) {
+            case Health:
+                entryList.sort(Comparator.comparing(entityDoubleEntry -> 20 - entityDoubleEntry.getKey().heartsLife));
+                break;
+            default:
+                entryList.sort(Map.Entry.comparingByValue());
+                break;
+        }
 
+        if (this.sort.getValue().equals(Sort.Multi)) {
 
-            } else {
-                Map.Entry<Entity, Double> result = entryList.stream().findFirst().orElse(null);
+            entryList.forEach(entityDoubleEntry -> {
+                this.target_Entities.add(entityDoubleEntry.getKey());
+                this.attackEntity(entityDoubleEntry.getKey());
+            });
 
-                if (result != null) {
+        } else {
+            Map.Entry<Entity, Double> result = entryList.stream().findFirst().orElse(null);
 
-                    this.target_Entities.add(result.getKey());
+            if (result != null) {
 
-                    this.attackEntity(result.getKey());
-                }
+                this.target_Entities.add(result.getKey());
+
+                this.attackEntity(result.getKey());
             }
         }
     }
@@ -260,12 +289,14 @@ public final class KillAura extends Render3DHack {
         }
     }
 
-    private boolean isEntityBehindWalls(Entity entity, double playerX, double playerY, double playerZ) {
-
+    //Method is not thread safe, so cannot be run in parallel.
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    private boolean isEntityVisible(Entity entity, double playerX, double playerY, double playerZ) {
         if (this.getWorld().rayTraceBlocks(Vec3D.createVector(playerX, playerY + this.getPlayer().getEyeHeight(), playerZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null) {
             return true;
-        } else
+        } else {
             return this.getWorld().rayTraceBlocks(Vec3D.createVector(playerX, playerY, playerZ), Vec3D.createVector(entity.posX, entity.posY + (double) entity.height / 2.0D, entity.posZ)) == null;
+        }
     }
 
     private void renderESP(Entity entity, float renderPartialTicks) {

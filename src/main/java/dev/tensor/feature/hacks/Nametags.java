@@ -16,7 +16,7 @@ import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -47,7 +47,7 @@ public final class Nametags extends Render3DHack {
     public final ColorSetting friendColor = new ColorSetting("Friend Color", Color.CYAN);
     public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150));
 
-    private final ArrayList<EntityPlayer> playersToRender = new ArrayList<>();
+    private final CopyOnWriteArrayList<EntityPlayer> playersToRender = new CopyOnWriteArrayList<>();
 
     @Override
     public void onDisable(boolean isNull) {
@@ -58,11 +58,11 @@ public final class Nametags extends Render3DHack {
     public void onClientTick() {
         this.playersToRender.clear();
 
-        for (Entity entity : this.getFilteredLoadedEntities()) {
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity instanceof EntityOtherPlayerMP || entity instanceof FakePlayer) {
                 this.playersToRender.add((EntityPlayer) entity);
             }
-        }
+        });
     }
 
     @Override

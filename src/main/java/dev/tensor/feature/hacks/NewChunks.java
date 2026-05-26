@@ -12,7 +12,6 @@ import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -78,16 +77,12 @@ public final class NewChunks extends Render3DHack {
     @Override
     public void onClientTick() {
         if (this.deleteFarAway.getValue() && !this.chunksToRender.isEmpty()) {
-            ArrayList<int[]> toRemove = new ArrayList<>();
-
-            this.chunksToRender.forEach(ints -> {
+            this.chunksToRender.parallelStream().forEach(ints -> {
 
                 if (!this.isPositionWithinXZRange(ints[0] * 16, ints[1] * 16, this.deleteDistance.getValue())) {
-                    toRemove.add(ints);
+                    this.chunksToRender.remove(ints);
                 }
             });
-
-            this.chunksToRender.removeAll(toRemove);
         }
     }
 
@@ -206,7 +201,7 @@ public final class NewChunks extends Render3DHack {
 
         AtomicBoolean isWithinPlayerRange = new AtomicBoolean(false);
 
-        this.getFilteredLoadedEntities().forEach(entity -> {
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
 
             if (!isWithinPlayerRange.get() && entity instanceof EntityOtherPlayerMP && this.isTargetWithinDistanceOfEntity(entity, x, z, 9)) {
                 isWithinPlayerRange.set(true);
