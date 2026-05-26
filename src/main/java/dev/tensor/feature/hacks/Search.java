@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -74,7 +74,7 @@ public final class Search extends Render3DHack {
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
 
-    private final ArrayList<BlockCoords> blockCoords = new ArrayList<>();
+    private final CopyOnWriteArrayList<BlockCoords> blockCoords = new CopyOnWriteArrayList<>();
 
     private boolean hasTracers = false;
 
@@ -106,6 +106,7 @@ public final class Search extends Render3DHack {
 
             AtomicBoolean shouldAdd = new AtomicBoolean(true);
 
+            //this is faster than parallel streams implementation.
             for (BlockCoords blockCoords : this.blockCoords) {
 
                 if (blockCoords.x == event.x) {
@@ -142,17 +143,13 @@ public final class Search extends Render3DHack {
 
     @Override
     public void onClientTick() {
-        ArrayList<BlockCoords> toRemove = new ArrayList<>();
-
-        this.blockCoords.forEach(blockCoords1 -> {
+        this.blockCoords.parallelStream().forEach(blockCoords1 -> {
             if (this.getWorld().getBlockId(blockCoords1.x, blockCoords1.y, blockCoords1.z) != blockCoords1.block.blockID) {
-                toRemove.add(blockCoords1);
+                this.blockCoords.remove(blockCoords1);
             } else if (!this.isPositionWithinXZRange(blockCoords1.x, blockCoords1.z, 256)) {
-                toRemove.add(blockCoords1);
+                this.blockCoords.remove(blockCoords1);
             }
         });
-
-        this.blockCoords.removeAll(toRemove);
     }
 
     @Override

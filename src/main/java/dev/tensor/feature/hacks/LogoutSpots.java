@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.EntityOtherPlayerMP;
 
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -59,9 +59,9 @@ public final class LogoutSpots extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor);
 
-    public final ArrayList<LogoutSpot> playersLogged = new ArrayList<>();
-    private final ArrayList<LogoutSpot> playersLoggedQueue = new ArrayList<>();
-    private final ArrayList<String> loggedNames = new ArrayList<>();
+    public final CopyOnWriteArrayList<LogoutSpot> playersLogged = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<LogoutSpot> playersLoggedQueue = new CopyOnWriteArrayList<>();
+    private final CopyOnWriteArrayList<String> loggedNames = new CopyOnWriteArrayList<>();
 
     @Override
     public void onDisable(boolean isNull) {
@@ -71,33 +71,25 @@ public final class LogoutSpots extends Render3DHack {
     @Override
     public void onClientTick() {
         if (!this.loggedNames.isEmpty() && !this.playersLoggedQueue.isEmpty()) {
-            ArrayList<String> toRemove = new ArrayList<>();
-
-            this.playersLoggedQueue.forEach(logoutSpot -> {
+            this.playersLoggedQueue.parallelStream().forEach(logoutSpot -> {
 
                 if (this.isLoggedName(logoutSpot.username) && !this.isLoggedPlayer(logoutSpot.username)) {
                     this.playersLogged.add(logoutSpot);
-                    toRemove.add(logoutSpot.username);
+                    this.loggedNames.remove(logoutSpot.username);
                 }
             });
-
-            this.loggedNames.removeAll(toRemove);
         }
 
         if (this.playersLogged.isEmpty()) {
             return;
         }
 
-        ArrayList<LogoutSpot> toRemove = new ArrayList<>();
-
-        this.playersLogged.forEach(logoutSpot -> {
+        this.playersLogged.parallelStream().forEach(logoutSpot -> {
 
             if (!this.isPositionWithinXZRange(logoutSpot.coords.x, logoutSpot.coords.z, 256)) {
-                toRemove.add(logoutSpot);
+                this.playersLogged.remove(logoutSpot);
             }
         });
-
-        this.playersLogged.removeAll(toRemove);
     }
 
     @Override
@@ -200,41 +192,32 @@ public final class LogoutSpots extends Render3DHack {
     }));
 
     private boolean isLoggedName(String username) {
-        return this.loggedNames.stream().filter(name -> name.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+        return this.loggedNames.parallelStream().filter(name -> name.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
     }
 
     private boolean isQueuedPlayer(String username) {
-        return this.playersLoggedQueue.stream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+        return this.playersLoggedQueue.parallelStream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
     }
 
     private boolean isLoggedPlayer(String username) {
-        return this.playersLogged.stream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
+        return this.playersLogged.parallelStream().filter(logoutSpot -> logoutSpot.username.equalsIgnoreCase(username)).findFirst().orElse(null) != null;
     }
 
     private void removeQueuedPlayer(String username) {
-        ArrayList<LogoutSpot> toRemove = new ArrayList<>();
-
-        this.playersLoggedQueue.forEach(logoutSpot -> {
-
+        this.playersLoggedQueue.parallelStream().forEach(logoutSpot -> {
             if (logoutSpot.username.equalsIgnoreCase(username)) {
-                toRemove.add(logoutSpot);
+                this.playersLoggedQueue.remove(logoutSpot);
             }
         });
-
-        this.playersLoggedQueue.removeAll(toRemove);
     }
 
     private void removeLoggedPlayer(String username) {
-        ArrayList<LogoutSpot> toRemove = new ArrayList<>();
-
-        this.playersLogged.forEach(logoutSpot -> {
+        this.playersLogged.parallelStream().forEach(logoutSpot -> {
 
             if (logoutSpot.username.equalsIgnoreCase(username)) {
-                toRemove.add(logoutSpot);
+                this.playersLogged.remove(logoutSpot);
             }
         });
-
-        this.playersLogged.removeAll(toRemove);
     }
 
     private void renderLogoutSpot(LogoutSpot logoutSpot) {

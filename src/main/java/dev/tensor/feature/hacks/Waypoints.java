@@ -9,8 +9,7 @@ import dev.tensor.misc.imp.hack.render.Render3DHack;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.*;
 
-import java.util.ArrayList;
-
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -46,7 +45,7 @@ public final class Waypoints extends Render3DHack {
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);
 
-    public final ArrayList<Waypoint> waypointsToRender = new ArrayList<>();
+    public final CopyOnWriteArrayList<Waypoint> waypointsToRender = new CopyOnWriteArrayList<>();
 
     private int renderDistance = 256;
 

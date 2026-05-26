@@ -8,13 +8,12 @@ import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Entity;
 import net.minecraft.src.EntityWolf;
 import net.minecraft.src.RenderManager;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Hoosiers
@@ -39,7 +38,7 @@ public final class WolfOwner extends Render3DHack {
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.RED);
     public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
 
-    private final HashMap<EntityWolf, Color> wolvesWithColorToRender = new HashMap<>();
+    private final ConcurrentHashMap<EntityWolf, Color> wolvesWithColorToRender = new ConcurrentHashMap<>();
 
     @Override
     public void onDisable(boolean isNull) {
@@ -50,7 +49,7 @@ public final class WolfOwner extends Render3DHack {
     public void onClientTick() {
         this.wolvesWithColorToRender.clear();
 
-        for (Entity entity : this.getFilteredLoadedEntities()) {
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity instanceof EntityWolf) {
 
                 EntityWolf entityWolf = (EntityWolf) entity;
@@ -63,7 +62,7 @@ public final class WolfOwner extends Render3DHack {
                     this.wolvesWithColorToRender.put(entityWolf, color1);
                 }
             }
-        }
+        });
     }
 
     @Override

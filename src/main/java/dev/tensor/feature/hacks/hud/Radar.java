@@ -17,8 +17,8 @@ import net.minecraft.src.EntityOtherPlayerMP;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -61,7 +61,7 @@ public final class Radar extends Hack implements HUDObject {
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 
-    private final ArrayList<EntityPoint> pointsToRender = new ArrayList<>();
+    private final CopyOnWriteArrayList<EntityPoint> pointsToRender = new CopyOnWriteArrayList<>();
 
     private float playerYaw = 0;
 
@@ -144,34 +144,41 @@ public final class Radar extends Hack implements HUDObject {
         int radius = this.radius.getValue();
         int radiusSq = (int) this.squaredD(radius * 1.05);
 
-        for (Entity entity : this.getFilteredLoadedEntities()) {
+        final double finalBigPointMultiplier = bigPointMultiplier;
+        final boolean finalShouldPlayerPlus = shouldPlayerPlus;
+
+        final double finalPlayerX1 = playerX;
+        final double finalPlayerY1 = playerY;
+        final double finalPlayerZ1 = playerZ;
+
+        this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity == this.getPlayer() || entity instanceof FakePlayer) {
-                continue;
+                return;
             }
 
             int color = this.getEntityColor(entity);
 
             if (color == -1) {
-                continue;
+                return;
             }
 
-            if (!this.isEntityWithinRange(entity, playerX, playerZ, radiusSq)) {
-                continue;
+            if (!this.isEntityWithinRange(entity, finalPlayerX1, finalPlayerZ1, radiusSq)) {
+                return;
             }
 
             boolean point = false;
             double pointMultiplier = 1;
 
             if (entity instanceof EntityOtherPlayerMP) {
-                point = shouldPlayerPlus;
+                point = finalShouldPlayerPlus;
 
-                if (bigPointMultiplier != 1) {
-                    pointMultiplier = bigPointMultiplier;
+                if (finalBigPointMultiplier != 1) {
+                    pointMultiplier = finalBigPointMultiplier;
                 }
             }
 
-            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (entity.posX - playerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (entity.posZ - playerZ) * 100 / radius), color, (int) (entity.posY - playerY), point, (int) (sphereRadius * pointMultiplier)));
-        }
+            this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (entity.posX - finalPlayerX1) * 100 / radius), (int) (((double) this.getHeight() / 2) + (entity.posZ - finalPlayerZ1) * 100 / radius), color, (int) (entity.posY - finalPlayerY1), point, (int) (sphereRadius * pointMultiplier)));
+        });
 
         if (this.logoutSpots.getValue()) {
             LogoutSpots logoutSpots1 = this.getHackManager().getHack(LogoutSpots.class);
@@ -183,7 +190,7 @@ public final class Radar extends Hack implements HUDObject {
                     final double finalPlayerY = playerY;
                     final double finalPlayerZ = playerZ;
 
-                    logoutSpots1.playersLogged.forEach(logoutSpot -> {
+                    logoutSpots1.playersLogged.parallelStream().forEach(logoutSpot -> {
                         if (this.isWithinRange(logoutSpot.coords.x, logoutSpot.coords.z, finalPlayerX, finalPlayerZ, radiusSq)) {
                             int color = this.getFriendManager().isFriend(logoutSpot.username) ? this.friendsColor.getValue().getRGB() : this.playersColor.getValue().getRGB();
 
@@ -206,7 +213,7 @@ public final class Radar extends Hack implements HUDObject {
                     final double finalPlayerY = playerY;
                     final double finalPlayerZ = playerZ;
 
-                    waypoints1.waypointsToRender.forEach(waypoint -> {
+                    waypoints1.waypointsToRender.parallelStream().forEach(waypoint -> {
                         if (this.isWithinRange(waypoint.getX(), waypoint.getZ(), finalPlayerX, finalPlayerZ, radiusSq)) {
                             this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (waypoint.getX() - finalPlayerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (waypoint.getZ() - finalPlayerZ) * 100 / radius), color, (int) (waypoint.getY() - finalPlayerY), true, sphereRadius));
                         }
