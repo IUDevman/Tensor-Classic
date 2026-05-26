@@ -163,11 +163,10 @@ public final class KillAura extends Render3DHack {
 
         if (this.sort.getValue().equals(Sort.Multi)) {
 
-            entitiesToKill.forEach((entity, aDouble) -> {
-                this.target_Entities.add(entity);
-                this.attackEntity(entity);
+            entryList.forEach(entityDoubleEntry -> {
+                this.target_Entities.add(entityDoubleEntry.getKey());
+                this.attackEntity(entityDoubleEntry.getKey());
             });
-
 
         } else {
             Map.Entry<Entity, Double> result = entryList.stream().findFirst().orElse(null);
