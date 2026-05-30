@@ -52,8 +52,8 @@ public final class ColorSettingButton implements ButtonSetting {
         this.hackElement = hackElement;
         this.colorSettingElement = colorSettingElement;
 
-        this.bigColorPickerObject = new BigColorPickerObject(this, this.clickGUI.x, this.clickGUI.y, 10, this.tensorGUI.titleBoxHeight + 12, 128, 128);
         this.smallColorPickerObject = new SmallColorPickerObject(this, this.clickGUI.x, this.clickGUI.y, 148, this.tensorGUI.titleBoxHeight + 12, 32, 128);
+        this.bigColorPickerObject = new BigColorPickerObject(this, this.clickGUI.x, this.clickGUI.y, 10, this.tensorGUI.titleBoxHeight + 12, 128, 128);
         this.alphaPickerObject = new AlphaPickerObject(this, this.clickGUI.x, this.clickGUI.y, 190, this.tensorGUI.titleBoxHeight + 12, 32, 128);
     }
 

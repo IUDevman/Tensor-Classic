@@ -1,4 +1,9 @@
-package dev.tensor.misc.imp.render;
+package dev.tensor.misc.helpers.color;
+
+/**
+ * @author Hoosiers
+ * @since 05-29-2026
+ */
 
 public final class LinkedColorValue {
 

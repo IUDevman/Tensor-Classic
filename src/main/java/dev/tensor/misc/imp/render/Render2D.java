@@ -84,7 +84,7 @@ public interface Render2D extends Globals {
 
         double yDiff = (double) height / (colors.length - 1);
 
-        for (int i = 0; i < colors.length - 1; i++)  {
+        for (int i = 0; i < colors.length - 1; i++) {
             float[] top = colors[i];
             float[] bottom = colors[i + 1];
 
@@ -121,21 +121,7 @@ public interface Render2D extends Globals {
         };
     }
 
-    //TODO: The R, G, and B should be the color from the 2nd rainbow slider
-    //We somehow have to approximate what color our already set value will land on the rainbow slider
-    //Modifying that slider only effects this one
-    //The point on this slider will determine the new value!
-    //TODO: make the color approximation only happen on load or when value manually inputted!
-
-    //Take R, G, and B values
-    //Filter by size (highest values first).
-    // Find default color with those two, set it on the small color picker
-    // Account for the values on the large color picker
-
-    //Farther to the left, add values
-    //Farther down subtract values
-    //Farther right add to values that are 0 by default
-    default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, int red, int green, int blue) {
+    default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, Color color) {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -149,7 +135,7 @@ public interface Render2D extends Globals {
         Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
         Tessellator.instance.addVertex(startX + width, startY + height, 0.0F);
 
-        Tessellator.instance.setColorRGBA_F(red / 255F, green / 255F, blue / 255F, 1F);
+        Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 1F);
         Tessellator.instance.addVertex(startX + width, startY, 0.0F);
 
         Tessellator.instance.setColorRGBA_F(1F, 1F, 1F, 1F);
