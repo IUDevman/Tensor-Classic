@@ -14,18 +14,10 @@ import java.awt.*;
 
 public final class TrueColorValuePoint implements Render2D, Hoverable {
 
-    private final int boxWidth;
-    private final int boxHeight;
+    private final int box_Width_Height;
 
     private ColorValueCache cache;
     private Color realColor;
-
-    private ColorOrder highest = ColorOrder.None;
-    private ColorOrder middle = ColorOrder.None;
-
-    private int mainRedEnd = 0;
-    private int mainGreenEnd = 0;
-    private int mainBlueEnd = 0;
 
     private boolean isDragging = false;
 
@@ -38,9 +30,8 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
     private int dragXToSet;
     private int dragYToSet;
 
-    public TrueColorValuePoint(int boxWidth, int boxHeight, ColorValueCache cache, Color realColor) {
-        this.boxWidth = boxWidth;
-        this.boxHeight = boxHeight;
+    public TrueColorValuePoint(int box_Width_Height, ColorValueCache cache, Color realColor) {
+        this.box_Width_Height = box_Width_Height;
         this.cache = cache;
 
         this.updateAll(cache, realColor);
@@ -49,61 +40,12 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
     public void updateAll(ColorValueCache cache, Color newColor) {
         this.cache = cache;
 
-        this.highest = ColorOrder.None;
-        this.middle = ColorOrder.None;
-
-        this.mainRedEnd = 0;
-        this.mainGreenEnd = 0;
-        this.mainBlueEnd = 0;
-
-        switch (this.cache.getRedOrderType()) {
-            case Highest:
-                this.highest = ColorOrder.Red;
-                this.mainRedEnd = 255;
-                break;
-            case Middle:
-                this.middle = ColorOrder.Red;
-                this.mainRedEnd = cache.getDefaultColor().getRed();
-                break;
-            default:
-                break;
-        }
-
-        switch (this.cache.getGreenOrderType()) {
-            case Highest:
-                this.highest = ColorOrder.Green;
-                this.mainGreenEnd = 255;
-                break;
-            case Middle:
-                this.middle = ColorOrder.Green;
-                this.mainGreenEnd = cache.getDefaultColor().getGreen();
-                break;
-            default:
-                break;
-        }
-
-        switch (this.cache.getBlueOrderType()) {
-            case Highest:
-                this.highest = ColorOrder.Blue;
-                this.mainBlueEnd = 255;
-                break;
-            case Middle:
-                this.middle = ColorOrder.Blue;
-                this.mainBlueEnd = cache.getDefaultColor().getBlue();
-                break;
-            default:
-                break;
-        }
-
-        Color oldColor = this.realColor;
         this.realColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue());
 
-        if (oldColor == null || this.realColor.getRGB() != oldColor.getRGB()) {
-            int[] old = this.getRenderPointForCurrentColor();
+        int[] old = this.getCoordinatesFromColor(this.realColor, this.cache.getDefaultColor());
 
-            this.pointX = old[0];
-            this.pointY = old[1];
-        }
+        this.pointX = old[0];
+        this.pointY = old[1];
     }
 
     public void updateColorFromDrag(int screenX, int screenY, int startX, int startY, ColorSettingButton colorSettingButton) {
@@ -116,13 +58,13 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.dragXToSet = screenX + dragOffsetX;
         this.dragYToSet = screenY + dragOffsetY;
 
-        if (this.dragXToSet <= startX + this.boxWidth && this.dragXToSet >= startX && this.dragOffsetX != 0) {
+        if (this.dragXToSet <= startX + this.box_Width_Height && this.dragXToSet >= startX && this.dragOffsetX != 0) {
             old[0] = this.dragXToSet - startX;
         } else {
             this.dragXToSet = old[0] + startX;
         }
 
-        if (this.dragYToSet <= startY + this.boxHeight && this.dragYToSet >= startY && this.dragOffsetY != 0) {
+        if (this.dragYToSet <= startY + this.box_Width_Height && this.dragYToSet >= startY && this.dragOffsetY != 0) {
             old[1] = this.dragYToSet - startY;
         } else {
             this.dragYToSet = old[1] + startY;
@@ -131,9 +73,9 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.pointX = old[0];
         this.pointY = old[1];
 
-        Color color = this.convertFromXYToColor(this.pointX, this.pointY);
+        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.box_Width_Height, this.cache.getDefaultColor());
 
-        colorSettingButton.setNewColorFrom(color);
+        colorSettingButton.setNewColorStealth(color);
         this.realColor = color;
     }
 
@@ -173,10 +115,10 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
 
     public void renderPoint(int startX, int startY, int rgb) {
         int x1 = startX + pointX;
-        int wX = startX + this.boxWidth;
+        int wX = startX + this.box_Width_Height;
 
         int y1 = startY + pointY;
-        int wY = startY + this.boxHeight;
+        int wY = startY + this.box_Width_Height;
 
         int minX = x1 - (x1 - 3 >= startX ? 3 : x1 - startX);
         int minY = y1 - (y1 - 3 >= startY ? 3 : y1 - startY);
@@ -186,160 +128,62 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.drawRectangle(minX, minY, maxX, maxY, rgb);
     }
 
-    private int[] getRenderPointForCurrentColor() {
-        int colorLR = 0;
-        int colorUD = 0;
+    public int[] getCoordinatesFromColor(Color targetColor, Color defaultColor) {
+        int red = targetColor.getRed();
+        int green = targetColor.getGreen();
+        int blue = targetColor.getBlue();
 
-        switch (this.highest) {
-            case Red:
-                if (this.middle == ColorOrder.None) {
-                    colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getGreen(), this.boxWidth);
-                    colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getRed(), this.boxHeight);
+        int maxTarget = Math.max(red, Math.max(green, blue));
+        int maxDefault = Math.max(defaultColor.getRed(), Math.max(defaultColor.getGreen(), defaultColor.getBlue()));
 
-                } else {
-                    if (this.middle == ColorOrder.Green) {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getBlue(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getRed(), this.boxHeight);
-                    } else {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getGreen(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getRed(), this.boxHeight);
-                    }
-                }
-                break;
+        double pctY = (maxDefault > 0) ? (double) maxTarget / maxDefault : 0.0;
 
-            case Green:
-                if (this.middle == ColorOrder.None) {
-                    colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getBlue(), this.boxWidth);
-                    colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getGreen(), this.boxHeight);
+        int x = 0;
+        int y = (int) Math.round(124 * (1.0 - pctY));
 
-                } else {
-                    if (this.middle == ColorOrder.Red) {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getBlue(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getGreen(), this.boxHeight);
+        if (pctY > 0) {
+            int topRed = Math.max(0, Math.min((int) Math.round(red / pctY), 255));
+            int topGreen = Math.max(0, Math.min((int) Math.round(green / pctY), 255));
+            int topBlue = Math.max(0, Math.min((int) Math.round(blue / pctY), 255));
 
-                    } else {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getRed(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getGreen(), this.boxHeight);
-                    }
-                }
-                break;
+            int dRed = defaultColor.getRed() - 255;
+            int dGreen = defaultColor.getGreen() - 255;
+            int dBlue = defaultColor.getBlue() - 255;
 
-            case Blue:
-                if (this.middle == ColorOrder.None) {
-                    colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getRed(), this.boxWidth);
-                    colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getBlue(), this.boxHeight);
+            int maxDiff = Math.max(Math.abs(dRed), Math.max(Math.abs(dGreen), Math.abs(dBlue)));
 
-                } else {
-                    if (this.middle == ColorOrder.Green) {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getRed(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getBlue(), this.boxHeight);
+            if (maxDiff == Math.abs(dRed) && dRed != 0) {
+                x = (int) Math.round((124.0 * (topRed - 255)) / dRed);
 
-                    } else {
-                        colorLR = this.boxWidth - this.convertRGBToXY(this.realColor.getGreen(), this.boxWidth);
-                        colorUD = this.boxHeight - this.convertRGBToXY(this.realColor.getBlue(), this.boxHeight);
-                    }
-                }
-                break;
+            } else if (maxDiff == Math.abs(dGreen) && dGreen != 0) {
+                x = (int) Math.round((124.0 * (topGreen - 255)) / dGreen);
 
-            default:
-                break;
+            } else if (dBlue != 0) {
+                x = (int) Math.round((124.0 * (topBlue - 255)) / dBlue);
+            }
         }
 
-        return new int[]{colorLR, colorUD};
+        x = Math.max(0, Math.min(x, 124));
+        y = Math.max(0, Math.min(y, 124));
+
+        return new int[]{x, y};
     }
 
-    private Color convertFromXYToColor(int x, int y) {
-        int redNew = 0;
-        int greenNew = 0;
-        int blueNew = 0;
+    public Color getColorFromCoordinates(int x, int y, int width_or_height, Color defaultColor) {
+        x = Math.max(0, Math.min(x, width_or_height));
+        y = Math.max(0, Math.min(y, width_or_height));
 
-        int unorderedRGB = 255 - this.convertXYToRGB(x, this.boxWidth, 255);
+        double pctX = (double) x / width_or_height;
+        double pctY = (double) (width_or_height - y) / width_or_height;
 
-        switch (this.highest) {
-            case Red:
-                if (this.middle == ColorOrder.None) {
-                    redNew = this.mainRedEnd - this.convertXYToRGB(y, this.boxHeight, this.mainRedEnd);
-                    greenNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                    blueNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
+        int topRed = (int) (255 + pctX * (defaultColor.getRed() - 255));
+        int topGreen = (int) (255 + pctX * (defaultColor.getGreen() - 255));
+        int topBlue = (int) (255 + pctX * (defaultColor.getBlue() - 255));
 
-                } else {
-                    if (this.middle == ColorOrder.Green) {
-                        redNew = this.mainRedEnd - this.convertXYToRGB(y, this.boxHeight, this.mainRedEnd);
-                        greenNew = this.mainGreenEnd - this.convertXYToRGB(y, this.boxHeight, this.mainGreenEnd);
-                        blueNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                    } else {
-                        redNew = this.mainRedEnd - this.convertXYToRGB(y, this.boxHeight, this.mainRedEnd);
-                        greenNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                        blueNew = this.mainBlueEnd - this.convertXYToRGB(y, this.boxHeight, this.mainBlueEnd);
-                    }
-                }
-                break;
+        int finalRed = (int) (topRed * pctY);
+        int finalGreen = (int) (topGreen * pctY);
+        int finalBlue = (int) (topBlue * pctY);
 
-            case Green:
-                if (this.middle == ColorOrder.None) {
-                    greenNew = this.mainGreenEnd - this.convertXYToRGB(y, this.boxHeight, this.mainGreenEnd);
-                    redNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                    blueNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-
-                } else {
-                    if (this.middle == ColorOrder.Red) {
-                        redNew = this.mainRedEnd - this.convertXYToRGB(y, this.boxHeight, this.mainRedEnd);
-                        greenNew = this.mainGreenEnd - this.convertXYToRGB(y, this.boxHeight, this.mainGreenEnd);
-                        blueNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                    } else {
-                        redNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                        greenNew = this.mainGreenEnd - this.convertXYToRGB(y, this.boxHeight, this.mainGreenEnd);
-                        blueNew = this.mainBlueEnd - this.convertXYToRGB(y, this.boxHeight, this.mainBlueEnd);
-                    }
-                }
-                break;
-
-            case Blue:
-                if (this.middle == ColorOrder.None) {
-                    blueNew = this.mainBlueEnd - this.convertXYToRGB(y, this.boxHeight, this.mainBlueEnd);
-                    redNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                    greenNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-
-                } else {
-                    if (this.middle == ColorOrder.Red) {
-                        redNew = this.mainRedEnd - this.convertXYToRGB(y, this.boxHeight, this.mainRedEnd);
-                        greenNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                        blueNew = this.mainBlueEnd - this.convertXYToRGB(y, this.boxHeight, this.mainBlueEnd);
-                    } else {
-                        redNew = unorderedRGB - this.convertXYToRGB(y, this.boxWidth, unorderedRGB);
-                        greenNew = this.mainGreenEnd - this.convertXYToRGB(y, this.boxWidth, this.mainGreenEnd);
-                        blueNew = this.mainBlueEnd - this.convertXYToRGB(y, this.boxHeight, this.mainBlueEnd);
-                    }
-                }
-                break;
-
-            default:
-                break;
-        }
-
-        return new Color(redNew, greenNew, blueNew);
-    }
-
-    private int convertRGBToXY(int RGB, int WIDTH_OR_HEIGHT) {
-        double dRGB = (double) RGB / 255;
-
-        return (int) (dRGB * WIDTH_OR_HEIGHT);
-    }
-
-    private int convertXYToRGB(int XY, int WIDTH_OR_HEIGHT, int maxRGB) {
-        double dXY = (double) XY / WIDTH_OR_HEIGHT;
-
-        int rgb = (int) (dXY * maxRGB);
-
-        if (rgb > maxRGB) {
-            return maxRGB;
-        } else return Math.max(rgb, 0);
-    }
-
-    private enum ColorOrder {
-        Red,
-        Green,
-        Blue,
-        None
+        return new Color(finalRed, finalGreen, finalBlue);
     }
 }

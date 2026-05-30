@@ -17,107 +17,103 @@ public final class ColorValueCache {
         colorValues.add(new LinkedColorValue(LinkedColorValue.Type.GREEN, color.getGreen()));
         colorValues.add(new LinkedColorValue(LinkedColorValue.Type.BLUE, color.getBlue()));
 
-        colorValues.sort(Comparator.comparing(linkedColorValue -> ((LinkedColorValue) linkedColorValue).toTestFloat()).reversed());
+        colorValues.sort(Comparator.comparing(linkedColorValue -> ((LinkedColorValue) linkedColorValue).value).reversed());
 
         LinkedColorValue highest = colorValues.get(0);
         LinkedColorValue middle = colorValues.get(1);
         LinkedColorValue lowest = colorValues.get(2);
 
-        int highestVal = Math.max(highest.value, 255);
-        int middleVal = middle.value;
-
-        if (highest.toTestFloat() == middle.toTestFloat() && middle.toTestFloat() == lowest.toTestFloat()) {
-            return new ColorValueCache(new Color(highestVal, 0, 0), 0, OrderType.Highest, OrderType.Dont_Care, OrderType.Dont_Care);
-        }
+        int defaultBarHeight = 0;
 
         if (highest.type == LinkedColorValue.Type.RED) {
-            if (middle.toTestFloat() == 0.0F) {
-                return new ColorValueCache(new Color(highestVal, 0, 0), previousDefaultBarHeight >= 103 ? 124 : 0, OrderType.Highest, OrderType.Dont_Care, OrderType.Dont_Care);
+            if (middle.value == 0) {
+                defaultBarHeight = previousDefaultBarHeight >= 103 ? 124 : 0;
 
-            } else if (middle.toTestFloat() == lowest.toTestFloat()) {
-                return new ColorValueCache(new Color(highestVal, 0, 0), previousDefaultBarHeight >= 103 ? 124 : 0, OrderType.Highest, OrderType.Dont_Care, OrderType.Dont_Care);
+            } else if (middle.value == lowest.value) {
+                defaultBarHeight = previousDefaultBarHeight >= 103 ? 124 : 0;
 
             } else if (middle.type == LinkedColorValue.Type.GREEN) {
-                return new ColorValueCache(new Color(highestVal, middleVal, 0), (int) (((double) middleVal / 255) * 20.667), OrderType.Highest, OrderType.Middle, OrderType.Dont_Care);
+                defaultBarHeight = (int) (((double) middle.value / 255) * 20.667);
 
             } else if (middle.type == LinkedColorValue.Type.BLUE) {
-                return new ColorValueCache(new Color(highestVal, 0, middleVal), 124 - (int) (((double) middleVal / 255) * 20.667), OrderType.Highest, OrderType.Dont_Care, OrderType.Middle);
+                defaultBarHeight = 124 - (int) (((double) middle.value / 255) * 20.667);
             }
 
         } else if (highest.type == LinkedColorValue.Type.GREEN) {
-            if (middle.toTestFloat() == 0.0F) {
-                return new ColorValueCache(new Color(0, highestVal, 0), 41, OrderType.Dont_Care, OrderType.Highest, OrderType.Dont_Care);
+            if (middle.value == 0) {
+                defaultBarHeight = 41;
 
-            } else if (middle.toTestFloat() == lowest.toTestFloat()) {
-                return new ColorValueCache(new Color(0, highestVal, 0), 41, OrderType.Dont_Care, OrderType.Highest, OrderType.Dont_Care);
+            } else if (middle.value == lowest.value) {
+                defaultBarHeight = 41;
 
             } else if (middle.type == LinkedColorValue.Type.RED) {
-                return new ColorValueCache(new Color(middleVal, highestVal, 0), (int) (41 - (((double) middleVal / 255) * 20.667)), OrderType.Middle, OrderType.Highest, OrderType.Dont_Care);
+                defaultBarHeight = (int) (41 - (((double) middle.value / 255) * 20.667));
 
             } else if (middle.type == LinkedColorValue.Type.BLUE) {
-                return new ColorValueCache(new Color(0, highestVal, middleVal), (int) (41 + (((double) middleVal / 255) * 20.667)), OrderType.Dont_Care, OrderType.Highest, OrderType.Middle);
+                defaultBarHeight = (int) (41 + (((double) middle.value / 255) * 20.667));
             }
 
         } else if (highest.type == LinkedColorValue.Type.BLUE) {
-            if (middle.toTestFloat() == 0.0F) {
-                return new ColorValueCache(new Color(0, 0, highestVal), 83, OrderType.Dont_Care, OrderType.Dont_Care, OrderType.Highest);
+            if (middle.value == 0) {
+                defaultBarHeight = 83;
 
-            } else if (middle.toTestFloat() == lowest.toTestFloat()) {
-                return new ColorValueCache(new Color(0, 0, highestVal), 83, OrderType.Dont_Care, OrderType.Dont_Care, OrderType.Highest);
+            } else if (middle.value == lowest.value) {
+                defaultBarHeight = 83;
 
             } else if (middle.type == LinkedColorValue.Type.RED) {
-                return new ColorValueCache(new Color(middleVal, 0, highestVal), (int) (83 + (((double) middleVal / 255) * 20.667)), OrderType.Middle, OrderType.Dont_Care, OrderType.Highest);
+                defaultBarHeight = (int) (83 + (((double) middle.value / 255) * 20.667));
 
             } else if (middle.type == LinkedColorValue.Type.GREEN) {
-                return new ColorValueCache(new Color(0, middleVal, highestVal), (int) (83 - (((double) middleVal / 255) * 20.667)), OrderType.Dont_Care, OrderType.Middle, OrderType.Highest);
+                defaultBarHeight = (int) (83 - (((double) middle.value / 255) * 20.667));
             }
-
         }
 
-        return new ColorValueCache(new Color(highestVal, 0, 0), 0, OrderType.Highest, OrderType.Dont_Care, OrderType.Dont_Care);
+        return new ColorValueCache(convertToDefaultColor(color), defaultBarHeight);
+    }
+
+    private static Color convertToDefaultColor(Color inputColor) {
+        int red = inputColor.getRed();
+        int green = inputColor.getGreen();
+        int blue = inputColor.getBlue();
+
+        int maxComponent = Math.max(red, Math.max(green, blue));
+
+        if (maxComponent == 0) {
+            return new Color(255, 0, 0);
+        }
+
+        int baseRed = (int) Math.round((red * 255.0) / maxComponent);
+        int baseGreen = (int) Math.round((green * 255.0) / maxComponent);
+        int baseBlue = (int) Math.round((blue * 255.0) / maxComponent);
+
+        int minComponent = Math.min(baseRed, Math.min(baseGreen, baseBlue));
+
+        if (baseRed == minComponent) {
+            baseRed = 0;
+
+        } else if (baseGreen == minComponent) {
+            baseGreen = 0;
+
+        } else {
+            baseBlue = 0;
+        }
+
+        return new Color(baseRed, baseGreen, baseBlue);
     }
 
     private final Color defaultColor;
     private final int defaultBarHeight;
-    private final OrderType red;
-    private final OrderType green;
-    private final OrderType blue;
 
-    private ColorValueCache(Color defaultColor, int defaultBarHeight, OrderType red, OrderType green, OrderType blue) {
+    private ColorValueCache(Color defaultColor, int defaultBarHeight) {
         this.defaultColor = defaultColor;
         this.defaultBarHeight = defaultBarHeight;
-        this.red = red;
-        this.green = green;
-        this.blue = blue;
     }
 
     public Color getDefaultColor() {
         return this.defaultColor;
     }
 
-    public Color getDefaultColorNoAlpha() {
-        return new Color(this.defaultColor.getRed(), this.defaultColor.getGreen(), this.defaultColor.getBlue());
-    }
-
     public int getDefaultBarHeight() {
         return this.defaultBarHeight;
-    }
-
-    public OrderType getRedOrderType() {
-        return this.red;
-    }
-
-    public OrderType getGreenOrderType() {
-        return this.green;
-    }
-
-    public OrderType getBlueOrderType() {
-        return this.blue;
-    }
-
-    public enum OrderType {
-        Highest,
-        Middle,
-        Dont_Care
     }
 }

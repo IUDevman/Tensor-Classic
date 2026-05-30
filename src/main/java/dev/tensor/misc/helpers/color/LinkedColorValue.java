@@ -20,14 +20,4 @@ public final class LinkedColorValue {
         GREEN,
         BLUE
     }
-
-    public float toTestFloat() {
-        float floatCovert = this.value / 255F;
-
-        if (floatCovert >= 0.5F) {
-            return 1.0F;
-        } else {
-            return 0.0F;
-        }
-    }
 }

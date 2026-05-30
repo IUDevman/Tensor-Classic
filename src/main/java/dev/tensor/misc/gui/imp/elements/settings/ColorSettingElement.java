@@ -63,7 +63,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         }
     }
 
-    public void clearSearching() {
+    private void clearSearching() {
         this.searchingR = false;
         this.searchingG = false;
         this.searchingB = false;

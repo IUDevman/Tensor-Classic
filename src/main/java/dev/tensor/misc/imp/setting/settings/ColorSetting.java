@@ -3,10 +3,12 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.Setting;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * @author Hoosiers
@@ -18,6 +20,8 @@ public class ColorSetting implements Setting<Color> {
     private final String name;
     private final Color defaultValue;
     private Color value;
+
+    private final ArrayList<SmallColorPickerObject> smallColorPickerObjects = new ArrayList<>();
 
     public ColorSetting(String name, Color value) {
         this.name = name;
@@ -48,6 +52,16 @@ public class ColorSetting implements Setting<Color> {
     @Override
     public void setValue(Color value) {
         this.value = value;
+
+        this.smallColorPickerObjects.forEach(SmallColorPickerObject::updateDefaultColor);
+    }
+
+    public void setValueStealth(Color value) {
+        this.value = value;
+    }
+
+    public void addSmallColorPickerObjectToQueue(SmallColorPickerObject smallColorPickerObject) {
+        this.smallColorPickerObjects.add(smallColorPickerObject);
     }
 
     @Override

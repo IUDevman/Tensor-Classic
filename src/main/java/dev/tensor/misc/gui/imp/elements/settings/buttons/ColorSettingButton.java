@@ -9,13 +9,16 @@ import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.Al
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.BigColorPickerObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.OtherHackColorObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
+import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -43,6 +46,12 @@ public final class ColorSettingButton implements ButtonSetting {
     private boolean hoveredOnList = false;
 
     private boolean active;
+
+    private boolean searchingR = false;
+    private boolean searchingG = false;
+    private boolean searchingB = false;
+    private boolean searchingA = false;
+    private String value = "";
 
     private final IntegerSetting scrollY = new IntegerSetting("ColorSettingList Scroll Y", 0, -10000, 10000);
 
@@ -122,6 +131,15 @@ public final class ColorSettingButton implements ButtonSetting {
 
         this.drawString("Copy Color From Other ColorSetting - ", this.getPosX() + 2, this.getPosY() + this.getHeight() - 106, Color.WHITE.getRGB());
 
+        int startX = this.getPosX() + 232;
+        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
+
+        this.drawCenteredString("> Reset <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 18, Color.WHITE.getRGB());
+        this.drawString("  > Red (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getRed() + "]"), startX + 3, startY + 33, Color.WHITE.getRGB());
+        this.drawString("  > Green (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getGreen() + "]"), startX + 3, startY + 48, Color.WHITE.getRGB());
+        this.drawString("  > Blue (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getBlue() + "]"), startX + 3, startY + 63, Color.WHITE.getRGB());
+        this.drawString("  > Alpha (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (!this.hasAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getAlpha() + "]")), startX + 3, startY + 78, Color.WHITE.getRGB());
+
         if (this.otherHackColorObjects.isEmpty()) {
             AtomicInteger count = new AtomicInteger(0);
 
@@ -161,18 +179,67 @@ public final class ColorSettingButton implements ButtonSetting {
 
             this.otherHackColorObjects.forEach(otherHackColorObject -> otherHackColorObject.onClick(mouseX, mouseY));
         }
+
+        int startX = this.getPosX() + 232;
+        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
+
+        int resetXStart = startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2);
+
+        if (this.isHovered(resetXStart, startY + 18, resetXStart + this.stringWidth("> Reset <"), startY + 30, mouseX, mouseY)) {
+            this.resetColorValue();
+            this.clearSearchingText();
+            return;
+        }
+
+        if (this.isHovered(startX + 3, startY + 33, startX + 3 + this.stringWidth("  > Red (0 -> 255) : " + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getRed() + "]")), startY + 43, mouseX, mouseY)) {
+            boolean oldR = this.searchingR;
+            this.clearSearchingText();
+            this.searchingR = !oldR;
+            return;
+        }
+
+        if (this.isHovered(startX + 3, startY + 48, startX + 3 + this.stringWidth("  > Green (0 -> 255) : " + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getGreen() + "]")), startY + 58, mouseX, mouseY)) {
+            boolean oldG = this.searchingG;
+            this.clearSearchingText();
+            this.searchingG = !oldG;
+            return;
+        }
+
+        if (this.isHovered(startX + 3, startY + 63, startX + 3 + this.stringWidth("  > Blue (0 -> 255) : " + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getBlue() + "]")), startY + 73, mouseX, mouseY)) {
+            boolean oldB = this.searchingB;
+            this.clearSearchingText();
+            this.searchingB = !oldB;
+            return;
+
+        }
+
+        if (this.isHovered(startX + 3, startY + 78, startX + 3 + this.stringWidth("  > Alpha (0 -> 255) : " + (!this.hasAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getAlpha() + "]"))), startY + 88, mouseX, mouseY)) {
+            boolean oldA = this.searchingA;
+            this.clearSearchingText();
+
+            if (this.hasAlpha) {
+                this.searchingA = !oldA;
+            }
+
+            return;
+        }
+
+        this.clearSearchingText();
     }
 
     public void onRenderDrag(int screenX, int screenY) {
         this.bigColorPickerObject.onRenderDrag(screenX, screenY);
+        this.alphaPickerObject.onRenderDrag(screenX, screenY);
     }
 
-    public void onClickDrag(double mouseX, double mouseY, int mouseButton) {
+    public void onClickDrag(double mouseX, double mouseY) {
         this.bigColorPickerObject.onClick(mouseX, mouseY);
+        this.alphaPickerObject.onClick(mouseX, mouseY);
     }
 
     public void resetDrag() {
         this.bigColorPickerObject.resetDrag();
+        this.alphaPickerObject.resetDrag();
     }
 
     @Override
@@ -236,7 +303,7 @@ public final class ColorSettingButton implements ButtonSetting {
 
     @Override
     public boolean isSearching() {
-        return false;
+        return this.searchingR || this.searchingG || this.searchingB || this.searchingA;
     }
 
     @Override
@@ -244,7 +311,17 @@ public final class ColorSettingButton implements ButtonSetting {
         if (!searching) {
             this.hoveredOnBack = false;
             this.hoveredOnList = false;
+
+            this.clearSearchingText();
         }
+    }
+
+    private void clearSearchingText() {
+        this.searchingR = false;
+        this.searchingG = false;
+        this.searchingB = false;
+        this.searchingA = false;
+        this.value = "";
     }
 
     @Override
@@ -259,7 +336,46 @@ public final class ColorSettingButton implements ButtonSetting {
 
     @Override
     public void onKeyPressed(char letter, int key) {
-        //todo
+        if (!this.searchingR && !this.searchingG && !this.searchingB && !this.searchingA) return;
+
+        if (key == Keyboard.KEY_DELETE || key == Keyboard.KEY_ESCAPE) {
+            this.clearSearchingText();
+            return;
+        }
+
+        if (key == Keyboard.KEY_RETURN) {
+
+            if (this.value.isEmpty()) {
+                this.clearSearchingText();
+                return;
+            }
+
+            int value1 = Integer.parseInt(this.value);
+
+            if (value1 > 255) value1 = 255;
+            else if (value1 < 0) value1 = 0;
+
+            this.setValueFromText(value1);
+
+            this.value = "";
+            this.clearSearchingText();
+        }
+
+        if (Arrays.stream(this.acceptedKeys()).noneMatch(value -> value == key)) {
+            return;
+        }
+
+        if (key == Keyboard.KEY_BACK) {
+            if (this.value.isEmpty()) return;
+            this.value = this.value.substring(0, this.value.length() - 1);
+            return;
+        }
+
+        if (this.value.length() >= 3) {
+            return;
+        }
+
+        this.value += Keyboard.getKeyName(key);
     }
 
     private LinkedHashMap<ColorSetting, Hack> getAllHackColors() {
@@ -282,9 +398,43 @@ public final class ColorSettingButton implements ButtonSetting {
         return this.otherHackColorObjects.size() * 15;
     }
 
-    public void setNewColorFrom(Color color) {
+    private int[] acceptedKeys() {
+        return new int[]{
+                Keyboard.KEY_0,
+                Keyboard.KEY_1,
+                Keyboard.KEY_2,
+                Keyboard.KEY_3,
+                Keyboard.KEY_4,
+                Keyboard.KEY_5,
+                Keyboard.KEY_6,
+                Keyboard.KEY_7,
+                Keyboard.KEY_8,
+                Keyboard.KEY_9,
+                Keyboard.KEY_BACK
+        };
+    }
+
+    private void setValueFromText(int value) {
+        Color oldColor = this.colorSettingElement.colorSetting.getValue();
+
+        if (this.searchingR) {
+            this.colorSettingElement.colorSetting.setValue(new Color(value, oldColor.getGreen(), oldColor.getBlue(), oldColor.getAlpha()));
+        } else if (this.searchingG) {
+            this.colorSettingElement.colorSetting.setValue(new Color(oldColor.getRed(), value, oldColor.getBlue(), oldColor.getAlpha()));
+        } else if (this.searchingB) {
+            this.colorSettingElement.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), value, oldColor.getAlpha()));
+        } else if (this.searchingA && this.hasAlpha) {
+            this.colorSettingElement.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), value));
+        }
+    }
+
+    private void resetColorValue() {
+        this.colorSettingElement.colorSetting.setValue(this.colorSettingElement.colorSetting.getDefaultValue());
+    }
+
+    public void setNewColorStealth(Color color) {
         Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? this.alphaPickerObject.getAlpha() : 255);
 
-        this.colorSettingElement.colorSetting.setValue(withAlpha);
+        this.colorSettingElement.colorSetting.setValueStealth(withAlpha);
     }
 }

@@ -3,6 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.object.DraggableObject;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
@@ -12,7 +13,11 @@ import java.awt.*;
  * @since 05-27-2026
  */
 
-public final class AlphaPickerObject implements ButtonSettingObject {
+public final class AlphaPickerObject implements ButtonSettingObject, DraggableObject {
+
+    /**
+     * todo: This dragging shit is bugged RN.
+     */
 
     private final ColorSettingButton button;
     private final IntegerSetting x;
@@ -22,6 +27,19 @@ public final class AlphaPickerObject implements ButtonSettingObject {
     private final int width;
     private final int height;
 
+    private int alpha = 255;
+
+    private int screenX;
+    private int screenY;
+
+    private boolean isDragging = false;
+
+    private int barY;
+
+    private int dragOffsetY;
+
+    private int dragYToSet;
+
     public AlphaPickerObject(ColorSettingButton button, IntegerSetting x, IntegerSetting y, int offsetX, int offsetY, int width, int height) {
         this.button = button;
         this.x = x;
@@ -30,6 +48,10 @@ public final class AlphaPickerObject implements ButtonSettingObject {
         this.offsetY = offsetY;
         this.width = width;
         this.height = height;
+
+        if (this.button.hasAlpha) {
+            this.alpha = this.button.colorSettingElement.colorSetting.getValue().getAlpha();
+        }
     }
 
     @Override
@@ -54,6 +76,23 @@ public final class AlphaPickerObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
+        if (this.isDragging) {
+            int startY = this.getPosY() + 2;
+            int oldY = this.barY + startY;
+
+            this.dragYToSet = screenY + dragOffsetY;
+
+            if (this.dragYToSet <= startY + 124 && this.dragYToSet >= startY && this.dragOffsetY != 0) {
+                oldY = this.dragYToSet - startY;
+            } else {
+                this.dragYToSet = oldY + startY;
+            }
+
+            this.barY = oldY;
+
+            this.alpha = this.yToAlpha(this.barY);
+        }
+
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + 2, this.getPosX() + 2, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
@@ -61,7 +100,7 @@ public final class AlphaPickerObject implements ButtonSettingObject {
 
         this.drawGradientRectangleTopBottom(this.getPosX() + 2, this.getPosY() + 2, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.getHeight() - 2, Color.WHITE.getRGB(), Color.BLACK.getRGB());
 
-        int alphaY = this.alphaToY(this.button.hasAlpha ? this.button.colorSettingElement.colorSetting.getValue().getAlpha() : 255);
+        int alphaY = this.alphaToY(this.alpha);
 
         if (alphaY == 0) {
             alphaY = 2;
@@ -73,7 +112,45 @@ public final class AlphaPickerObject implements ButtonSettingObject {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        if (!this.button.hasAlpha) {
+            return;
+        }
 
+        int alphaY = this.alphaToY(this.alpha);
+
+        if (alphaY == 0) {
+            alphaY = 2;
+        }
+
+        if (this.isHovered(this.getPosX() + 2, this.getPosY() + 2 + alphaY, this.getPosX() + this.getWidth() - 2, this.getPosY() + alphaY + 4, mouseX, mouseY)) {
+            this.isDragging = true;
+
+            int boxStartY = this.getPosY() + 2;
+
+            this.dragYToSet = boxStartY + this.barY;
+
+            int newDragOffsetY = (int) (this.dragYToSet - mouseY);
+
+            if (newDragOffsetY + boxStartY + 3 <= 0) {
+                newDragOffsetY = this.dragYToSet;
+            }
+
+            this.dragOffsetY = newDragOffsetY;
+
+        } else {
+            this.isDragging = false;
+        }
+    }
+
+    @Override
+    public void onRenderDrag(int screenX, int screenY) {
+        this.screenX = screenX;
+        this.screenY = screenY;
+    }
+
+    @Override
+    public void resetDrag() {
+        this.isDragging = false;
     }
 
     @Override
@@ -97,18 +174,14 @@ public final class AlphaPickerObject implements ButtonSettingObject {
     }
 
     //height 124
-    private int yToAlpha(int y, int startY) {
-        int dY = startY - y;
+    private int yToAlpha(int y) {
+        int alpha = (y / 124) * 255;
 
-        return (dY / 124) * 255;
+        return Math.min(alpha, 255);
+
     }
 
     public int getAlpha() {
-        if (!this.button.hasAlpha) {
-            return 255;
-        }
-
-        //todo
-        return 255;
+        return this.alpha;
     }
 }

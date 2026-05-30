@@ -36,6 +36,8 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
         this.width = width;
         this.height = height;
 
+        this.button.colorSettingElement.colorSetting.addSmallColorPickerObjectToQueue(this);
+
         this.updateDefaultColor();
     }
 
@@ -61,10 +63,6 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        if (!this.draggingBigColorPicker) {
-            this.updateDefaultColor();
-        }
-
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + 2, this.getPosX() + 2, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
@@ -105,7 +103,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
 
     }
 
-    private void updateDefaultColor() {
+    public void updateDefaultColor() {
         Color color = this.button.colorSettingElement.colorSetting.getValue();
 
         this.defaultColorValueCache = ColorValueCache.getCacheForColor(color, this.defaultColorValueCache == null ? 0 : this.defaultColorValueCache.getDefaultBarHeight());

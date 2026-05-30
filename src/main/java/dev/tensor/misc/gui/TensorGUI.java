@@ -207,7 +207,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
             if (this.activeButton != null && k == 0) {
                 if (this.activeButton instanceof ColorSettingButton) {
-                    ((ColorSettingButton) this.activeButton).onClickDrag(i, j, k);
+                    ((ColorSettingButton) this.activeButton).onClickDrag(i, j);
                 }
 
                 this.activeButton.onClick(i, j);
