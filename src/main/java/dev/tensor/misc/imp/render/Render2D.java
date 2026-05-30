@@ -15,10 +15,10 @@ import java.awt.*;
 public interface Render2D extends Globals {
 
     default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
-        float r = (float) (color >> 16 & 255) / 255.0F;
-        float g = (float) (color >> 8 & 255) / 255.0F;
-        float b = (float) (color & 255) / 255.0F;
-        float a = (float) (color >> 24 & 255) / 255.0F;
+        float r = (color >> 16 & 255) / 255.0F;
+        float g = (color >> 8 & 255) / 255.0F;
+        float b = (color & 255) / 255.0F;
+        float a = (color >> 24 & 255) / 255.0F;
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -33,6 +33,131 @@ public interface Render2D extends Globals {
         Tessellator.instance.addVertex(minX, minY, 0.0F);
         Tessellator.instance.draw();
 
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    default void drawGradientRectangleTopBottom(int minX, int minY, int maxX, int maxY, int topColor, int bottomColor) {
+        float topR = (topColor >> 16 & 255) / 255.0F;
+        float topG = (topColor >> 8 & 255) / 255.0F;
+        float topB = (topColor & 255) / 255.0F;
+        float topA = (topColor >> 24 & 255) / 255.0F;
+
+        float bottomR = (bottomColor >> 16 & 255) / 255.0F;
+        float bottomG = (bottomColor >> 8 & 255) / 255.0F;
+        float bottomB = (bottomColor & 255) / 255.0F;
+        float bottomA = (bottomColor >> 24 & 255) / 255.0F;
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+
+        Tessellator.instance.startDrawingQuads();
+
+        Tessellator.instance.setColorRGBA_F(bottomR, bottomG, bottomB, bottomA);
+
+        Tessellator.instance.addVertex(minX, maxY, 0.0F);
+        Tessellator.instance.addVertex(maxX, maxY, 0.0F);
+
+        Tessellator.instance.setColorRGBA_F(topR, topG, topB, topA);
+
+        Tessellator.instance.addVertex(maxX, minY, 0.0F);
+        Tessellator.instance.addVertex(minX, minY, 0.0F);
+
+        Tessellator.instance.draw();
+
+        GL11.glShadeModel(GL11.GL_FLAT);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    default void drawSmallColorPickerRectangle(int startX, int startY, int width, int height) {
+        float[][] colors = this.getColorGradient();
+
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+
+        Tessellator.instance.startDrawingQuads();
+
+        double yDiff = (double) height / (colors.length - 1);
+
+        for (int i = 0; i < colors.length - 1; i++)  {
+            float[] top = colors[i];
+            float[] bottom = colors[i + 1];
+
+            Tessellator.instance.setColorRGBA_F(bottom[0], bottom[1], bottom[2], bottom[3]);
+
+            float minY = (float) (startY + (yDiff * i));
+            float maxY = (float) (startY + (yDiff * (i + 1)));
+
+            Tessellator.instance.addVertex(startX, maxY, 0.0F);
+            Tessellator.instance.addVertex(startX + width, maxY, 0.0F);
+
+            Tessellator.instance.setColorRGBA_F(top[0], top[1], top[2], top[3]);
+
+            Tessellator.instance.addVertex(startX + width, minY, 0.0F);
+            Tessellator.instance.addVertex(startX, minY, 0.0F);
+        }
+
+        Tessellator.instance.draw();
+
+        GL11.glShadeModel(GL11.GL_FLAT);
+        GL11.glEnable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_BLEND);
+    }
+
+    default float[][] getColorGradient() {
+        return new float[][]{
+                {1F, 0F, 0F, 1F},
+                {1F, 1F, 0F, 1F},
+                {0F, 1F, 0F, 1F},
+                {0F, 1F, 1F, 1F},
+                {0F, 0F, 1F, 1F},
+                {1F, 0F, 1F, 1F},
+                {1F, 0F, 0F, 1F}
+        };
+    }
+
+    //TODO: The R, G, and B should be the color from the 2nd rainbow slider
+    //We somehow have to approximate what color our already set value will land on the rainbow slider
+    //Modifying that slider only effects this one
+    //The point on this slider will determine the new value!
+    //TODO: make the color approximation only happen on load or when value manually inputted!
+
+    //Take R, G, and B values
+    //Filter by size (highest values first).
+    // Find default color with those two, set it on the small color picker
+    // Account for the values on the large color picker
+
+    //Farther to the left, add values
+    //Farther down subtract values
+    //Farther right add to values that are 0 by default
+    default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, int red, int green, int blue) {
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glShadeModel(GL11.GL_SMOOTH);
+
+        Tessellator.instance.startDrawingQuads();
+
+        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
+        Tessellator.instance.addVertex(startX, startY + height, 0.0F);
+
+        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
+        Tessellator.instance.addVertex(startX + width, startY + height, 0.0F);
+
+        Tessellator.instance.setColorRGBA_F(red / 255F, green / 255F, blue / 255F, 1F);
+        Tessellator.instance.addVertex(startX + width, startY, 0.0F);
+
+        Tessellator.instance.setColorRGBA_F(1F, 1F, 1F, 1F);
+        Tessellator.instance.addVertex(startX, startY, 0.0F);
+
+        Tessellator.instance.draw();
+
+        GL11.glShadeModel(GL11.GL_FLAT);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
     }
@@ -219,5 +344,9 @@ public interface Render2D extends Globals {
 
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
+    }
+
+    default boolean isBlackNoAlpha(Color color) {
+        return color.getRed() == 0 && color.getGreen() == 0 && color.getBlue() == 0;
     }
 }

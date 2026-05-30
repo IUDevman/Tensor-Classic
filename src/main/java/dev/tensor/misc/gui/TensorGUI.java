@@ -9,6 +9,8 @@ import dev.tensor.misc.gui.imp.elements.CategoryElement;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
@@ -94,6 +96,16 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                                 if (element.button.isActive()) {
                                     element.button.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue());
                                     this.activeButton = element.button;
+                                    this.isButtonActive.set(true);
+                                }
+                            }
+
+                            if (settingElement instanceof ColorSettingElement) {
+                                ColorSettingElement element = (ColorSettingElement) settingElement;
+
+                                if (element.colorButton.isActive()) {
+                                    element.colorButton.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue());
+                                    this.activeButton = element.colorButton;
                                     this.isButtonActive.set(true);
                                 }
                             }
@@ -318,7 +330,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
             if (this.activeButton != null) {
                 this.activeButton.onHovered(i, j);
-                activeButton.handleScroll(this.scrollingSpeed);
+                this.activeButton.handleScroll(this.scrollingSpeed);
             }
 
             return;
@@ -354,6 +366,13 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                                 KeyPressElement element = (KeyPressElement) settingElement;
 
                                 element.setSearching(false);
+
+                                if (element instanceof ColorSettingElement) {
+                                    ColorSettingElement colorElement = (ColorSettingElement) settingElement;
+
+                                    colorElement.colorButton.close();
+                                }
+
                             } else if (settingElement instanceof ButtonSettingElement) {
                                 ButtonSettingElement element = (ButtonSettingElement) settingElement;
 
