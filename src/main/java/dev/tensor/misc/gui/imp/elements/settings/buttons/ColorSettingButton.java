@@ -163,6 +163,18 @@ public final class ColorSettingButton implements ButtonSetting {
         }
     }
 
+    public void onRenderDrag(int screenX, int screenY) {
+        this.bigColorPickerObject.onRenderDrag(screenX, screenY);
+    }
+
+    public void onClickDrag(double mouseX, double mouseY, int mouseButton) {
+        this.bigColorPickerObject.onClick(mouseX, mouseY);
+    }
+
+    public void resetDrag() {
+        this.bigColorPickerObject.resetDrag();
+    }
+
     @Override
     public void onHovered(int mouseX, int mouseY) {
         this.hoveredOnBack = this.isHovered(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, mouseX, mouseY);
@@ -217,6 +229,7 @@ public final class ColorSettingButton implements ButtonSetting {
         this.setActive(false);
         this.setSearching(false);
         this.scrollY.setValue(0);
+        this.resetDrag();
         //todo
         this.tensorGUI.closeButton();
     }
@@ -267,5 +280,11 @@ public final class ColorSettingButton implements ButtonSetting {
 
     private int getColorListHeight() {
         return this.otherHackColorObjects.size() * 15;
+    }
+
+    public void setNewColorFrom(Color color) {
+        Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? this.alphaPickerObject.getAlpha() : 255);
+
+        this.colorSettingElement.colorSetting.setValue(withAlpha);
     }
 }

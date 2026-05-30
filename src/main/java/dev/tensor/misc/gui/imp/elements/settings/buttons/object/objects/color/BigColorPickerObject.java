@@ -15,7 +15,7 @@ import java.awt.*;
 
 public final class BigColorPickerObject implements ButtonSettingObject {
 
-    private final ColorSettingButton button;
+    public final ColorSettingButton button;
     private final IntegerSetting x;
     private final IntegerSetting y;
     private final int offsetX;
@@ -24,6 +24,9 @@ public final class BigColorPickerObject implements ButtonSettingObject {
     private final int height;
 
     private final TrueColorValuePoint trueColorValuePoint;
+
+    private int screenX;
+    private int screenY;
 
     public BigColorPickerObject(ColorSettingButton button, IntegerSetting x, IntegerSetting y, int offsetX, int offsetY, int width, int height) {
         this.button = button;
@@ -59,7 +62,9 @@ public final class BigColorPickerObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.trueColorValuePoint.update(this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
+        this.trueColorValuePoint.updateAll(this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
+
+        this.trueColorValuePoint.updateColorFromDrag(this.screenX, this.screenY, this.getPosX() + 2, this.getPosY() + 2, this.button);
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
@@ -73,7 +78,16 @@ public final class BigColorPickerObject implements ButtonSettingObject {
 
     @Override
     public void onClick(double mouseX, double mouseY) {
+        this.trueColorValuePoint.handleDraggingClick(this.getPosX() + 2, this.getPosY() + 2, (int) mouseX, (int) mouseY, this);
+    }
 
+    public void onRenderDrag(int screenX, int screenY) {
+        this.screenX = screenX;
+        this.screenY = screenY;
+    }
+
+    public void resetDrag() {
+        this.trueColorValuePoint.resetDrag();
     }
 
     @Override

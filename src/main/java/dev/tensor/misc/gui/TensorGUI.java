@@ -116,6 +116,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         });
 
         if (this.isButtonActive.get()) {
+            if (this.activeButton != null && this.activeButton instanceof ColorSettingButton) {
+                ((ColorSettingButton) this.activeButton).onRenderDrag(i, j);
+            }
+
             return;
         }
 
@@ -202,6 +206,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         if (this.isButtonActive.get()) {
 
             if (this.activeButton != null && k == 0) {
+                if (this.activeButton instanceof ColorSettingButton) {
+                    ((ColorSettingButton) this.activeButton).onClickDrag(i, j, k);
+                }
+
                 this.activeButton.onClick(i, j);
             }
 
@@ -305,6 +313,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
         if (Mouse.getEventButton() == 0) {
             this.isDragging = false;
+
+            if (this.isButtonActive.get() && this.activeButton != null && this.activeButton instanceof ColorSettingButton) {
+                ((ColorSettingButton) this.activeButton).resetDrag();
+            }
         }
 
         if (!Mouse.getEventButtonState()) {

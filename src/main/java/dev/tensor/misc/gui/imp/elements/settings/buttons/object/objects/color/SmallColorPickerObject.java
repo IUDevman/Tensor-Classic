@@ -25,6 +25,8 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
 
     public ColorValueCache defaultColorValueCache;
 
+    private boolean draggingBigColorPicker = false;
+
     public SmallColorPickerObject(ColorSettingButton button, IntegerSetting x, IntegerSetting y, int offsetX, int offsetY, int width, int height) {
         this.button = button;
         this.x = x;
@@ -59,7 +61,9 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.updateDefaultColor();
+        if (!this.draggingBigColorPicker) {
+            this.updateDefaultColor();
+        }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
@@ -75,6 +79,10 @@ public final class SmallColorPickerObject implements ButtonSettingObject {
         }
 
         this.drawRectangle(this.getPosX() + 2, this.getPosY() + 2 + barY, this.getPosX() + this.getWidth() - 2, this.getPosY() + 2 + barY + 2, Color.DARK_GRAY.getRGB());
+    }
+
+    public void setDraggingBigColorPicker(boolean draggingBigColorPicker) {
+        this.draggingBigColorPicker = draggingBigColorPicker;
     }
 
     @Override

@@ -109,6 +109,6 @@ public final class AlphaPickerObject implements ButtonSettingObject {
         }
 
         //todo
-        return 0;
+        return 255;
     }
 }
