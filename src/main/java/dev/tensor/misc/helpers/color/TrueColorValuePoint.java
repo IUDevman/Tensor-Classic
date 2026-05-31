@@ -75,7 +75,7 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
 
         Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.box_Width_Height, this.cache.getDefaultColor());
 
-        colorSettingButton.setNewColorStealth(color);
+        colorSettingButton.setNewColorStealth(color, false);
         this.realColor = color;
     }
 

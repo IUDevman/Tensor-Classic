@@ -15,10 +15,6 @@ import java.awt.*;
 
 public final class AlphaPickerObject implements ButtonSettingObject, DraggableObject {
 
-    /**
-     * todo: This dragging shit is bugged RN.
-     */
-
     private final ColorSettingButton button;
     private final IntegerSetting x;
     private final IntegerSetting y;
@@ -27,18 +23,15 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
     private final int width;
     private final int height;
 
-    private int alpha = 255;
-
-    private int screenX;
-    private int screenY;
-
     private boolean isDragging = false;
 
-    private int barY;
+    private int pointY;
 
     private int dragOffsetY;
 
     private int dragYToSet;
+
+    private int screenY;
 
     public AlphaPickerObject(ColorSettingButton button, IntegerSetting x, IntegerSetting y, int offsetX, int offsetY, int width, int height) {
         this.button = button;
@@ -50,7 +43,7 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
         this.height = height;
 
         if (this.button.hasAlpha) {
-            this.alpha = this.button.colorSettingElement.colorSetting.getValue().getAlpha();
+            this.pointY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
         }
     }
 
@@ -78,19 +71,22 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         if (this.isDragging) {
             int startY = this.getPosY() + 2;
-            int oldY = this.barY + startY;
+            int old = this.pointY;
 
-            this.dragYToSet = screenY + dragOffsetY;
+            this.dragYToSet = this.screenY + this.dragOffsetY;
 
             if (this.dragYToSet <= startY + 124 && this.dragYToSet >= startY && this.dragOffsetY != 0) {
-                oldY = this.dragYToSet - startY;
+                old = this.dragYToSet - startY;
             } else {
-                this.dragYToSet = oldY + startY;
+                this.dragYToSet = old + startY;
             }
 
-            this.barY = oldY;
+            this.pointY = old;
 
-            this.alpha = this.yToAlpha(this.barY);
+            Color oldColor = this.button.colorSettingElement.colorSetting.getValue();
+            this.button.setNewColorStealth(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), this.getAlphaFromY(this.pointY)), true);
+        } else {
+            this.pointY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
         }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
@@ -100,14 +96,9 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
         this.drawGradientRectangleTopBottom(this.getPosX() + 2, this.getPosY() + 2, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.getHeight() - 2, Color.WHITE.getRGB(), Color.BLACK.getRGB());
 
-        int alphaY = this.alphaToY(this.alpha);
+        int barHeight = this.pointY >= 124 ? -2 : 0;
 
-        if (alphaY == 0) {
-            alphaY = 2;
-        }
-
-        this.drawRectangle(this.getPosX() + 2, this.getPosY() + alphaY, this.getPosX() + this.getWidth() - 2, this.getPosY() + alphaY + 2, new Color(this.button.colorSettingElement.colorSetting.getValue().getRed(), this.button.colorSettingElement.colorSetting.getValue().getGreen(), this.button.colorSettingElement.colorSetting.getValue().getBlue(), 255).getRGB());
-
+        this.drawRectangle(this.getPosX() + 2, this.getPosY() + 2 + this.pointY + barHeight, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.pointY + 4 + barHeight, new Color(this.button.colorSettingElement.colorSetting.getValue().getRed(), this.button.colorSettingElement.colorSetting.getValue().getGreen(), this.button.colorSettingElement.colorSetting.getValue().getBlue(), 255).getRGB());
     }
 
     @Override
@@ -116,22 +107,16 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
             return;
         }
 
-        int alphaY = this.alphaToY(this.alpha);
+        int boxStartY = this.getPosY() + 2;
 
-        if (alphaY == 0) {
-            alphaY = 2;
-        }
-
-        if (this.isHovered(this.getPosX() + 2, this.getPosY() + 2 + alphaY, this.getPosX() + this.getWidth() - 2, this.getPosY() + alphaY + 4, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + 2, boxStartY + this.pointY - 3, this.getPosX() + this.getWidth() - 2, boxStartY + this.pointY + 3, mouseX, mouseY)) {
             this.isDragging = true;
 
-            int boxStartY = this.getPosY() + 2;
-
-            this.dragYToSet = boxStartY + this.barY;
+            this.dragYToSet = boxStartY + this.pointY;
 
             int newDragOffsetY = (int) (this.dragYToSet - mouseY);
 
-            if (newDragOffsetY + boxStartY + 3 <= 0) {
+            if (newDragOffsetY + boxStartY + 2 <= 0) {
                 newDragOffsetY = this.dragYToSet;
             }
 
@@ -144,7 +129,6 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
     @Override
     public void onRenderDrag(int screenX, int screenY) {
-        this.screenX = screenX;
         this.screenY = screenY;
     }
 
@@ -168,20 +152,30 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
     }
 
-    private int alphaToY(int alpha) {
-        double diff = (double) alpha / 255;
-        return (int) (diff * 124);
+    private int getYFromAlpha(int alpha) {
+        if (!this.button.hasAlpha) {
+            return 124;
+        }
+
+        double dAlpha = (double) alpha / 255;
+        int y = (int) (124 * dAlpha);
+
+        if (y > 124) {
+            return 124;
+        } else if (y < 0) {
+            return 0;
+        }
+
+        return y;
     }
 
-    //height 124
-    private int yToAlpha(int y) {
-        int alpha = (y / 124) * 255;
+    private int getAlphaFromY(int y) {
+        double dY = (double) y / 124;
 
-        return Math.min(alpha, 255);
+        int alpha = (int) (dY * 255);
 
-    }
-
-    public int getAlpha() {
-        return this.alpha;
+        if (alpha < 0) {
+            return 0;
+        } else return Math.min(alpha, 255);
     }
 }

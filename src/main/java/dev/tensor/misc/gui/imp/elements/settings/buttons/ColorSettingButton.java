@@ -432,8 +432,8 @@ public final class ColorSettingButton implements ButtonSetting {
         this.colorSettingElement.colorSetting.setValue(this.colorSettingElement.colorSetting.getDefaultValue());
     }
 
-    public void setNewColorStealth(Color color) {
-        Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? this.alphaPickerObject.getAlpha() : 255);
+    public void setNewColorStealth(Color color, boolean alpha) {
+        Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? (alpha ? color.getAlpha() :  this.colorSettingElement.colorSetting.getValue().getAlpha()) : 255);
 
         this.colorSettingElement.colorSetting.setValueStealth(withAlpha);
     }
