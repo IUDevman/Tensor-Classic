@@ -83,7 +83,7 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        this.trueColorValuePoint.handleDraggingClick(this.getPosX() + 2, this.getPosY() + 2, (int) mouseX, (int) mouseY, this);
+        this.trueColorValuePoint.handleDraggingClick(this.getPosX() + 2, this.getPosY() + 2, (int) mouseX, (int) mouseY);
     }
 
     @Override

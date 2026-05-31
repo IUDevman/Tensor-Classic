@@ -86,7 +86,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
 
             this.barY = old;
 
-            this.updateDefaultColor(this.getDefaultColorFromBarY(this.barY));
+            this.updateDefaultColor(this.getDefaultColorFromBarHeight(this.barY));
         }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
@@ -111,7 +111,6 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
 
         if (this.isHovered(this.getPosX() + 2, boxStartY + this.barY - 3, this.getPosX() + this.getWidth() - 2, boxStartY + this.barY + 3, mouseX, mouseY)) {
             this.isDragging = true;
-            this.getTensorLogger().info("Test");
 
             this.dragYToSet = boxStartY + this.barY;
 
@@ -164,34 +163,34 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
         this.barY = this.defaultColorValueCache.getDefaultBarHeight();
     }
 
-    private Color getDefaultColorFromBarY(int barY) {
+    private Color getDefaultColorFromBarHeight(int barHeight) {
         int red = 0;
         int green = 0;
         int blue = 0;
 
-        if (barY >= 0 && barY <= 20) {
+        if (barHeight >= 0 && barHeight <= 20) {
             red = 255;
-            green = (int) Math.round((barY / 20.667) * 255);
+            green = (int) Math.round((barHeight / 20.667) * 255);
 
-        } else if (barY > 20 && barY <= 41) {
-            red = (int) Math.round(((41 - barY) / 20.667) * 255);
+        } else if (barHeight > 20 && barHeight <= 41) {
+            red = (int) Math.round(((41 - barHeight) / 20.667) * 255);
             green = 255;
 
-        } else if (barY > 41 && barY <= 62) {
+        } else if (barHeight > 41 && barHeight <= 62) {
             green = 255;
-            blue = (int) Math.round(((barY - 41) / 20.667) * 255);
+            blue = (int) Math.round(((barHeight - 41) / 20.667) * 255);
 
-        } else if (barY > 62 && barY <= 83) {
-            green = (int) Math.round(((82.667 - barY) / 20.667) * 255);
+        } else if (barHeight > 62 && barHeight <= 83) {
+            green = (int) Math.round(((82.667 - barHeight) / 20.667) * 255);
             blue = 255;
 
-        } else if (barY > 83 && barY <= 103) {
-            red = (int) Math.round(((barY - 82.667) / 20.667) * 255);
+        } else if (barHeight > 83 && barHeight <= 103) {
+            red = (int) Math.round(((barHeight - 82.667) / 20.667) * 255);
             blue = 255;
 
-        } else if (barY > 103 && barY <= 124) {
+        } else if (barHeight > 103 && barHeight <= 124) {
             red = 255;
-            blue = (int) Math.round(((124 - barY) / 20.667) * 255);
+            blue = (int) Math.round(((124 - barHeight) / 20.667) * 255);
         }
 
         red = Math.max(0, Math.min(255, red));

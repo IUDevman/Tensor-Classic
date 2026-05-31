@@ -2,7 +2,6 @@ package dev.tensor.misc.helpers.color;
 
 import dev.tensor.misc.gui.imp.Hoverable;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.BigColorPickerObject;
 import dev.tensor.misc.imp.render.Render2D;
 
 import java.awt.*;
@@ -55,8 +54,8 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
 
         int[] old = new int[]{this.pointX, this.pointY};
 
-        this.dragXToSet = screenX + dragOffsetX;
-        this.dragYToSet = screenY + dragOffsetY;
+        this.dragXToSet = screenX + this.dragOffsetX;
+        this.dragYToSet = screenY + this.dragOffsetY;
 
         if (this.dragXToSet <= startX + this.box_Width_Height && this.dragXToSet >= startX && this.dragOffsetX != 0) {
             old[0] = this.dragXToSet - startX;
@@ -88,14 +87,12 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.realColor = color;
     }
 
-    public void handleDraggingClick(int boxStartX, int boxStartY, int mouseX, int mouseY, BigColorPickerObject bigColorPickerObject) {
+    public void handleDraggingClick(int boxStartX, int boxStartY, int mouseX, int mouseY) {
         if (this.isHovered(boxStartX + this.pointX - 3, boxStartY + this.pointY - 3, boxStartX + this.pointX + 3, boxStartY + this.pointY + 3, mouseX, mouseY)) {
             this.isDragging = true;
 
-            int[] old = new int[]{this.pointX, this.pointY};
-
-            this.dragXToSet = boxStartX + old[0];
-            this.dragYToSet = boxStartY + old[1];
+            this.dragXToSet = boxStartX + this.pointX;
+            this.dragYToSet = boxStartY + this.pointY;
 
             int newDragOffsetX = this.dragXToSet - mouseX;
             int newDragOffsetY = this.dragYToSet - mouseY;
