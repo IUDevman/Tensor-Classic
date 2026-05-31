@@ -4,7 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.DraggableObject;
-import dev.tensor.misc.helpers.color.TrueColorValuePoint;
+import dev.tensor.misc.helpers.color.ColorPickerPoint;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
@@ -24,7 +24,7 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
     private final int width;
     private final int height;
 
-    private final TrueColorValuePoint trueColorValuePoint;
+    private final ColorPickerPoint colorPickerPoint;
 
     private int screenX;
     private int screenY;
@@ -38,7 +38,7 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
         this.width = width;
         this.height = height;
 
-        this.trueColorValuePoint = new TrueColorValuePoint(124, this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
+        this.colorPickerPoint = new ColorPickerPoint(124, this.button.smallColorPickerObject.defaultColor, this.button.colorSettingElement.colorSetting.getValue());
     }
 
     @Override
@@ -64,11 +64,11 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         if (!this.button.smallColorPickerObject.isDragging) {
-            this.trueColorValuePoint.updateAll(this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
+            this.colorPickerPoint.updateAll(this.button.smallColorPickerObject.defaultColor, this.button.colorSettingElement.colorSetting.getValue());
 
-            this.trueColorValuePoint.updateColorFromDrag(this.screenX, this.screenY, this.getPosX() + 2, this.getPosY() + 2, this.button);
+            this.colorPickerPoint.updateColorFromDrag(this.screenX, this.screenY, this.getPosX() + 2, this.getPosY() + 2, this.button);
         } else {
-            this.trueColorValuePoint.updateFromSmallColorPickerDragging(this.button.smallColorPickerObject.defaultColorValueCache, this.button);
+            this.colorPickerPoint.updateFromSmallColorPickerDragging(this.button.smallColorPickerObject.defaultColor, this.button);
         }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
@@ -76,14 +76,14 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
         this.drawRectangle(this.getPosX(), this.getPosY() + 2, this.getPosX() + 2, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX() + this.getWidth() - 2, this.getPosY() + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
 
-        this.drawLargeColorPickerRectangle(this.getPosX() + 2, this.getPosY() + 2, 124, 124, this.button.smallColorPickerObject.defaultColorValueCache.getDefaultColor());
+        this.drawLargeColorPickerRectangle(this.getPosX() + 2, this.getPosY() + 2, 124, 124, this.button.smallColorPickerObject.defaultColor.getDefaultColor());
 
-        this.trueColorValuePoint.renderPoint(this.getPosX() + 2, this.getPosY() + 2, Color.DARK_GRAY.getRGB());
+        this.colorPickerPoint.renderPoint(this.getPosX() + 2, this.getPosY() + 2, Color.DARK_GRAY.getRGB());
     }
 
     @Override
     public void onClick(double mouseX, double mouseY) {
-        this.trueColorValuePoint.handleDraggingClick(this.getPosX() + 2, this.getPosY() + 2, (int) mouseX, (int) mouseY);
+        this.colorPickerPoint.handleDraggingClick(this.getPosX() + 2, this.getPosY() + 2, (int) mouseX, (int) mouseY);
     }
 
     @Override
@@ -94,7 +94,7 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
 
     @Override
     public void resetDrag() {
-        this.trueColorValuePoint.resetDrag();
+        this.colorPickerPoint.resetDrag();
     }
 
     @Override
