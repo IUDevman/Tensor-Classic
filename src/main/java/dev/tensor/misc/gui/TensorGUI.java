@@ -4,13 +4,9 @@ import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.gui.imp.Hoverable;
-import dev.tensor.misc.gui.imp.elements.ButtonSetting;
-import dev.tensor.misc.gui.imp.elements.CategoryElement;
-import dev.tensor.misc.gui.imp.elements.HackElement;
-import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
@@ -116,8 +112,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         });
 
         if (this.isButtonActive.get()) {
-            if (this.activeButton != null && this.activeButton instanceof ColorSettingButton) {
-                ((ColorSettingButton) this.activeButton).onRenderDrag(i, j);
+            if (this.activeButton != null && this.activeButton instanceof DraggableButtonSetting) {
+                ((DraggableButtonSetting) this.activeButton).onRenderDrag(i, j);
             }
 
             return;
@@ -206,8 +202,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         if (this.isButtonActive.get()) {
 
             if (this.activeButton != null && k == 0) {
-                if (this.activeButton instanceof ColorSettingButton) {
-                    ((ColorSettingButton) this.activeButton).onClickDrag(i, j);
+                if (this.activeButton instanceof DraggableButtonSetting) {
+                    ((DraggableButtonSetting) this.activeButton).onClickDrag(i, j);
                 }
 
                 this.activeButton.onClick(i, j);
@@ -314,8 +310,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         if (Mouse.getEventButton() == 0) {
             this.isDragging = false;
 
-            if (this.isButtonActive.get() && this.activeButton != null && this.activeButton instanceof ColorSettingButton) {
-                ((ColorSettingButton) this.activeButton).resetDrag();
+            if (this.isButtonActive.get() && this.activeButton != null && this.activeButton instanceof DraggableButtonSetting) {
+                ((DraggableButtonSetting) this.activeButton).resetDrag();
             }
         }
 

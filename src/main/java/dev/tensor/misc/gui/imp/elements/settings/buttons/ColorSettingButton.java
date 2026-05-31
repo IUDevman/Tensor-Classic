@@ -3,6 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.ButtonSetting;
+import dev.tensor.misc.gui.imp.elements.DraggableButtonSetting;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.AlphaPickerObject;
@@ -27,7 +28,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 05-27-2026
  */
 
-public final class ColorSettingButton implements ButtonSetting {
+public final class ColorSettingButton implements ButtonSetting, DraggableButtonSetting {
 
     public final TensorGUI tensorGUI;
     private final ClickGUI clickGUI;
@@ -227,18 +228,21 @@ public final class ColorSettingButton implements ButtonSetting {
         this.clearSearchingText();
     }
 
+    @Override
     public void onRenderDrag(int screenX, int screenY) {
         this.bigColorPickerObject.onRenderDrag(screenX, screenY);
         this.smallColorPickerObject.onRenderDrag(screenX, screenY);
         this.alphaPickerObject.onRenderDrag(screenX, screenY);
     }
 
+    @Override
     public void onClickDrag(double mouseX, double mouseY) {
         this.bigColorPickerObject.onClick(mouseX, mouseY);
         this.smallColorPickerObject.onClick(mouseX, mouseY);
         this.alphaPickerObject.onClick(mouseX, mouseY);
     }
 
+    @Override
     public void resetDrag() {
         this.bigColorPickerObject.resetDrag();
         this.smallColorPickerObject.resetDrag();
