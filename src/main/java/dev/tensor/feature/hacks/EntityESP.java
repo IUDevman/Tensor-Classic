@@ -1,7 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.constant.ChangeWorldEvent;
-import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -52,7 +50,6 @@ public final class EntityESP extends Render3DHack {
     @Override
     public void onDisable(boolean isNull) {
         this.entitiesWithColorToRender.clear();
-        RenderStatic.tensor_playerFrustrum = null;
     }
 
     @Override
@@ -103,14 +100,10 @@ public final class EntityESP extends Render3DHack {
     @Override
     public void onRender3D(float renderPartialTicks) {
         if (this.frustrum.getValue()) {
-            if (RenderStatic.tensor_playerFrustrum == null) {
-                RenderStatic.tensor_playerFrustrum = new Frustrum();
-            }
-
-            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+            RenderStatic.setFrustrumPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
 
             this.entitiesWithColorToRender.forEach((entity, color) -> {
-                if (RenderStatic.tensor_playerFrustrum.isBoundingBoxInFrustum(entity.boundingBox)) {
+                if (RenderStatic.isBoundingBoxInFrustum(entity.boundingBox)) {
                     this.renderESPForEntity(entity, color, renderPartialTicks);
                 }
             });
@@ -119,9 +112,6 @@ public final class EntityESP extends Render3DHack {
             this.entitiesWithColorToRender.forEach((entity, color) -> this.renderESPForEntity(entity, color, renderPartialTicks));
         }
     }
-
-    @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> RenderStatic.tensor_playerFrustrum = null));
 
     private void renderESPForEntity(Entity entity, Color color, float renderPartialTicks) {
         AxisAlignedBB bb = entity.boundingBox;

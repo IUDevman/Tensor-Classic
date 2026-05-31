@@ -200,12 +200,12 @@ public interface Render3D extends Render2D {
             }
 
             int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float r = (float) (damageColor >> 16 & 255) / 255.0F;
-            float g = (float) (damageColor >> 8 & 255) / 255.0F;
-            float b = (float) (damageColor & 255) / 255.0F;
+            float red = (float) (damageColor >> 16 & 255) / 255.0F;
+            float green = (float) (damageColor >> 8 & 255) / 255.0F;
+            float blue = (float) (damageColor & 255) / 255.0F;
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(r, g, b, 1.0F);
+                GL11.glColor4f(red, green, blue, 1.0F);
             }
 
             RenderStatic.tensor_renderItem.renderTexturedQuad(startX, startY + (itemID < 256 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
