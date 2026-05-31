@@ -63,9 +63,13 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.trueColorValuePoint.updateAll(this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
+        if (!this.button.smallColorPickerObject.isDragging) {
+            this.trueColorValuePoint.updateAll(this.button.smallColorPickerObject.defaultColorValueCache, this.button.colorSettingElement.colorSetting.getValue());
 
-        this.trueColorValuePoint.updateColorFromDrag(this.screenX, this.screenY, this.getPosX() + 2, this.getPosY() + 2, this.button);
+            this.trueColorValuePoint.updateColorFromDrag(this.screenX, this.screenY, this.getPosX() + 2, this.getPosY() + 2, this.button);
+        } else {
+            this.trueColorValuePoint.updateFromSmallColorPickerDragging(this.button.smallColorPickerObject.defaultColorValueCache, this.button);
+        }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
         this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());

@@ -229,16 +229,19 @@ public final class ColorSettingButton implements ButtonSetting {
 
     public void onRenderDrag(int screenX, int screenY) {
         this.bigColorPickerObject.onRenderDrag(screenX, screenY);
+        this.smallColorPickerObject.onRenderDrag(screenX, screenY);
         this.alphaPickerObject.onRenderDrag(screenX, screenY);
     }
 
     public void onClickDrag(double mouseX, double mouseY) {
         this.bigColorPickerObject.onClick(mouseX, mouseY);
+        this.smallColorPickerObject.onClick(mouseX, mouseY);
         this.alphaPickerObject.onClick(mouseX, mouseY);
     }
 
     public void resetDrag() {
         this.bigColorPickerObject.resetDrag();
+        this.smallColorPickerObject.resetDrag();
         this.alphaPickerObject.resetDrag();
     }
 
@@ -433,7 +436,7 @@ public final class ColorSettingButton implements ButtonSetting {
     }
 
     public void setNewColorStealth(Color color, boolean alpha) {
-        Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? (alpha ? color.getAlpha() :  this.colorSettingElement.colorSetting.getValue().getAlpha()) : 255);
+        Color withAlpha = new Color(color.getRed(), color.getGreen(), color.getBlue(), this.hasAlpha ? (alpha ? color.getAlpha() : this.colorSettingElement.colorSetting.getValue().getAlpha()) : 255);
 
         this.colorSettingElement.colorSetting.setValueStealth(withAlpha);
     }

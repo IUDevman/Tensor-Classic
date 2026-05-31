@@ -79,10 +79,18 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.realColor = color;
     }
 
+    public void updateFromSmallColorPickerDragging(ColorValueCache cache, ColorSettingButton colorSettingButton) {
+        this.cache = cache;
+
+        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.box_Width_Height, this.cache.getDefaultColor());
+
+        colorSettingButton.setNewColorStealth(color, false);
+        this.realColor = color;
+    }
+
     public void handleDraggingClick(int boxStartX, int boxStartY, int mouseX, int mouseY, BigColorPickerObject bigColorPickerObject) {
         if (this.isHovered(boxStartX + this.pointX - 3, boxStartY + this.pointY - 3, boxStartX + this.pointX + 3, boxStartY + this.pointY + 3, mouseX, mouseY)) {
             this.isDragging = true;
-            bigColorPickerObject.button.smallColorPickerObject.setDraggingBigColorPicker(true);
 
             int[] old = new int[]{this.pointX, this.pointY};
 
@@ -105,7 +113,6 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
 
         } else {
             this.isDragging = false;
-            bigColorPickerObject.button.smallColorPickerObject.setDraggingBigColorPicker(false);
         }
     }
 

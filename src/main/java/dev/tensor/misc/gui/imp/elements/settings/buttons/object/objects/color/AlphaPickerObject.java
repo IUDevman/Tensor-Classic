@@ -25,7 +25,7 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
     private boolean isDragging = false;
 
-    private int pointY;
+    private int barY;
 
     private int dragOffsetY;
 
@@ -43,7 +43,7 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
         this.height = height;
 
         if (this.button.hasAlpha) {
-            this.pointY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
+            this.barY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
         }
     }
 
@@ -71,7 +71,7 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
         if (this.isDragging) {
             int startY = this.getPosY() + 2;
-            int old = this.pointY;
+            int old = this.barY;
 
             this.dragYToSet = this.screenY + this.dragOffsetY;
 
@@ -81,12 +81,12 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
                 this.dragYToSet = old + startY;
             }
 
-            this.pointY = old;
+            this.barY = old;
 
             Color oldColor = this.button.colorSettingElement.colorSetting.getValue();
-            this.button.setNewColorStealth(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), this.getAlphaFromY(this.pointY)), true);
+            this.button.setNewColorStealth(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), this.getAlphaFromY(this.barY)), true);
         } else {
-            this.pointY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
+            this.barY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
         }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
@@ -96,9 +96,9 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
         this.drawGradientRectangleTopBottom(this.getPosX() + 2, this.getPosY() + 2, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.getHeight() - 2, Color.WHITE.getRGB(), Color.BLACK.getRGB());
 
-        int barHeight = this.pointY >= 124 ? -2 : 0;
+        int barHeight = this.barY >= 124 ? -2 : 0;
 
-        this.drawRectangle(this.getPosX() + 2, this.getPosY() + 2 + this.pointY + barHeight, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.pointY + 4 + barHeight, new Color(this.button.colorSettingElement.colorSetting.getValue().getRed(), this.button.colorSettingElement.colorSetting.getValue().getGreen(), this.button.colorSettingElement.colorSetting.getValue().getBlue(), 255).getRGB());
+        this.drawRectangle(this.getPosX() + 2, this.getPosY() + 2 + this.barY + barHeight, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.barY + 4 + barHeight, new Color(this.button.colorSettingElement.colorSetting.getValue().getRed(), this.button.colorSettingElement.colorSetting.getValue().getGreen(), this.button.colorSettingElement.colorSetting.getValue().getBlue(), 255).getRGB());
     }
 
     @Override
@@ -109,10 +109,10 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
 
         int boxStartY = this.getPosY() + 2;
 
-        if (this.isHovered(this.getPosX() + 2, boxStartY + this.pointY - 3, this.getPosX() + this.getWidth() - 2, boxStartY + this.pointY + 3, mouseX, mouseY)) {
+        if (this.isHovered(this.getPosX() + 2, boxStartY + this.barY - 3, this.getPosX() + this.getWidth() - 2, boxStartY + this.barY + 3, mouseX, mouseY)) {
             this.isDragging = true;
 
-            this.dragYToSet = boxStartY + this.pointY;
+            this.dragYToSet = boxStartY + this.barY;
 
             int newDragOffsetY = (int) (this.dragYToSet - mouseY);
 
