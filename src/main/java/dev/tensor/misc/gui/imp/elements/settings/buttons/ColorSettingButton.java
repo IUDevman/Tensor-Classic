@@ -184,9 +184,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         int startX = this.getPosX() + 232;
         int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
 
-        int resetXStart = startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2);
-
-        if (this.isHovered(resetXStart, startY + 18, resetXStart + this.stringWidth("> Reset <"), startY + 30, mouseX, mouseY)) {
+        if (this.isHovered(startX + + this.stringWidth("> Reset <"), startY + 18, startX + (2 * this.stringWidth("> Reset <")) + 4, startY + 30, mouseX, mouseY)) {
             this.resetColorValue();
             this.clearSearchingText();
             return;
@@ -304,7 +302,6 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         this.setSearching(false);
         this.scrollY.setValue(0);
         this.resetDrag();
-        //todo
         this.tensorGUI.closeButton();
     }
 
