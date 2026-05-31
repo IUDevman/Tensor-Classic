@@ -4,11 +4,9 @@ import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.gui.imp.Hoverable;
-import dev.tensor.misc.gui.imp.elements.ButtonSetting;
-import dev.tensor.misc.gui.imp.elements.CategoryElement;
-import dev.tensor.misc.gui.imp.elements.HackElement;
-import dev.tensor.misc.gui.imp.elements.KeyPressElement;
+import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
@@ -97,6 +95,16 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                                     this.isButtonActive.set(true);
                                 }
                             }
+
+                            if (settingElement instanceof ColorSettingElement) {
+                                ColorSettingElement element = (ColorSettingElement) settingElement;
+
+                                if (element.colorButton.isActive()) {
+                                    element.colorButton.render(this, this.clickGUI.fillColor.getValue(), this.clickGUI.selectedFillColor.getValue(), this.clickGUI.outlineColor.getValue());
+                                    this.activeButton = element.colorButton;
+                                    this.isButtonActive.set(true);
+                                }
+                            }
                         });
                     }
                 });
@@ -104,6 +112,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         });
 
         if (this.isButtonActive.get()) {
+            if (this.activeButton != null && this.activeButton instanceof DraggableButtonSetting) {
+                ((DraggableButtonSetting) this.activeButton).onRenderDrag(i, j);
+            }
+
             return;
         }
 
@@ -190,6 +202,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         if (this.isButtonActive.get()) {
 
             if (this.activeButton != null && k == 0) {
+                if (this.activeButton instanceof DraggableButtonSetting) {
+                    ((DraggableButtonSetting) this.activeButton).onClickDrag(i, j);
+                }
+
                 this.activeButton.onClick(i, j);
             }
 
@@ -293,6 +309,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
         if (Mouse.getEventButton() == 0) {
             this.isDragging = false;
+
+            if (this.isButtonActive.get() && this.activeButton != null && this.activeButton instanceof DraggableButtonSetting) {
+                ((DraggableButtonSetting) this.activeButton).resetDrag();
+            }
         }
 
         if (!Mouse.getEventButtonState()) {
@@ -318,7 +338,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
             if (this.activeButton != null) {
                 this.activeButton.onHovered(i, j);
-                activeButton.handleScroll(this.scrollingSpeed);
+                this.activeButton.handleScroll(this.scrollingSpeed);
             }
 
             return;
@@ -354,6 +374,13 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                                 KeyPressElement element = (KeyPressElement) settingElement;
 
                                 element.setSearching(false);
+
+                                if (element instanceof ColorSettingElement) {
+                                    ColorSettingElement colorElement = (ColorSettingElement) settingElement;
+
+                                    colorElement.colorButton.close();
+                                }
+
                             } else if (settingElement instanceof ButtonSettingElement) {
                                 ButtonSettingElement element = (ButtonSettingElement) settingElement;
 

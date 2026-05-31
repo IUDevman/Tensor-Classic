@@ -4,6 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
@@ -20,7 +21,8 @@ import java.util.Arrays;
 
 public final class ColorSettingElement extends SettingElement implements KeyPressElement {
 
-    private final ColorSetting colorSetting;
+    public final ColorSetting colorSetting;
+    public final ColorSettingButton colorButton;
     private boolean searchingR = false;
     private boolean searchingG = false;
     private boolean searchingB = false;
@@ -31,10 +33,14 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     public ColorSettingElement(HackElement hackElement, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.colorSetting = colorSetting;
+        ColorSettingButton colorButton = new ColorSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, this);
 
         if (colorSetting instanceof ColorNoAlphaSetting) {
             this.disabledAlpha = true;
+            colorButton.hasAlpha = false;
         }
+
+        this.colorButton = colorButton;
     }
 
     @Override
@@ -57,7 +63,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         }
     }
 
-    public void clearSearching() {
+    private void clearSearching() {
         this.searchingR = false;
         this.searchingG = false;
         this.searchingB = false;
@@ -102,7 +108,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
         this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
 
-        String name = this.colorSetting.getName() + " : " + "(" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ", " + this.colorSetting.getValue().getAlpha() + ")";
+        String name = this.colorSetting.getName() + " : (Click)";
 
         this.drawCenteredString(name, midX + 3, minY + 3, (Color.WHITE.getRGB()));
 
@@ -126,7 +132,10 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
             }
         });
 
-        if (mouseY > getPosY() + 15 && mouseY <= getPosY() + 30) {
+        if (mouseY > getPosY() && mouseY <= getPosY() + 15) {
+            this.colorButton.setActive(true);
+            this.clearSearching();
+        } else if (mouseY > getPosY() + 15 && mouseY <= getPosY() + 30) {
             this.searchingR = !this.searchingR;
             this.searchingG = false;
             this.searchingB = false;
