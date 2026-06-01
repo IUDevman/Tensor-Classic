@@ -111,5 +111,4 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
     public void setHovered(boolean hovered) {
 
     }
-
 }
