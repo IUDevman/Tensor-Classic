@@ -302,6 +302,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         this.setSearching(false);
         this.scrollY.setValue(0);
         this.resetDrag();
+        this.otherHackColorObjects.clear();
         this.tensorGUI.closeButton();
     }
 
