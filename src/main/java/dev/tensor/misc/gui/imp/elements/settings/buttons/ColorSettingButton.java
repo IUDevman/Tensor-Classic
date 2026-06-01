@@ -8,7 +8,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.AlphaPickerObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.BigColorPickerObject;
-import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.OtherHackColorObject;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.OtherSettingColorObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Hack;
@@ -39,7 +39,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
     public final SmallColorPickerObject smallColorPickerObject;
     public final AlphaPickerObject alphaPickerObject;
 
-    private final ArrayList<OtherHackColorObject> otherHackColorObjects = new ArrayList<>();
+    private final ArrayList<OtherSettingColorObject> otherSettingColorObjects = new ArrayList<>();
 
     public boolean hasAlpha = true;
 
@@ -141,11 +141,11 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         this.drawString("  > Blue (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getBlue() + "]"), startX + 3, startY + 63, Color.WHITE.getRGB());
         this.drawString("  > Alpha (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (!this.hasAlpha ? "[N/A]" : (this.searchingA ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getAlpha() + "]")), startX + 3, startY + 78, Color.WHITE.getRGB());
 
-        if (this.otherHackColorObjects.isEmpty()) {
+        if (this.otherSettingColorObjects.isEmpty()) {
             AtomicInteger count = new AtomicInteger(0);
 
             int offsetY = this.getHeight() - 88;
-            this.getAllHackColors().forEach((colorSetting, hack) -> this.otherHackColorObjects.add(new OtherHackColorObject(this, hack, colorSetting, this.clickGUI.x, this.clickGUI.y, this.scrollY, offsetY, count.getAndAdd(1))));
+            this.getAllHackColors().forEach((colorSetting, hack) -> this.otherSettingColorObjects.add(new OtherSettingColorObject(this, hack, colorSetting, this.clickGUI.x, this.clickGUI.y, this.scrollY, offsetY, count.getAndAdd(1))));
         }
 
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
@@ -165,7 +165,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
 
         GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
 
-        this.otherHackColorObjects.forEach(otherHackColorObject -> otherHackColorObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
+        this.otherSettingColorObjects.forEach(otherSettingColorObject -> otherSettingColorObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
     }
@@ -178,7 +178,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
 
         if (this.isHovered(this.getPosX(), this.getPosY() + this.getHeight() - 88, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
 
-            this.otherHackColorObjects.forEach(otherHackColorObject -> otherHackColorObject.onClick(mouseX, mouseY));
+            this.otherSettingColorObjects.forEach(otherSettingColorObject -> otherSettingColorObject.onClick(mouseX, mouseY));
         }
 
         int startX = this.getPosX() + 232;
@@ -253,9 +253,9 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
 
         if (this.isHovered(this.getPosX(), this.getPosY() + this.getHeight() - 88, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), mouseX, mouseY)) {
             this.hoveredOnList = true;
-            this.otherHackColorObjects.forEach(otherHackColorObject -> otherHackColorObject.onHovered(mouseX, mouseY));
+            this.otherSettingColorObjects.forEach(otherSettingColorObject -> otherSettingColorObject.onHovered(mouseX, mouseY));
         } else {
-            this.otherHackColorObjects.forEach(otherHackColorObject -> otherHackColorObject.setHovered(false));
+            this.otherSettingColorObjects.forEach(otherSettingColorObject -> otherSettingColorObject.setHovered(false));
             this.hoveredOnList = false;
         }
     }
@@ -302,7 +302,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         this.setSearching(false);
         this.scrollY.setValue(0);
         this.resetDrag();
-        this.otherHackColorObjects.clear();
+        this.otherSettingColorObjects.clear();
         this.tensorGUI.closeButton();
     }
 
@@ -400,7 +400,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
     }
 
     private int getColorListHeight() {
-        return this.otherHackColorObjects.size() * 15;
+        return this.otherSettingColorObjects.size() * 15;
     }
 
     private int[] acceptedKeys() {

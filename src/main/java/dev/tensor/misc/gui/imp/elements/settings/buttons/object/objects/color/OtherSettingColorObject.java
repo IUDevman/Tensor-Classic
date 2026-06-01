@@ -16,7 +16,7 @@ import java.awt.*;
  * @since 05-27-2026
  */
 
-public final class OtherHackColorObject implements ButtonSettingObject, Hoverable {
+public final class OtherSettingColorObject implements ButtonSettingObject, Hoverable {
 
     private final ColorSettingButton button;
     private final Hack hack;
@@ -30,7 +30,7 @@ public final class OtherHackColorObject implements ButtonSettingObject, Hoverabl
 
     private boolean hovered;
 
-    public OtherHackColorObject(ColorSettingButton button, Hack hack, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetY, int number) {
+    public OtherSettingColorObject(ColorSettingButton button, Hack hack, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int offsetY, int number) {
         this.button = button;
         this.hack = hack;
         this.colorSetting = colorSetting;
