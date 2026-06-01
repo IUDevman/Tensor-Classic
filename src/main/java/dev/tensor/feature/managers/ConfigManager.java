@@ -52,16 +52,18 @@ public final class ConfigManager implements Manager {
         return this.configPath;
     }
 
-    @SuppressWarnings("deprecation")
     public JsonObject getJsonObjectFromPath(Path path) throws Exception {
-        InputStream inputStream = Files.newInputStream(path);
-        return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonObject();
+        return this.getJsonElementFromPath(path).getAsJsonObject();
     }
 
-    @SuppressWarnings("deprecation")
     public JsonArray getJsonArrayFromPath(Path path) throws Exception {
+        return this.getJsonElementFromPath(path).getAsJsonArray();
+    }
+
+    private JsonElement getJsonElementFromPath(Path path) throws Exception {
         InputStream inputStream = Files.newInputStream(path);
-        return new JsonParser().parse(new InputStreamReader(inputStream)).getAsJsonArray();
+
+        return JsonParser.parseReader(new InputStreamReader(inputStream));
     }
 
     public void registerFile(Path path) throws IOException {
@@ -71,19 +73,18 @@ public final class ConfigManager implements Manager {
     }
 
     public void createAndWrite(Path path, JsonObject jsonObject) throws Exception {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(path.toString()), StandardCharsets.UTF_8);
-
-        String jsonString = gson.toJson(new JsonParser().parse(jsonObject.toString()));
-        outputStreamWriter.write(jsonString);
-        outputStreamWriter.close();
+        this.createAndWrite(path, jsonObject.toString());
     }
 
     public void createAndWrite(Path path, JsonArray jsonArray) throws Exception {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(path.toString()), StandardCharsets.UTF_8);
+        this.createAndWrite(path, jsonArray.toString());
+    }
 
-        String jsonString = gson.toJson(new JsonParser().parse(jsonArray.toString()));
+    private void createAndWrite(Path path, String objectString) throws Exception {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        OutputStreamWriter outputStreamWriter = new OutputStreamWriter(Files.newOutputStream(Paths.get(path.toString())), StandardCharsets.UTF_8);
+
+        String jsonString = gson.toJson(JsonParser.parseString(objectString));
         outputStreamWriter.write(jsonString);
         outputStreamWriter.close();
     }
