@@ -95,7 +95,6 @@ public final class Search extends Render3DHack {
         } else {
             this.blockCoords.clear();
             this.hasTracers = false;
-            RenderStatic.tensor_playerFrustrum = null;
         }
     }
 
@@ -138,7 +137,6 @@ public final class Search extends Render3DHack {
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blockCoords.clear();
         this.hasTracers = false;
-        RenderStatic.tensor_playerFrustrum = null;
     }));
 
     @Override
@@ -157,16 +155,12 @@ public final class Search extends Render3DHack {
         this.hasTracers = false;
 
         if (this.frustrum.getValue()) {
-            if (RenderStatic.tensor_playerFrustrum == null) {
-                RenderStatic.tensor_playerFrustrum = new Frustrum();
-            }
-
-            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+            RenderStatic.setFrustrumPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
 
             switch ((TracerMode) this.tracers.getValue()) {
                 case None:
                     this.blockCoords.forEach(blockCoords1 -> {
-                        if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                        if (blockCoords1.isInFrustrum()) {
                             this.renderForBlock(blockCoords1, false);
                         }
                     });
@@ -180,7 +174,7 @@ public final class Search extends Render3DHack {
                         if (blockCoords1.block.blockID == Block.portal.blockID) {
                             this.hasTracers = true;
                             this.renderForBlock(blockCoords1, true);
-                        } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                        } else if (blockCoords1.isInFrustrum()) {
                             this.renderForBlock(blockCoords1, false);
                         }
                     });
@@ -190,7 +184,7 @@ public final class Search extends Render3DHack {
                         if (this.customTracers.containsBlock(blockCoords1.block.blockID)) {
                             this.hasTracers = true;
                             this.renderForBlock(blockCoords1, true);
-                        } else if (blockCoords1.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+                        } else if (blockCoords1.isInFrustrum()) {
                             this.renderForBlock(blockCoords1, false);
                         }
                     });
@@ -395,7 +389,7 @@ public final class Search extends Render3DHack {
             }
         }
 
-        if (frustrum && !blockCoords.isInFrustrum(RenderStatic.tensor_playerFrustrum)) {
+        if (frustrum && !blockCoords.isInFrustrum()) {
             return;
         }
 
@@ -418,7 +412,6 @@ public final class Search extends Render3DHack {
     public void resetSearch() {
         this.blockCoords.clear();
         this.hasTracers = false;
-        RenderStatic.tensor_playerFrustrum = null;
         this.resetWorld();
     }
 

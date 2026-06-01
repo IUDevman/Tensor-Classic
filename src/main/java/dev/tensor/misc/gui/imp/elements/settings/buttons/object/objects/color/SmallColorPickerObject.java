@@ -4,7 +4,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.DraggableObject;
-import dev.tensor.misc.helpers.color.ColorValueCache;
+import dev.tensor.misc.helpers.color.SliderDefaultColor;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
@@ -24,7 +24,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
     private final int width;
     private final int height;
 
-    public ColorValueCache defaultColorValueCache;
+    public SliderDefaultColor defaultColor;
 
     public boolean isDragging = false;
 
@@ -86,7 +86,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
 
             this.barY = old;
 
-            this.updateDefaultColor(this.getDefaultColorFromBarHeight(this.barY));
+            this.updateDefaultColor(SliderDefaultColor.getDefaultColorFromBarHeight(this.barY));
         }
 
         this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
@@ -96,7 +96,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
 
         this.drawSmallColorPickerRectangle(this.getPosX() + 2, this.getPosY() + 2, 28, 124);
 
-        int barY = this.defaultColorValueCache.getDefaultBarHeight();
+        int barY = this.defaultColor.getDefaultBarHeight();
 
         if (barY > 122) {
             barY = 122;
@@ -159,44 +159,7 @@ public final class SmallColorPickerObject implements ButtonSettingObject, Dragga
     }
 
     private void updateDefaultColor(Color color) {
-        this.defaultColorValueCache = ColorValueCache.getCacheForColor(color, this.defaultColorValueCache == null ? 0 : this.defaultColorValueCache.getDefaultBarHeight());
-        this.barY = this.defaultColorValueCache.getDefaultBarHeight();
-    }
-
-    private Color getDefaultColorFromBarHeight(int barHeight) {
-        int red = 0;
-        int green = 0;
-        int blue = 0;
-
-        if (barHeight >= 0 && barHeight <= 20) {
-            red = 255;
-            green = (int) Math.round((barHeight / 20.667) * 255);
-
-        } else if (barHeight > 20 && barHeight <= 41) {
-            red = (int) Math.round(((41 - barHeight) / 20.667) * 255);
-            green = 255;
-
-        } else if (barHeight > 41 && barHeight <= 62) {
-            green = 255;
-            blue = (int) Math.round(((barHeight - 41) / 20.667) * 255);
-
-        } else if (barHeight > 62 && barHeight <= 83) {
-            green = (int) Math.round(((82.667 - barHeight) / 20.667) * 255);
-            blue = 255;
-
-        } else if (barHeight > 83 && barHeight <= 103) {
-            red = (int) Math.round(((barHeight - 82.667) / 20.667) * 255);
-            blue = 255;
-
-        } else if (barHeight > 103 && barHeight <= 124) {
-            red = 255;
-            blue = (int) Math.round(((124 - barHeight) / 20.667) * 255);
-        }
-
-        red = Math.max(0, Math.min(255, red));
-        green = Math.max(0, Math.min(255, green));
-        blue = Math.max(0, Math.min(255, blue));
-
-        return new Color(red, green, blue);
+        this.defaultColor = SliderDefaultColor.getDefaultColorCache(color, this.defaultColor == null ? 0 : this.defaultColor.getDefaultBarHeight());
+        this.barY = this.defaultColor.getDefaultBarHeight();
     }
 }

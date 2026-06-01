@@ -11,11 +11,11 @@ import java.awt.*;
  * @since 05-29-2026
  */
 
-public final class TrueColorValuePoint implements Render2D, Hoverable {
+public final class ColorPickerPoint implements Render2D, Hoverable {
 
-    private final int box_Width_Height;
+    private final int BOX_WIDTH_OR_HEIGHT;
 
-    private ColorValueCache cache;
+    private SliderDefaultColor cache;
     private Color realColor;
 
     private boolean isDragging = false;
@@ -29,14 +29,14 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
     private int dragXToSet;
     private int dragYToSet;
 
-    public TrueColorValuePoint(int box_Width_Height, ColorValueCache cache, Color realColor) {
-        this.box_Width_Height = box_Width_Height;
+    public ColorPickerPoint(int BOX_WIDTH_OR_HEIGHT, SliderDefaultColor cache, Color realColor) {
+        this.BOX_WIDTH_OR_HEIGHT = BOX_WIDTH_OR_HEIGHT;
         this.cache = cache;
 
         this.updateAll(cache, realColor);
     }
 
-    public void updateAll(ColorValueCache cache, Color newColor) {
+    public void updateAll(SliderDefaultColor cache, Color newColor) {
         this.cache = cache;
 
         this.realColor = new Color(newColor.getRed(), newColor.getGreen(), newColor.getBlue());
@@ -57,13 +57,13 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.dragXToSet = screenX + this.dragOffsetX;
         this.dragYToSet = screenY + this.dragOffsetY;
 
-        if (this.dragXToSet <= startX + this.box_Width_Height && this.dragXToSet >= startX && this.dragOffsetX != 0) {
+        if (this.dragXToSet <= startX + this.BOX_WIDTH_OR_HEIGHT && this.dragXToSet >= startX && this.dragOffsetX != 0) {
             old[0] = this.dragXToSet - startX;
         } else {
             this.dragXToSet = old[0] + startX;
         }
 
-        if (this.dragYToSet <= startY + this.box_Width_Height && this.dragYToSet >= startY && this.dragOffsetY != 0) {
+        if (this.dragYToSet <= startY + this.BOX_WIDTH_OR_HEIGHT && this.dragYToSet >= startY && this.dragOffsetY != 0) {
             old[1] = this.dragYToSet - startY;
         } else {
             this.dragYToSet = old[1] + startY;
@@ -72,16 +72,16 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
         this.pointX = old[0];
         this.pointY = old[1];
 
-        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.box_Width_Height, this.cache.getDefaultColor());
+        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.BOX_WIDTH_OR_HEIGHT, this.cache.getDefaultColor());
 
         colorSettingButton.setNewColorStealth(color, false);
         this.realColor = color;
     }
 
-    public void updateFromSmallColorPickerDragging(ColorValueCache cache, ColorSettingButton colorSettingButton) {
+    public void updateFromSmallColorPickerDragging(SliderDefaultColor cache, ColorSettingButton colorSettingButton) {
         this.cache = cache;
 
-        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.box_Width_Height, this.cache.getDefaultColor());
+        Color color = this.getColorFromCoordinates(this.pointX, this.pointY, this.BOX_WIDTH_OR_HEIGHT, this.cache.getDefaultColor());
 
         colorSettingButton.setNewColorStealth(color, false);
         this.realColor = color;
@@ -119,10 +119,10 @@ public final class TrueColorValuePoint implements Render2D, Hoverable {
 
     public void renderPoint(int startX, int startY, int rgb) {
         int x1 = startX + pointX;
-        int wX = startX + this.box_Width_Height;
+        int wX = startX + this.BOX_WIDTH_OR_HEIGHT;
 
         int y1 = startY + pointY;
-        int wY = startY + this.box_Width_Height;
+        int wY = startY + this.BOX_WIDTH_OR_HEIGHT;
 
         int minX = x1 - (x1 - 3 >= startX ? 3 : x1 - startX);
         int minY = y1 - (y1 - 3 >= startY ? 3 : y1 - startY);

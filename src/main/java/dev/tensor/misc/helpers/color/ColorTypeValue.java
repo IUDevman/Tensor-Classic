@@ -5,12 +5,12 @@ package dev.tensor.misc.helpers.color;
  * @since 05-29-2026
  */
 
-public final class LinkedColorValue {
+public final class ColorTypeValue {
 
     public final Type type;
     public final int value;
 
-    public LinkedColorValue(Type type, int value) {
+    public ColorTypeValue(Type type, int value) {
         this.type = type;
         this.value = value;
     }

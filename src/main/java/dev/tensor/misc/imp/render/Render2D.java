@@ -15,16 +15,16 @@ import java.awt.*;
 public interface Render2D extends Globals {
 
     default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
-        float r = (color >> 16 & 255) / 255.0F;
-        float g = (color >> 8 & 255) / 255.0F;
-        float b = (color & 255) / 255.0F;
-        float a = (color >> 24 & 255) / 255.0F;
+        float red = (color >> 16 & 255) / 255.0F;
+        float green = (color >> 8 & 255) / 255.0F;
+        float blue = (color & 255) / 255.0F;
+        float alpha = (color >> 24 & 255) / 255.0F;
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 
-        GL11.glColor4f(r, g, b, a);
+        GL11.glColor4f(red, green, blue, alpha);
 
         Tessellator.instance.startDrawingQuads();
         Tessellator.instance.addVertex(minX, maxY, 0.0F);
@@ -38,15 +38,15 @@ public interface Render2D extends Globals {
     }
 
     default void drawGradientRectangleTopBottom(int minX, int minY, int maxX, int maxY, int topColor, int bottomColor) {
-        float topR = (topColor >> 16 & 255) / 255.0F;
-        float topG = (topColor >> 8 & 255) / 255.0F;
-        float topB = (topColor & 255) / 255.0F;
-        float topA = (topColor >> 24 & 255) / 255.0F;
+        float topRed = (topColor >> 16 & 255) / 255.0F;
+        float topGreen = (topColor >> 8 & 255) / 255.0F;
+        float topBlue = (topColor & 255) / 255.0F;
+        float topAlpha = (topColor >> 24 & 255) / 255.0F;
 
-        float bottomR = (bottomColor >> 16 & 255) / 255.0F;
-        float bottomG = (bottomColor >> 8 & 255) / 255.0F;
-        float bottomB = (bottomColor & 255) / 255.0F;
-        float bottomA = (bottomColor >> 24 & 255) / 255.0F;
+        float bottomRed = (bottomColor >> 16 & 255) / 255.0F;
+        float bottomGreen = (bottomColor >> 8 & 255) / 255.0F;
+        float bottomBlue = (bottomColor & 255) / 255.0F;
+        float bottomAlpha = (bottomColor >> 24 & 255) / 255.0F;
 
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -55,12 +55,12 @@ public interface Render2D extends Globals {
 
         Tessellator.instance.startDrawingQuads();
 
-        Tessellator.instance.setColorRGBA_F(bottomR, bottomG, bottomB, bottomA);
+        Tessellator.instance.setColorRGBA_F(bottomRed, bottomGreen, bottomBlue, bottomAlpha);
 
         Tessellator.instance.addVertex(minX, maxY, 0.0F);
         Tessellator.instance.addVertex(maxX, maxY, 0.0F);
 
-        Tessellator.instance.setColorRGBA_F(topR, topG, topB, topA);
+        Tessellator.instance.setColorRGBA_F(topRed, topGreen, topBlue, topAlpha);
 
         Tessellator.instance.addVertex(maxX, minY, 0.0F);
         Tessellator.instance.addVertex(minX, minY, 0.0F);
@@ -232,12 +232,12 @@ public interface Render2D extends Globals {
             }
 
             int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float r = (float) (damageColor >> 16 & 255) / 255.0F;
-            float g = (float) (damageColor >> 8 & 255) / 255.0F;
-            float b = (float) (damageColor & 255) / 255.0F;
+            float red = (float) (damageColor >> 16 & 255) / 255.0F;
+            float green = (float) (damageColor >> 8 & 255) / 255.0F;
+            float blue = (float) (damageColor & 255) / 255.0F;
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(r, g, b, 1.0F);
+                GL11.glColor4f(red, green, blue, 1.0F);
             }
 
             RenderStatic.tensor_renderItem.renderTexturedQuad(0, 0, itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);

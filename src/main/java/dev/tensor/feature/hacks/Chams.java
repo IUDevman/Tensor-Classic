@@ -11,7 +11,10 @@ import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.render.RenderStatic;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EntityTypeListSetting;
-import net.minecraft.src.*;
+import net.minecraft.src.Entity;
+import net.minecraft.src.EntityItem;
+import net.minecraft.src.EntityOtherPlayerMP;
+import net.minecraft.src.RenderManager;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,6 @@ public final class Chams extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
-        RenderStatic.tensor_playerFrustrum = null;
         this.resetEntityCache();
     }
 
@@ -58,7 +60,6 @@ public final class Chams extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
-        RenderStatic.tensor_playerFrustrum = null;
         this.resetEntityCache();
     }));
 
@@ -104,13 +105,9 @@ public final class Chams extends Hack {
 
     private boolean passesFrustrumCheck(Entity entity, boolean returnValue) {
         if (returnValue && this.frustrum.getValue()) {
-            if (RenderStatic.tensor_playerFrustrum == null) {
-                RenderStatic.tensor_playerFrustrum = new Frustrum();
-            }
+            RenderStatic.setFrustrumPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
 
-            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
-
-            if (!RenderStatic.tensor_playerFrustrum.isBoundingBoxInFrustum(entity.boundingBox)) {
+            if (!RenderStatic.isBoundingBoxInFrustum(entity.boundingBox)) {
                 return false;
             }
         }

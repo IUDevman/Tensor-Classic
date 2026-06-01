@@ -1,7 +1,7 @@
 package dev.tensor.misc.helpers.block;
 
+import dev.tensor.misc.imp.render.RenderStatic;
 import net.minecraft.src.Block;
-import net.minecraft.src.Frustrum;
 
 /**
  * @author Hoosiers
@@ -25,7 +25,7 @@ public final class BlockCoords {
         this.quickFrustrumBox = new int[]{x + 1, y + 1, z + 1};
     }
 
-    public boolean isInFrustrum(Frustrum frustrum) {
-        return frustrum.isBoxInFrustum(this.x, this.y, this.z, this.quickFrustrumBox[0], this.quickFrustrumBox[1], this.quickFrustrumBox[2]);
+    public boolean isInFrustrum() {
+        return RenderStatic.isBoxInFrustum(this.x, this.y, this.z, this.quickFrustrumBox[0], this.quickFrustrumBox[1], this.quickFrustrumBox[2]);
     }
 }

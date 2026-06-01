@@ -70,8 +70,6 @@ public final class NewChunks extends Render3DHack {
         if (this.deleteOnDisable.getValue()) {
             this.clearLoggedChunks();
         }
-
-        RenderStatic.tensor_playerFrustrum = null;
     }
 
     @Override
@@ -89,11 +87,7 @@ public final class NewChunks extends Render3DHack {
     @Override
     public void onRender3D(float renderPartialTicks) {
         if (this.frustrum.getValue()) {
-            if (RenderStatic.tensor_playerFrustrum == null) {
-                RenderStatic.tensor_playerFrustrum = new Frustrum();
-            }
-
-            RenderStatic.tensor_playerFrustrum.setPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
+            RenderStatic.setFrustrumPosition(RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ);
 
             this.chunksToRender.forEach(ints -> {
 
@@ -101,7 +95,7 @@ public final class NewChunks extends Render3DHack {
                 int y = this.renderY.getValue();
                 int z = ints[1] * 16;
 
-                if (RenderStatic.tensor_playerFrustrum.isBoxInFrustum(x, y, z, x + 16, y + this.thickness.getValue(), z + 16)) {
+                if (RenderStatic.isBoxInFrustum(x, y, z, x + 16, y + this.thickness.getValue(), z + 16)) {
                     this.renderChunk(ints);
                 }
             });
@@ -167,10 +161,7 @@ public final class NewChunks extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
-        this.clearLoggedChunks();
-        RenderStatic.tensor_playerFrustrum = null;
-    }));
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.clearLoggedChunks()));
 
     //Ways to tell if a chunk is newly generated: sand/gravel falling and water/lava flowing.
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
