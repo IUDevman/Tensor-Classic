@@ -33,6 +33,13 @@ public class ColorSetting implements Setting<Color> {
         this.value = value;
     }
 
+    public ColorSetting(String name, Color value, boolean rainbow) {
+        this.name = name;
+        this.defaultValue = value;
+        this.value = value;
+        this.rainbow = rainbow;
+    }
+
     @Override
     public String getName() {
         return this.name;

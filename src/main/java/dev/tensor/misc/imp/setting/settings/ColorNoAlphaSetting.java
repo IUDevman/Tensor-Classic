@@ -12,4 +12,8 @@ public class ColorNoAlphaSetting extends ColorSetting {
     public ColorNoAlphaSetting(String NAME, Color VALUE) {
         super(NAME, VALUE);
     }
+
+    public ColorNoAlphaSetting(String NAME, Color VALUE, boolean RAINBOW) {
+        super(NAME, VALUE, RAINBOW);
+    }
 }
