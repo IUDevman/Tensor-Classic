@@ -133,7 +133,7 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         this.drawString("Copy Color From Other ColorSetting - ", this.getPosX() + 2, this.getPosY() + this.getHeight() - 106, Color.WHITE.getRGB());
 
         int startX = this.getPosX() + 232;
-        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
+        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 10;
 
         this.drawCenteredString("> Reset <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 3, Color.WHITE.getRGB());
         this.drawCenteredString("> Rainbow <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 18, this.colorSettingElement.colorSetting.isRainbow() ? new Color(this.colorSettingElement.colorSetting.getValueRainbow().getRed(), this.colorSettingElement.colorSetting.getValueRainbow().getGreen(), this.colorSettingElement.colorSetting.getValueRainbow().getBlue(), 255).getRGB() : Color.WHITE.getRGB());
@@ -183,15 +183,15 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         }
 
         int startX = this.getPosX() + 232;
-        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
+        int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 8;
 
-        if (this.isHovered(startX + this.stringWidth("> Reset <"), startY + 3, startX + (2 * this.stringWidth("> Reset <")) + 4, startY + 15, mouseX, mouseY)) {
+        if (this.isHovered(startX + this.stringWidth("> Reset <"), startY + 3, startX + (2 * this.stringWidth("> Reset <")) + 4, startY + 13, mouseX, mouseY)) {
             this.colorSettingElement.colorSetting.reset();
             this.clearSearchingText();
             return;
         }
 
-        if (this.isHovered(startX + this.stringWidth("> Rainbow <") - 12, startY + 18, startX + (2 * this.stringWidth("> Rainbow <")) - 12, startY + 30, mouseX, mouseY)) {
+        if (this.isHovered(startX + this.stringWidth("> Rainbow <") - 12, startY + 18, startX + (2 * this.stringWidth("> Rainbow <")) - 12, startY + 28, mouseX, mouseY)) {
             this.colorSettingElement.colorSetting.setRainbow(!this.colorSettingElement.colorSetting.isRainbow());
             this.clearSearchingText();
             return;
