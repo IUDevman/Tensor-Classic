@@ -29,8 +29,8 @@ public final class Coordinates extends Hack implements HUDObject {
     public final BooleanSetting compass = new BooleanSetting("Compass", true);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting type = new EnumSetting("Type", Type.Both);
-    public final ColorSetting overworldColor = new ColorSetting("Overworld Color", new Color(255, 255, 255, 255));
-    public final ColorSetting netherColor = new ColorSetting("Nether Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting overworldColor = new ColorNoAlphaSetting("Overworld Color", new Color(255, 255, 255, 255));
+    public final ColorNoAlphaSetting netherColor = new ColorNoAlphaSetting("Nether Color", new Color(255, 0, 0, 255));
 
     private final String coordinatesString = "({X}, {Y}, {Z})";
     private final String coordinatesStringWithDirection = this.coordinatesString + "{D}";
