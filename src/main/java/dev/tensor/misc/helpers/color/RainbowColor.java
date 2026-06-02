@@ -2,6 +2,11 @@ package dev.tensor.misc.helpers.color;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * @author Hoosiers
+ * @since 06-01-2026
+ */
+
 public final class RainbowColor {
 
     public static AtomicInteger[] getRainbow() {
