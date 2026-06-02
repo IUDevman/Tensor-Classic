@@ -300,6 +300,12 @@ public final class HackManager implements Manager {
             return;
         }
 
+        HUDEditor hudEditor = this.getHack(HUDEditor.class);
+
+        if (hudEditor.isRenderingInEditor()) {
+            return;
+        }
+
         this.getEnabledHudObjects().forEach(hack -> ((HUDObject) hack).render());
     }));
 

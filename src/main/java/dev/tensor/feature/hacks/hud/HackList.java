@@ -4,7 +4,10 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
-import dev.tensor.misc.imp.setting.settings.*;
+import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
+import dev.tensor.misc.imp.setting.settings.DoubleSetting;
+import dev.tensor.misc.imp.setting.settings.EnumSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 import java.awt.*;
 import java.util.ArrayList;

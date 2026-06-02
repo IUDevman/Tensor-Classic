@@ -44,6 +44,14 @@ public final class HUDEditor extends Hack {
         this.getMinecraft().displayGuiScreen(this.tensorHUDEditor);
     }
 
+    public boolean isRenderingInEditor() {
+        if (!this.isEnabled()) {
+            return false;
+        }
+
+        return !this.render.getValue().equals(RenderType.Outline);
+    }
+
     public enum RenderType {
         Outline,
         Object,
