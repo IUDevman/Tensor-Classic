@@ -127,7 +127,7 @@ public final class Speedometer extends Hack implements HUDObject {
         this.prepareScale();
 
         String value = "Speed: " + this.coordinateFormat.format(this.currentSpeed) + " " + this.getUnits();
-        this.drawString(value, this.getOffSetX(value), 1, this.color.getValue().getRGB());
+        this.drawString(value, this.getOffSetX(value), 1, this.color.getValueRainbow().getRGB());
 
         this.finishScale();
     }

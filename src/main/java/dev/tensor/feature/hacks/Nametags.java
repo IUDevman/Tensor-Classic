@@ -76,8 +76,8 @@ public final class Nametags extends Render3DHack {
     private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks) {
         String username = entity.username;
 
-        Color textColor = this.friends.getValue() && this.getFriendManager().isFriend(username) ? this.friendColor.getValue() : this.textColor.getValue();
-        Color fillColor = this.backgroundColor.getValue();
+        Color textColor = this.friends.getValue() && this.getFriendManager().isFriend(username) ? this.friendColor.getValueRainbow() : this.textColor.getValueRainbow();
+        Color fillColor = this.backgroundColor.getValueRainbow();
 
         String health = "";
         String healthPost = "";

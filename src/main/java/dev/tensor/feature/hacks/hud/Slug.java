@@ -102,7 +102,7 @@ public final class Slug extends Hack implements HUDObject {
 
         this.getMinecraft().renderEngine.bindTexture(texture);
 
-        GL11.glColor4f(this.color.getValue().getRed() / 255F, this.color.getValue().getGreen() / 255F, this.color.getValue().getBlue() / 255F, 1F);
+        GL11.glColor4f(this.color.getValueRainbow().getRed() / 255F, this.color.getValueRainbow().getGreen() / 255F, this.color.getValueRainbow().getBlue() / 255F, 1F);
 
         if (this.mode.getValue().equals(Mode.VibeCoded)) {
             GL11.glTranslatef(128F, 128F, -0F);

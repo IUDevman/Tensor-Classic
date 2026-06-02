@@ -119,7 +119,7 @@ public final class Scaffold extends Render3DHack {
         double my = 1 + ry;
         double mz = 1 + rz;
 
-        Color color = this.esp_color.getValue();
+        Color color = this.esp_color.getValueRainbow();
 
         switch ((RenderMode) this.renderMode.getValue()) {
             case Outline:

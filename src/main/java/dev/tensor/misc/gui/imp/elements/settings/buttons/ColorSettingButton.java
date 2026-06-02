@@ -135,7 +135,8 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         int startX = this.getPosX() + 232;
         int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
 
-        this.drawCenteredString("> Reset <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 18, Color.WHITE.getRGB());
+        this.drawCenteredString("> Reset <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 3, Color.WHITE.getRGB());
+        this.drawCenteredString("> Rainbow <", startX + ((this.getPosX() + this.getWidth() - 10 - startX) / 2), startY + 18, this.colorSettingElement.colorSetting.isRainbow() ? new Color(this.colorSettingElement.colorSetting.getValueRainbow().getRed(), this.colorSettingElement.colorSetting.getValueRainbow().getGreen(), this.colorSettingElement.colorSetting.getValueRainbow().getBlue(), 255).getRGB() : Color.WHITE.getRGB());
         this.drawString("  > Red (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingR ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getRed() + "]"), startX + 3, startY + 33, Color.WHITE.getRGB());
         this.drawString("  > Green (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingG ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getGreen() + "]"), startX + 3, startY + 48, Color.WHITE.getRGB());
         this.drawString("  > Blue (0 -> 255) : " + ChatColor.LIGHT_GRAY.text() + (this.searchingB ? (this.value.equalsIgnoreCase("") ? "[...]" : this.value) : "[" + this.colorSettingElement.colorSetting.getValue().getBlue() + "]"), startX + 3, startY + 63, Color.WHITE.getRGB());
@@ -184,8 +185,14 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         int startX = this.getPosX() + 232;
         int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 7;
 
-        if (this.isHovered(startX + +this.stringWidth("> Reset <"), startY + 18, startX + (2 * this.stringWidth("> Reset <")) + 4, startY + 30, mouseX, mouseY)) {
-            this.resetColorValue();
+        if (this.isHovered(startX + this.stringWidth("> Reset <"), startY + 3, startX + (2 * this.stringWidth("> Reset <")) + 4, startY + 15, mouseX, mouseY)) {
+            this.colorSettingElement.colorSetting.reset();
+            this.clearSearchingText();
+            return;
+        }
+
+        if (this.isHovered(startX + this.stringWidth("> Rainbow <") - 12, startY + 18, startX + (2 * this.stringWidth("> Rainbow <")) - 12, startY + 30, mouseX, mouseY)) {
+            this.colorSettingElement.colorSetting.setRainbow(!this.colorSettingElement.colorSetting.isRainbow());
             this.clearSearchingText();
             return;
         }
@@ -431,10 +438,6 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
         } else if (this.searchingA && this.hasAlpha) {
             this.colorSettingElement.colorSetting.setValue(new Color(oldColor.getRed(), oldColor.getGreen(), oldColor.getBlue(), value));
         }
-    }
-
-    private void resetColorValue() {
-        this.colorSettingElement.colorSetting.setValue(this.colorSettingElement.colorSetting.getDefaultValue());
     }
 
     public void setNewColorStealth(Color color, boolean alpha) {

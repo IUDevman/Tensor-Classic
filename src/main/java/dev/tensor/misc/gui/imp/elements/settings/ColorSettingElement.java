@@ -99,7 +99,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValue().getRGB());
+        this.drawRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValueRainbow().getRGB());
         this.drawRectangle(minX + 1, minY + 15, maxX - 1, maxY - 45, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.drawRectangle(minX + 1, minY + 30, maxX - 1, maxY - 30, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.drawRectangle(minX + 1, minY + 45, maxX - 1, maxY - 15, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());

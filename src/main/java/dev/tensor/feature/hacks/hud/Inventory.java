@@ -87,11 +87,11 @@ public final class Inventory extends Hack implements HUDObject {
 
     @Override
     public void render() {
-        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.fillColor.getValueRainbow().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getScaledOutline(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(this.getMinX().getValue(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getScaledOutline(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(this.getMinX().getValue() + this.getWidth() - this.getScaledOutline(), this.getMinY().getValue() + this.getScaledOutline(), this.getMinX().getValue() + this.getWidth(), this.getMinY().getValue() + this.getHeight() - this.getScaledOutline(), this.outlineColor.getValueRainbow().getRGB());
 
         if (this.itemsToRender.isEmpty()) {
             return;

@@ -33,7 +33,7 @@ public final class CustomClouds extends Hack {
         }
 
         if (this.customColor.getValue()) {
-            event.setNewColor(this.color.getValue());
+            event.setNewColor(this.color.getValueRainbow());
         }
     }));
 }

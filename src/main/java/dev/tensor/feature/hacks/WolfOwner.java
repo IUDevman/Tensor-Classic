@@ -57,7 +57,7 @@ public final class WolfOwner extends Render3DHack {
                 String owner = entityWolf.getWolfOwner();
 
                 if (owner != null && !owner.isEmpty()) {
-                    Color color1 = owner.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValue() : this.getFriendManager().isFriend(owner) ? this.friendColor.getValue() : this.color.getValue();
+                    Color color1 = owner.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValueRainbow() : this.getFriendManager().isFriend(owner) ? this.friendColor.getValueRainbow() : this.color.getValueRainbow();
 
                     this.wolvesWithColorToRender.put(entityWolf, color1);
                 }

@@ -71,7 +71,7 @@ public final class ModInfo extends Hack implements HUDObject {
     public void render() {
         this.prepareScale();
 
-        this.drawString(this.modInfo, 1, 1, this.textColor.getValue().getRGB());
+        this.drawString(this.modInfo, 1, 1, this.textColor.getValueRainbow().getRGB());
 
         this.finishScale();
     }

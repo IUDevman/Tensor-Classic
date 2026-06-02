@@ -78,10 +78,10 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
     }
 
     private void drawHudObjectOutline(HUDObject hudObject) {
-        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + 2, this.hudEditor.outlineColor.getValue().getRGB());
-        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), this.hudEditor.outlineColor.getValue().getRGB());
-        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + 2, hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValue().getRGB());
-        this.drawRectangle(hudObject.getMinX().getValue() + hudObject.getWidthScaled() - 2, hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValue().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + 2, this.hudEditor.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), this.hudEditor.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue(), hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + 2, hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(hudObject.getMinX().getValue() + hudObject.getWidthScaled() - 2, hudObject.getMinY().getValue() + 2, hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled() - 2, this.hudEditor.outlineColor.getValueRainbow().getRGB());
     }
 
     @Override

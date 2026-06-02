@@ -63,12 +63,12 @@ public final class Tracers extends Render3DHack {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.entitiesWithColorToTrace.put(otherPlayer, this.friendsColor.getValue());
+                    this.entitiesWithColorToTrace.put(otherPlayer, this.friendsColor.getValueRainbow());
                     return;
                 }
 
                 if (this.players.getValue()) {
-                    this.entitiesWithColorToTrace.put(otherPlayer, this.playersColor.getValue());
+                    this.entitiesWithColorToTrace.put(otherPlayer, this.playersColor.getValueRainbow());
                     return;
                 }
 
@@ -78,22 +78,22 @@ public final class Tracers extends Render3DHack {
             Class<? extends Entity> entityClass = entity.getClass();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
-                this.entitiesWithColorToTrace.put(entity, this.animalsColor.getValue());
+                this.entitiesWithColorToTrace.put(entity, this.animalsColor.getValueRainbow());
                 return;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
-                this.entitiesWithColorToTrace.put(entity, this.hostilesColor.getValue());
+                this.entitiesWithColorToTrace.put(entity, this.hostilesColor.getValueRainbow());
                 return;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.entitiesWithColorToTrace.put(entity, this.itemColor.getValue());
+                this.entitiesWithColorToTrace.put(entity, this.itemColor.getValueRainbow());
                 return;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
-                this.entitiesWithColorToTrace.put(entity, this.miscColor.getValue());
+                this.entitiesWithColorToTrace.put(entity, this.miscColor.getValueRainbow());
             }
         });
     }

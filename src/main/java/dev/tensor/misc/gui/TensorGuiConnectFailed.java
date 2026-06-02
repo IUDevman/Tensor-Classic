@@ -52,7 +52,7 @@ public final class TensorGuiConnectFailed extends GuiConnectFailed implements Re
     public void drawScreen(int i, int j, float f) {
         String timeRemaining = this.timeFormat.format(this.secondsRemaining);
 
-        this.drawCenteredString(TensorClassic.MOD_NAME + ": Time until restart is [" + timeRemaining + "s]!", this.width / 2, this.height / 2 + 100, this.autoReconnect.textColor.getValue().getRGB());
+        this.drawCenteredString(TensorClassic.MOD_NAME + ": Time until restart is [" + timeRemaining + "s]!", this.width / 2, this.height / 2 + 100, this.autoReconnect.textColor.getValueRainbow().getRGB());
 
         super.drawScreen(i, j, f);
     }

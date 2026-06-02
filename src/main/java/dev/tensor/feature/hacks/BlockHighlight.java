@@ -115,7 +115,7 @@ public final class BlockHighlight extends Render3DHack {
             }
         }
 
-        Color color = this.color.getValue();
+        Color color = this.color.getValueRainbow();
 
         switch ((Render) this.render.getValue()) {
             case Outline:

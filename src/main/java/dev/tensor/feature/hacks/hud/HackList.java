@@ -148,7 +148,7 @@ public final class HackList extends Hack implements HUDObject {
 
         switch ((ColorType) this.colorType.getValue()) {
             case All:
-                return this.textColor.getValue();
+                return this.textColor.getValueRainbow();
             case Category:
                 return this.getColorFromCategory(hack.CATEGORY);
         }

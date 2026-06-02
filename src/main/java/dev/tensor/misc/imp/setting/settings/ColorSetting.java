@@ -5,10 +5,12 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
 import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.color.RainbowColor;
 import dev.tensor.misc.imp.setting.Setting;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hoosiers
@@ -20,6 +22,8 @@ public class ColorSetting implements Setting<Color> {
     private final String name;
     private final Color defaultValue;
     private Color value;
+
+    private boolean rainbow = false;
 
     private final ArrayList<SmallColorPickerObject> smallColorPickerObjects = new ArrayList<>();
 
@@ -42,6 +46,24 @@ public class ColorSetting implements Setting<Color> {
     @Override
     public Color getValue() {
         return this.value;
+    }
+
+    public boolean isRainbow() {
+        return this.rainbow;
+    }
+
+    public void setRainbow(boolean rainbow) {
+        this.rainbow = rainbow;
+    }
+
+    public Color getValueRainbow() {
+        if (!this.isRainbow()) {
+            return this.getValue();
+        }
+
+        AtomicInteger[] rainbow = RainbowColor.getRainbow();
+
+        return new Color(rainbow[0].get(), rainbow[1].get(), rainbow[2].get(), this.value.getAlpha());
     }
 
     @Override
@@ -68,20 +90,26 @@ public class ColorSetting implements Setting<Color> {
     public void setValueFromString(String string) throws Exception {
         String[] values = string.split("_");
 
-        if (values.length < 4) {
-            throw new Exception();
+        if (values.length < 5) {
+            if (values.length < 4) {
+                throw new Exception();
+            } else {
+                this.setValuesFromString(values[0], values[1], values[2], values[3], "false");
+                return;
+            }
         }
 
-        this.setValuesFromString(values[0], values[1], values[2], values[3]);
+        this.setValuesFromString(values[0], values[1], values[2], values[3], values[4]);
     }
 
-    private void setValuesFromString(String RED, String GREEN, String BLUE, String ALPHA) throws NumberFormatException {
+    private void setValuesFromString(String RED, String GREEN, String BLUE, String ALPHA, String RAINBOW) throws NumberFormatException {
         int RED_INT = Integer.parseInt(RED);
         int GREEN_INT = Integer.parseInt(GREEN);
         int BLUE_INT = Integer.parseInt(BLUE);
         int ALPHA_INT = Integer.parseInt(ALPHA);
 
         this.setValue(new Color(RED_INT, GREEN_INT, BLUE_INT, ALPHA_INT));
+        this.rainbow = Boolean.parseBoolean(RAINBOW);
     }
 
     @Override
@@ -95,8 +123,14 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public void save(JsonObject jsonObject) {
-        String value = this.getValue().getRed() + "_" + this.getValue().getGreen() + "_" + this.getValue().getBlue() + "_" + this.getValue().getAlpha();
+        String value = this.getValue().getRed() + "_" + this.getValue().getGreen() + "_" + this.getValue().getBlue() + "_" + this.getValue().getAlpha() + "_" + this.rainbow;
 
         jsonObject.add(this.getName(), new JsonPrimitive(value));
+    }
+
+    @Override
+    public void reset() {
+        this.rainbow = false;
+        Setting.super.reset();
     }
 }

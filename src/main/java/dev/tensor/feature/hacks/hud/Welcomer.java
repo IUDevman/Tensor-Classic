@@ -70,7 +70,7 @@ public final class Welcomer extends Hack implements HUDObject {
         this.prepareScale();
 
         String welcome = this.getWelcomer();
-        this.drawCenteredString(welcome, 1 + (this.getFontRenderer().getStringWidth(welcome) / 2), 1, this.textColor.getValue().getRGB());
+        this.drawCenteredString(welcome, 1 + (this.getFontRenderer().getStringWidth(welcome) / 2), 1, this.textColor.getValueRainbow().getRGB());
 
         this.finishScale();
     }

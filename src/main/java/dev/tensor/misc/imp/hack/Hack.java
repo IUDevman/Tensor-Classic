@@ -38,6 +38,8 @@ public abstract class Hack implements Globals {
 
         boolean messages() default true;
 
+        boolean toggleable() default true;
+
         boolean enabled() default false;
     }
 
@@ -54,6 +56,8 @@ public abstract class Hack implements Globals {
     public boolean DRAWN = this.getInfo().drawn();
 
     public boolean MESSAGES = this.getInfo().messages();
+
+    public boolean TOGGLEABLE = this.getInfo().toggleable();
 
     private boolean ENABLED = this.getInfo().enabled();
 
@@ -129,6 +133,14 @@ public abstract class Hack implements Globals {
     }
 
     private void disable() {
+        if (!this.TOGGLEABLE) {
+            if (!this.failsNullCheck()) {
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + this.NAME + " cannot be disabled!");
+            }
+
+            return;
+        }
+
         this.ENABLED = false;
 
         this.actions.forEach(action -> this.getEventManager().removeAction(action));

@@ -192,7 +192,7 @@ public final class Radar extends Hack implements HUDObject {
 
                     logoutSpots1.playersLogged.parallelStream().forEach(logoutSpot -> {
                         if (this.isWithinRange(logoutSpot.coords.x, logoutSpot.coords.z, finalPlayerX, finalPlayerZ, radiusSq)) {
-                            int color = this.getFriendManager().isFriend(logoutSpot.username) ? this.friendsColor.getValue().getRGB() : this.playersColor.getValue().getRGB();
+                            int color = this.getFriendManager().isFriend(logoutSpot.username) ? this.friendsColor.getValueRainbow().getRGB() : this.playersColor.getValueRainbow().getRGB();
 
                             this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + (logoutSpot.coords.x - finalPlayerX) * 100 / radius), (int) (((double) this.getHeight() / 2) + (logoutSpot.coords.z - finalPlayerZ) * 100 / radius), color, (int) (logoutSpot.coords.y - finalPlayerY), true, sphereRadius));
                         }
@@ -207,7 +207,7 @@ public final class Radar extends Hack implements HUDObject {
             if (waypoints1 != null && waypoints1.isEnabled()) {
                 if (!waypoints1.waypointsToRender.isEmpty()) {
 
-                    int color = this.waypointColor.getValue().getRGB();
+                    int color = this.waypointColor.getValueRainbow().getRGB();
 
                     final double finalPlayerX = playerX;
                     final double finalPlayerY = playerY;
@@ -231,7 +231,7 @@ public final class Radar extends Hack implements HUDObject {
                 double dY = freeY - playerZ;
 
                 if (this.squaredD(dX) <= radiusSq && this.squaredD(dY) <= radiusSq) {
-                    this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValue().getRGB(), (int) (freecam.oldY - playerY), true, sphereRadius));
+                    this.pointsToRender.add(new EntityPoint((int) (((double) this.getWidth() / 2) + dX * 100 / radius), (int) (((double) this.getHeight() / 2) + dY * 100 / radius), this.friendsColor.getValueRainbow().getRGB(), (int) (freecam.oldY - playerY), true, sphereRadius));
                 }
             }
         }
@@ -243,29 +243,29 @@ public final class Radar extends Hack implements HUDObject {
     public void render() {
         this.prepareScale(true);
 
-        this.drawRectangle(1, 1, this.getWidth() - 1, this.getHeight() - 1, this.fillColor.getValue().getRGB());
+        this.drawRectangle(1, 1, this.getWidth() - 1, this.getHeight() - 1, this.fillColor.getValueRainbow().getRGB());
 
         if (!this.pointsToRender.isEmpty()) {
             this.pointsToRender.forEach(EntityPoint::render);
         }
 
-        this.drawCenteredString("N", this.getWidth() / 2, 5, this.markerColors.getValue().getRGB());
-        this.drawCenteredString("S", this.getWidth() / 2, this.getHeight() - 11, this.markerColors.getValue().getRGB());
-        this.drawCenteredString("E", this.getWidth() - 7, this.getHeight() / 2, this.markerColors.getValue().getRGB());
-        this.drawCenteredString("W", 7, this.getHeight() / 2, this.markerColors.getValue().getRGB());
+        this.drawCenteredString("N", this.getWidth() / 2, 5, this.markerColors.getValueRainbow().getRGB());
+        this.drawCenteredString("S", this.getWidth() / 2, this.getHeight() - 11, this.markerColors.getValueRainbow().getRGB());
+        this.drawCenteredString("E", this.getWidth() - 7, this.getHeight() / 2, this.markerColors.getValueRainbow().getRGB());
+        this.drawCenteredString("W", 7, this.getHeight() / 2, this.markerColors.getValueRainbow().getRGB());
 
-        this.drawRectangle(0, 0, 1, this.getHeight(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(this.getWidth() - 1, 0, this.getWidth(), this.getHeight(), this.outlineColor.getValue().getRGB());
-        this.drawRectangle(1, 0, this.getWidth() - 1, 1, this.outlineColor.getValue().getRGB());
-        this.drawRectangle(1, this.getHeight() - 1, this.getWidth() - 1, this.getHeight(), this.outlineColor.getValue().getRGB());
+        this.drawRectangle(0, 0, 1, this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(this.getWidth() - 1, 0, this.getWidth(), this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(1, 0, this.getWidth() - 1, 1, this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(1, this.getHeight() - 1, this.getWidth() - 1, this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
 
         GL11.glTranslatef((float) this.getWidth() / 2, (float) this.getHeight() / 2, 0F);
         GL11.glRotatef(this.playerYaw, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef((float) -this.getWidth() / 2, (float) -this.getHeight() / 2, 0F);
 
-        this.drawRectangle((this.getWidth() / 2) - 3, (this.getHeight() / 2) - 1, (this.getWidth() / 2) - 1, (this.getHeight() / 2) + 1, this.markerColors.getValue().getRGB());
-        this.drawRectangle((this.getWidth() / 2) + 1, (this.getHeight() / 2) - 1, (this.getWidth() / 2) + 3, (this.getHeight() / 2) + 1, this.markerColors.getValue().getRGB());
-        this.drawRectangle((this.getWidth() / 2) - 1, (this.getHeight() / 2) - 3, (this.getWidth() / 2) + 1, (this.getHeight() / 2) + 7, this.markerColors.getValue().getRGB());
+        this.drawRectangle((this.getWidth() / 2) - 3, (this.getHeight() / 2) - 1, (this.getWidth() / 2) - 1, (this.getHeight() / 2) + 1, this.markerColors.getValueRainbow().getRGB());
+        this.drawRectangle((this.getWidth() / 2) + 1, (this.getHeight() / 2) - 1, (this.getWidth() / 2) + 3, (this.getHeight() / 2) + 1, this.markerColors.getValueRainbow().getRGB());
+        this.drawRectangle((this.getWidth() / 2) - 1, (this.getHeight() / 2) - 3, (this.getWidth() / 2) + 1, (this.getHeight() / 2) + 7, this.markerColors.getValueRainbow().getRGB());
 
         this.finishScale(true);
     }
@@ -315,11 +315,11 @@ public final class Radar extends Hack implements HUDObject {
             EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
             if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                return this.friendsColor.getValue().getRGB();
+                return this.friendsColor.getValueRainbow().getRGB();
             }
 
             if (this.players.getValue()) {
-                return this.playersColor.getValue().getRGB();
+                return this.playersColor.getValueRainbow().getRGB();
             }
 
             return -1;
@@ -328,19 +328,19 @@ public final class Radar extends Hack implements HUDObject {
         Class<? extends Entity> entityClass = entity.getClass();
 
         if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
-            return this.animalsColor.getValue().getRGB();
+            return this.animalsColor.getValueRainbow().getRGB();
         }
 
         if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
-            return this.hostilesColor.getValue().getRGB();
+            return this.hostilesColor.getValueRainbow().getRGB();
         }
 
         if (this.items.getValue() && entity instanceof EntityItem) {
-            return this.itemColor.getValue().getRGB();
+            return this.itemColor.getValueRainbow().getRGB();
         }
 
         if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
-            return this.miscColor.getValue().getRGB();
+            return this.miscColor.getValueRainbow().getRGB();
         }
 
         return -1;

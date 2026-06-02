@@ -110,11 +110,11 @@ public final class TabGUI extends Hack implements HUDObject {
 
         this.prepareScale();
 
-        this.drawRectangle(1, 0, maxX, maxY, this.fillColor.getValue().getRGB());
-        this.drawRectangle(0, 0, maxX + 1, 1, this.outlineColor.getValue().getRGB());
-        this.drawRectangle(0, 0, 1, maxY + 1, this.outlineColor.getValue().getRGB());
-        this.drawRectangle(0, maxY, maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
-        this.drawRectangle(maxX, 0, maxX + 1, maxY + 1, this.outlineColor.getValue().getRGB());
+        this.drawRectangle(1, 0, maxX, maxY, this.fillColor.getValueRainbow().getRGB());
+        this.drawRectangle(0, 0, maxX + 1, 1, this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(0, 0, 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(0, maxY, maxX + 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
+        this.drawRectangle(maxX, 0, maxX + 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
 
         this.drawString(clientMessage, 2, 2, Color.WHITE.getRGB());
 

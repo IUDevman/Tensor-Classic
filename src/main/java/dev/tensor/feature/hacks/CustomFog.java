@@ -36,7 +36,7 @@ public final class CustomFog extends Hack {
             }
 
             if (this.fogColor.getValue()) {
-                event.setNewColor(this.color.getValue());
+                event.setNewColor(this.color.getValueRainbow());
             }
         }
     }));
