@@ -112,7 +112,7 @@ public final class BreadCrumbs extends Render3DHack {
             return;
         }
 
-        this.drawBreadCrumbs(this.loggedPositions, RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ, this.lineWidth.getValue(), this.color.getValue());
+        this.drawBreadCrumbs(this.loggedPositions, RenderManager.renderPosX, RenderManager.renderPosY, RenderManager.renderPosZ, this.lineWidth.getValue(), this.color.getValueRainbow());
     }
 
     @SuppressWarnings("unused")

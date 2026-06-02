@@ -123,7 +123,7 @@ public final class BreakProgress extends Render3DHack {
 
         scaled = scaled.expand(-scale * (mx - rx), -scale * (my - ry), -scale * (mz - rz));
 
-        Color color = this.color.getValue();
+        Color color = this.color.getValueRainbow();
 
         if (this.usePercentageColor.getValue()) {
             color = this.getPercentageColor(this.getMinecraft().renderGlobal.damagePartialTime, 1F);

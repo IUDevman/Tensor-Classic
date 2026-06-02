@@ -119,7 +119,7 @@ public final class FPS extends Hack implements HUDObject {
         this.prepareScale();
 
         String value = "FPS: " + this.currentFPS + (this.average.getValue() ? " (AVG: " + this.currentAverageFPS + ")" : "");
-        this.drawString(value, this.getOffSetX(value), 1, this.color.getValue().getRGB());
+        this.drawString(value, this.getOffSetX(value), 1, this.color.getValueRainbow().getRGB());
 
         this.finishScale();
     }

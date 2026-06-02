@@ -370,12 +370,12 @@ public final class Search extends Render3DHack {
             }
         }
 
-        Color color = this.searchColor.getValue();
+        Color color = this.searchColor.getValueRainbow();
 
         if (blockCoords.block.blockID == Block.chest.blockID) {
-            color = this.chestColor.getValue();
+            color = this.chestColor.getValueRainbow();
         } else if (blockCoords.block.blockID == Block.portal.blockID) {
-            color = this.portalColor.getValue();
+            color = this.portalColor.getValueRainbow();
         }
 
         if (!this.tracers.getValue().equals(TracerMode.None)) {

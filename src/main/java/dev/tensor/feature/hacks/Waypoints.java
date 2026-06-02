@@ -106,14 +106,14 @@ public final class Waypoints extends Render3DHack {
                         this.tagBackground.getValue(),
                         this.tagScale.getValue(),
                         this.tagDistanceMultiplier.getValue(),
-                        this.tagTextColor.getValue(),
-                        this.tagBackgroundColor.getValue(),
+                        this.tagTextColor.getValueRainbow(),
+                        this.tagBackgroundColor.getValueRainbow(),
                         renderBox,
                         monolith,
                         onlyCloseMonoliths.getValue(),
                         type,
                         this.boxLineWidth.getValue(),
-                        this.boxColor.getValue(),
+                        this.boxColor.getValueRainbow(),
                         this.boxFillAlpha.getValue(),
                         this.renderDistance);
             }

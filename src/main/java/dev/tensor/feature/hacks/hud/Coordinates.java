@@ -29,8 +29,8 @@ public final class Coordinates extends Hack implements HUDObject {
     public final BooleanSetting compass = new BooleanSetting("Compass", true);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting type = new EnumSetting("Type", Type.Both);
-    public final ColorSetting overworldColor = new ColorSetting("Overworld Color", new Color(255, 255, 255, 255));
-    public final ColorSetting netherColor = new ColorSetting("Nether Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting overworldColor = new ColorNoAlphaSetting("Overworld Color", new Color(255, 255, 255, 255));
+    public final ColorNoAlphaSetting netherColor = new ColorNoAlphaSetting("Nether Color", new Color(255, 0, 0, 255));
 
     private final String coordinatesString = "({X}, {Y}, {Z})";
     private final String coordinatesStringWithDirection = this.coordinatesString + "{D}";
@@ -87,30 +87,30 @@ public final class Coordinates extends Hack implements HUDObject {
                 String coordinatesOverworld = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
                 coordinatesOverworld = coordinatesOverworld.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
 
-                this.renderCoordinate(coordinatesOverworld, 1, this.overworldColor.getValue());
+                this.renderCoordinate(coordinatesOverworld, 1, this.overworldColor.getValueRainbow());
                 break;
             case Nether:
                 String coordinatesNether = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                 coordinatesNether = coordinatesNether.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
 
-                this.renderCoordinate(coordinatesNether, 1, this.netherColor.getValue());
+                this.renderCoordinate(coordinatesNether, 1, this.netherColor.getValueRainbow());
                 break;
             case Both:
                 if (this.getWorld().worldProvider.isHellWorld) {
                     String coordinatesNether1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                     coordinatesNether1 = coordinatesNether1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
-                    this.renderCoordinate(coordinatesNether1, 1, this.netherColor.getValue());
+                    this.renderCoordinate(coordinatesNether1, 1, this.netherColor.getValueRainbow());
 
                     String coordinatesOverworld1 = this.coordinatesString.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
-                    this.renderCoordinate(coordinatesOverworld1, 12, this.overworldColor.getValue());
+                    this.renderCoordinate(coordinatesOverworld1, 12, this.overworldColor.getValueRainbow());
 
                 } else {
                     String coordinatesOverworld1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ));
                     coordinatesOverworld1 = coordinatesOverworld1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
-                    this.renderCoordinate(coordinatesOverworld1, 1, this.overworldColor.getValue());
+                    this.renderCoordinate(coordinatesOverworld1, 1, this.overworldColor.getValueRainbow());
 
                     String coordinatesNether1 = this.coordinatesString.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
-                    this.renderCoordinate(coordinatesNether1, 12, this.netherColor.getValue());
+                    this.renderCoordinate(coordinatesNether1, 12, this.netherColor.getValueRainbow());
                     break;
                 }
         }

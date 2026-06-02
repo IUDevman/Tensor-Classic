@@ -4,10 +4,7 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
-import dev.tensor.misc.imp.setting.settings.ColorSetting;
-import dev.tensor.misc.imp.setting.settings.DoubleSetting;
-import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import dev.tensor.misc.imp.setting.settings.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -33,7 +30,7 @@ public final class HackList extends Hack implements HUDObject {
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting add = new EnumSetting("Add", Add.Down);
     public final EnumSetting colorType = new EnumSetting("Color Type", ColorType.All);
-    public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 0, 0, 255));
 
     private final ArrayList<Hack> hacksToRender = new ArrayList<>();
 
@@ -148,7 +145,7 @@ public final class HackList extends Hack implements HUDObject {
 
         switch ((ColorType) this.colorType.getValue()) {
             case All:
-                return this.textColor.getValue();
+                return this.textColor.getValueRainbow();
             case Category:
                 return this.getColorFromCategory(hack.CATEGORY);
         }

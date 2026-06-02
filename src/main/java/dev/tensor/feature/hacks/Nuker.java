@@ -709,7 +709,7 @@ public final class Nuker extends Render3DHack {
             }
         }
 
-        Color color = this.esp_color.getValue();
+        Color color = this.esp_color.getValueRainbow();
 
         switch ((RenderMode) this.renderMode.getValue()) {
             case Outline:

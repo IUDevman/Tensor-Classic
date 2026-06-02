@@ -62,12 +62,12 @@ public final class EntityESP extends Render3DHack {
                 EntityOtherPlayerMP otherPlayer = (EntityOtherPlayerMP) entity;
 
                 if (this.friends.getValue() && this.getFriendManager().isFriend(otherPlayer.username)) {
-                    this.entitiesWithColorToRender.put(otherPlayer, this.friendsColor.getValue());
+                    this.entitiesWithColorToRender.put(otherPlayer, this.friendsColor.getValueRainbow());
                     return;
                 }
 
                 if (this.players.getValue()) {
-                    this.entitiesWithColorToRender.put(otherPlayer, this.playersColor.getValue());
+                    this.entitiesWithColorToRender.put(otherPlayer, this.playersColor.getValueRainbow());
                     return;
                 }
 
@@ -77,22 +77,22 @@ public final class EntityESP extends Render3DHack {
             Class<? extends Entity> entityClass = entity.getClass();
 
             if (this.animals.getValue() && this.customAnimals.containsEntity(entityClass)) {
-                this.entitiesWithColorToRender.put(entity, this.animalsColor.getValue());
+                this.entitiesWithColorToRender.put(entity, this.animalsColor.getValueRainbow());
                 return;
             }
 
             if (this.hostiles.getValue() && this.customHostiles.containsEntity(entityClass)) {
-                this.entitiesWithColorToRender.put(entity, this.hostilesColor.getValue());
+                this.entitiesWithColorToRender.put(entity, this.hostilesColor.getValueRainbow());
                 return;
             }
 
             if (this.items.getValue() && entity instanceof EntityItem) {
-                this.entitiesWithColorToRender.put(entity, this.itemColor.getValue());
+                this.entitiesWithColorToRender.put(entity, this.itemColor.getValueRainbow());
                 return;
             }
 
             if (this.misc.getValue() && this.customMisc.containsEntity(entityClass)) {
-                this.entitiesWithColorToRender.put(entity, this.miscColor.getValue());
+                this.entitiesWithColorToRender.put(entity, this.miscColor.getValueRainbow());
             }
         });
     }

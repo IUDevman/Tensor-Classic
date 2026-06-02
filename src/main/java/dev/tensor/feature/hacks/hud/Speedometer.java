@@ -47,7 +47,7 @@ public final class Speedometer extends Hack implements HUDObject {
     };
     public final BooleanSetting average = new BooleanSetting("Average Speed", true);
     public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 20, 5, 100);
-    public final ColorSetting color = new ColorSetting("Color", new Color(255, 255, 0, 255));
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 255, 0, 255));
 
     private final DecimalFormat coordinateFormat = new DecimalFormat("#0.00");
 
@@ -127,7 +127,7 @@ public final class Speedometer extends Hack implements HUDObject {
         this.prepareScale();
 
         String value = "Speed: " + this.coordinateFormat.format(this.currentSpeed) + " " + this.getUnits();
-        this.drawString(value, this.getOffSetX(value), 1, this.color.getValue().getRGB());
+        this.drawString(value, this.getOffSetX(value), 1, this.color.getValueRainbow().getRGB());
 
         this.finishScale();
     }

@@ -316,14 +316,14 @@ public final class KillAura extends Render3DHack {
 
         switch ((RenderMode) this.renderMode.getValue()) {
             case Outline:
-                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValue());
+                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValueRainbow());
                 break;
             case Fill:
-                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
+                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValueRainbow().getRed(), this.esp_color.getValueRainbow().getGreen(), this.esp_color.getValueRainbow().getBlue(), this.fillAlpha.getValue()));
                 break;
             case Both:
-                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValue().getRed(), this.esp_color.getValue().getGreen(), this.esp_color.getValue().getBlue(), this.fillAlpha.getValue()));
-                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValue());
+                this.drawFillBox(x, y, z, wX, wY, wZ, new Color(this.esp_color.getValueRainbow().getRed(), this.esp_color.getValueRainbow().getGreen(), this.esp_color.getValueRainbow().getBlue(), this.fillAlpha.getValue()));
+                this.drawOutlineBox(x, y, z, wX, wY, wZ, this.lineWidth.getValue(), this.esp_color.getValueRainbow());
                 break;
         }
     }

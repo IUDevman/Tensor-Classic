@@ -249,7 +249,7 @@ public final class NewChunks extends Render3DHack {
         double maxY = minY + this.thickness.getValue();
         double maxZ = minZ + 16;
 
-        Color color = this.renderColor.getValue();
+        Color color = this.renderColor.getValueRainbow();
 
         switch ((RenderMode) this.renderMode.getValue()) {
             case Outline:

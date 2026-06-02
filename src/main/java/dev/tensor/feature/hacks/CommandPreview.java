@@ -41,6 +41,6 @@ public final class CommandPreview extends Hack {
             return;
         }
 
-        tensorChatGUI.render(prefix, event.message, event.minX, event.minY, event.maxX, event.maxY, this.fillColor.getValue().getRGB(), this.outlineColor.getValue().getRGB(), this.textColor.getValue().getRGB());
+        tensorChatGUI.render(prefix, event.message, event.minX, event.minY, event.maxX, event.maxY, this.fillColor.getValueRainbow().getRGB(), this.outlineColor.getValueRainbow().getRGB(), this.textColor.getValueRainbow().getRGB());
     }));
 }

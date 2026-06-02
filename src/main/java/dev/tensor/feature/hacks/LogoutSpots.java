@@ -243,11 +243,11 @@ public final class LogoutSpots extends Render3DHack {
                 this.tagBackground.getValue(),
                 this.tagScale.getValue(),
                 this.tagDistanceMultiplier.getValue(),
-                this.tagTextColor.getValue(),
-                this.tagBackgroundColor.getValue(),
+                this.tagTextColor.getValueRainbow(),
+                this.tagBackgroundColor.getValueRainbow(),
                 type,
                 this.boxLineWidth.getValue(),
-                this.boxColor.getValue(),
+                this.boxColor.getValueRainbow(),
                 this.boxFillAlpha.getValue());
     }
 
