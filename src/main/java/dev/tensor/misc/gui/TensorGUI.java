@@ -432,6 +432,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                     categoryElement.hackElements.forEach(hackElement -> hackHeight.getAndAdd(hackElement.getHeight()));
 
+                    if (hackHeight.get() <= this.guiHeight.get() - 22) {
+                        return;
+                    }
+
                     int scrollAdjust = this.scrollingSpeed;
 
                     if (hackScrollY.getValue() > -this.getScrollSpeed() && this.scrollingSpeed > 0) {
@@ -470,6 +474,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                             settingHeight.getAndAdd(hackElement.propertyElement.getHeight());
 
                             hackElement.settingElements.forEach(settingElement -> settingHeight.getAndAdd(settingElement.getHeight()));
+
+                            if (settingHeight.get() <= this.guiHeight.get() - 22) {
+                                return;
+                            }
 
                             int scrollAdjust = this.scrollingSpeed;
 
