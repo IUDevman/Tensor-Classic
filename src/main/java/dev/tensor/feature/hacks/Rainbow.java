@@ -30,7 +30,7 @@ public final class Rainbow extends Hack {
             RainbowColor.setSleepTime(VALUE);
         }
     };
-    public final IntegerSetting increment = new IntegerSetting("Increment Step", RainbowColor.DEFAULT_INCREMENT_STEP, 1, 20) {
+    public final IntegerSetting increment = new IntegerSetting("Increment Step", RainbowColor.DEFAULT_INCREMENT_STEP, 1, 12) {
 
         @Override
         public void setValue(Integer VALUE) {
