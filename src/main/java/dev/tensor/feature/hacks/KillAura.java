@@ -1,7 +1,5 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.helpers.entity.FakePlayer;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
@@ -46,7 +44,6 @@ public final class KillAura extends Render3DHack {
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
-    public final EnumSetting type = new EnumSetting("Hit Type", HitType.Packet);
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
@@ -275,18 +272,7 @@ public final class KillAura extends Render3DHack {
             this.getPlayer().swingItem();
         }
 
-        switch ((HitType) this.type.getValue()) {
-            case Vanilla:
-                this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
-                break;
-            case Packet:
-                if (this.shouldCallEvent(AttackEntityEvent.class)) {
-                    EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(entity).call(true);
-                }
-
-                this.sendPacket(new Packet7UseEntity(this.getPlayer().entityId, entity.entityId, 1));
-                break;
-        }
+        this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
     }
 
     //Method is not thread safe, so cannot be run in parallel.
@@ -338,11 +324,6 @@ public final class KillAura extends Render3DHack {
         Stop,
         Player,
         Camera
-    }
-
-    public enum HitType {
-        Vanilla,
-        Packet
     }
 
     public enum Sort {
