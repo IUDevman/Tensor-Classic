@@ -354,6 +354,14 @@ public final class Nuker extends Render3DHack {
 
                     float blockStrength = blockCoords.block.blockStrength(this.getPlayer());
 
+                    if (newItem == 9 && blockCoords.block.getHardness() != 0.0F) {
+                        ItemStack itemStack9 = this.getInventory().getStackInSlot(9);
+
+                        if (itemStack9 != null) {
+                            blockStrength = itemStack9.getStrVsBlock(blockCoords.block);
+                        }
+                    }
+
                     if (blockStrength == 0) {
                         return;
                     }
@@ -479,6 +487,14 @@ public final class Nuker extends Render3DHack {
     }
 
     private int swapFor(Block block, int currentItemSlot) {
+        AutoNine autoNine = this.getHackManager().getHack(AutoNine.class);
+
+        if (autoNine != null && autoNine.isEnabled()) {
+            this.getInventory().currentItem = 9;
+            autoNine.swapAndFindBestBlock(block, block.blockID);
+            return 9;
+        }
+
         if (!this.swap.getValue()) {
             return -1;
         }
@@ -541,7 +557,7 @@ public final class Nuker extends Render3DHack {
     }
 
     private void swapBack(int oldSlot, int newSlot) {
-        if (!this.swapBack.getValue()) {
+        if (!this.swapBack.getValue() || newSlot == 9) {
             return;
         }
 
