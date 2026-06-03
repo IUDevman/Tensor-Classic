@@ -4,10 +4,13 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;
+import net.minecraft.src.InventoryPlayer;
 import net.minecraft.src.ItemRenderer;
+import net.minecraft.src.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
@@ -70,5 +73,14 @@ public final class ItemRendererMixin implements Globals {
                 ci.cancel();
             }
         });
+    }
+
+    @Redirect(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/InventoryPlayer;getCurrentItem()Lnet/minecraft/src/ItemStack;"))
+    public ItemStack tensor_updateEquippedItemSlot9Fix(InventoryPlayer instance) {
+        if (instance.currentItem == 9) {
+            return instance.getStackInSlot(9);
+        }
+
+        return instance.getCurrentItem();
     }
 }
