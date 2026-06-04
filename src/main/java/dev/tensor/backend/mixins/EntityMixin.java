@@ -31,7 +31,7 @@ public final class EntityMixin implements Globals {
     public float entityBrightness;
 
     @Inject(method = "applyEntityCollision", at = @At("HEAD"), cancellable = true)
-    public void tensor_onApplyEntityCollision(Entity par1, CallbackInfo ci) {
+    public void tensor_onApplyEntityCollision(Entity entity, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -49,13 +49,13 @@ public final class EntityMixin implements Globals {
     }
 
     @Redirect(method = "moveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isSneaking()Z"))
-    public boolean tensor_onMoveEntityInvokeIsSneaking(Entity instance) {
+    public boolean tensor_onMoveEntityInvokeIsSneaking(Entity entity) {
         if (this.failsNullCheck()) {
-            return instance.isSneaking();
+            return entity.isSneaking();
         }
 
         if (!this.shouldCallEvent(MovementClipEvent.class)) {
-            return instance.isSneaking();
+            return entity.isSneaking();
         }
 
         MovementClipEvent event = EventCache.getCachedEvent(MovementClipEvent.class).call(true);
@@ -64,11 +64,11 @@ public final class EntityMixin implements Globals {
             return true;
         }
 
-        return instance.isSneaking();
+        return entity.isSneaking();
     }
 
     @Inject(method = "getEntityBrightness", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetEntityBrightness(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetEntityBrightness(float partialTicks, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }

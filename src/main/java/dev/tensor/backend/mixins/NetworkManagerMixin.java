@@ -26,13 +26,13 @@ import java.net.Socket;
 public final class NetworkManagerMixin implements Globals {
 
     @Inject(method = "readPacket", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
-    public void tensor_onReadPacket(CallbackInfoReturnable<Boolean> cir, int var1, Packet var2) {
-        if (this.failsNullCheck() || var2 == null) {
+    public void tensor_onReadPacket(CallbackInfoReturnable<Boolean> cir, int index, Packet packetToRead) {
+        if (this.failsNullCheck() || packetToRead == null) {
             return;
         }
 
         if (this.shouldCallEvent(GeneralPacketEvent.class)) {
-            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.INBOUND, var2).call(true);
+            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.INBOUND, packetToRead).call(true);
 
             if (event.isCancelled()) {
                 cir.setReturnValue(false);
@@ -41,8 +41,8 @@ public final class NetworkManagerMixin implements Globals {
             }
         }
 
-        if (var2 instanceof Packet28EntityVelocity) {
-            Packet28EntityVelocity packet = (Packet28EntityVelocity) var2;
+        if (packetToRead instanceof Packet28EntityVelocity) {
+            Packet28EntityVelocity packet = (Packet28EntityVelocity) packetToRead;
 
             if (packet.entityId != this.getPlayer().entityId) {
                 return;
@@ -63,8 +63,8 @@ public final class NetworkManagerMixin implements Globals {
             return;
         }
 
-        if (var2 instanceof Packet52MultiBlockChange) {
-            Packet52MultiBlockChange packet = (Packet52MultiBlockChange) var2;
+        if (packetToRead instanceof Packet52MultiBlockChange) {
+            Packet52MultiBlockChange packet = (Packet52MultiBlockChange) packetToRead;
 
             if (!this.shouldCallEvent(ChunkChangeEvent.class)) {
                 return;
@@ -74,8 +74,8 @@ public final class NetworkManagerMixin implements Globals {
             return;
         }
 
-        if (var2 instanceof Packet53BlockChange) {
-            Packet53BlockChange packet = (Packet53BlockChange) var2;
+        if (packetToRead instanceof Packet53BlockChange) {
+            Packet53BlockChange packet = (Packet53BlockChange) packetToRead;
 
             if (!this.shouldCallEvent(ChunkChangeEvent.class)) {
                 return;
@@ -86,8 +86,8 @@ public final class NetworkManagerMixin implements Globals {
     }
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/net/Socket;getRemoteSocketAddress()Ljava/net/SocketAddress;", shift = At.Shift.BEFORE))
-    public void tensor_onInitSocket(Socket string, String arg, NetHandler par3, CallbackInfo ci) {
-        if (string == null) {
+    public void tensor_onInitSocket(Socket socket, String threadName, NetHandler netHandler, CallbackInfo ci) {
+        if (socket == null) {
             return;
         }
 
@@ -103,8 +103,8 @@ public final class NetworkManagerMixin implements Globals {
 
             if (event.isCancelled()) {
                 try {
-                    string.setTcpNoDelay(true);
-                    this.getTensorLogger().info("TCP set to : {}!", string.getTcpNoDelay());
+                    socket.setTcpNoDelay(true);
+                    this.getTensorLogger().info("TCP set to : {}!", socket.getTcpNoDelay());
 
                 } catch (Exception ignored) {
                     this.getTensorLogger().info("TCP Failed to set!");

@@ -26,16 +26,16 @@ public final class RenderManagerMixin implements Render3D {
     private boolean hasChams = false;
 
     @Inject(method = "renderEntity", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderEntityHead(Entity f, float par2, CallbackInfo ci) {
+    public void tensor_onRenderEntityHead(Entity entity, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (f == null) {
+        if (entity == null) {
             return;
         }
 
-        if (f instanceof EntityItem && this.shouldCallEvent(RenderItemEvent.class)) {
+        if (entity instanceof EntityItem && this.shouldCallEvent(RenderItemEvent.class)) {
             EventCache.getCachedEvent(RenderItemEvent.class).call(true, event -> {
 
                 if (event.isCancelled()) {
@@ -54,7 +54,7 @@ public final class RenderManagerMixin implements Render3D {
             return;
         }
 
-        EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(f).call(true, event -> {
+        EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(entity).call(true, event -> {
 
             if (event.isCancelled()) {
                 this.hasChams = true;
@@ -64,7 +64,7 @@ public final class RenderManagerMixin implements Render3D {
     }
 
     @Inject(method = "renderEntity", at = @At("TAIL"), cancellable = true)
-    public void tensor_onRenderEntityTail(Entity f, float par2, CallbackInfo ci) {
+    public void tensor_onRenderEntityTail(Entity entity, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

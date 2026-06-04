@@ -27,10 +27,10 @@ public abstract class GuiIngameMixin implements Globals {
     private Minecraft mc;
 
     @Shadow
-    protected abstract void renderInventorySlot(int i, int j, int k, float f);
+    protected abstract void renderInventorySlot(int slot, int width, int height, float partialTicks);
 
     @Inject(method = "renderGameOverlay", at = @At("TAIL"))
-    public void tensor_onRenderGameOverlay(float bl, boolean i, int j, int par4, CallbackInfo ci) {
+    public void tensor_onRenderGameOverlay(float partialTicks, boolean flag, int x, int y, CallbackInfo ci) {
         if (this.failsNullCheck() || this.getInGameGUI() == null) {
             return;
         }
@@ -39,7 +39,7 @@ public abstract class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderVignette", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderVignette(float i, int j, int par3, CallbackInfo ci) {
+    public void tensor_onRenderVignette(float partialTicks, int x, int y, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -57,7 +57,7 @@ public abstract class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderPumpkinBlur", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderPumpkinBlur(int j, int par2, CallbackInfo ci) {
+    public void tensor_onRenderPumpkinBlur(int x, int y, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -75,7 +75,7 @@ public abstract class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderPortalOverlay", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderPortalOverlay(float i, int j, int par3, CallbackInfo ci) {
+    public void tensor_onRenderPortalOverlay(float partialTicks, int x, int y, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -92,7 +92,7 @@ public abstract class GuiIngameMixin implements Globals {
     }
 
     @Inject(method = "renderGameOverlay", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderHelper;disableStandardItemLighting()V", shift = At.Shift.BEFORE))
-    public void tensor_onRenderGameOverlaySlot9Fix(float bl, boolean i, int j, int par4, CallbackInfo ci) {
+    public void tensor_onRenderGameOverlaySlot9Fix(float partialTicks, boolean flag, int x, int y, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -108,6 +108,6 @@ public abstract class GuiIngameMixin implements Globals {
         }
 
         ScaledResolution sr = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
-        this.renderInventorySlot(9, sr.getScaledWidth() / 2 - 90 + 9 * 20 + 2, sr.getScaledHeight() - 16 - 3, bl);
+        this.renderInventorySlot(9, sr.getScaledWidth() / 2 - 90 + 9 * 20 + 2, sr.getScaledHeight() - 16 - 3, partialTicks);
     }
 }

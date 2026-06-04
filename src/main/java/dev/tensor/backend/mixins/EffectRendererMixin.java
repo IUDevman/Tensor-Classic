@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class EffectRendererMixin implements Globals {
 
     @Inject(method = "renderParticles", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderParticles(Entity f, float par2, CallbackInfo ci) {
+    public void tensor_onRenderParticles(Entity entity, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

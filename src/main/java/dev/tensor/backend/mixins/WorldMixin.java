@@ -1,6 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.WeatherEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
@@ -44,7 +45,7 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Inject(method = "func_27166_f", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetThunderStrength(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetThunderStrength(float partialTicks, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -62,7 +63,7 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Inject(method = "func_27162_g", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetRainStrength(float par1, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetRainStrength(float partialTicks, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -79,14 +80,15 @@ public abstract class WorldMixin implements Globals {
         });
     }
 
+    @TensorRedirect
     @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
-    public double tensor_onHandleMaterialAccelerationInvokeVector(Vec3D instance) {
+    public double tensor_onHandleMaterialAccelerationInvokeVector(Vec3D vec3D) {
         if (this.failsNullCheck()) {
-            return instance.lengthVector();
+            return vec3D.lengthVector();
         }
 
         if (!this.shouldCallEvent(VelocityEvent.class)) {
-            return instance.lengthVector();
+            return vec3D.lengthVector();
         }
 
         VelocityEvent event = EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Fluid).call(true);
@@ -95,16 +97,16 @@ public abstract class WorldMixin implements Globals {
             return 0;
         }
 
-        return instance.lengthVector();
+        return vec3D.lengthVector();
     }
 
     @Inject(method = "playSoundAtEntity", at = @At("HEAD"), cancellable = true)
-    public void tensor_onPlaySoundAtEntity(Entity string, String f, float g, float par4, CallbackInfo ci) {
-        if (this.failsNullCheck() || f == null) {
+    public void tensor_onPlaySoundAtEntity(Entity entity, String name, float volume, float random, CallbackInfo ci) {
+        if (this.failsNullCheck() || name == null) {
             return;
         }
 
-        if (f.equalsIgnoreCase("mob.wolf.shake") && this.shouldCallEvent(WeatherEvent.class)) {
+        if (name.equalsIgnoreCase("mob.wolf.shake") && this.shouldCallEvent(WeatherEvent.class)) {
             EventCache.getCachedEvent(WeatherEvent.class).call(true, event -> {
 
                 if (event.isCancelled()) {
@@ -115,26 +117,26 @@ public abstract class WorldMixin implements Globals {
     }
 
     @Inject(method = "entityJoinedWorld", at = @At("HEAD"))
-    public void tensor_onEntityJoinedWorld(Entity par1, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onEntityJoinedWorld(Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (par1 instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
-            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
+        if (entity instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
+            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) entity;
 
             EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Join, otherPlayerMP).call(true);
         }
     }
 
     @Inject(method = "setEntityDead", at = @At("HEAD"))
-    public void tensor_onSetEntityDead(Entity par1, CallbackInfo ci) {
+    public void tensor_onSetEntityDead(Entity entity, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (par1 instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
-            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) par1;
+        if (entity instanceof EntityOtherPlayerMP && this.shouldCallEvent(PlayerJoinLeaveWorldEvent.class)) {
+            EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) entity;
 
             EventCache.getCachedEvent(PlayerJoinLeaveWorldEvent.class).withVariables(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave, otherPlayerMP).call(true);
         }

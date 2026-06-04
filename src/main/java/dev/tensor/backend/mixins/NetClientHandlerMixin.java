@@ -28,13 +28,13 @@ public final class NetClientHandlerMixin implements Globals {
     private boolean disconnected;
 
     @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
-    public void tensor_onAddToSendQueue(Packet arg, CallbackInfo ci) {
-        if (arg == null || this.failsNullCheck() || !this.isMultiplayer()) {
+    public void tensor_onAddToSendQueue(Packet packetToSend, CallbackInfo ci) {
+        if (packetToSend == null || this.failsNullCheck() || !this.isMultiplayer()) {
             return;
         }
 
         if (this.shouldCallEvent(GeneralPacketEvent.class)) {
-            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.OUTBOUND, arg).call(true);
+            GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.OUTBOUND, packetToSend).call(true);
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -42,8 +42,8 @@ public final class NetClientHandlerMixin implements Globals {
             }
         }
 
-        if (arg instanceof Packet3Chat) {
-            Packet3Chat packet = (Packet3Chat) arg;
+        if (packetToSend instanceof Packet3Chat) {
+            Packet3Chat packet = (Packet3Chat) packetToSend;
 
             if (packet.message == null) {
                 return;
@@ -65,8 +65,8 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        if (arg instanceof Packet14BlockDig) {
-            Packet14BlockDig packet = (Packet14BlockDig) arg;
+        if (packetToSend instanceof Packet14BlockDig) {
+            Packet14BlockDig packet = (Packet14BlockDig) packetToSend;
 
             if (!this.shouldCallEvent(BlockBreakEvent.class)) {
                 return;
@@ -82,8 +82,8 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        if (arg instanceof Packet10Flying) {
-            Packet10Flying packet = (Packet10Flying) arg;
+        if (packetToSend instanceof Packet10Flying) {
+            Packet10Flying packet = (Packet10Flying) packetToSend;
 
             EventCache.getCachedEvent(Packet10FlyingEvent.class).withVariables(packet).call(false, event1 -> {
 
@@ -99,8 +99,8 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        if (arg instanceof Packet101CloseWindow) {
-            Packet101CloseWindow packet = (Packet101CloseWindow) arg;
+        if (packetToSend instanceof Packet101CloseWindow) {
+            Packet101CloseWindow packet = (Packet101CloseWindow) packetToSend;
 
             if (packet.windowId == this.getPlayer().craftingInventory.windowId && this.shouldCallEvent(CloseInventoryEvent.class)) {
 
@@ -115,8 +115,8 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        if (arg instanceof Packet7UseEntity) {
-            Packet7UseEntity packet = (Packet7UseEntity) arg;
+        if (packetToSend instanceof Packet7UseEntity) {
+            Packet7UseEntity packet = (Packet7UseEntity) packetToSend;
 
             if (packet.playerEntityId != this.getPlayer().entityId) {
                 return;
@@ -136,8 +136,8 @@ public final class NetClientHandlerMixin implements Globals {
     }
 
     @Inject(method = "handleChat", at = @At("HEAD"), cancellable = true)
-    public void tensor_onHandleChat(Packet3Chat par1, CallbackInfo ci) {
-        if (this.failsNullCheck() || par1 == null) {
+    public void tensor_onHandleChat(Packet3Chat packet, CallbackInfo ci) {
+        if (this.failsNullCheck() || packet == null) {
             return;
         }
 
@@ -145,7 +145,7 @@ public final class NetClientHandlerMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(par1.message).call(true, event -> {
+        EventCache.getCachedEvent(ChatReceivedEvent.class).withVariables(packet.message).call(true, event -> {
 
             if (event.isCancelled()) {
                 this.sendMessageWithLinesColor(event.message);
@@ -155,8 +155,8 @@ public final class NetClientHandlerMixin implements Globals {
     }
 
     @Inject(method = "handleKickDisconnect", at = @At("HEAD"), cancellable = true)
-    public void tensor_onHandleKickDisconnect(Packet255KickDisconnect par1, CallbackInfo ci) {
-        if (this.failsNullCheck() || par1 == null) {
+    public void tensor_onHandleKickDisconnect(Packet255KickDisconnect packet, CallbackInfo ci) {
+        if (this.failsNullCheck() || packet == null) {
             return;
         }
 
@@ -164,14 +164,14 @@ public final class NetClientHandlerMixin implements Globals {
             this.netManager.networkShutdown("disconnect.kicked");
             this.disconnected = true;
             this.getMinecraft().changeWorld1(null);
-            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.disconnected", "disconnect.genericReason", par1.reason));
+            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.disconnected", "disconnect.genericReason", packet.reason));
 
             ci.cancel();
         }
     }
 
     @Inject(method = "handleErrorMessage", at = @At("HEAD"), cancellable = true)
-    public void tensor_onHandleErrorMessage(String objects, Object[] par2, CallbackInfo ci) {
+    public void tensor_onHandleErrorMessage(String error, Object[] details, CallbackInfo ci) {
         if (this.failsNullCheck() || this.disconnected) {
             return;
         }
@@ -179,7 +179,7 @@ public final class NetClientHandlerMixin implements Globals {
         if (this.isAutoReconnectEnabled()) {
             this.disconnected = true;
             this.getMinecraft().changeWorld1(null);
-            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.lost", objects, par2));
+            this.getMinecraft().displayGuiScreen(new TensorGuiConnectFailed("disconnect.lost", error, details));
 
             ci.cancel();
         }

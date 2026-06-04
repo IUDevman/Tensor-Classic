@@ -18,10 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class GuiConnectingMixin implements Globals {
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    public void tensor_onInit(Minecraft string, String i, int par3, CallbackInfo ci) {
+    public void tensor_onInit(Minecraft minecraft, String lastServerName, int lastServerPort, CallbackInfo ci) {
         if (this.getAutoReconnect() != null) {
-            this.getAutoReconnect().setServerLastName(i);
-            this.getAutoReconnect().setServerLastPort(par3);
+            this.getAutoReconnect().setServerLastName(lastServerName);
+            this.getAutoReconnect().setServerLastPort(lastServerPort);
         }
     }
 }

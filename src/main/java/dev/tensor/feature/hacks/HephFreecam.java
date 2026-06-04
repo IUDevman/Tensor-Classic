@@ -72,7 +72,9 @@ public final class HephFreecam extends Hack {
             if (this.copyPlayer.getValue()) {
                 this.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
 
+                this.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
                 this.fakePlayer.inventory.mainInventory[0] = this.getInventory().getCurrentItem();
+                this.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
                 this.fakePlayer.inventory.armorInventory[0] = this.getInventory().armorInventory[0];
                 this.fakePlayer.inventory.armorInventory[1] = this.getInventory().armorInventory[1];
                 this.fakePlayer.inventory.armorInventory[2] = this.getInventory().armorInventory[2];
@@ -112,7 +114,9 @@ public final class HephFreecam extends Hack {
     @Override
     public void onClientTick() {
         if (this.copyPlayer.getValue() && this.fakePlayer != null) {
+            this.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
             this.fakePlayer.inventory.mainInventory[0] = this.getInventory().getCurrentItem();
+            this.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
             this.fakePlayer.motionX = 0;
             this.fakePlayer.motionY = 0;
             this.fakePlayer.motionZ = 0;

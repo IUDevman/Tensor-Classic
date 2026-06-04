@@ -1,6 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderBlockBreakEvent;
 import dev.tensor.backend.events.variable.RenderEntityEvent;
@@ -12,7 +13,6 @@ import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -28,11 +28,8 @@ import java.awt.*;
 @Mixin(value = RenderGlobal.class, priority = MixinPriority.VALUE)
 public final class RenderGlobalMixin implements Globals {
 
-    @Shadow
-    private RenderEngine renderEngine;
-
     @Inject(method = "renderClouds", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderClouds(float par1, CallbackInfo ci) {
+    public void tensor_onRenderClouds(float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -55,7 +52,7 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderClouds", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
-    public void tensor_onRenderCloudsInvoke(float par1, CallbackInfo ci) {
+    public void tensor_onRenderCloudsInvoke(float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -83,7 +80,7 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderCloudsFancy", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Tessellator;setColorRGBA_F(FFFF)V", shift = At.Shift.AFTER))
-    public void tensor_onRenderCloudsFancyInvoke(float par1, CallbackInfo ci) {
+    public void tensor_onRenderCloudsFancyInvoke(float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -107,23 +104,23 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "renderCloudsFancy", at = @At("HEAD"))
-    public void tensor_fixGLGlitchHead(float par1, CallbackInfo ci) {
+    public void tensor_fixGLGlitchHead(float partialTicks, CallbackInfo ci) {
         GL11.glPushMatrix();
     }
 
     @Inject(method = "renderCloudsFancy", at = @At("TAIL"))
-    public void tensor_fixGLGlitchTail(float par1, CallbackInfo ci) {
+    public void tensor_fixGLGlitchTail(float partialTicks, CallbackInfo ci) {
         GL11.glPopMatrix();
     }
 
     @Inject(method = "drawSelectionBox", at = @At("HEAD"), cancellable = true)
-    public void tensor_onDrawSelectionBox(EntityPlayer arg2, MovingObjectPosition i, int arg3, ItemStack f, float par5, CallbackInfo ci) {
+    public void tensor_onDrawSelectionBox(EntityPlayer entityPlayer, MovingObjectPosition movingObjectPosition, int allFaces, ItemStack itemStack, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderSelectionBoxEvent.class)) {
-            EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(i).call(true, event -> {
+        if (allFaces == 0 && movingObjectPosition.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderSelectionBoxEvent.class)) {
+            EventCache.getCachedEvent(RenderSelectionBoxEvent.class).withVariables(movingObjectPosition).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -133,13 +130,13 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @Inject(method = "drawBlockBreaking", at = @At("HEAD"), cancellable = true)
-    public void tensor_onDrawBlockBreaking(EntityPlayer arg2, MovingObjectPosition i, int arg3, ItemStack f, float par5, CallbackInfo ci) {
+    public void tensor_onDrawBlockBreaking(EntityPlayer entityPlayer, MovingObjectPosition movingObjectPosition, int allFaces, ItemStack itemStack, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (arg3 == 0 && i.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderBlockBreakEvent.class)) {
-            EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(i).call(true, event -> {
+        if (allFaces == 0 && movingObjectPosition.typeOfHit == EnumMovingObjectType.TILE && this.shouldCallEvent(RenderBlockBreakEvent.class)) {
+            EventCache.getCachedEvent(RenderBlockBreakEvent.class).withVariables(movingObjectPosition).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();
@@ -148,18 +145,19 @@ public final class RenderGlobalMixin implements Globals {
         }
     }
 
+    @TensorRedirect
     @Redirect(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
-    public ThreadDownloadImageData tensor_onObtainEntitySkinImageBuffer(RenderEngine instance, String arg, ImageBuffer imageBuffer) {
-        if (arg.endsWith("files/tensor/cape.png")) {
-            return this.renderEngine.obtainImageData(arg, new TensorImageBuffer());
+    public ThreadDownloadImageData tensor_onObtainEntitySkinImageBuffer(RenderEngine renderEngine, String skinURL, ImageBuffer imageBuffer) {
+        if (skinURL.endsWith("files/tensor/cape.png")) {
+            return renderEngine.obtainImageData(skinURL, new TensorImageBuffer());
 
         } else {
-            return this.renderEngine.obtainImageData(arg, new ImageBufferDownload());
+            return renderEngine.obtainImageData(skinURL, new ImageBufferDownload());
         }
     }
 
-    @Inject(method = "renderEntities", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderEntities(Vec3D arg2, ICamera f, float par3, CallbackInfo ci) {
+    @Inject(method = "renderEntities", at = @At("HEAD"))
+    public void tensor_onRenderEntities(Vec3D player, ICamera camera, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -171,26 +169,27 @@ public final class RenderGlobalMixin implements Globals {
         }
     }
 
+    @TensorRedirect
     @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isInRangeToRenderVec3D(Lnet/minecraft/src/Vec3D;)Z"))
-    public boolean tensor_onRenderEntitiesWithinRange(Entity instance, Vec3D vec3D) {
+    public boolean tensor_onRenderEntitiesWithinRange(Entity entity, Vec3D camera) {
         if (this.failsNullCheck()) {
-            return instance.isInRangeToRenderVec3D(vec3D);
+            return entity.isInRangeToRenderVec3D(camera);
         }
 
         if (this.isXrayEnabled()) {
-            return instance.isInRangeToRenderVec3D(vec3D);
+            return entity.isInRangeToRenderVec3D(camera);
         }
 
         if (!this.shouldCallEvent(RenderEntityEvent.class)) {
-            return instance.isInRangeToRenderVec3D(vec3D);
+            return entity.isInRangeToRenderVec3D(camera);
         }
 
-        RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(instance).call(true);
+        RenderEntityEvent event = EventCache.getCachedEvent(RenderEntityEvent.class).withVariables(entity).call(true);
 
         if (event.isCancelled()) {
             return true;
         }
 
-        return instance.isInRangeToRenderVec3D(vec3D);
+        return entity.isInRangeToRenderVec3D(camera);
     }
 }

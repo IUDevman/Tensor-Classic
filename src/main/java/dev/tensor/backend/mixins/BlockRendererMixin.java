@@ -28,13 +28,13 @@ public final class BlockRendererMixin implements Globals {
     public boolean hasOpacity = false;
 
     @Inject(method = "renderBlockByRenderType", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderBlockByRenderType(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onRenderBlockByRenderType(Block block, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }
 
         if (this.shouldCallEvent(RenderBlockEvent.class)) {
-            EventCache.getCachedEvent(RenderBlockEvent.class).withVariables(i, j, k, par4).call(true);
+            EventCache.getCachedEvent(RenderBlockEvent.class).withVariables(block, x, y, z).call(true);
         }
 
         if (!this.isXrayEnabled()) {
@@ -45,7 +45,7 @@ public final class BlockRendererMixin implements Globals {
 
         if (!this.getXray().opacity.getValue()) {
 
-            if (!this.getXray().isOnXrayList(i.blockID)) {
+            if (!this.getXray().isOnXrayList(block.blockID)) {
                 cir.setReturnValue(false);
             } else {
                 this.renderAllFaces = true;
@@ -54,7 +54,7 @@ public final class BlockRendererMixin implements Globals {
             return;
         }
 
-        if (this.getXray().isOnXrayList(i.blockID) || this.getXray().isOpacityBlacklisted(i.blockID, true)) {
+        if (this.getXray().isOnXrayList(block.blockID) || this.getXray().isOpacityBlacklisted(block.blockID, true)) {
             this.renderAllFaces = true;
             this.getXray().setShouldOpacity(false);
         } else {
@@ -63,8 +63,8 @@ public final class BlockRendererMixin implements Globals {
         }
     }
 
-    @Inject(method = "renderBlockByRenderType", at = @At("TAIL"), cancellable = true)
-    public void tensor_onRenderBlockByRenderTypeTail(Block i, int j, int k, int par4, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "renderBlockByRenderType", at = @At("TAIL"))
+    public void tensor_onRenderBlockByRenderTypeTail(Block block, int x, int y, int z, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }

@@ -24,7 +24,7 @@ public final class GuiChatMixin extends GuiScreen implements Globals {
     private String message;
 
     @Inject(method = "drawScreen", at = @At("HEAD"))
-    public void tensor_onDrawScreen(int j, int f, float par3, CallbackInfo ci) {
+    public void tensor_onDrawScreen(int x, int y, float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

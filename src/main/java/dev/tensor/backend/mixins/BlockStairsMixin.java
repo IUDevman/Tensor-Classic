@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = BlockStairs.class, priority = MixinPriority.VALUE)
 public abstract class BlockStairsMixin extends Block implements Globals {
 
-    protected BlockStairsMixin(int i, Material arg) {
-        super(i, arg);
+    protected BlockStairsMixin(int blockID, Material material) {
+        super(blockID, material);
     }
 
     @Inject(method = "getRenderBlockPass", at = @At("HEAD"), cancellable = true)

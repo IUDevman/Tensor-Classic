@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class RenderPlayerMixin implements Globals {
 
     @Inject(method = "passSpecialRender(Lnet/minecraft/src/EntityPlayer;DDD)V", at = @At("HEAD"), cancellable = true)
-    public void tensor_onPassSpecialRender(EntityPlayer d, double e, double f, double par4, CallbackInfo ci) {
+    public void tensor_onPassSpecialRender(EntityPlayer entityPlayer, double x, double y, double z, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

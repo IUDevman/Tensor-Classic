@@ -36,7 +36,7 @@ public abstract class MinecraftMixin implements Globals {
     public GuiScreen currentScreen;
 
     @Shadow
-    protected abstract void clickMouse(int i);
+    protected abstract void clickMouse(int button);
 
     @Shadow
     private int mouseTicksRan;
@@ -80,7 +80,7 @@ public abstract class MinecraftMixin implements Globals {
     }
 
     @Inject(method = "changeWorld", at = @At("RETURN"))
-    public void tensor_onChangeWorld(World string, String arg2, EntityPlayer par3, CallbackInfo ci) {
+    public void tensor_onChangeWorld(World world, String nane, EntityPlayer player, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }

@@ -1,6 +1,7 @@
 package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.misc.imp.Globals;
@@ -22,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class ItemRendererMixin implements Globals {
 
     @Inject(method = "renderInsideOfBlock", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderInsideOfBlock(float i, int par2, CallbackInfo ci) {
+    public void tensor_onRenderInsideOfBlock(float partialTicks, int color, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -40,7 +41,7 @@ public final class ItemRendererMixin implements Globals {
     }
 
     @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderFireInFirstPerson(float par1, CallbackInfo ci) {
+    public void tensor_onRenderFireInFirstPerson(float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -58,7 +59,7 @@ public final class ItemRendererMixin implements Globals {
     }
 
     @Inject(method = "renderWarpedTextureOverlay", at = @At("HEAD"), cancellable = true)
-    public void tensor_onRenderWarpedTextureOverlay(float par1, CallbackInfo ci) {
+    public void tensor_onRenderWarpedTextureOverlay(float partialTicks, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -75,12 +76,13 @@ public final class ItemRendererMixin implements Globals {
         });
     }
 
+    @TensorRedirect
     @Redirect(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/InventoryPlayer;getCurrentItem()Lnet/minecraft/src/ItemStack;"))
-    public ItemStack tensor_updateEquippedItemSlot9Fix(InventoryPlayer instance) {
-        if (instance.currentItem == 9) {
-            return instance.getStackInSlot(9);
+    public ItemStack tensor_updateEquippedItemSlot9Fix(InventoryPlayer inventoryPlayer) {
+        if (inventoryPlayer.currentItem == 9) {
+            return inventoryPlayer.getStackInSlot(9);
         }
 
-        return instance.getCurrentItem();
+        return inventoryPlayer.getCurrentItem();
     }
 }

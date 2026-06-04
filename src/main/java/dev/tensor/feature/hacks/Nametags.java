@@ -145,7 +145,14 @@ public final class Nametags extends Render3DHack {
         }
 
         if (this.showItems.getValue()) {
+            int handInt = entity.inventory.currentItem;
+
             ItemStack hand = entity.inventory.getCurrentItem();
+
+            if (handInt == 9) {
+                hand = entity.inventory.mainInventory[9];
+            }
+
             ItemStack[] armor = entity.inventory.armorInventory;
 
             RenderHelper.enableStandardItemLighting();

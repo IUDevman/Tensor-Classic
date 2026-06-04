@@ -24,7 +24,7 @@ public final class BlockMixin implements Globals {
     public int blockID;
 
     @Inject(method = "getBlockBrightness", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetBlockBrightness(IBlockAccess i, int j, int k, int par4, CallbackInfoReturnable<Float> cir) {
+    public void tensor_onGetBlockBrightness(IBlockAccess iBlockAccess, int x, int y, int z, CallbackInfoReturnable<Float> cir) {
         if (this.failsNullCheck()) {
             return;
         }

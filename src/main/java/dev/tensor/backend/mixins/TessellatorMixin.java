@@ -18,10 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class TessellatorMixin implements Globals {
 
     @Shadow
-    public abstract void setColorRGBA(int i, int j, int k, int l);
+    public abstract void setColorRGBA(int red, int green, int blue, int alpha);
 
     @Inject(method = "setColorOpaque", at = @At("HEAD"), cancellable = true)
-    public void tensor_onSetColorOpaque(int j, int k, int par3, CallbackInfo ci) {
+    public void tensor_onSetColorOpaque(int red, int green, int blue, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -31,7 +31,7 @@ public abstract class TessellatorMixin implements Globals {
         }
 
         if (this.getXray().shouldRenderOpacity()) {
-            this.setColorRGBA(j, k, par3, this.getXray().opacityValue.getValue());
+            this.setColorRGBA(red, green, blue, this.getXray().opacityValue.getValue());
             ci.cancel();
         }
     }

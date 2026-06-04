@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public final class BlockFluidMixin implements Globals {
 
     @Inject(method = "getCollisionBoundingBoxFromPool", at = @At("HEAD"), cancellable = true)
-    public void tensor_onGetCollisionBoundingBoxFromPool(World i, int j, int k, int par4, CallbackInfoReturnable<AxisAlignedBB> cir) {
+    public void tensor_onGetCollisionBoundingBoxFromPool(World world, int x, int y, int z, CallbackInfoReturnable<AxisAlignedBB> cir) {
         if (this.failsNullCheck()) {
             return;
         }
@@ -31,16 +31,16 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(j, k, par4).call(true, event -> {
+        EventCache.getCachedEvent(FluidCollisionEvent.class).withVariables(x, y, z).call(true, event -> {
 
             if (event.isCancelled()) {
-                cir.setReturnValue(AxisAlignedBB.getBoundingBox(j, k, par4, j + 1, k + 1, par4 + 1));
+                cir.setReturnValue(AxisAlignedBB.getBoundingBox(x, y, z, x + 1, y + 1, z + 1));
             }
         });
     }
 
     @Inject(method = "canCollideCheck", at = @At("HEAD"), cancellable = true)
-    public void tensor_onCanCollideCheck(int bl, boolean par2, CallbackInfoReturnable<Boolean> cir) {
+    public void tensor_onCanCollideCheck(int blockID, boolean flag, CallbackInfoReturnable<Boolean> cir) {
         if (this.failsNullCheck()) {
             return;
         }

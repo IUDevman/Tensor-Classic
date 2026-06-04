@@ -21,16 +21,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public final class PlayerControllerMPMixin implements Globals {
 
     @Inject(method = "attackEntity", at = @At("HEAD"))
-    public void tensor_onAttackEntity(EntityPlayer arg2, Entity par2, CallbackInfo ci) {
+    public void tensor_onAttackEntity(EntityPlayer player, Entity target, CallbackInfo ci) {
         if (this.failsNullCheck()) {
             return;
         }
 
-        if (this.getPlayer() != arg2) {
+        if (this.getPlayer() != player) {
             return;
         }
 
-        if (par2 == null) {
+        if (target == null) {
             return;
         }
 
@@ -38,6 +38,6 @@ public final class PlayerControllerMPMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(par2).call(true);
+        EventCache.getCachedEvent(AttackEntityEvent.class).withVariables(target).call(true);
     }
 }
