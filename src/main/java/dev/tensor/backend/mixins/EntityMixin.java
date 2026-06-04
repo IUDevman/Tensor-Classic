@@ -1,6 +1,9 @@
 package dev.tensor.backend.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.tensor.backend.MixinPriority;
+import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.MovementClipEvent;
 import dev.tensor.backend.events.variable.EntityLightValueEvent;
@@ -12,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -48,8 +50,9 @@ public final class EntityMixin implements Globals {
         });
     }
 
-    @Redirect(method = "moveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isSneaking()Z"))
-    public boolean tensor_onMoveEntityInvokeIsSneaking(Entity entity) {
+    @TensorRedirect
+    @WrapOperation(method = "moveEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isSneaking()Z"))
+    public boolean tensor_onMoveEntityInvokeIsSneaking(Entity entity, Operation<Boolean> original) {
         if (this.failsNullCheck()) {
             return entity.isSneaking();
         }

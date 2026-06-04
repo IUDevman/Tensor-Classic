@@ -1,5 +1,7 @@
 package dev.tensor.backend.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
@@ -14,7 +16,6 @@ import net.minecraft.src.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -81,8 +82,8 @@ public abstract class WorldMixin implements Globals {
     }
 
     @TensorRedirect
-    @Redirect(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
-    public double tensor_onHandleMaterialAccelerationInvokeVector(Vec3D vec3D) {
+    @WrapOperation(method = "handleMaterialAcceleration", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Vec3D;lengthVector()D"))
+    public double tensor_onHandleMaterialAccelerationInvokeVector(Vec3D vec3D, Operation<Double> original) {
         if (this.failsNullCheck()) {
             return vec3D.lengthVector();
         }

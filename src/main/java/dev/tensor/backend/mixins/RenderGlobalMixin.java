@@ -1,5 +1,7 @@
 package dev.tensor.backend.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
@@ -15,7 +17,6 @@ import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
@@ -146,8 +147,8 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @TensorRedirect
-    @Redirect(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
-    public ThreadDownloadImageData tensor_onObtainEntitySkinImageBuffer(RenderEngine renderEngine, String skinURL, ImageBuffer imageBuffer) {
+    @WrapOperation(method = "obtainEntitySkin", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/RenderEngine;obtainImageData(Ljava/lang/String;Lnet/minecraft/src/ImageBuffer;)Lnet/minecraft/src/ThreadDownloadImageData;", opcode = 1))
+    public ThreadDownloadImageData tensor_onObtainEntitySkinImageBuffer(RenderEngine renderEngine, String skinURL, ImageBuffer imageBuffer, Operation<ThreadDownloadImageData> original) {
         if (skinURL.endsWith("files/tensor/cape.png")) {
             return renderEngine.obtainImageData(skinURL, new TensorImageBuffer());
 
@@ -170,8 +171,8 @@ public final class RenderGlobalMixin implements Globals {
     }
 
     @TensorRedirect
-    @Redirect(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isInRangeToRenderVec3D(Lnet/minecraft/src/Vec3D;)Z"))
-    public boolean tensor_onRenderEntitiesWithinRange(Entity entity, Vec3D camera) {
+    @WrapOperation(method = "renderEntities", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;isInRangeToRenderVec3D(Lnet/minecraft/src/Vec3D;)Z"))
+    public boolean tensor_onRenderEntitiesWithinRange(Entity entity, Vec3D camera, Operation<Boolean> original) {
         if (this.failsNullCheck()) {
             return entity.isInRangeToRenderVec3D(camera);
         }
