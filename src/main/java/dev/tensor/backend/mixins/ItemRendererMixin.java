@@ -1,5 +1,7 @@
 package dev.tensor.backend.mixins;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
@@ -11,7 +13,6 @@ import net.minecraft.src.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
@@ -77,8 +78,8 @@ public final class ItemRendererMixin implements Globals {
     }
 
     @TensorRedirect
-    @Redirect(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/InventoryPlayer;getCurrentItem()Lnet/minecraft/src/ItemStack;"))
-    public ItemStack tensor_updateEquippedItemSlot9Fix(InventoryPlayer inventoryPlayer) {
+    @WrapOperation(method = "updateEquippedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/InventoryPlayer;getCurrentItem()Lnet/minecraft/src/ItemStack;"))
+    public ItemStack tensor_updateEquippedItemSlot9Fix(InventoryPlayer inventoryPlayer, Operation<ItemStack> original) {
         if (inventoryPlayer.currentItem == 9) {
             return inventoryPlayer.getStackInSlot(9);
         }
