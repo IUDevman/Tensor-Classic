@@ -7,6 +7,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Hoosiers
@@ -53,24 +54,24 @@ public interface Render3D extends Render2D {
     }
 
     default void drawOutlineBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color) {
-        BasicRenderContext strip = new BasicRenderContext(lineWidth, color);
-
-        strip.addVertex(minX, minY, minZ);
-        strip.addVertex(maxX, minY, minZ);
-        strip.addVertex(maxX, minY, maxZ);
-        strip.addVertex(minX, minY, maxZ);
-        strip.addVertex(minX, minY, minZ);
-
-        strip.addVertex(minX, maxY, minZ);
-        strip.addVertex(maxX, maxY, minZ);
-        strip.addVertex(maxX, maxY, maxZ);
-        strip.addVertex(minX, maxY, maxZ);
-        strip.addVertex(minX, maxY, minZ);
-
-        RenderTask.RENDER_TASK.loadStrip(strip);
-
         BasicRenderContext line = new BasicRenderContext(lineWidth, color);
 
+        line.addVertex(minX, minY, minZ);
+        line.addVertex(maxX, minY, minZ);
+        line.addVertex(maxX, minY, minZ);
+        line.addVertex(maxX, minY, maxZ);
+        line.addVertex(maxX, minY, maxZ);
+        line.addVertex(minX, minY, maxZ);
+        line.addVertex(minX, minY, maxZ);
+        line.addVertex(minX, minY, minZ);
+        line.addVertex(minX, maxY, minZ);
+        line.addVertex(maxX, maxY, minZ);
+        line.addVertex(maxX, maxY, minZ);
+        line.addVertex(maxX, maxY, maxZ);
+        line.addVertex(maxX, maxY, maxZ);
+        line.addVertex(minX, maxY, maxZ);
+        line.addVertex(minX, maxY, maxZ);
+        line.addVertex(minX, maxY, minZ);
         line.addVertex(minX, minY, minZ);
         line.addVertex(minX, maxY, minZ);
         line.addVertex(maxX, minY, minZ);
@@ -90,31 +91,26 @@ public interface Render3D extends Render2D {
         quad.addVertex(maxX, minY, minZ);
         quad.addVertex(maxX, maxY, minZ);
         quad.addVertex(maxX, maxY, maxZ);
-
         quad.addVertex(minX, minY, minZ);
         quad.addVertex(minX, minY, maxZ);
         quad.addVertex(minX, maxY, maxZ);
         quad.addVertex(minX, maxY, minZ);
-
         quad.addVertex(maxX, minY, minZ);
         quad.addVertex(minX, minY, minZ);
         quad.addVertex(minX, maxY, minZ);
         quad.addVertex(maxX, maxY, minZ);
-
         quad.addVertex(minX, minY, maxZ);
         quad.addVertex(maxX, minY, maxZ);
         quad.addVertex(maxX, maxY, maxZ);
         quad.addVertex(minX, maxY, maxZ);
-
-        quad.addVertex(maxX, maxY, minZ);
-        quad.addVertex(minX, maxY, minZ);
         quad.addVertex(minX, maxY, maxZ);
         quad.addVertex(maxX, maxY, maxZ);
-
+        quad.addVertex(maxX, maxY, minZ);
+        quad.addVertex(minX, maxY, minZ);
+        quad.addVertex(minX, minY, minZ);
         quad.addVertex(maxX, minY, minZ);
         quad.addVertex(maxX, minY, maxZ);
         quad.addVertex(minX, minY, maxZ);
-        quad.addVertex(minX, minY, minZ);
 
         RenderTask.RENDER_TASK.loadQuad(quad);
     }
