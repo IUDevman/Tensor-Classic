@@ -474,7 +474,7 @@ public final class AccountListSettingButton implements ButtonSetting {
             this.accountObjects.remove(object);
 
             if (this.getAccountManager().isActiveAccount(account)) {
-                this.buttonSetting.onTriggerChange();
+                this.buttonSetting.onChange();
             }
 
             this.getAccountManager().deleteAccount(account);

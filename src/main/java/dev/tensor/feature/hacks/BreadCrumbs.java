@@ -33,7 +33,7 @@ public final class BreadCrumbs extends Render3DHack {
     public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Positions", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
 
         @Override
-        public void onTriggerChange() {
+        public void onChange() {
             BreadCrumbs breadCrumbs = this.getHackManager().getHack(BreadCrumbs.class);
 
             if (breadCrumbs != null) {

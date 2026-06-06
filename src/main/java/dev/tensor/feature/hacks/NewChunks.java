@@ -31,7 +31,7 @@ public final class NewChunks extends Render3DHack {
     public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
 
         @Override
-        public void onTriggerChange() {
+        public void onChange() {
             NewChunks newChunks = this.getHackManager().getHack(NewChunks.class);
 
             if (newChunks != null) {

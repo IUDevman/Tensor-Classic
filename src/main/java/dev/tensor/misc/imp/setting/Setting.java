@@ -31,7 +31,7 @@ public interface Setting<T> extends Globals {
         this.setValue(this.getDefaultValue());
     }
 
-    default boolean shouldExcludeFromHackConfig() {
+    default boolean hasCustomConfig() {
         return false;
     }
 }

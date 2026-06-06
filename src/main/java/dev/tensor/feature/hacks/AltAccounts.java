@@ -17,7 +17,7 @@ public final class AltAccounts extends Hack {
     public final GeneralButtonSetting buttonWindow = new GeneralButtonSetting("Accounts List", GeneralButtonSetting.ButtonType.ACCOUNTS) {
 
         @Override
-        public void onTriggerChange() {
+        public void onChange() {
             if (this.failsNullCheck()) {
                 return;
             }

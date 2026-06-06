@@ -82,7 +82,7 @@ public class WaypointListSetting implements Setting<WaypointList> {
     }
 
     @Override
-    public boolean shouldExcludeFromHackConfig() {
+    public boolean hasCustomConfig() {
         return true;
     }
 }

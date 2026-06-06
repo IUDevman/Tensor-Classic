@@ -225,7 +225,7 @@ public final class Accounts implements Command {
         AltAccounts altAccounts = this.getHackManager().getHack(AltAccounts.class);
 
         if (altAccounts != null && altAccounts.isEnabled()) {
-            altAccounts.buttonWindow.onTriggerChange();
+            altAccounts.buttonWindow.onChange();
         }
     }
 

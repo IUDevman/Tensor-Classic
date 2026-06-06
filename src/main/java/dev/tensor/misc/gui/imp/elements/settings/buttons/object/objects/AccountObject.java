@@ -140,7 +140,7 @@ public final class AccountObject implements ButtonSettingObject {
     public void onClick(double mouseX, double mouseY) {
         if (this.hoveredActive && !this.getAccountManager().isActiveAccount(this.account)) {
             this.getAccountManager().setActiveAccount(this.account);
-            this.button.buttonSetting.onTriggerChange();
+            this.button.buttonSetting.onChange();
 
         } else if (this.hoveredDelete) {
             this.button.queueToRemoveAccount(account);

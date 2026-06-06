@@ -17,7 +17,7 @@ public final class Rainbow extends Hack {
     public final GeneralButtonSetting reset = new GeneralButtonSetting("Reset Color", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
 
         @Override
-        public void onTriggerChange() {
+        public void onChange() {
             RainbowColor.reset();
         }
     };

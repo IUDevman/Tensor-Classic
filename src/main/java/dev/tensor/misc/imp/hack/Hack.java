@@ -206,7 +206,7 @@ public abstract class Hack implements Globals {
         this.getSettings().forEach(objectSetting -> {
             JsonElement jsonElement = settingObject.get(objectSetting.getName());
 
-            if (jsonElement != null && !objectSetting.shouldExcludeFromHackConfig()) {
+            if (jsonElement != null && !objectSetting.hasCustomConfig()) {
                 objectSetting.load(jsonElement);
             }
         });
@@ -214,7 +214,7 @@ public abstract class Hack implements Globals {
         this.setEnabled(jsonObject.get("Enabled").getAsBoolean());
 
         this.getSettings().forEach(objectSetting -> {
-            if (objectSetting.shouldExcludeFromHackConfig()) {
+            if (objectSetting.hasCustomConfig()) {
                 objectSetting.load(null);
             }
         });
@@ -235,7 +235,7 @@ public abstract class Hack implements Globals {
 
         this.getSettings().forEach(objectSetting -> {
 
-            if (!objectSetting.shouldExcludeFromHackConfig()) {
+            if (!objectSetting.hasCustomConfig()) {
                 objectSetting.save(settingObject);
             }
         });
@@ -246,7 +246,7 @@ public abstract class Hack implements Globals {
 
         this.getSettings().forEach(objectSetting -> {
 
-            if (objectSetting.shouldExcludeFromHackConfig()) {
+            if (objectSetting.hasCustomConfig()) {
                 objectSetting.save(null);
             }
         });

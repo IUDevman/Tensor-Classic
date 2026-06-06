@@ -67,11 +67,11 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
 
     @Deprecated
     @Override
-    public boolean shouldExcludeFromHackConfig() {
+    public boolean hasCustomConfig() {
         return true;
     }
 
-    public void onTriggerChange() {
+    public void onChange() {
 
     }
 

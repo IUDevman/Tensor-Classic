@@ -27,7 +27,7 @@ public final class ActionSettingButton implements ButtonSetting {
     @Override
     public void setActive(boolean active) {
         if (active) {
-            this.button.onTriggerChange();
+            this.button.onChange();
         }
     }
 
