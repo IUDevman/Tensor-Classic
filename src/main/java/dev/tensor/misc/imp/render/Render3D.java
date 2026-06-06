@@ -7,7 +7,6 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * @author Hoosiers
