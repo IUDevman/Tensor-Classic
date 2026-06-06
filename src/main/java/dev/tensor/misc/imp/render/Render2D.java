@@ -14,71 +14,69 @@ import java.awt.*;
 
 public interface Render2D extends Globals {
 
-    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
-        float red = (color >> 16 & 255) / 255.0F;
-        float green = (color >> 8 & 255) / 255.0F;
-        float blue = (color & 255) / 255.0F;
-        float alpha = (color >> 24 & 255) / 255.0F;
-
+    default void startFlatGL(boolean gradient) {
         GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glDisable(GL11.GL_ALPHA_TEST);
 
-        GL11.glColor4f(red, green, blue, alpha);
+        if (gradient) {
+            GL11.glShadeModel(GL11.GL_SMOOTH);
+        }
+    }
 
-        Tessellator.instance.startDrawingQuads();
-        Tessellator.instance.addVertex(minX, maxY, 0.0F);
-        Tessellator.instance.addVertex(maxX, maxY, 0.0F);
-        Tessellator.instance.addVertex(maxX, minY, 0.0F);
-        Tessellator.instance.addVertex(minX, minY, 0.0F);
-        Tessellator.instance.draw();
+    default void finishFlatGL(boolean gradient) {
+        if (gradient) {
+            GL11.glShadeModel(GL11.GL_FLAT);
+        }
 
+        GL11.glEnable(GL11.GL_ALPHA_TEST);
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
     }
 
+    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
+        float[] colors = this.getColor(color, true);
+
+        this.startFlatGL(false);
+
+        GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
+
+        Tessellator.instance.startDrawingQuads();
+        Tessellator.instance.addVertex(minX, maxY, 0.0F);
+        Tessellator.instance.addVertex(maxX, maxY, 0.0F);
+        Tessellator.instance.addVertex(maxX, minY, 0.0F);
+        Tessellator.instance.addVertex(minX, minY, 0.0F);
+        Tessellator.instance.draw();
+
+        this.finishFlatGL(false);
+    }
+
     default void drawGradientRectangleTopBottom(int minX, int minY, int maxX, int maxY, int topColor, int bottomColor) {
-        float topRed = (topColor >> 16 & 255) / 255.0F;
-        float topGreen = (topColor >> 8 & 255) / 255.0F;
-        float topBlue = (topColor & 255) / 255.0F;
-        float topAlpha = (topColor >> 24 & 255) / 255.0F;
+        float[] topColors = this.getColor(topColor, true);
+        float[] bottomColors = this.getColor(bottomColor, true);
 
-        float bottomRed = (bottomColor >> 16 & 255) / 255.0F;
-        float bottomGreen = (bottomColor >> 8 & 255) / 255.0F;
-        float bottomBlue = (bottomColor & 255) / 255.0F;
-        float bottomAlpha = (bottomColor >> 24 & 255) / 255.0F;
-
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glShadeModel(GL11.GL_SMOOTH);
+        this.startFlatGL(true);
 
         Tessellator.instance.startDrawingQuads();
 
-        Tessellator.instance.setColorRGBA_F(bottomRed, bottomGreen, bottomBlue, bottomAlpha);
+        Tessellator.instance.setColorRGBA_F(bottomColors[0], bottomColors[1], bottomColors[2], bottomColors[3]);
+        Tessellator.instance.addVertex(minX, maxY, 0F);
+        Tessellator.instance.addVertex(maxX, maxY, 0F);
 
-        Tessellator.instance.addVertex(minX, maxY, 0.0F);
-        Tessellator.instance.addVertex(maxX, maxY, 0.0F);
-
-        Tessellator.instance.setColorRGBA_F(topRed, topGreen, topBlue, topAlpha);
-
-        Tessellator.instance.addVertex(maxX, minY, 0.0F);
-        Tessellator.instance.addVertex(minX, minY, 0.0F);
+        Tessellator.instance.setColorRGBA_F(topColors[0], topColors[1], topColors[2], topColors[3]);
+        Tessellator.instance.addVertex(maxX, minY, 0F);
+        Tessellator.instance.addVertex(minX, minY, 0F);
 
         Tessellator.instance.draw();
 
-        GL11.glShadeModel(GL11.GL_FLAT);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+        this.finishFlatGL(true);
     }
 
     default void drawSmallColorPickerRectangle(int startX, int startY, int width, int height) {
         float[][] colors = this.getColorGradient();
 
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glShadeModel(GL11.GL_SMOOTH);
+        this.startFlatGL(true);
 
         Tessellator.instance.startDrawingQuads();
 
@@ -88,25 +86,53 @@ public interface Render2D extends Globals {
             float[] top = colors[i];
             float[] bottom = colors[i + 1];
 
-            Tessellator.instance.setColorRGBA_F(bottom[0], bottom[1], bottom[2], bottom[3]);
-
             float minY = (float) (startY + (yDiff * i));
             float maxY = (float) (startY + (yDiff * (i + 1)));
 
+            Tessellator.instance.setColorRGBA_F(bottom[0], bottom[1], bottom[2], bottom[3]);
             Tessellator.instance.addVertex(startX, maxY, 0.0F);
             Tessellator.instance.addVertex(startX + width, maxY, 0.0F);
 
             Tessellator.instance.setColorRGBA_F(top[0], top[1], top[2], top[3]);
-
             Tessellator.instance.addVertex(startX + width, minY, 0.0F);
             Tessellator.instance.addVertex(startX, minY, 0.0F);
         }
 
         Tessellator.instance.draw();
 
-        GL11.glShadeModel(GL11.GL_FLAT);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+        this.finishFlatGL(true);
+    }
+
+    default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, Color color) {
+        float[] colors = this.getColor(color, false);
+
+        this.startFlatGL(true);
+
+        Tessellator.instance.startDrawingQuads();
+
+        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
+        Tessellator.instance.addVertex(startX, startY + height, 0F);
+
+        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
+        Tessellator.instance.addVertex(startX + width, startY + height, 0F);
+
+        Tessellator.instance.setColorRGBA_F(colors[0], colors[1], colors[2], colors[3]);
+        Tessellator.instance.addVertex(startX + width, startY, 0F);
+
+        Tessellator.instance.setColorRGBA_F(1F, 1F, 1F, 1F);
+        Tessellator.instance.addVertex(startX, startY, 0F);
+
+        Tessellator.instance.draw();
+
+        this.finishFlatGL(true);
+    }
+
+    default float[] getColor(int color, boolean hasAlpha) {
+        return new float[]{(color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, hasAlpha ? (color >> 24 & 255) / 255.0F : 1F};
+    }
+
+    default float[] getColor(Color color, boolean hasAlpha) {
+        return this.getColor(color.getRGB(), hasAlpha);
     }
 
     default float[][] getColorGradient() {
@@ -121,35 +147,16 @@ public interface Render2D extends Globals {
         };
     }
 
-    default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, Color color) {
-        GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-        GL11.glShadeModel(GL11.GL_SMOOTH);
-
-        Tessellator.instance.startDrawingQuads();
-
-        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
-        Tessellator.instance.addVertex(startX, startY + height, 0.0F);
-
-        Tessellator.instance.setColorRGBA_F(0F, 0F, 0F, 1F);
-        Tessellator.instance.addVertex(startX + width, startY + height, 0.0F);
-
-        Tessellator.instance.setColorRGBA_F(color.getRed() / 255F, color.getGreen() / 255F, color.getBlue() / 255F, 1F);
-        Tessellator.instance.addVertex(startX + width, startY, 0.0F);
-
-        Tessellator.instance.setColorRGBA_F(1F, 1F, 1F, 1F);
-        Tessellator.instance.addVertex(startX, startY, 0.0F);
-
-        Tessellator.instance.draw();
-
-        GL11.glShadeModel(GL11.GL_FLAT);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
-    }
-
     default void drawString(String text, int x, int y, int color) {
+        //Can enable opacity for strings if these calls are present:
+        //GL11.glEnable(GL11.GL_BLEND);
+        //GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        //GL11.glDisable(GL11.GL_ALPHA_TEST);
+
         this.getInGameGUI().drawString(this.getFontRenderer(), text, x, y, color);
+
+        //GL11.glEnable(GL11.GL_ALPHA_TEST);
+        //GL11.glDisable(GL11.GL_BLEND);
     }
 
     default void drawCenteredString(String text, int x, int y, int color) {
@@ -164,16 +171,13 @@ public interface Render2D extends Globals {
         GL11.glPushMatrix();
         GL11.glDisable(GL11.GL_BLEND);
         GL11.glEnable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
-
         RenderHelper.enableStandardItemLighting();
-
         GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
     }
 
     default void finishItemGL() {
         RenderHelper.disableStandardItemLighting();
-
         GL11.glDisable(EXTRescaleNormal.GL_RESCALE_NORMAL_EXT);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glDepthMask(true);
