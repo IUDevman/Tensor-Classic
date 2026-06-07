@@ -143,7 +143,14 @@ public final class BlockCoords implements Globals {
     }
 
     public boolean[] getNeighborMap() {
-        return this.neighborMap.get();
+        boolean[] returnMap =  this.neighborMap.get();
+
+        if (returnMap == null) {
+            this.updateNeighborMap();
+            return this.neighborMap.get();
+        }
+        
+        return returnMap;
     }
 
     public void updateNeighborMap() {
