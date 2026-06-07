@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  */
 
 /**
- * Discarded for now on compilation, useful for me to see where all the redirects are for compatibility.
+ * Discarded for now on compilation, useful for me to see where all the redirects (WrapOperations) are for compatibility.
  * May use this for something else in the future...
  */
 
