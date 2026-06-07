@@ -1,17 +1,17 @@
 package dev.tensor.misc.imp.render.task;
 
-import java.awt.*;
+import dev.tensor.misc.imp.Globals;
 
 /**
  * @author Hoosiers
  * @since 05-03-2026
  */
 
-public interface RenderContext {
+public interface RenderContext extends Globals {
 
     int getLineWidth();
 
-    Color getColor();
+    int getColor();
 
     boolean isEmpty();
 

@@ -36,7 +36,7 @@ public interface Render2D extends Globals {
     }
 
     default void prepRectangle(int color) {
-        float[] colors = RenderStatic.getCachedColors(color, true);
+        float[] colors = this.getColor(color, true);
 
         GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
 
@@ -102,8 +102,8 @@ public interface Render2D extends Globals {
     }
 
     default void drawGradientRectangleTopBottom(int minX, int minY, int maxX, int maxY, int topColor, int bottomColor) {
-        float[] topColors = RenderStatic.getCachedColors(topColor, true);
-        float[] bottomColors = RenderStatic.getCachedColors(bottomColor, true);
+        float[] topColors = this.getColor(topColor, true);
+        float[] bottomColors = this.getColor(bottomColor, true);
 
         this.startFlatGL(true);
 
@@ -153,7 +153,7 @@ public interface Render2D extends Globals {
     }
 
     default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, Color color) {
-        float[] colors = RenderStatic.getCachedColors(color, false);
+        float[] colors = this.getColor(color, false);
 
         this.startFlatGL(true);
 
@@ -243,13 +243,10 @@ public interface Render2D extends Globals {
             GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 
-            int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float r = (float) (damageColor >> 16 & 255) / 255.0F;
-            float g = (float) (damageColor >> 8 & 255) / 255.0F;
-            float b = (float) (damageColor & 255) / 255.0F;
+            float[] colors = this.getColor(Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage()), false);
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(r, g, b, 1.0F);
+                GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
             }
 
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
@@ -276,13 +273,10 @@ public interface Render2D extends Globals {
                 this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/gui/items.png"));
             }
 
-            int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float red = (float) (damageColor >> 16 & 255) / 255.0F;
-            float green = (float) (damageColor >> 8 & 255) / 255.0F;
-            float blue = (float) (damageColor & 255) / 255.0F;
+            float[] colors = this.getColor(Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage()), false);
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(red, green, blue, 1.0F);
+                GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
             }
 
             RenderStatic.tensor_renderItem.renderTexturedQuad(0, 0, itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);

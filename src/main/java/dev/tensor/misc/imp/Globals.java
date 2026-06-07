@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.slf4j.Logger;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -425,5 +426,13 @@ public interface Globals {
 
             this.getWorld().worldProvider.lightBrightnessTable[i] = (1.0F - brightness) / (brightness * 3.0F + 1.0F) * 0.95F + 0.05F;
         }
+    }
+
+    default float[] getColor(Color color, boolean hasAlpha) {
+        return this.getColor(color.getRGB(), hasAlpha);
+    }
+
+    default float[] getColor(int color, boolean hasAlpha) {
+        return new float[]{(color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, hasAlpha ? (color >> 24 & 255) / 255.0F : 1F};
     }
 }

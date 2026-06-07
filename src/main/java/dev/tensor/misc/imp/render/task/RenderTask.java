@@ -4,10 +4,8 @@ import dev.tensor.misc.imp.render.task.context.BasicRenderContext;
 import net.minecraft.src.Tessellator;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Hoosiers
@@ -36,7 +34,7 @@ public final class RenderTask {
 
     public void render() {
         AtomicInteger prevLineWidth = new AtomicInteger(0);
-        AtomicReference<Color> prevColor = new AtomicReference<>();
+        AtomicInteger prevColor = new AtomicInteger(-1);
 
         if (!this.quads.isEmpty()) {
 

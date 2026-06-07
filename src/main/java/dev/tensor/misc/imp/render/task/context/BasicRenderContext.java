@@ -4,7 +4,6 @@ import dev.tensor.misc.imp.render.task.RenderContext;
 import net.minecraft.src.Tessellator;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -15,11 +14,11 @@ import java.util.ArrayList;
 public final class BasicRenderContext implements RenderContext {
 
     private final int lineWidth;
-    private final Color color;
+    private final int color;
 
     private final ArrayList<double[]> queue = new ArrayList<>();
 
-    public BasicRenderContext(int lineWidth, Color color) {
+    public BasicRenderContext(int lineWidth, int color) {
         this.lineWidth = lineWidth;
         this.color = color;
     }
@@ -30,7 +29,7 @@ public final class BasicRenderContext implements RenderContext {
     }
 
     @Override
-    public Color getColor() {
+    public int getColor() {
         return this.color;
     }
 
@@ -51,7 +50,8 @@ public final class BasicRenderContext implements RenderContext {
         }
 
         if (color) {
-            GL11.glColor4f(this.color.getRed() / 255F, this.color.getGreen() / 255F, this.color.getBlue() / 255F, this.color.getAlpha() / 255F);
+            float[] colors = this.getColor(this.color, true);
+            GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
         }
     }
 

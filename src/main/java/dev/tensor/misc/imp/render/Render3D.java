@@ -55,7 +55,7 @@ public interface Render3D extends Render2D {
     }
 
     default void drawOutlineBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color) {
-        BasicRenderContext line = new BasicRenderContext(lineWidth, color);
+        BasicRenderContext line = new BasicRenderContext(lineWidth, color.getRGB());
 
         line.addVertex(minX, minY, minZ);
         line.addVertex(maxX, minY, minZ);
@@ -86,7 +86,7 @@ public interface Render3D extends Render2D {
     }
 
     default void drawFillBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color) {
-        BasicRenderContext quad = new BasicRenderContext(0, color);
+        BasicRenderContext quad = new BasicRenderContext(0, color.getRGB());
 
         quad.addVertex(maxX, minY, maxZ);
         quad.addVertex(maxX, minY, minZ);
@@ -117,7 +117,7 @@ public interface Render3D extends Render2D {
     }
 
     default void drawTracer(double targetX, double targetY, double targetZ, int lineWidth, Color color, int alpha) {
-        BasicRenderContext line = new BasicRenderContext(lineWidth, new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha));
+        BasicRenderContext line = new BasicRenderContext(lineWidth, new Color(color.getRed(), color.getGreen(), color.getBlue(), alpha).getRGB());
 
         line.addVertex(0, 0, 0);
         line.addVertex(targetX, targetY, targetZ);
@@ -130,7 +130,7 @@ public interface Render3D extends Render2D {
             return;
         }
 
-        BasicRenderContext strip = new BasicRenderContext(lineWidth, color);
+        BasicRenderContext strip = new BasicRenderContext(lineWidth, color.getRGB());
 
         for (double[] position : positions) {
             if (position == null) {
@@ -163,13 +163,10 @@ public interface Render3D extends Render2D {
             GL11.glRotatef(210.0F, 1.0F, 0.0F, 0.0F);
             GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 
-            int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float r = (float) (damageColor >> 16 & 255) / 255.0F;
-            float g = (float) (damageColor >> 8 & 255) / 255.0F;
-            float b = (float) (damageColor & 255) / 255.0F;
+            float[] colors = this.getColor(Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage()), false);
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(r, g, b, 1.0F);
+                GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
             }
 
             GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
@@ -196,13 +193,10 @@ public interface Render3D extends Render2D {
                 this.getRenderEngine().bindTexture(this.getRenderEngine().getTexture("/gui/items.png"));
             }
 
-            int damageColor = Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage());
-            float red = (float) (damageColor >> 16 & 255) / 255.0F;
-            float green = (float) (damageColor >> 8 & 255) / 255.0F;
-            float blue = (float) (damageColor & 255) / 255.0F;
+            float[] colors = this.getColor(Item.itemsList[itemID].getColorFromDamage(itemStack.getItemDamage()), false);
 
             if (RenderStatic.tensor_renderItem.field_27004_a) {
-                GL11.glColor4f(red, green, blue, 1.0F);
+                GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
             }
 
             RenderStatic.tensor_renderItem.renderTexturedQuad(startX, startY + (itemID < 256 ? -2 : 0), itemIcon % 16 * 16, itemIcon / 16 * 16, 16, 16);
