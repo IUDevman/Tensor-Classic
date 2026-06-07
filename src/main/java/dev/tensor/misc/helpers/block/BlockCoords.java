@@ -133,6 +133,10 @@ public final class BlockCoords implements Globals {
     }
 
     public boolean hasNoFaces() {
+        if (this.neighborMap.get() == null) {
+            this.updateNeighborMap();
+        }
+
         for (boolean face : this.neighborMap.get()) {
             if (face) {
                 return false;
@@ -143,13 +147,13 @@ public final class BlockCoords implements Globals {
     }
 
     public boolean[] getNeighborMap() {
-        boolean[] returnMap =  this.neighborMap.get();
+        boolean[] returnMap = this.neighborMap.get();
 
         if (returnMap == null) {
             this.updateNeighborMap();
             return this.neighborMap.get();
         }
-        
+
         return returnMap;
     }
 
