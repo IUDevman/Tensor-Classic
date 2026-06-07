@@ -60,12 +60,51 @@ public final class BlockCoords implements Globals {
 
             boolean face = neighborBlockId != this.block.blockID;
 
-            if (!face && (this.block.blockID == 64 || this.block.blockID == 65 || this.block.blockID == 71 || this.block.blockID == 96)) {
+            if (!face && this.block.blockID == Block.ladder.blockID) {
                 int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
 
-                //todo: fix doors:
                 if (neighborMetadata != metadata) {
                     face = true;
+                }
+
+            } else if (!face && this.block.blockID == Block.trapdoor.blockID) {
+                int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
+
+                if (metadata >= 4 && neighborMetadata < 4) {
+                    face = true;
+
+                } else if (metadata < 4 && neighborMetadata >= 4) {
+                    face = true;
+
+                } else if (metadata != neighborMetadata && (i == 2 || i == 3)) {
+                    face = true;
+
+                } else if (metadata == 4 && neighborMetadata > 4) {
+                    face = true;
+
+                } else if (neighborMetadata == 4 && metadata > 4) {
+                    face = true;
+                } else if (metadata < 4 && metadata == neighborMetadata && (i == 2 || i == 3)) {
+                    face = true;
+                }
+
+            } else if (!face && (this.block.blockID == Block.doorWood.blockID || this.block.blockID == Block.doorSteel.blockID)) {
+                if (i != 2 && i != 3) {
+                    int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
+
+                    int testMetadata = metadata;
+
+                    if (testMetadata >= 8) {
+                        testMetadata -= 8;
+                    }
+
+                    if (neighborMetadata >= 8) {
+                        neighborMetadata -= 8;
+                    }
+
+                    if (testMetadata != neighborMetadata && testMetadata + 3 != neighborMetadata && testMetadata - 3 != neighborMetadata) {
+                        face = true;
+                    }
                 }
             }
 
@@ -90,7 +129,7 @@ public final class BlockCoords implements Globals {
         int ourBlockID = this.block.blockID;
 
         //blocks that should only merge the top/bottom
-        if (ourBlockID == 26 || ourBlockID == 81 || ourBlockID == 83) {
+        if (ourBlockID == Block.cactus.blockID || ourBlockID == Block.reed.blockID) {
             faces[0] = true;
             faces[1] = true;
             faces[4] = true;
@@ -98,7 +137,7 @@ public final class BlockCoords implements Globals {
         }
 
         //blocks that should not merge the top/bottom
-        if (ourBlockID == 44 || ourBlockID == 60 || ourBlockID == 78 || ourBlockID == 96) {
+        if (ourBlockID == Block.blockBed.blockID || ourBlockID == Block.stairSingle.blockID || ourBlockID == Block.redstoneWire.blockID || ourBlockID == Block.tilledField.blockID || ourBlockID == Block.snow.blockID) {
             faces[2] = true;
             faces[3] = true;
         }
@@ -109,22 +148,21 @@ public final class BlockCoords implements Globals {
     private boolean isThisADudBlock() {
         int ourBlockID = this.block.blockID;
 
-        if (ourBlockID == 6
-                || (ourBlockID > 29 && ourBlockID < 33)
-                || ourBlockID == 34
-                || (ourBlockID > 35 && ourBlockID < 41)
-                || ourBlockID == 50
-                || ourBlockID == 55
-                || ourBlockID == 59
-                || ourBlockID == 63
-                || ourBlockID == 68
-                || ourBlockID == 69
-                || ourBlockID == 70
-                || ourBlockID == 72
-                || ourBlockID == 75
-                || ourBlockID == 76
-                || ourBlockID == 77
-                || ourBlockID == 92) {
+        if (ourBlockID == Block.sapling.blockID
+                || (ourBlockID > Block.pistonStickyBase.blockID && ourBlockID < Block.pistonBase.blockID)
+                || ourBlockID == Block.pistonExtension.blockID
+                || (ourBlockID > Block.cloth.blockID && ourBlockID < Block.blockGold.blockID)
+                || ourBlockID == Block.torchWood.blockID
+                || ourBlockID == Block.crops.blockID
+                || ourBlockID == Block.signPost.blockID
+                || ourBlockID == Block.signWall.blockID
+                || ourBlockID == Block.lever.blockID
+                || ourBlockID == Block.pressurePlateStone.blockID
+                || ourBlockID == Block.pressurePlatePlanks.blockID
+                || ourBlockID == Block.torchRedstoneIdle.blockID
+                || ourBlockID == Block.torchRedstoneActive.blockID
+                || ourBlockID == Block.button.blockID
+                || ourBlockID == Block.cake.blockID) {
 
             return true;
         }

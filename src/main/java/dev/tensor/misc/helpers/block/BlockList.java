@@ -329,6 +329,7 @@ public final class BlockList implements Globals {
             LOGICAL_SEARCH.add(String.valueOf(Block.doorSteel.blockID));
             LOGICAL_SEARCH.add(String.valueOf(Block.doorWood.blockID));
             LOGICAL_SEARCH.add(String.valueOf(Block.trapdoor.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.ladder.blockID));
         }
 
         return new ArrayList<>(LOGICAL_SEARCH);
