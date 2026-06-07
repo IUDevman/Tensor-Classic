@@ -119,11 +119,23 @@ public final class AccountObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 110, this.getPosY() + this.getHeight() - 2, this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 110, this.getPosY(), this.getPosX() + this.getWidth() - 108, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 55, this.getPosY(), this.getPosX() + this.getWidth() - 53, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, this.account.isSessionAccount() ? this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB() : this.hoveredDelete ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 108, this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight() - 2, this.getAccountManager().isActiveAccount(this.account) ? this.hoveredActive ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB() : this.hoveredActive ? new Color(255, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 255, 0, fillColor.getAlpha()).getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 110, this.getPosY() + this.getHeight() - 2);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 110, this.getPosY(), this.getPosX() + this.getWidth() - 108, this.getPosY() + this.getHeight() - 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 55, this.getPosY(), this.getPosX() + this.getWidth() - 53, this.getPosY() + this.getHeight() - 2);
+
+        this.swapRectangleColor(this.account.isSessionAccount() ? this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB() : this.hoveredDelete ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2);
+
+        this.swapRectangleColor(this.getAccountManager().isActiveAccount(this.account) ? this.hoveredActive ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB() : this.hoveredActive ? new Color(255, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 255, 0, fillColor.getAlpha()).getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 108, this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight() - 2);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawString("> Active <", this.getPosX() + this.getWidth() - 55 - ((this.getFontRenderer().getStringWidth("> Active <") + 53) / 2), this.getPosY() + 3, Color.YELLOW.getRGB());
         this.drawString(this.account.isSessionAccount() ? "> N/A <" : "> Delete <", this.getPosX() + this.getWidth() - ((this.getFontRenderer().getStringWidth(this.account.isSessionAccount() ? "> N/A <" : "> Delete <") + 53) / 2), this.getPosY() + 3, Color.YELLOW.getRGB());

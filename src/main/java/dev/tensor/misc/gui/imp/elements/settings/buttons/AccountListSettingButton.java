@@ -94,26 +94,39 @@ public final class AccountListSettingButton implements ButtonSetting {
             this.getAccountManager().setUpdated(false);
         }
 
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(fillColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY());
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
+        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 45);
+        this.genRectangleVertices(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 43);
+
+        this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight);
+
+        this.swapRectangleColor(this.hoveredOnMainBox ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43);
+
+        this.swapRectangleColor(this.hoveredOnAdd ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB());
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 43);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
+
         this.drawCenteredString(this.hackElement.hack.NAME + " : " + this.buttonSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
-
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
         this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
-
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-
-        this.drawRectangle(this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43, this.hoveredOnMainBox ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 45, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 43, this.hoveredOnAdd ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB());
-        this.drawRectangle(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 43, outLineColor.getRGB());
         this.drawCenteredString(">> Add <<", this.getPosX() + 50 - (this.getFontRenderer().getStringWidth(">> Add <<") / 2), this.getPosY() + this.tensorGUI.titleBoxHeight + 18, Color.YELLOW.getRGB());
         this.drawString("Username : " + ChatColor.LIGHT_GRAY.text() + (this.searchingUsername ? this.usernameValue.isEmpty() ? "..." : this.usernameValue : this.usernameValue.isEmpty() ? "New Account" : this.usernameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 5, Color.WHITE.getRGB());
         this.drawString("Server : " + ChatColor.LIGHT_GRAY.text() + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());

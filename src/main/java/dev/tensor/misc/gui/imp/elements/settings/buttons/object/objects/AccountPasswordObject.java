@@ -62,9 +62,19 @@ public final class AccountPasswordObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight(), this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 55, this.getPosY(), this.getPosX() + this.getWidth() - 53, this.getPosY() + this.getHeight(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), this.hoveredOnDelete ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 55, this.getPosY() + this.getHeight());
+
+        this.swapRectangleColor(outLineColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 55, this.getPosY(), this.getPosX() + this.getWidth() - 53, this.getPosY() + this.getHeight());
+
+        this.swapRectangleColor(this.hoveredOnDelete ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 53, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight());
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawString("> Delete <", this.getPosX() + this.getWidth() - ((this.getFontRenderer().getStringWidth("> Delete <") + 53) / 2), this.getPosY() + 3, Color.YELLOW.getRGB());
         this.drawString(this.server + " - " + ChatColor.LIGHT_GRAY.text() + this.password, this.getPosX() + 3, this.getPosY() + 3, Color.WHITE.getRGB());

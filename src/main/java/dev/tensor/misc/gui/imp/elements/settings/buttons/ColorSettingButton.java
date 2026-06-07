@@ -89,48 +89,53 @@ public final class ColorSettingButton implements ButtonSetting, DraggableButtonS
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(fillColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 108, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 90);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 10, this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX() + 138, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 148, this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX() + 180, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 190, this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX() + 222, this.getPosY() + this.getHeight() - 152, this.getPosX() + 232, this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 152, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 12);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 120, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 110);
+        this.genRectangleVertices(this.getPosX() + 222, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 152);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() - 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() - 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() - 2, this.getPosX() + this.getWidth(), this.getPosY());
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
+        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 110, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 108);
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 90, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 88);
+        this.genRectangleVertices(this.getPosX() + 232, this.getPosY() + this.getHeight() - 152, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 150);
+        this.genRectangleVertices(this.getPosX() + 232, this.getPosY() + this.getHeight() - 122, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 120);
+        this.genRectangleVertices(this.getPosX() + 232, this.getPosY() + this.getHeight() - 150, this.getPosX() + 234, this.getPosY() + this.getHeight() - 122);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 12, this.getPosY() + this.getHeight() - 150, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 122);
+
+        this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight);
+
+        this.swapRectangleColor(this.colorSettingElement.colorSetting.getValue().getRGB());
+        this.genRectangleVertices(this.getPosX() + 234, this.getPosY() + this.getHeight() - 150, this.getPosX() + this.getWidth() - 12, this.getPosY() + this.getHeight() - 122);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
+
         this.drawCenteredString(this.hackElement.hack.NAME + " : " + this.colorSettingElement.colorSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
-
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight, this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight, outLineColor.getRGB());
         this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
-
-        this.drawRectangle(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2, outLineColor.getRGB());
-
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 110, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 108, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 108, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 90, fillColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 90, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 88, outLineColor.getRGB());
+        this.drawString("Copy Color From Other ColorSetting - ", this.getPosX() + 2, this.getPosY() + this.getHeight() - 106, Color.WHITE.getRGB());
 
         this.smallColorPickerObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor);
         this.bigColorPickerObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor);
         this.alphaPickerObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor);
-
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 12, fillColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 120, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 110, fillColor.getRGB());
-
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 10, this.getPosY() + this.getHeight() - 120, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + 138, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 148, this.getPosY() + this.getHeight() - 120, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + 180, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + 190, this.getPosY() + this.getHeight() - 120, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + 222, this.getPosY() + this.getHeight() - 152, this.getPosX() + 232, this.getPosY() + this.getHeight() - 120, fillColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 152, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 120, fillColor.getRGB());
-
-        this.drawRectangle(this.getPosX() + 222, this.getPosY() + this.tensorGUI.titleBoxHeight + 12, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 152, fillColor.getRGB());
-
-        this.drawRectangle(this.getPosX() + 234, this.getPosY() + this.getHeight() - 150, this.getPosX() + this.getWidth() - 12, this.getPosY() + this.getHeight() - 122, this.colorSettingElement.colorSetting.getValue().getRGB());
-        this.drawRectangle(this.getPosX() + 232, this.getPosY() + this.getHeight() - 152, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 150, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + 232, this.getPosY() + this.getHeight() - 122, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 120, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + 232, this.getPosY() + this.getHeight() - 150, this.getPosX() + 234, this.getPosY() + this.getHeight() - 122, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 12, this.getPosY() + this.getHeight() - 150, this.getPosX() + this.getWidth() - 10, this.getPosY() + this.getHeight() - 122, outLineColor.getRGB());
-
-        this.drawString("Copy Color From Other ColorSetting - ", this.getPosX() + 2, this.getPosY() + this.getHeight() - 106, Color.WHITE.getRGB());
 
         int startX = this.getPosX() + 232;
         int startY = this.getPosY() + this.tensorGUI.titleBoxHeight + 10;

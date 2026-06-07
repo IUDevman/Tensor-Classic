@@ -71,10 +71,7 @@ public final class BigColorPickerObject implements ButtonSettingObject, Draggabl
             this.colorPickerPoint.updateFromSmallColorPickerDragging(this.button.smallColorPickerObject.defaultColor, this.button);
         }
 
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + 2, this.getPosX() + 2, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 2, this.getPosY() + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
+        this.drawOutlinedRectangle(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), 2, 0, outLineColor.getRGB(), false);
 
         this.drawLargeColorPickerRectangle(this.getPosX() + 2, this.getPosY() + 2, 124, 124, this.button.smallColorPickerObject.defaultColor.getDefaultColor());
 

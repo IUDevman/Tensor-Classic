@@ -84,9 +84,18 @@ public final class ButtonSettingElement extends SettingElement {
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY, maxX - 1, maxY, fillColor.getRGB());
-        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY, maxX - 1, maxY);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY, minX + 1, maxY);
+        this.genRectangleVertices(maxX - 1, minY, maxX, maxY);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         String click = "Click";
 

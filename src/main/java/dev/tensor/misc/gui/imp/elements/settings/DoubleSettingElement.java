@@ -65,9 +65,18 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY, maxX - 1, maxY, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY, maxX - 1, maxY);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY, minX + 1, maxY);
+        this.genRectangleVertices(maxX - 1, minY, maxX, maxY);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMin()) + " -> " + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()) + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValueString(false));
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());

@@ -35,26 +35,75 @@ public interface Render2D extends Globals {
         GL11.glDisable(GL11.GL_BLEND);
     }
 
-    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
-        float[] colors = this.getColor(color, true);
-
-        this.startFlatGL(false);
+    default void prepRectangle(int color) {
+        float[] colors = RenderStatic.getCachedColors(color, true);
 
         GL11.glColor4f(colors[0], colors[1], colors[2], colors[3]);
 
         Tessellator.instance.startDrawingQuads();
+    }
+
+    default void finishRectangle() {
+        Tessellator.instance.draw();
+    }
+
+    default void swapRectangleColor(int color) {
+        this.finishRectangle();
+        this.prepRectangle(color);
+    }
+
+    default void drawRectangle(int minX, int minY, int maxX, int maxY, int color) {
+        this.startFlatGL(false);
+
+        this.prepRectangle(color);
+
+        this.genRectangleVertices(minX, minY, maxX, maxY);
+
+        this.finishRectangle();
+
+        this.finishFlatGL(false);
+    }
+
+    default void genRectangleVertices(int minX, int minY, int maxX, int maxY) {
         Tessellator.instance.addVertex(minX, maxY, 0.0F);
         Tessellator.instance.addVertex(maxX, maxY, 0.0F);
         Tessellator.instance.addVertex(maxX, minY, 0.0F);
         Tessellator.instance.addVertex(minX, minY, 0.0F);
-        Tessellator.instance.draw();
+    }
+
+    default void drawOutlinedRectangle(int minX, int minY, int width, int height, int outlineWidth, int fillColor, int outlineColor, boolean shouldFill) {
+        this.startFlatGL(false);
+
+        this.prepRectangle(outlineColor);
+
+        int minXWidth = minX + outlineWidth;
+        int maxXWidth = minX + width;
+        int maxXWidthMinusLine = maxXWidth - outlineWidth;
+        int minYHeight = minY + outlineWidth;
+        int maxYHeight = minY + height;
+        int maxYHeightMinusLine = maxYHeight - outlineWidth;
+
+        this.genRectangleVertices(minX, minY, maxXWidth, minYHeight);
+        this.genRectangleVertices(minX, maxYHeightMinusLine, maxXWidth, maxYHeight);
+        this.genRectangleVertices(minX, minYHeight, minXWidth, maxYHeightMinusLine);
+        this.genRectangleVertices(maxXWidthMinusLine, minYHeight, maxXWidth, maxYHeightMinusLine);
+
+        this.finishRectangle();
+
+        if (shouldFill) {
+            this.prepRectangle(fillColor);
+
+            this.genRectangleVertices(minXWidth, minYHeight, maxXWidthMinusLine, maxYHeightMinusLine);
+
+            this.finishRectangle();
+        }
 
         this.finishFlatGL(false);
     }
 
     default void drawGradientRectangleTopBottom(int minX, int minY, int maxX, int maxY, int topColor, int bottomColor) {
-        float[] topColors = this.getColor(topColor, true);
-        float[] bottomColors = this.getColor(bottomColor, true);
+        float[] topColors = RenderStatic.getCachedColors(topColor, true);
+        float[] bottomColors = RenderStatic.getCachedColors(bottomColor, true);
 
         this.startFlatGL(true);
 
@@ -104,7 +153,7 @@ public interface Render2D extends Globals {
     }
 
     default void drawLargeColorPickerRectangle(int startX, int startY, int width, int height, Color color) {
-        float[] colors = this.getColor(color, false);
+        float[] colors = RenderStatic.getCachedColors(color, false);
 
         this.startFlatGL(true);
 
@@ -125,14 +174,6 @@ public interface Render2D extends Globals {
         Tessellator.instance.draw();
 
         this.finishFlatGL(true);
-    }
-
-    default float[] getColor(int color, boolean hasAlpha) {
-        return new float[]{(color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, hasAlpha ? (color >> 24 & 255) / 255.0F : 1F};
-    }
-
-    default float[] getColor(Color color, boolean hasAlpha) {
-        return this.getColor(color.getRGB(), hasAlpha);
     }
 
     default float[][] getColorGradient() {

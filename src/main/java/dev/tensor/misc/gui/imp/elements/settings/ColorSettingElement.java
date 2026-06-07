@@ -99,14 +99,50 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY, maxX - 1, maxY - 60, this.colorSetting.getValueRainbow().getRGB());
-        this.drawRectangle(minX + 1, minY + 15, maxX - 1, maxY - 45, this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX + 1, minY + 30, maxX - 1, maxY - 30, this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX + 1, minY + 45, maxX - 1, maxY - 15, this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX + 1, minY + 60, maxX - 1, maxY, this.searchingA ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.colorSetting.getValueRainbow().getRGB());
 
-        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.genRectangleVertices(minX + 1, minY, maxX - 1, maxY - 60);
+
+        int prev = this.searchingR ? selectedFillColor.getRGB() : fillColor.getRGB();
+
+        this.swapRectangleColor(prev);
+        this.genRectangleVertices(minX + 1, minY + 15, maxX - 1, maxY - 45);
+
+        int newG = this.searchingG ? selectedFillColor.getRGB() : fillColor.getRGB();
+
+        if (newG != prev) {
+            prev = newG;
+            this.swapRectangleColor(prev);
+        }
+
+        this.genRectangleVertices(minX + 1, minY + 30, maxX - 1, maxY - 30);
+
+        int newB = this.searchingB ? selectedFillColor.getRGB() : fillColor.getRGB();
+
+        if (newB != prev) {
+            prev = newB;
+            this.swapRectangleColor(prev);
+        }
+
+        this.genRectangleVertices(minX + 1, minY + 45, maxX - 1, maxY - 15);
+
+        int newA = this.searchingA ? selectedFillColor.getRGB() : fillColor.getRGB();
+
+        if (newA != prev) {
+            prev = newA;
+            this.swapRectangleColor(prev);
+        }
+
+        this.genRectangleVertices(minX + 1, minY + 60, maxX - 1, maxY);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY, minX + 1, maxY);
+        this.genRectangleVertices(maxX - 1, minY, maxX, maxY);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         String name = this.colorSetting.getName() + " : (Click)";
 

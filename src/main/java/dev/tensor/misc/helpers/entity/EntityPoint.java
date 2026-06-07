@@ -25,17 +25,22 @@ public final class EntityPoint implements Render2D {
         this.radius = radius;
     }
 
+    //Note: This method only adds vertices. @see Radar.class.
     public void render() {
         if (this.plusSymbol) {
-            this.drawRectangle(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius, this.color);
-            this.drawRectangle(this.x + this.radius, this.y - this.radius, this.x + (2 * this.radius), this.y + this.radius, this.color);
-            this.drawRectangle(this.x - (2 * this.radius), this.y - this.radius, this.x - this.radius, this.y + this.radius, this.color);
-            this.drawRectangle(this.x - this.radius, this.y + this.radius, this.x + this.radius, this.y + (2 * this.radius), this.color);
-            this.drawRectangle(this.x - this.radius, this.y - (2 * this.radius), this.x + this.radius, this.y - this.radius, this.color);
+            this.genRectangleVertices(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius);
+            this.genRectangleVertices(this.x + this.radius, this.y - this.radius, this.x + (2 * this.radius), this.y + this.radius);
+            this.genRectangleVertices(this.x - (2 * this.radius), this.y - this.radius, this.x - this.radius, this.y + this.radius);
+            this.genRectangleVertices(this.x - this.radius, this.y + this.radius, this.x + this.radius, this.y + (2 * this.radius));
+            this.genRectangleVertices(this.x - this.radius, this.y - (2 * this.radius), this.x + this.radius, this.y - this.radius);
 
         } else {
-            this.drawRectangle(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius, this.color);
+            this.genRectangleVertices(this.x - this.radius, this.y - this.radius, this.x + this.radius, this.y + this.radius);
         }
+    }
+
+    public int getColor() {
+        return this.color;
     }
 
     public int getWorldYDiff() {

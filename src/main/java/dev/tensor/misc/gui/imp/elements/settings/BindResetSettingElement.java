@@ -66,10 +66,19 @@ public final class BindResetSettingElement extends SettingElement implements Key
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY, fillColor.getRGB());
-        this.drawRectangle(minX, minY + 1, minX + 1, maxY, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY, outLineColor.getRGB());
-        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY + 1, maxX - 1, maxY);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY + 1, minX + 1, maxY);
+        this.genRectangleVertices(maxX - 1, minY + 1, maxX, maxY);
+        this.genRectangleVertices(minX, minY, maxX, minY + 1);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         String text = "Keybind : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
         this.drawCenteredString(text, midX, minY + 3, Color.YELLOW.getRGB());

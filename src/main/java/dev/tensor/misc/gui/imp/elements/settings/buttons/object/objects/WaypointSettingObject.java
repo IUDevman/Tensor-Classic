@@ -63,12 +63,24 @@ public final class WaypointSettingObject implements ButtonSettingObject {
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.getHeight() - 2, this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 25, this.waypoint.isEnabled() ? (this.hoveredEnabled ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB()) : (this.hoveredEnabled ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB()));
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY() + 25, this.getPosX() + this.getWidth(), this.getPosY() + 27, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 100, this.getPosY() + 27, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.hovered ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.getHeight() - 2);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.getHeight() - 2);
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY() + 25, this.getPosX() + this.getWidth(), this.getPosY() + 27);
+
+        this.swapRectangleColor(this.waypoint.isEnabled() ? (this.hoveredEnabled ? new Color(0, 255, 0, fillColor.getAlpha()).darker().getRGB() : new Color(0, 255, 0, fillColor.getAlpha()).getRGB()) : (this.hoveredEnabled ? new Color(255, 0, 0, fillColor.getAlpha()).darker().getRGB() : new Color(255, 0, 0, fillColor.getAlpha()).getRGB()));
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 25);
+
+        this.swapRectangleColor(this.hoveredDelete ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY() + 27, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawString("Name : " + ChatColor.LIGHT_GRAY.text() + this.waypoint.getName(), this.getPosX() + 3, this.getPosY() + 3, Color.WHITE.getRGB());
         this.drawString("Coordinates : X = " + ChatColor.YELLOW.text() + this.waypoint.getX() + ChatColor.DEFAULT.text() + ", Y = " + ChatColor.YELLOW.text() + this.waypoint.getY() + ChatColor.DEFAULT.text() + ", Z = " + ChatColor.YELLOW.text() + this.waypoint.getZ(), this.getPosX() + 3, this.getPosY() + 15, Color.WHITE.getRGB());

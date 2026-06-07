@@ -64,9 +64,18 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
         int maxY = this.getPosY() + this.getHeight();
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY, maxX - 1, maxY, this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX, minY, minX + 1, maxY, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY, maxX, maxY, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.isSearching() ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY, maxX - 1, maxY);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY, minX + 1, maxY);
+        this.genRectangleVertices(maxX - 1, minY, maxX, maxY);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         String text = this.integerSetting.getName() + " (" + this.integerSetting.getMin() + " -> " + this.integerSetting.getMax() + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.integerSetting.getValue());
         this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());

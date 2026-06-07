@@ -136,11 +136,20 @@ public final class HackElement implements Element {
         int midX = this.getPosX() + (this.getWidth() / 2);
         int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, this.isViewed() ? selectedFillColor.getRGB() : fillColor.getRGB());
-        this.drawRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
-        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
-        this.drawRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.isViewed() ? selectedFillColor.getRGB() : fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY + 1, maxX - 1, maxY - 1);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY + 1, minX + 1, maxY - 1);
+        this.genRectangleVertices(maxX - 1, minY + 1, maxX, maxY - 1);
+        this.genRectangleVertices(minX, minY, maxX, minY + 1);
+        this.genRectangleVertices(minX, maxY - 1, maxX, maxY + 1);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawCenteredString(this.hack.NAME, midX, midY, hack.isEnabled() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
@@ -164,12 +173,21 @@ public final class HackElement implements Element {
                 return;
             }
 
-            this.drawRectangle(barMinX + 1, barMinY, barMaxX - 1, barMaxY - 1, fillColor.getRGB());
-            this.drawRectangle(barMinX, barMinY + 4, barMinX + 1, barMaxY - 1, outLineColor.getRGB());
-            this.drawRectangle(barMaxX - 1, barMinY + 4, barMaxX, barMaxY - 1, outLineColor.getRGB());
-            this.drawRectangle(barMinX, barMinY, barMinX + 1, barMinY + 4, outLineColor.getRGB());
-            this.drawRectangle(barMaxX - 1, barMinY, barMaxX, barMinY + 4, outLineColor.getRGB());
-            this.drawRectangle(barMinX, barMaxY - 1, barMaxX, barMaxY + 1, outLineColor.getRGB());
+            this.startFlatGL(false);
+            this.prepRectangle(fillColor.getRGB());
+
+            this.genRectangleVertices(barMinX + 1, barMinY, barMaxX - 1, barMaxY - 1);
+
+            this.swapRectangleColor(outLineColor.getRGB());
+
+            this.genRectangleVertices(barMinX, barMinY + 4, barMinX + 1, barMaxY - 1);
+            this.genRectangleVertices(barMaxX - 1, barMinY + 4, barMaxX, barMaxY - 1);
+            this.genRectangleVertices(barMinX, barMinY, barMinX + 1, barMinY + 4);
+            this.genRectangleVertices(barMaxX - 1, barMinY, barMaxX, barMinY + 4);
+            this.genRectangleVertices(barMinX, barMaxY - 1, barMaxX, barMaxY + 1);
+
+            this.finishRectangle();
+            this.finishFlatGL(false);
         }
     }
 

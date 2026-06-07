@@ -89,10 +89,7 @@ public final class AlphaPickerObject implements ButtonSettingObject, DraggableOb
             this.barY = this.getYFromAlpha(this.button.colorSettingElement.colorSetting.getValue().getAlpha());
         }
 
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + 2, this.getPosX() + 2, this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
-        this.drawRectangle(this.getPosX() + this.getWidth() - 2, this.getPosY() + 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, outLineColor.getRGB());
+        this.drawOutlinedRectangle(this.getPosX(), this.getPosY(), this.getWidth(), this.getHeight(), 2, 0, outLineColor.getRGB(), false);
 
         this.drawGradientRectangleTopBottom(this.getPosX() + 2, this.getPosY() + 2, this.getPosX() + this.getWidth() - 2, this.getPosY() + this.getHeight() - 2, Color.WHITE.getRGB(), Color.BLACK.getRGB());
 

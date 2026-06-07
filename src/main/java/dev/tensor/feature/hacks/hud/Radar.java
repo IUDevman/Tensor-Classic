@@ -19,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 import java.awt.*;
 import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Hoosiers
@@ -245,8 +246,29 @@ public final class Radar extends Hack implements HUDObject {
 
         this.drawRectangle(1, 1, this.getWidth() - 1, this.getHeight() - 1, this.fillColor.getValueRainbow().getRGB());
 
+        AtomicInteger prevColor = new AtomicInteger(0);
+
         if (!this.pointsToRender.isEmpty()) {
-            this.pointsToRender.forEach(EntityPoint::render);
+            this.startFlatGL(false);
+
+            this.pointsToRender.forEach(entityPoint -> {
+
+                int color = entityPoint.getColor();
+
+                if (this.pointsToRender.get(0) == entityPoint) {
+                    this.prepRectangle(color);
+                    prevColor.set(color);
+
+                } else if (color != prevColor.get()) {
+                    this.swapRectangleColor(color);
+                    prevColor.set(color);
+                }
+
+                entityPoint.render();
+            });
+
+            this.finishRectangle();
+            this.finishFlatGL(false);
         }
 
         this.drawCenteredString("N", this.getWidth() / 2, 5, this.markerColors.getValueRainbow().getRGB());
@@ -254,18 +276,23 @@ public final class Radar extends Hack implements HUDObject {
         this.drawCenteredString("E", this.getWidth() - 7, this.getHeight() / 2, this.markerColors.getValueRainbow().getRGB());
         this.drawCenteredString("W", 7, this.getHeight() / 2, this.markerColors.getValueRainbow().getRGB());
 
-        this.drawRectangle(0, 0, 1, this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(this.getWidth() - 1, 0, this.getWidth(), this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(1, 0, this.getWidth() - 1, 1, this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(1, this.getHeight() - 1, this.getWidth() - 1, this.getHeight(), this.outlineColor.getValueRainbow().getRGB());
+        this.drawOutlinedRectangle(0, 0, this.getWidth(), this.getHeight(), 1, 0, this.outlineColor.getValueRainbow().getRGB(), false);
 
         GL11.glTranslatef((float) this.getWidth() / 2, (float) this.getHeight() / 2, 0F);
         GL11.glRotatef(this.playerYaw, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef((float) -this.getWidth() / 2, (float) -this.getHeight() / 2, 0F);
 
-        this.drawRectangle((this.getWidth() / 2) - 3, (this.getHeight() / 2) - 1, (this.getWidth() / 2) - 1, (this.getHeight() / 2) + 1, this.markerColors.getValueRainbow().getRGB());
-        this.drawRectangle((this.getWidth() / 2) + 1, (this.getHeight() / 2) - 1, (this.getWidth() / 2) + 3, (this.getHeight() / 2) + 1, this.markerColors.getValueRainbow().getRGB());
-        this.drawRectangle((this.getWidth() / 2) - 1, (this.getHeight() / 2) - 3, (this.getWidth() / 2) + 1, (this.getHeight() / 2) + 7, this.markerColors.getValueRainbow().getRGB());
+        this.startFlatGL(false);
+
+        this.prepRectangle(this.markerColors.getValueRainbow().getRGB());
+
+        this.genRectangleVertices((this.getWidth() / 2) - 3, (this.getHeight() / 2) - 1, (this.getWidth() / 2) - 1, (this.getHeight() / 2) + 1);
+        this.genRectangleVertices((this.getWidth() / 2) + 1, (this.getHeight() / 2) - 1, (this.getWidth() / 2) + 3, (this.getHeight() / 2) + 1);
+        this.genRectangleVertices((this.getWidth() / 2) - 1, (this.getHeight() / 2) - 3, (this.getWidth() / 2) + 1, (this.getHeight() / 2) + 7);
+
+        this.finishRectangle();
+
+        this.finishFlatGL(false);
 
         this.finishScale(true);
     }

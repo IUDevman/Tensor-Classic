@@ -64,8 +64,16 @@ public final class OtherSettingColorObject implements ButtonSettingObject, Hover
 
     @Override
     public void render(TensorGUI tensorGUI, Color fillColor, Color selectedFillColor, Color outLineColor) {
-        this.drawRectangle(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2, this.hovered ? (this.isBlackNoAlpha(this.colorSetting.getValue()) ? this.colorSetting.getValue().brighter().brighter().getRGB() : this.colorSetting.getValue().darker().getRGB()) : this.colorSetting.getValue().getRGB());
-        this.drawRectangle(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight(), outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(this.hovered ? (this.isBlackNoAlpha(this.colorSetting.getValue()) ? this.colorSetting.getValue().brighter().brighter().getRGB() : this.colorSetting.getValue().darker().getRGB()) : this.colorSetting.getValue().getRGB());
+
+        this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() - 2);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight() - 2, this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight());
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawString(this.hack.NAME + " - " + this.colorSetting.getName() + " : (" + this.colorSetting.getValue().getRed() + ", " + this.colorSetting.getValue().getGreen() + ", " + this.colorSetting.getValue().getBlue() + ", " + (this.hasAlpha ? this.colorSetting.getValue().getAlpha() : "255") + ")", this.getPosX() + 2, this.getPosY() + 2, Color.WHITE.getRGB());
     }

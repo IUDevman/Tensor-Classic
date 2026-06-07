@@ -2,7 +2,7 @@ package dev.tensor.feature.hacks.hud;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.variable.KeyPressedEvent;
-import dev.tensor.feature.hacks.Commands;
+import dev.tensor.feature.hacks.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.gui.TabGUIEntry;
 import dev.tensor.misc.helpers.ChatColor;
@@ -37,6 +37,8 @@ public final class TabGUI extends Hack implements HUDObject {
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+
+    private final ArrayList<Class<? extends Hack>> BLACKLISTED = new ArrayList<>();
 
     private final int minPage = 1;
     private int maxPage = 1;
@@ -110,11 +112,7 @@ public final class TabGUI extends Hack implements HUDObject {
 
         this.prepareScale();
 
-        this.drawRectangle(1, 0, maxX, maxY, this.fillColor.getValueRainbow().getRGB());
-        this.drawRectangle(0, 0, maxX + 1, 1, this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(0, 0, 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(0, maxY, maxX + 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
-        this.drawRectangle(maxX, 0, maxX + 1, maxY + 1, this.outlineColor.getValueRainbow().getRGB());
+        this.drawOutlinedRectangle(0, 0, maxX + 1, maxY + 1, 1, this.fillColor.getValueRainbow().getRGB(), this.outlineColor.getValueRainbow().getRGB(), true);
 
         this.drawString(clientMessage, 2, 2, Color.WHITE.getRGB());
 
@@ -157,21 +155,24 @@ public final class TabGUI extends Hack implements HUDObject {
 
         this.getHackManager().getHacks().forEach(hack -> {
 
-            if (!this.shouldIgnoreHack(hack.NAME)) {
+            if (!this.shouldIgnoreHack(hack)) {
                 this.tabGUIEntries.add(new TabGUIEntry(hack.NAME + " [" + Keyboard.getKeyName(hack.BIND) + "]", hack.isEnabled() ? Color.GREEN : Color.RED));
             }
         });
     }
 
+    private boolean shouldIgnoreHack(Hack hack) {
+        if (this.BLACKLISTED.isEmpty()) {
+            this.BLACKLISTED.add(ClientMessages.class);
+            this.BLACKLISTED.add(Commands.class);
+            this.BLACKLISTED.add(TabGUI.class);
+            this.BLACKLISTED.add(CommandPreview.class);
+            this.BLACKLISTED.add(DiscordRPC.class);
+            this.BLACKLISTED.add(Rotations.class);
+            this.BLACKLISTED.add(TCPNoDelay.class);
+        }
 
-    private boolean shouldIgnoreHack(String name) {
-        if (name.equalsIgnoreCase("ClientMessages")) {
-            return true;
-        } else if (name.equalsIgnoreCase("Commands")) {
-            return true;
-        } else if (name.equalsIgnoreCase("TabGUI")) {
-            return true;
-        } else return name.equalsIgnoreCase("CommandPreview");
+        return this.BLACKLISTED.contains(hack.getClass());
     }
 
     @SuppressWarnings("unused")

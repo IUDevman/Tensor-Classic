@@ -60,11 +60,20 @@ public final class PropertyElement implements Element {
         int maxY = this.getPosY() + this.getHeight() - 1;
         int midX = this.getPosX() + (this.getWidth() / 2);
 
-        this.drawRectangle(minX + 1, minY + 1, maxX - 1, maxY - 1, fillColor.getRGB());
-        this.drawRectangle(minX, minY + 1, minX + 1, maxY - 1, outLineColor.getRGB());
-        this.drawRectangle(maxX - 1, minY + 1, maxX, maxY - 1, outLineColor.getRGB());
-        this.drawRectangle(minX, minY, maxX, minY + 1, outLineColor.getRGB());
-        this.drawRectangle(minX, maxY - 1, maxX, maxY + 1, outLineColor.getRGB());
+        this.startFlatGL(false);
+        this.prepRectangle(fillColor.getRGB());
+
+        this.genRectangleVertices(minX + 1, minY + 1, maxX - 1, maxY - 1);
+
+        this.swapRectangleColor(outLineColor.getRGB());
+
+        this.genRectangleVertices(minX, minY + 1, minX + 1, maxY - 1);
+        this.genRectangleVertices(maxX - 1, minY + 1, maxX, maxY - 1);
+        this.genRectangleVertices(minX, minY, maxX, minY + 1);
+        this.genRectangleVertices(minX, maxY - 1, maxX, maxY + 1);
+
+        this.finishRectangle();
+        this.finishFlatGL(false);
 
         this.drawCenteredString("Enabled", midX, minY + 3, this.hack.isEnabled() ? Color.GREEN.getRGB() : Color.RED.getRGB());
         this.drawCenteredString("Drawn", midX, minY + 18, this.hack.DRAWN ? Color.GREEN.getRGB() : Color.RED.getRGB());
