@@ -85,6 +85,80 @@ public interface Render3D extends Render2D {
         RenderTask.RENDER_TASK.loadLine(line);
     }
 
+    default void drawOutlineBoxWithFaces(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color, boolean[] faces) {
+        BasicRenderContext line = new BasicRenderContext(lineWidth, color.getRGB());
+
+        if (faces[2]) {
+            if (faces[4]) {
+                line.addVertex(minX, minY, minZ);
+                line.addVertex(maxX, minY, minZ);
+            }
+
+            if (faces[1]) {
+                line.addVertex(maxX, minY, minZ);
+                line.addVertex(maxX, minY, maxZ);
+            }
+
+            if (faces[5]) {
+                line.addVertex(maxX, minY, maxZ);
+                line.addVertex(minX, minY, maxZ);
+            }
+
+            if (faces[0]) {
+                line.addVertex(minX, minY, maxZ);
+                line.addVertex(minX, minY, minZ);
+            }
+        }
+
+        if (faces[3]) {
+            if (faces[4]) {
+                line.addVertex(minX, maxY, minZ);
+                line.addVertex(maxX, maxY, minZ);
+            }
+
+            if (faces[1]) {
+                line.addVertex(maxX, maxY, minZ);
+                line.addVertex(maxX, maxY, maxZ);
+            }
+
+            if (faces[5]) {
+                line.addVertex(maxX, maxY, maxZ);
+                line.addVertex(minX, maxY, maxZ);
+            }
+
+            if (faces[0]) {
+                line.addVertex(minX, maxY, maxZ);
+                line.addVertex(minX, maxY, minZ);
+            }
+        }
+
+        if (faces[4]) {
+            if (faces[0]) {
+                line.addVertex(minX, minY, minZ);
+                line.addVertex(minX, maxY, minZ);
+            }
+
+            if (faces[1]) {
+                line.addVertex(maxX, minY, minZ);
+                line.addVertex(maxX, maxY, minZ);
+            }
+        }
+
+        if (faces[5]) {
+            if (faces[1]) {
+                line.addVertex(maxX, minY, maxZ);
+                line.addVertex(maxX, maxY, maxZ);
+            }
+
+            if (faces[0]) {
+                line.addVertex(minX, minY, maxZ);
+                line.addVertex(minX, maxY, maxZ);
+            }
+        }
+
+        RenderTask.RENDER_TASK.loadLine(line);
+    }
+
     default void drawFillBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color) {
         BasicRenderContext quad = new BasicRenderContext(0, color.getRGB());
 
@@ -112,6 +186,54 @@ public interface Render3D extends Render2D {
         quad.addVertex(maxX, minY, minZ);
         quad.addVertex(maxX, minY, maxZ);
         quad.addVertex(minX, minY, maxZ);
+
+        RenderTask.RENDER_TASK.loadQuad(quad);
+    }
+
+    default void drawFillBoxWithFaces(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color, boolean[] faces) {
+        BasicRenderContext quad = new BasicRenderContext(0, color.getRGB());
+
+        if (faces[1]) {
+            quad.addVertex(maxX, minY, maxZ);
+            quad.addVertex(maxX, minY, minZ);
+            quad.addVertex(maxX, maxY, minZ);
+            quad.addVertex(maxX, maxY, maxZ);
+        }
+
+        if (faces[0]) {
+            quad.addVertex(minX, minY, minZ);
+            quad.addVertex(minX, minY, maxZ);
+            quad.addVertex(minX, maxY, maxZ);
+            quad.addVertex(minX, maxY, minZ);
+        }
+
+        if (faces[4]) {
+            quad.addVertex(maxX, minY, minZ);
+            quad.addVertex(minX, minY, minZ);
+            quad.addVertex(minX, maxY, minZ);
+            quad.addVertex(maxX, maxY, minZ);
+        }
+
+        if (faces[5]) {
+            quad.addVertex(minX, minY, maxZ);
+            quad.addVertex(maxX, minY, maxZ);
+            quad.addVertex(maxX, maxY, maxZ);
+            quad.addVertex(minX, maxY, maxZ);
+        }
+
+        if (faces[3]) {
+            quad.addVertex(minX, maxY, maxZ);
+            quad.addVertex(maxX, maxY, maxZ);
+            quad.addVertex(maxX, maxY, minZ);
+            quad.addVertex(minX, maxY, minZ);
+        }
+
+        if (faces[2]) {
+            quad.addVertex(minX, minY, minZ);
+            quad.addVertex(maxX, minY, minZ);
+            quad.addVertex(maxX, minY, maxZ);
+            quad.addVertex(minX, minY, maxZ);
+        }
 
         RenderTask.RENDER_TASK.loadQuad(quad);
     }

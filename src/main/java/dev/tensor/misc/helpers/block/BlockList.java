@@ -317,6 +317,23 @@ public final class BlockList implements Globals {
         return new ArrayList<>(SCAFFOLD_BLOCKLIST);
     }
 
+    private static final ArrayList<String> LOGICAL_SEARCH = new ArrayList<>();
+
+    public static ArrayList<String> LOGICAL_SEARCH() {
+        if (LOGICAL_SEARCH.isEmpty()) {
+            LOGICAL_SEARCH.add(String.valueOf(Block.chest.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.blockBed.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.portal.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.snow.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.redstoneWire.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.doorSteel.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.doorWood.blockID));
+            LOGICAL_SEARCH.add(String.valueOf(Block.trapdoor.blockID));
+        }
+
+        return new ArrayList<>(LOGICAL_SEARCH);
+    }
+
     private static final ArrayList<String> CUSTOM = new ArrayList<>();
 
     public static ArrayList<String> CUSTOM() {

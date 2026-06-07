@@ -61,6 +61,8 @@ public final class Search extends Render3DHack {
         }
     };
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
+    public final EnumSetting mergeFaces = new EnumSetting("Merge Faces", MergeFaces.All);
+    public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()));
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
@@ -73,6 +75,7 @@ public final class Search extends Render3DHack {
     public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255));
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
+    private final BlockList LOGICAL = new BlockList(BlockList.LOGICAL_SEARCH());
 
     private final CopyOnWriteArrayList<BlockCoords> blockCoords = new CopyOnWriteArrayList<>();
 
@@ -120,8 +123,22 @@ public final class Search extends Render3DHack {
                 }
             }
 
+            boolean mergeFaces = false;
+
+            switch ((MergeFaces) this.mergeFaces.getValue()) {
+                case All:
+                    mergeFaces = true;
+                    break;
+                case Logical:
+                    mergeFaces = this.LOGICAL.containsBlock(event.block.blockID);
+                    break;
+                case Custom:
+                    mergeFaces = this.customMerge.containsBlock(event.block.blockID);
+                    break;
+            }
+
             if (shouldAdd.get()) {
-                this.blockCoords.add(new BlockCoords(event.block, event.x, event.y, event.z));
+                this.blockCoords.add(new BlockCoords(event.block, event.x, event.y, event.z, mergeFaces));
             }
         }
     }));
@@ -148,6 +165,25 @@ public final class Search extends Render3DHack {
                 this.blockCoords.remove(blockCoords1);
             }
         });
+
+        if (!this.mergeFaces.getValue().equals(MergeFaces.None)) {
+            final boolean isLogical = this.mergeFaces.getValue().equals(MergeFaces.Logical);
+            final boolean isCustom = this.mergeFaces.getValue().equals(MergeFaces.Custom);
+
+            this.blockCoords.parallelStream().forEach(blockCoords1 -> {
+                if (blockCoords1.isInFrustrum()) {
+                    if (isLogical && !this.LOGICAL.containsBlock(blockCoords1.block.blockID)) {
+                        return;
+                    }
+
+                    if (!isLogical && isCustom && !this.customMerge.containsBlock(blockCoords1.block.blockID)) {
+                        return;
+                    }
+
+                    blockCoords1.updateNeighborMap();
+                }
+            });
+        }
     }
 
     @Override
@@ -393,6 +429,55 @@ public final class Search extends Render3DHack {
             return;
         }
 
+        switch ((MergeFaces) this.mergeFaces.getValue()) {
+            case None:
+                this.renderNoMerge(rx, ry, rz, mx, my, mz, color);
+                break;
+            case Logical:
+                if (this.LOGICAL.containsBlock(blockCoords.block.blockID)) {
+                    this.renderWithMerge(rx, ry, rz, mx, my, mz, color, blockCoords);
+
+                } else {
+                    this.renderNoMerge(rx, ry, rz, mx, my, mz, color);
+                }
+
+                break;
+            case Custom:
+                if (this.customMerge.containsBlock(blockCoords.block.blockID)) {
+                    this.renderWithMerge(rx, ry, rz, mx, my, mz, color, blockCoords);
+
+                } else {
+                    this.renderNoMerge(rx, ry, rz, mx, my, mz, color);
+                }
+                break;
+            case All:
+                this.renderWithMerge(rx, ry, rz, mx, my, mz, color, blockCoords);
+                break;
+        }
+    }
+
+    private void renderWithMerge(double rx, double ry, double rz, double mx, double my, double mz, Color color, BlockCoords blockCoords) {
+        if (blockCoords.hasNoFaces()) {
+            return;
+        }
+
+        switch ((Render) this.render.getValue()) {
+            case None:
+                break;
+            case Outline:
+                this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockCoords.getNeighborMap());
+                break;
+            case Fill:
+                this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockCoords.getNeighborMap());
+                break;
+            case Both:
+                this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockCoords.getNeighborMap());
+                this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockCoords.getNeighborMap());
+                break;
+        }
+    }
+
+    private void renderNoMerge(double rx, double ry, double rz, double mx, double my, double mz, Color color) {
         switch ((Render) this.render.getValue()) {
             case None:
                 break;
@@ -413,6 +498,13 @@ public final class Search extends Render3DHack {
         this.blockCoords.clear();
         this.hasTracers = false;
         this.resetWorld();
+    }
+
+    private enum MergeFaces {
+        None,
+        Logical,
+        Custom,
+        All
     }
 
     private enum Mode {
