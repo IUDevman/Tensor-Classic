@@ -114,7 +114,6 @@ public final class BlockCoords implements Globals {
                 || ourBlockID == 34
                 || (ourBlockID > 35 && ourBlockID < 41)
                 || ourBlockID == 50
-                || ourBlockID == 51
                 || ourBlockID == 55
                 || ourBlockID == 59
                 || ourBlockID == 63
