@@ -123,22 +123,9 @@ public final class Search extends Render3DHack {
                 }
             }
 
-            boolean mergeFaces = false;
-
-            switch ((MergeFaces) this.mergeFaces.getValue()) {
-                case All:
-                    mergeFaces = true;
-                    break;
-                case Logical:
-                    mergeFaces = this.LOGICAL.containsBlock(event.block.blockID);
-                    break;
-                case Custom:
-                    mergeFaces = this.customMerge.containsBlock(event.block.blockID);
-                    break;
-            }
-
             if (shouldAdd.get()) {
-                this.blockCoords.add(new BlockCoords(event.block, event.x, event.y, event.z, mergeFaces));
+                //no point in running the merge functions when it will just be checked again onClientTick
+                this.blockCoords.add(new BlockCoords(event.block, event.x, event.y, event.z, false));
             }
         }
     }));

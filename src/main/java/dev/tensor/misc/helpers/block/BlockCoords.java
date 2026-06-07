@@ -18,7 +18,7 @@ public final class BlockCoords implements Globals {
     public final int y;
     public final int z;
     private final int[] quickFrustrumBox;
-    private final AtomicReference<boolean[]> neighborMap = new AtomicReference<>();
+    private final AtomicReference<boolean[]> neighborMap = new AtomicReference<>(new boolean[]{false, false, false, false, false, false});
 
     public BlockCoords(Block block, int x, int y, int z) {
         this.block = block;
@@ -171,10 +171,6 @@ public final class BlockCoords implements Globals {
     }
 
     public boolean hasNoFaces() {
-        if (this.neighborMap.get() == null) {
-            this.updateNeighborMap();
-        }
-
         for (boolean face : this.neighborMap.get()) {
             if (face) {
                 return false;
@@ -185,14 +181,7 @@ public final class BlockCoords implements Globals {
     }
 
     public boolean[] getNeighborMap() {
-        boolean[] returnMap = this.neighborMap.get();
-
-        if (returnMap == null) {
-            this.updateNeighborMap();
-            return this.neighborMap.get();
-        }
-
-        return returnMap;
+        return this.neighborMap.get();
     }
 
     public void updateNeighborMap() {
