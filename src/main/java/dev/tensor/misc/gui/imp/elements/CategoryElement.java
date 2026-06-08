@@ -97,7 +97,7 @@ public final class CategoryElement implements Element {
         int midX = this.getPosX() + (this.getWidth() / 2);
         int midY = this.getPosY() + ((this.getHeight() - 10) / 2);
 
-        this.drawOutlinedRectangle(minX, minY, maxX - minX, (maxY - minY) + 1, 1, fillColor.getRGB(), outLineColor.getRGB(), true);
+        this.drawOutlinedRectangle(minX, minY, maxX - minX, (maxY - minY) + 1, 2, fillColor.getRGB(), outLineColor.getRGB(), true);
 
         this.drawCenteredString(this.category.name(), midX, midY, this.isSelected() ? Color.YELLOW.getRGB() : Color.WHITE.getRGB());
 
