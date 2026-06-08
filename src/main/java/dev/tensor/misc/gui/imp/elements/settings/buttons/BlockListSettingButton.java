@@ -88,7 +88,6 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
-        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
 
         this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());

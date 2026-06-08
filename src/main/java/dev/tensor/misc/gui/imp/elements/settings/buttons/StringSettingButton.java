@@ -75,7 +75,6 @@ public final class StringSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight);
-        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 4 + this.tensorGUI.titleBoxHeight, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 6 + this.tensorGUI.titleBoxHeight);
 
         this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());

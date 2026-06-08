@@ -108,7 +108,6 @@ public final class AccountListSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
-        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 43, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 45);
         this.genRectangleVertices(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 43);

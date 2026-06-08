@@ -161,6 +161,18 @@ public interface Globals {
         return this.getWorld().multiplayerWorld;
     }
 
+    default boolean isNetherNulLSafe() {
+        if (this.getWorld() == null) {
+            return false;
+        }
+
+        if (this.getWorld().worldProvider == null) {
+            return false;
+        }
+
+        return this.getWorld().worldProvider.isNether;
+    }
+
     default void sendPacket(Packet packet) {
         if (this.getMinecraft().getSendQueue() == null) {
             return;
@@ -365,6 +377,10 @@ public interface Globals {
     }
 
     default String getWaypointServerName() {
+        if (this.getWorld() == null) {
+            return "Singleplayer";
+        }
+
         if (!this.isMultiplayer()) {
             return "Singleplayer";
         }

@@ -25,8 +25,8 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
     /**
      * TODO:
      * <p>
-     * 2. Opening the clickgui fucks when scrolled and panels are opened
-     * 3. Misc clickgui nullcheck crashes
+     * 2. Opening the clickgui fucks when  panels are opened (BUT BLOCKLIST DOES NOT DO IT??)
+     * 3. Misc clickgui nullcheck crashes (fixed getWorld() one)
      */
 
     @Unique
@@ -74,8 +74,8 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
         this.controlList.add(new GuiButton(3, centerX, startY + 48, translate.translateKey("menu.mods")));
         this.controlList.add(new GuiButton(4, centerX, startY + 72, translate.translateKey("menu.options")));
-        //this.controlList.add(new GuiButton(5, centerX, startY + 96, "Tensor Classic"));
-        this.controlList.add(new GuiButton(6, centerX, startY + 96 /* 120 */, translate.translateKey("menu.quit")));
+        this.controlList.add(new GuiButton(5, centerX, startY + 96, "Tensor Classic GUI"));
+        this.controlList.add(new GuiButton(6, centerX, startY + 120, translate.translateKey("menu.quit")));
 
         ci.cancel();
     }
@@ -98,7 +98,12 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
             case 5:
                 ClickGUI clickGUI = this.tensor_getClickGUI();
                 if (clickGUI != null) {
-                    this.getMinecraft().displayGuiScreen(new TensorGUI(clickGUI));
+
+                    TensorGUI tensorGUI = new TensorGUI(clickGUI, this);
+
+                    clickGUI.tensorGUI = tensorGUI;
+
+                    this.getMinecraft().displayGuiScreen(tensorGUI);
                 }
                 break;
             case 6:
