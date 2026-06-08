@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 
 @Mixin(value = GuiMainMenu.class, priority = MixinPriority.VALUE)
-public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
+public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
     @Unique
     private boolean loaded = false;
@@ -145,7 +145,7 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
     }
 
     @Unique
-    public void tensor_drawBackground(int background, int number, int width, int height) {
+    private void tensor_drawBackground(int background, int number, int width, int height) {
         if (background == -1) {
             return;
         }

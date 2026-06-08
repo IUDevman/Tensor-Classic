@@ -78,7 +78,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     @Override
     public void drawScreen(int i, int j, float f) {
         if (this.mainMenuObject != null) {
-            this.mainMenuObject.drawScreen(i, j, f);
+            this.mainMenuObject.drawScreen(0, 0, f);
         }
 
         this.categoryElements.forEach(categoryElement -> {
