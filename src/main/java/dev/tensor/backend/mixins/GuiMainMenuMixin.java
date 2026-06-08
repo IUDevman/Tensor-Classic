@@ -22,13 +22,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(value = GuiMainMenu.class, priority = MixinPriority.VALUE)
 public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
-    /**
-     * TODO:
-     * <p>
-     * 2. Opening the clickgui fucks when  panels are opened (BUT BLOCKLIST DOES NOT DO IT??)
-     * 3. Misc clickgui nullcheck crashes (fixed getWorld() one)
-     */
-
     @Unique
     private boolean loaded = false;
 
@@ -86,15 +79,19 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
             case 1:
                 this.getMinecraft().displayGuiScreen(new GuiSelectWorld(this));
                 break;
+
             case 2:
                 this.getMinecraft().displayGuiScreen(new GuiMultiplayer(this));
                 break;
+
             case 3:
                 this.mc.displayGuiScreen(new GuiTexturePacks(this));
                 break;
+
             case 4:
                 this.getMinecraft().displayGuiScreen(new GuiOptions(this, this.getMinecraft().gameSettings));
                 break;
+
             case 5:
                 ClickGUI clickGUI = this.tensor_getClickGUI();
                 if (clickGUI != null) {
@@ -106,10 +103,10 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
                     this.getMinecraft().displayGuiScreen(tensorGUI);
                 }
                 break;
+
             case 6:
                 this.getMinecraft().shutdown();
                 break;
-
         }
 
         ci.cancel();
@@ -149,26 +146,30 @@ public abstract class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
     @Unique
     public void tensor_drawBackground(int background, int number, int width, int height) {
-        this.getMinecraft().renderEngine.bindTexture(background);
-
-        int var1 = 0;
-        int var2 = 0;
-
-        if (number == 1) {
-            var1 = width;
-
-        } else if (number == 2) {
-            var2 = height;
-
-        } else if (number == 3) {
-            var1 = width;
-            var2 = height;
-
-        } else if (number == 4) {
-            var1 = (1280 / 2) - (width / 2);
-            var2 = 30;
+        if (background == -1) {
+            return;
         }
 
-        this.drawTexturedRectangle(var1, var2, width, height, (double) this.width / 1280, (double) this.height / 720);
+        this.getMinecraft().renderEngine.bindTexture(background);
+
+        int startX = 0;
+        int startY = 0;
+
+        if (number == 1) {
+            startX = width;
+
+        } else if (number == 2) {
+            startY = height;
+
+        } else if (number == 3) {
+            startX = width;
+            startY = height;
+
+        } else if (number == 4) {
+            startX = (1280 / 2) - (width / 2);
+            startY = 30;
+        }
+
+        this.drawTexturedRectangle(startX, startY, width, height, (double) this.width / 1280, (double) this.height / 720);
     }
 }

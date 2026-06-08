@@ -76,24 +76,24 @@ public interface Render2D extends Globals {
 
         this.prepRectangle(outlineColor);
 
-        int minXWidth = minX + outlineWidth;
-        int maxXWidth = minX + width;
-        int maxXWidthMinusLine = maxXWidth - outlineWidth;
-        int minYHeight = minY + outlineWidth;
-        int maxYHeight = minY + height;
-        int maxYHeightMinusLine = maxYHeight - outlineWidth;
+        int minXPlusLine = minX + outlineWidth;
+        int maxX = minX + width;
+        int maxXMinusLine = maxX - outlineWidth;
+        int minYPlusLine = minY + outlineWidth;
+        int maxY = minY + height;
+        int maxYMinusLine = maxY - outlineWidth;
 
-        this.genRectangleVertices(minX, minY, maxXWidth, minYHeight);
-        this.genRectangleVertices(minX, maxYHeightMinusLine, maxXWidth, maxYHeight);
-        this.genRectangleVertices(minX, minYHeight, minXWidth, maxYHeightMinusLine);
-        this.genRectangleVertices(maxXWidthMinusLine, minYHeight, maxXWidth, maxYHeightMinusLine);
+        this.genRectangleVertices(minX, minY, maxX, minYPlusLine);
+        this.genRectangleVertices(minX, maxYMinusLine, maxX, maxY);
+        this.genRectangleVertices(minX, minYPlusLine, minXPlusLine, maxYMinusLine);
+        this.genRectangleVertices(maxXMinusLine, minYPlusLine, maxX, maxYMinusLine);
 
         this.finishRectangle();
 
         if (shouldFill) {
             this.prepRectangle(fillColor);
 
-            this.genRectangleVertices(minXWidth, minYHeight, maxXWidthMinusLine, maxYHeightMinusLine);
+            this.genRectangleVertices(minXPlusLine, minYPlusLine, maxXMinusLine, maxYMinusLine);
 
             this.finishRectangle();
         }
