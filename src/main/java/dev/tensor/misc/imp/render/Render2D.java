@@ -176,6 +176,26 @@ public interface Render2D extends Globals {
         this.finishFlatGL(true);
     }
 
+    default void drawTexturedRectangle(int startX, int startY, int imageWidth, int imageHeight, double scaleX, double scaleY) {
+        startX = (int) (startX * scaleX);
+        startY = (int) (startY * scaleY);
+
+        int renderWidth = (int) (imageWidth * scaleX);
+        int renderHeight = (int) (imageHeight * scaleY);
+
+        float xScaleFactor = 1.0F / imageWidth;
+        float yScaleFactor = 1.0F / imageHeight;
+
+        Tessellator.instance.startDrawingQuads();
+
+        Tessellator.instance.addVertexWithUV(startX, startY + renderHeight, 0, 0, imageHeight * yScaleFactor);
+        Tessellator.instance.addVertexWithUV(startX + renderWidth, startY + renderHeight, 0, imageWidth * xScaleFactor, imageHeight * yScaleFactor);
+        Tessellator.instance.addVertexWithUV(startX + renderWidth, startY, 0, imageWidth * xScaleFactor, 0);
+        Tessellator.instance.addVertexWithUV(startX, startY, 0, 0, 0);
+
+        Tessellator.instance.draw();
+    }
+
     default float[][] getColorGradient() {
         return new float[][]{
                 {1F, 0F, 0F, 1F},

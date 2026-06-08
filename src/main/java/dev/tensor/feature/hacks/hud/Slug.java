@@ -4,22 +4,14 @@ import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.RenderOrder;
+import dev.tensor.misc.imp.render.RenderStatic;
 import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.src.Tessellator;
 import org.lwjgl.opengl.GL11;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Optional;
 
 /**
  * @author Hoosiers
@@ -90,8 +82,8 @@ public final class Slug extends Hack implements HUDObject {
 
     @Override
     public void render() {
-        if (texture == -1) {
-            this.setupTexture();
+        if (this.texture == -1) {
+            this.texture = this.setupTexture("slug.png", RenderStatic.SLUG_TEXTURE_ID);
         }
 
         if (texture == -1) {
@@ -119,40 +111,9 @@ public final class Slug extends Hack implements HUDObject {
             GL11.glTranslatef(-128F, -128F, 0.0F);
         }
 
-        this.drawTexturedRectangle(0, 0, 0, 0, 256, 256);
+        this.drawTexturedRectangle(0, 0, 256, 256, 1, 1);
 
         this.finishScale();
-    }
-
-    @SuppressWarnings("deprecation")
-    private void setupTexture() {
-        try {
-            Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer("tensorclassic");
-
-            if (!modContainer.isPresent()) {
-                return;
-            }
-
-            Path imagePath = modContainer.get().getPath("assets/tensorclassic/slug.png");
-
-            InputStream inputStream = Files.newInputStream(imagePath);
-
-            BufferedImage image = ImageIO.read(inputStream);
-
-            this.texture = this.getMinecraft().renderEngine.allocateAndSetupTexture(image);
-
-        } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load slug texture!");
-        }
-    }
-
-    public void drawTexturedRectangle(int minX, int minY, int offsetX, int offsetY, int imageWidth, int imageHeight) {
-        Tessellator.instance.startDrawingQuads();
-        Tessellator.instance.addVertexWithUV(minX, minY + imageHeight, 0, (float) (offsetX) * 0.00390625F, (float) (offsetY + imageHeight) * 0.00390625F);
-        Tessellator.instance.addVertexWithUV(minX + imageWidth, minY + imageHeight, 0, (float) (offsetX + imageWidth) * 0.00390625F, (float) (offsetY + imageHeight) * 0.00390625F);
-        Tessellator.instance.addVertexWithUV(minX + imageWidth, minY, 0, (float) (offsetX + imageWidth) * 0.00390625F, (float) (offsetY) * 0.00390625F);
-        Tessellator.instance.addVertexWithUV(minX, minY, 0, (float) (offsetX) * 0.00390625F, (float) (offsetY) * 0.00390625F);
-        Tessellator.instance.draw();
     }
 
     private enum Mode {
