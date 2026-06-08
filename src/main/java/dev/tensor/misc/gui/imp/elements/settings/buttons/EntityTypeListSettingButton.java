@@ -100,15 +100,10 @@ public final class EntityTypeListSettingButton implements ButtonSetting {
         int width1 = this.getWidth() - 7;
         int height1 = this.getHeight() - this.tensorGUI.titleBoxHeight - 2;
 
-        int windowHeight = this.getMinecraft().displayHeight;
         double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
         double scaleY = (double) this.getMinecraft().displayHeight / (double) this.getMinecraft().currentScreen.height;
-        int widthScaled = (int) (scaleX * width1);
-        int heightScaled = (int) (scaleY * height1);
-        int xScaled = (int) (posX * scaleX);
-        int yScaled = (int) (posY * scaleY);
 
-        GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+        GL11.glScissor((int) Math.ceil(posX * scaleX), this.getMinecraft().displayHeight - (int) Math.ceil((posY + height1) * scaleY), (int) Math.ceil(width1 * scaleX), (int) Math.ceil(height1 * scaleY));
 
         this.entityTypeObjects.forEach(entityTypeObject -> entityTypeObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 

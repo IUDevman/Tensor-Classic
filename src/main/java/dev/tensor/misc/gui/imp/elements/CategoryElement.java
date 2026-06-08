@@ -110,15 +110,10 @@ public final class CategoryElement implements Element {
             int width1 = tensorGUI.guiWidth + 1;
             int height1 = tensorGUI.guiHeight.get() - tensorGUI.titleBoxHeight - 4;
 
-            int windowHeight = this.getMinecraft().displayHeight;
             double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
             double scaleY = (double) this.getMinecraft().displayHeight / (double) this.getMinecraft().currentScreen.height;
-            int widthScaled = (int) (scaleX * width1);
-            int heightScaled = (int) (scaleY * height1);
-            int xScaled = (int) (posX * scaleX);
-            int yScaled = (int) (posY * scaleY);
 
-            GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+            GL11.glScissor((int) Math.ceil(posX * scaleX), this.getMinecraft().displayHeight - (int) Math.ceil((posY + height1) * scaleY), (int) Math.ceil(width1 * scaleX), (int) Math.ceil(height1 * scaleY));
 
             this.hackElements.forEach(hackElement -> hackElement.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 
