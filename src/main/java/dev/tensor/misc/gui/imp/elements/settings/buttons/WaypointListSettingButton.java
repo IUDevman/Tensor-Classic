@@ -115,7 +115,6 @@ public final class WaypointListSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
-        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 55, this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 57);
         this.genRectangleVertices(this.getPosX() + 55, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + 57, this.getPosY() + this.tensorGUI.titleBoxHeight + 55);
@@ -137,7 +136,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
 
         this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? ChatColor.RED.text() : ChatColor.LIGHT_GRAY.text()) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Dimension : " + (this.getWorld().worldProvider.isHellWorld ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());
+        this.drawString("Dimension : " + (this.isNetherNulLSafe() ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());
         this.drawString("Server : " + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 29, Color.WHITE.getRGB());
         this.drawString("Enabled : " + (this.enabledValue ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 41, Color.WHITE.getRGB());
 
@@ -153,15 +152,10 @@ public final class WaypointListSettingButton implements ButtonSetting {
         int width1 = this.getWidth();
         int height1 = this.getHeight() - this.tensorGUI.titleBoxHeight - 57;
 
-        int windowHeight = this.getMinecraft().displayHeight;
         double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
         double scaleY = (double) this.getMinecraft().displayHeight / (double) this.getMinecraft().currentScreen.height;
-        int widthScaled = (int) (scaleX * width1);
-        int heightScaled = (int) (scaleY * height1);
-        int xScaled = (int) (posX * scaleX);
-        int yScaled = (int) (posY * scaleY);
 
-        GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+        GL11.glScissor((int) Math.ceil(posX * scaleX), this.getMinecraft().displayHeight - (int) Math.ceil((posY + height1) * scaleY), (int) Math.ceil(width1 * scaleX), (int) Math.ceil(height1 * scaleY));
 
         this.waypointSettingObjects.forEach(waypointSettingObject -> waypointSettingObject.render(tensorGUI, fillColor, selectedFillColor, outLineColor));
 
@@ -568,7 +562,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
             this.nameValue = "New Waypoint";
         }
 
-        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName()).stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
+        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.isNetherNulLSafe(), this.getWaypointServerName()).stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
 
         if (waypointFound != null) {
             this.alreadyHasWaypointName = true;
@@ -580,7 +574,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         int y = Integer.parseInt(this.yValue);
         int z = Integer.parseInt(this.zValue);
 
-        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName());
+        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.isNetherNulLSafe(), this.getWaypointServerName());
         waypoint.setEnabled(enabledValue);
 
         int size = this.waypointSettingObjects.size();

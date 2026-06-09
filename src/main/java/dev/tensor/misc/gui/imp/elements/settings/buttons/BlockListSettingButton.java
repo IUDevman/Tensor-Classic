@@ -88,7 +88,6 @@ public final class BlockListSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 102, this.getPosY(), this.getPosX() + this.getWidth() - 100, this.getPosY() + this.tensorGUI.titleBoxHeight);
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX(), this.getPosY() + this.getHeight() + 2);
         this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth() + 2, this.getPosY() + this.getHeight() + 2);
-        this.genRectangleVertices(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.tensorGUI.titleBoxHeight + 2);
         this.genRectangleVertices(this.getPosX(), this.getPosY() + this.getHeight(), this.getPosX() + this.getWidth(), this.getPosY() + this.getHeight() + 2);
 
         this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
@@ -108,15 +107,10 @@ public final class BlockListSettingButton implements ButtonSetting {
         int width1 = this.getWidth() - 7;
         int height1 = this.getHeight() - this.tensorGUI.titleBoxHeight - 2;
 
-        int windowHeight = this.getMinecraft().displayHeight;
         double scaleX = (double) this.getMinecraft().displayWidth / (double) this.getMinecraft().currentScreen.width;
         double scaleY = (double) this.getMinecraft().displayHeight / (double) this.getMinecraft().currentScreen.height;
-        int widthScaled = (int) (scaleX * width1);
-        int heightScaled = (int) (scaleY * height1);
-        int xScaled = (int) (posX * scaleX);
-        int yScaled = (int) (posY * scaleY);
 
-        GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+        GL11.glScissor((int) Math.ceil(posX * scaleX), this.getMinecraft().displayHeight - (int) Math.ceil((posY + height1) * scaleY), (int) Math.ceil(width1 * scaleX), (int) Math.ceil(height1 * scaleY));
 
         this.blockIDObjects.forEach(blockIDObject -> blockIDObject.render(tensorGUI, fillColor, selectedFillColor, new Color(0, 255, 0, fillColor.getAlpha())));
 

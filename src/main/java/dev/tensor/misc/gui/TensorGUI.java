@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     public final ClickGUI clickGUI;
+    public final GuiScreen mainMenuObject;
 
     public final ArrayList<CategoryElement> categoryElements = new ArrayList<>();
 
@@ -56,8 +57,9 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     private final AtomicBoolean isButtonActive = new AtomicBoolean(false);
     private ButtonSetting activeButton = null;
 
-    public TensorGUI(ClickGUI clickGUI) {
+    public TensorGUI(ClickGUI clickGUI, GuiScreen mainMenuObject) {
         this.clickGUI = clickGUI;
+        this.mainMenuObject = mainMenuObject;
 
         AtomicInteger offsetY = new AtomicInteger(0);
 
@@ -75,6 +77,11 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     @Override
     public void drawScreen(int i, int j, float f) {
+        if (this.mainMenuObject != null) {
+            this.mainMenuObject.width = this.width;
+            this.mainMenuObject.height = this.height;
+            this.mainMenuObject.drawScreen(0, 0, f);
+        }
 
         this.categoryElements.forEach(categoryElement -> {
 

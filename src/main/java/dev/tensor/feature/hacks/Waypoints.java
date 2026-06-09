@@ -57,7 +57,7 @@ public final class Waypoints extends Render3DHack {
     @Override
     public void onClientTick() {
         this.waypointsToRender.clear();
-        this.waypointsToRender.addAll(this.waypointList.getValue().getSortedWaypointsFor(!this.getWorld().worldProvider.isHellWorld, this.getWaypointServerName()));
+        this.waypointsToRender.addAll(this.waypointList.getValue().getSortedWaypointsFor(!this.isNetherNulLSafe(), this.getWaypointServerName()));
 
         this.renderDistance = this.getMaxXZForRenderDistance();
     }

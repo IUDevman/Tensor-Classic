@@ -12,14 +12,22 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.rotation.Rotation;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 import org.slf4j.Logger;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * @author Hoosiers
@@ -151,6 +159,18 @@ public interface Globals {
 
     default boolean isMultiplayer() {
         return this.getWorld().multiplayerWorld;
+    }
+
+    default boolean isNetherNulLSafe() {
+        if (this.getWorld() == null) {
+            return false;
+        }
+
+        if (this.getWorld().worldProvider == null) {
+            return false;
+        }
+
+        return this.getWorld().worldProvider.isNether;
     }
 
     default void sendPacket(Packet packet) {
@@ -357,6 +377,10 @@ public interface Globals {
     }
 
     default String getWaypointServerName() {
+        if (this.getWorld() == null) {
+            return "Singleplayer";
+        }
+
         if (!this.isMultiplayer()) {
             return "Singleplayer";
         }
@@ -434,5 +458,31 @@ public interface Globals {
 
     default float[] getColor(int color, boolean hasAlpha) {
         return new float[]{(color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, hasAlpha ? (color >> 24 & 255) / 255.0F : 1F};
+    }
+
+    @SuppressWarnings("deprecation")
+    default int setupTexture(String name, int id) {
+        try {
+            Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer("tensorclassic");
+
+            if (!modContainer.isPresent()) {
+                return -1;
+            }
+
+            Path imagePath = modContainer.get().getPath("assets/tensorclassic/" + name);
+
+            InputStream inputStream = Files.newInputStream(imagePath);
+
+            BufferedImage image = ImageIO.read(inputStream);
+
+            this.getMinecraft().renderEngine.setupTexture(image, id);
+
+            return id;
+
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load texture: " + name + " (" + id + ")!");
+        }
+
+        return -1;
     }
 }

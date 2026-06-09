@@ -67,18 +67,12 @@ public interface HUDObject extends Render2D {
             int width1 = this.getWidthScaled();
             int height1 = this.getHeightScaled();
 
-            int windowHeight = this.getMinecraft().displayHeight;
-
             ScaledResolution scaledResolution = new ScaledResolution(this.getMinecraft().gameSettings, this.getMinecraft().displayWidth, this.getMinecraft().displayHeight);
+
             double scaleX = (double) this.getMinecraft().displayWidth / (double) scaledResolution.getScaledWidth();
             double scaleY = (double) this.getMinecraft().displayHeight / (double) scaledResolution.getScaledHeight();
 
-            int widthScaled = (int) (scaleX * width1);
-            int heightScaled = (int) (scaleY * height1);
-            int xScaled = (int) (posX * scaleX);
-            int yScaled = (int) (posY * scaleY);
-
-            GL11.glScissor(xScaled, windowHeight - yScaled - heightScaled, widthScaled, heightScaled);
+            GL11.glScissor((int) Math.ceil(posX * scaleX), this.getMinecraft().displayHeight - (int) Math.ceil((posY + height1) * scaleY), (int) Math.ceil(width1 * scaleX), (int) Math.ceil(height1 * scaleY));
         }
 
         double scale = this.getScale().getValue();

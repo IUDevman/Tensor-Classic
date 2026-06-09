@@ -35,10 +35,10 @@ public final class ClickGUI extends Hack {
             return;
         }
 
-        if (this.tensorGUI == null) {
-            tensorGUI = new TensorGUI(this);
+        if (this.tensorGUI == null || this.tensorGUI.mainMenuObject != null) {
+            this.tensorGUI = new TensorGUI(this, null);
         }
 
-        this.getMinecraft().displayGuiScreen(tensorGUI);
+        this.getMinecraft().displayGuiScreen(this.tensorGUI);
     }
 }

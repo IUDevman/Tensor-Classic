@@ -96,7 +96,7 @@ public final class Coordinates extends Hack implements HUDObject {
                 this.renderCoordinate(coordinatesNether, 1, this.netherColor.getValueRainbow());
                 break;
             case Both:
-                if (this.getWorld().worldProvider.isHellWorld) {
+                if (this.isNetherNulLSafe()) {
                     String coordinatesNether1 = this.coordinatesStringWithDirection.replace("{X}", coordinateFormat.format(posX / 8)).replace("{Y}", coordinateFormat.format(posY)).replace("{Z}", coordinateFormat.format(posZ / 8));
                     coordinatesNether1 = coordinatesNether1.replace("{D}", this.compass.getValue() ? " [" + this.getDirection() + "]" : "");
                     this.renderCoordinate(coordinatesNether1, 1, this.netherColor.getValueRainbow());

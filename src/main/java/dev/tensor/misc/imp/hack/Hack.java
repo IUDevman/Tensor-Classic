@@ -99,6 +99,10 @@ public abstract class Hack implements Globals {
 
     public final void setEnabled(boolean ENABLED) {
         if (ENABLED) {
+            if (this.shouldDisableOnDisconnect() && this.failsNullCheck()) {
+                return;
+            }
+
             this.enable();
             return;
         }

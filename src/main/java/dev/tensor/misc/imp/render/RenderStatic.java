@@ -12,6 +12,13 @@ import net.minecraft.src.RenderItem;
 
 public final class RenderStatic {
 
+    public static final int SLUG_TEXTURE_ID = 69001;
+    public static final int BACKGROUND_TEXTURE_1_ID = 69002;
+    public static final int BACKGROUND_TEXTURE_2_ID = 69003;
+    public static final int BACKGROUND_TEXTURE_3_ID = 69004;
+    public static final int BACKGROUND_TEXTURE_4_ID = 69005;
+    public static final int BACKGROUND_LOGO_ID = 69006;
+
     public static final RenderItem tensor_renderItem = new RenderItem();
     public static final RenderBlocks tensor_renderBlocks = new RenderBlocks();
 

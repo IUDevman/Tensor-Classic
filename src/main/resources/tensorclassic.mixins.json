@@ -28,6 +28,7 @@
     "GuiChatMixin",
     "GuiConnectingMixin",
     "GuiIngameMixin",
+    "GuiMainMenuMixin",
     "ItemRendererMixin",
     "MinecraftMixin",
     "NetClientHandlerMixin",

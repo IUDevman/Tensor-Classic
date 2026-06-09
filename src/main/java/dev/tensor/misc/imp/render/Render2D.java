@@ -76,24 +76,24 @@ public interface Render2D extends Globals {
 
         this.prepRectangle(outlineColor);
 
-        int minXWidth = minX + outlineWidth;
-        int maxXWidth = minX + width;
-        int maxXWidthMinusLine = maxXWidth - outlineWidth;
-        int minYHeight = minY + outlineWidth;
-        int maxYHeight = minY + height;
-        int maxYHeightMinusLine = maxYHeight - outlineWidth;
+        int minXPlusLine = minX + outlineWidth;
+        int maxX = minX + width;
+        int maxXMinusLine = maxX - outlineWidth;
+        int minYPlusLine = minY + outlineWidth;
+        int maxY = minY + height;
+        int maxYMinusLine = maxY - outlineWidth;
 
-        this.genRectangleVertices(minX, minY, maxXWidth, minYHeight);
-        this.genRectangleVertices(minX, maxYHeightMinusLine, maxXWidth, maxYHeight);
-        this.genRectangleVertices(minX, minYHeight, minXWidth, maxYHeightMinusLine);
-        this.genRectangleVertices(maxXWidthMinusLine, minYHeight, maxXWidth, maxYHeightMinusLine);
+        this.genRectangleVertices(minX, minY, maxX, minYPlusLine);
+        this.genRectangleVertices(minX, maxYMinusLine, maxX, maxY);
+        this.genRectangleVertices(minX, minYPlusLine, minXPlusLine, maxYMinusLine);
+        this.genRectangleVertices(maxXMinusLine, minYPlusLine, maxX, maxYMinusLine);
 
         this.finishRectangle();
 
         if (shouldFill) {
             this.prepRectangle(fillColor);
 
-            this.genRectangleVertices(minXWidth, minYHeight, maxXWidthMinusLine, maxYHeightMinusLine);
+            this.genRectangleVertices(minXPlusLine, minYPlusLine, maxXMinusLine, maxYMinusLine);
 
             this.finishRectangle();
         }
@@ -174,6 +174,26 @@ public interface Render2D extends Globals {
         Tessellator.instance.draw();
 
         this.finishFlatGL(true);
+    }
+
+    default void drawTexturedRectangle(int startX, int startY, int imageWidth, int imageHeight, double scaleX, double scaleY) {
+        startX = (int) (startX * scaleX);
+        startY = (int) (startY * scaleY);
+
+        int renderWidth = (int) (imageWidth * scaleX);
+        int renderHeight = (int) (imageHeight * scaleY);
+
+        float xScaleFactor = 1.0F / imageWidth;
+        float yScaleFactor = 1.0F / imageHeight;
+
+        Tessellator.instance.startDrawingQuads();
+
+        Tessellator.instance.addVertexWithUV(startX, startY + renderHeight, 0, 0, imageHeight * yScaleFactor);
+        Tessellator.instance.addVertexWithUV(startX + renderWidth, startY + renderHeight, 0, imageWidth * xScaleFactor, imageHeight * yScaleFactor);
+        Tessellator.instance.addVertexWithUV(startX + renderWidth, startY, 0, imageWidth * xScaleFactor, 0);
+        Tessellator.instance.addVertexWithUV(startX, startY, 0, 0, 0);
+
+        Tessellator.instance.draw();
     }
 
     default float[][] getColorGradient() {
