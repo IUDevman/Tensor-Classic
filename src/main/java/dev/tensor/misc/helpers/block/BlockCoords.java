@@ -4,6 +4,7 @@ import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.render.RenderStatic;
 import net.minecraft.src.Block;
 
+import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -35,11 +36,23 @@ public final class BlockCoords implements Globals {
         this.y = y;
         this.z = z;
 
-
         this.quickFrustrumBox = new int[]{x + 1, y + 1, z + 1};
 
         if (findNeighbors) {
             this.neighborMap.set(this.loadNeighborMap(x, y, z));
+        }
+    }
+
+    public BlockCoords(boolean nuker, Block block, int x, int y, int z) {
+        this.block = block;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+
+        this.quickFrustrumBox = new int[]{x + 1, y + 1, z + 1};
+
+        if (nuker) {
+            this.neighborMap.set(new boolean[]{true, true, true, true, true, true});
         }
     }
 
@@ -56,62 +69,90 @@ public final class BlockCoords implements Globals {
         for (int i = 0; i < neighbors.length; i++) {
             int[] neighbor = neighbors[i];
 
-            int neighborBlockId = this.getWorld().getBlockId(neighbor[0], neighbor[1], neighbor[2]);
-
-            boolean face = neighborBlockId != this.block.blockID;
-
-            if (!face && this.block.blockID == Block.ladder.blockID) {
-                int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
-
-                if (neighborMetadata != metadata) {
-                    face = true;
-                }
-
-            } else if (!face && this.block.blockID == Block.trapdoor.blockID) {
-                int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
-
-                if (metadata >= 4 && neighborMetadata < 4) {
-                    face = true;
-
-                } else if (metadata < 4 && neighborMetadata >= 4) {
-                    face = true;
-
-                } else if (metadata != neighborMetadata && (i == 2 || i == 3)) {
-                    face = true;
-
-                } else if (metadata == 4 && neighborMetadata > 4) {
-                    face = true;
-
-                } else if (neighborMetadata == 4 && metadata > 4) {
-                    face = true;
-                } else if (metadata < 4 && metadata == neighborMetadata && (i == 2 || i == 3)) {
-                    face = true;
-                }
-
-            } else if (!face && (this.block.blockID == Block.doorWood.blockID || this.block.blockID == Block.doorSteel.blockID)) {
-                if (i != 2 && i != 3) {
-                    int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
-
-                    int testMetadata = metadata;
-
-                    if (testMetadata >= 8) {
-                        testMetadata -= 8;
-                    }
-
-                    if (neighborMetadata >= 8) {
-                        neighborMetadata -= 8;
-                    }
-
-                    if (testMetadata != neighborMetadata && testMetadata + 3 != neighborMetadata && testMetadata - 3 != neighborMetadata) {
-                        face = true;
-                    }
-                }
-            }
-
-            returnResult[i] = face;
+            returnResult[i] = this.shouldDrawFace(metadata, i, neighbor, this.getWorld().getBlockId(neighbor[0], neighbor[1], neighbor[2]));
         }
 
         return this.adjustForID(returnResult);
+    }
+
+    private boolean[] loadNeighborMap(int x, int y, int z, ArrayList<BlockCoords> list) {
+        boolean[] returnResult = new boolean[6];
+
+        if (this.isThisADudBlock()) {
+            return new boolean[]{true, true, true, true, true, true};
+        }
+
+        int metadata = this.getWorld().getBlockMetadata(x, y, z);
+
+        int[][] neighbors = this.neighborMap(x, y, z);
+        for (int i = 0; i < neighbors.length; i++) {
+            int[] neighbor = neighbors[i];
+
+            BlockCoords blockCoords = list.stream().filter(blockCoords1 -> this.hasSameCoordinates(neighbor[0], neighbor[1], neighbor[2], blockCoords1)).findFirst().orElse(null);
+
+            if (blockCoords == null) {
+                returnResult[i] = true;
+                continue;
+            }
+
+            returnResult[i] = this.shouldDrawFace(metadata, i, neighbor, blockCoords.block.blockID);
+        }
+
+        return this.adjustForID(returnResult);
+    }
+
+    private boolean shouldDrawFace(int selfMetadata, int i, int[] neighbor, int neighborBlockId) {
+        boolean face = neighborBlockId != this.block.blockID;
+
+        if (!face && this.block.blockID == Block.ladder.blockID) {
+            int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
+
+            if (neighborMetadata != selfMetadata) {
+                face = true;
+            }
+
+        } else if (!face && this.block.blockID == Block.trapdoor.blockID) {
+            int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
+
+            if (selfMetadata >= 4 && neighborMetadata < 4) {
+                face = true;
+
+            } else if (selfMetadata < 4 && neighborMetadata >= 4) {
+                face = true;
+
+            } else if (selfMetadata != neighborMetadata && (i == 2 || i == 3)) {
+                face = true;
+
+            } else if (selfMetadata == 4 && neighborMetadata > 4) {
+                face = true;
+
+            } else if (neighborMetadata == 4 && selfMetadata > 4) {
+                face = true;
+            } else if (selfMetadata < 4 && selfMetadata == neighborMetadata && (i == 2 || i == 3)) {
+                face = true;
+            }
+
+        } else if (!face && (this.block.blockID == Block.doorWood.blockID || this.block.blockID == Block.doorSteel.blockID)) {
+            if (i != 2 && i != 3) {
+                int neighborMetadata = this.getWorld().getBlockMetadata(neighbor[0], neighbor[1], neighbor[2]);
+
+                int testMetadata = selfMetadata;
+
+                if (testMetadata >= 8) {
+                    testMetadata -= 8;
+                }
+
+                if (neighborMetadata >= 8) {
+                    neighborMetadata -= 8;
+                }
+
+                if (testMetadata != neighborMetadata && testMetadata + 3 != neighborMetadata && testMetadata - 3 != neighborMetadata) {
+                    face = true;
+                }
+            }
+        }
+
+        return face;
     }
 
     private int[][] neighborMap(int x, int y, int z) {
@@ -170,6 +211,22 @@ public final class BlockCoords implements Globals {
         return false;
     }
 
+    private boolean hasSameCoordinates(int selfX, int selfY, int selfZ, BlockCoords toCompare) {
+        if (selfX != toCompare.x) {
+            return false;
+        }
+
+        if (selfY != toCompare.y) {
+            return false;
+        }
+
+        if (selfZ != toCompare.z) {
+            return false;
+        }
+
+        return true;
+    }
+
     public boolean hasNoFaces() {
         for (boolean face : this.neighborMap.get()) {
             if (face) {
@@ -186,6 +243,10 @@ public final class BlockCoords implements Globals {
 
     public void updateNeighborMap() {
         this.neighborMap.set(this.loadNeighborMap(this.x, this.y, this.z));
+    }
+
+    public void updateNeighborMap(ArrayList<BlockCoords> list) {
+        this.neighborMap.set(this.loadNeighborMap(this.x, this.y, this.z, list));
     }
 
     public boolean isInFrustrum() {
