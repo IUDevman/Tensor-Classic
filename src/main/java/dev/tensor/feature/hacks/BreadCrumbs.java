@@ -38,6 +38,10 @@ public final class BreadCrumbs extends Render3DHack {
 
             if (breadCrumbs != null) {
                 breadCrumbs.clearPositions();
+
+                if (breadCrumbs.isEnabled() && !this.failsNullCheck()) {
+                    this.sendClientMessageWithHeader("BreadCrumbs: Cleared logged positions!");
+                }
             }
         }
     };

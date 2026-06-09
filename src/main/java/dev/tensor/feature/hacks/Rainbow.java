@@ -19,6 +19,16 @@ public final class Rainbow extends Hack {
         @Override
         public void onChange() {
             RainbowColor.reset();
+
+            if (this.failsNullCheck()) {
+                return;
+            }
+
+            Rainbow rainbow = this.getHackManager().getHack(Rainbow.class);
+
+            if (rainbow != null && rainbow.isEnabled()) {
+                this.sendClientMessageWithHeader("Rainbow: Reset global rainbow color!");
+            }
         }
     };
     public final IntegerSetting speed = new IntegerSetting("Speed MS", (int) RainbowColor.DEFAULT_SLEEP_TIME, 1, 50) {

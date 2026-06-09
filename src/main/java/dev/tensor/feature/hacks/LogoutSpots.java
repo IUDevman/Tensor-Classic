@@ -42,6 +42,10 @@ public final class LogoutSpots extends Render3DHack {
 
             if (logoutSpots != null) {
                 logoutSpots.clearLogoutSpots();
+
+                if (logoutSpots.isEnabled() && !this.failsNullCheck()) {
+                    this.sendClientMessageWithHeader("LogoutSpots: Cleared logged players!");
+                }
             }
         }
     };

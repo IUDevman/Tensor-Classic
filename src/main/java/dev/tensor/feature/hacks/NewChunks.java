@@ -36,6 +36,10 @@ public final class NewChunks extends Render3DHack {
 
             if (newChunks != null) {
                 newChunks.clearLoggedChunks();
+
+                if (newChunks.isEnabled() && !this.failsNullCheck()) {
+                    this.sendClientMessageWithHeader("NewChunks: Cleared logged chunks!");
+                }
             }
         }
     };
