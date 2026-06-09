@@ -68,17 +68,18 @@ public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
         int centerX = this.width / 2 - 100;
         int startY = this.height / 4 + 48;
 
-        this.controlList.add(new GuiButton(1, centerX, startY, translate.translateKey("menu.singleplayer")));
+        this.controlList.add(new GuiButton(1, centerX - 102, startY, translate.translateKey("menu.singleplayer")));
 
-        GuiButton multiplayer = new GuiButton(2, centerX, startY + 24, translate.translateKey("menu.multiplayer"));
+        GuiButton multiplayer = new GuiButton(2, centerX + 102, startY, translate.translateKey("menu.multiplayer"));
         multiplayer.enabled = true;
 
         this.controlList.add(multiplayer);
 
-        this.controlList.add(new GuiButton(3, centerX, startY + 48, translate.translateKey("menu.mods")));
-        this.controlList.add(new GuiButton(4, centerX, startY + 72, translate.translateKey("menu.options")));
-        this.controlList.add(new GuiButton(5, centerX, startY + 96, "Tensor Classic GUI"));
-        this.controlList.add(new GuiButton(6, centerX, startY + 120, translate.translateKey("menu.quit")));
+        this.controlList.add(new GuiButton(3, centerX - 102, startY + 24, translate.translateKey("menu.mods")));
+        this.controlList.add(new GuiButton(4, centerX - 102, startY + 48, translate.translateKey("menu.options")));
+        this.controlList.add(new GuiButton(5, centerX, startY + 72, "Tensor Classic GUI"));
+        this.controlList.add(new GuiButton(6, centerX + 102, startY + 48, translate.translateKey("menu.quit")));
+        this.controlList.add(new GuiButton(7, centerX + 102, startY + 24, "Play 2beta2t.net"));
 
         ci.cancel();
     }
@@ -120,6 +121,10 @@ public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
             case 6:
                 this.getMinecraft().shutdown();
+                break;
+
+            case 7:
+                this.mc.displayGuiScreen(new GuiConnecting(this.mc, "2beta2t.net", 25565));
                 break;
         }
 
