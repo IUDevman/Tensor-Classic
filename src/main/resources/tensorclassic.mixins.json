@@ -23,6 +23,7 @@
     "BlockRendererMixin",
     "EffectRendererMixin",
     "EntityClientPlayerMPMixin",
+    "EntityOtherPlayerMPMixin",
     "EntityPlayerSPMixin",
     "EntityRendererMixin",
     "GuiChatMixin",

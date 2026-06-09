@@ -13,13 +13,17 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 /**
  * @author Hoosiers
  * @since 03-19-2026
  */
 
 @Mixin(value = NetClientHandler.class, priority = MixinPriority.VALUE)
-public final class NetClientHandlerMixin implements Globals {
+public abstract class NetClientHandlerMixin implements Globals {
 
     @Shadow
     private NetworkManager netManager;
@@ -183,5 +187,38 @@ public final class NetClientHandlerMixin implements Globals {
 
             ci.cancel();
         }
+    }
+
+    //Adapted from @author tweska 2023; MIT LICENSE; https://github.com/tweska/BetaFix/blob/master/LICENSE
+    @Inject(method = "handleHandshake", at = @At("HEAD"), cancellable = true)
+    public void betaFix_handleHandshake(Packet2Handshake packet2Handshake, CallbackInfo ci) {
+        if (packet2Handshake.username.equals("-")) {
+            this.sendPacket(new Packet1Login(this.getMinecraft().session.username, 14));
+
+            ci.cancel();
+            return;
+        }
+
+        try {
+            URL url = new URL("http://session.minecraft.net/game/joinserver.jsp?user=" + this.getMinecraft().session.username + "&sessionId=" + this.getMinecraft().session.sessionId + "&serverId=" + packet2Handshake.username);
+
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(url.openStream()));
+
+            String result = bufferedReader.readLine();
+            bufferedReader.close();
+
+            if (result.equalsIgnoreCase("ok")) {
+                this.sendPacket(new Packet1Login(this.getMinecraft().session.username, 14));
+
+            } else {
+                this.netManager.networkShutdown("disconnect.loginFailedInfo", result);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.netManager.networkShutdown("disconnect.genericReason", "Internal client error: " + e);
+        }
+
+        ci.cancel();
     }
 }

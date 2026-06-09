@@ -9,10 +9,9 @@ import dev.tensor.backend.events.constant.PortalCloseGUIEvent;
 import dev.tensor.backend.events.variable.SignEvent;
 import dev.tensor.backend.events.variable.VelocityEvent;
 import dev.tensor.misc.imp.Globals;
+import dev.tensor.misc.imp.betafix.BetaFix;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityPlayerSP;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.TileEntitySign;
+import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -25,7 +24,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 
 @Mixin(value = EntityPlayerSP.class, priority = MixinPriority.VALUE)
-public final class EntityPlayerSPMixin implements Globals {
+public abstract class EntityPlayerSPMixin extends Entity implements Globals {
+
+    public EntityPlayerSPMixin(World world) {
+        super(world);
+    }
+
+    //Adapted from @author tweska 2023; MIT LICENSE; https://github.com/tweska/BetaFix/blob/master/LICENSE
+    @Inject(method = "<init>", at = @At("TAIL"))
+    public void betaFix_init(Minecraft minecraft, World world, Session session, int dimension, CallbackInfo ci) {
+        if (session != null && session.username != null && session.username.length() > 0) {
+            this.skinUrl = BetaFix.getSkinURL(session.username);
+        }
+    }
 
     @Inject(method = "pushOutOfBlocks", at = @At("HEAD"), cancellable = true)
     public void tensor_onPushOutOfBlocks(double x, double y, double z, CallbackInfoReturnable<Boolean> cir) {
