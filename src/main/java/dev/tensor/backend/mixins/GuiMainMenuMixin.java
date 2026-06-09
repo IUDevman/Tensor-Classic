@@ -2,6 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.feature.hacks.ClickGUI;
+import dev.tensor.feature.hacks.MainMenu;
 import dev.tensor.feature.managers.HackManager;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.imp.render.Render2D;
@@ -40,9 +41,18 @@ public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
     @Unique
     private int logo = -1;
 
+    @Unique
+    private MainMenu mainMenu = null;
+
     @SuppressWarnings("unchecked")
     @Inject(method = "initGui", at = @At("HEAD"), cancellable = true)
     public void tensor_onInitGui(CallbackInfo ci) {
+        this.mainMenu = this.getHackManager().getHack(MainMenu.class);
+
+        if (this.mainMenu == null || !this.mainMenu.isEnabled()) {
+            return;
+        }
+
         if (!this.loaded) {
             this.tb1 = this.setupTexture("gui/background_1.png", RenderStatic.BACKGROUND_TEXTURE_1_ID);
             this.tb2 = this.setupTexture("gui/background_2.png", RenderStatic.BACKGROUND_TEXTURE_2_ID);
@@ -75,6 +85,10 @@ public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
     @Inject(method = "actionPerformed", at = @At("HEAD"), cancellable = true)
     public void tensor_onActionPerformed(GuiButton guiButton, CallbackInfo ci) {
+        if (this.mainMenu == null || !this.mainMenu.isEnabled()) {
+            return;
+        }
+
         switch (guiButton.id) {
             case 1:
                 this.getMinecraft().displayGuiScreen(new GuiSelectWorld(this));
@@ -114,10 +128,16 @@ public final class GuiMainMenuMixin extends GuiScreen implements Render2D {
 
     @Inject(method = "drawScreen", at = @At("HEAD"), cancellable = true)
     public void tensor_onDrawScreen(int x, int y, float partialTicks, CallbackInfo ci) {
+        if (this.mainMenu == null || !this.mainMenu.isEnabled()) {
+            return;
+        }
+
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_FOG);
 
-        GL11.glColor4f(176 / 255F, 24 / 255F, 24 / 255F, 1.0F);
+        float[] color = this.mainMenu.getColorArray();
+
+        GL11.glColor4f(color[0], color[1], color[2], 1.0F);
 
         this.tensor_drawBackground(this.tb1, 0, 640, 360);
         this.tensor_drawBackground(this.tb2, 1, 640, 360);
