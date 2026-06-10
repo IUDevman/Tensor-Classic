@@ -1,11 +1,19 @@
 package dev.tensor.misc.imp.render;
 
 import dev.tensor.misc.imp.Globals;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.src.*;
 import org.lwjgl.opengl.EXTRescaleNormal;
 import org.lwjgl.opengl.GL11;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * @author Hoosiers
@@ -393,5 +401,39 @@ public interface Render2D extends Globals {
 
     default boolean isBlackNoAlpha(Color color) {
         return color.getRed() == 0 && color.getGreen() == 0 && color.getBlue() == 0;
+    }
+
+    default float[] getColor(Color color, boolean hasAlpha) {
+        return this.getColor(color.getRGB(), hasAlpha);
+    }
+
+    default float[] getColor(int color, boolean hasAlpha) {
+        return new float[]{(color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, hasAlpha ? (color >> 24 & 255) / 255.0F : 1F};
+    }
+
+    @SuppressWarnings("deprecation")
+    default int setupTexture(String name, int id) {
+        try {
+            Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer("tensorclassic");
+
+            if (!modContainer.isPresent()) {
+                return -1;
+            }
+
+            Path imagePath = modContainer.get().getPath("assets/tensorclassic/" + name);
+
+            InputStream inputStream = Files.newInputStream(imagePath);
+
+            BufferedImage image = ImageIO.read(inputStream);
+
+            this.getMinecraft().renderEngine.setupTexture(image, id);
+
+            return id;
+
+        } catch (Exception ignored) {
+            this.getTensorLogger().info("Failed to load texture: " + name + " (" + id + ")!");
+        }
+
+        return -1;
     }
 }
