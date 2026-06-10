@@ -145,7 +145,7 @@ public interface Globals {
     }
 
     default boolean failsNullCheck() {
-        return this.getMinecraft() == null || this.getPlayer() == null || this.getWorld() == null;
+        return this.getMinecraft() == null || this.getPlayer() == null /* || this.getWorld() == null */;
     }
 
     default boolean isMultiplayer() {
