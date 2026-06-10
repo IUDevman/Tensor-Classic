@@ -61,21 +61,7 @@ public final class HephFreecam extends Hack {
                 }
 
                 if (VALUE) {
-                    freecam.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
-
-                    freecam.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
-                    freecam.fakePlayer.inventory.mainInventory[this.getInventory().currentItem] = this.getInventory().getCurrentItem();
-                    freecam.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
-                    freecam.fakePlayer.inventory.armorInventory[0] = this.getInventory().armorInventory[0];
-                    freecam.fakePlayer.inventory.armorInventory[1] = this.getInventory().armorInventory[1];
-                    freecam.fakePlayer.inventory.armorInventory[2] = this.getInventory().armorInventory[2];
-                    freecam.fakePlayer.inventory.armorInventory[3] = this.getInventory().armorInventory[3];
-
-                    freecam.fakePlayer.username = this.getPlayer().username;
-                    freecam.fakePlayer.setPositionAndRotation(freecam.oldX, freecam.oldY, freecam.oldZ, freecam.oldYaw, freecam.oldPitch);
-                    freecam.fakePlayer.skinUrl = this.getPlayer().skinUrl;
-
-                    this.getWorld().entityJoinedWorld(freecam.fakePlayer);
+                    freecam.loadPlayerCopy();
 
                 } else {
                     freecam.fakePlayer = null;
@@ -110,21 +96,7 @@ public final class HephFreecam extends Hack {
             this.isThirdPerson = this.getMinecraft().gameSettings.thirdPersonView;
 
             if (this.copyPlayer.getValue()) {
-                this.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
-
-                this.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
-                this.fakePlayer.inventory.mainInventory[this.getInventory().currentItem] = this.getInventory().getCurrentItem();
-                this.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
-                this.fakePlayer.inventory.armorInventory[0] = this.getInventory().armorInventory[0];
-                this.fakePlayer.inventory.armorInventory[1] = this.getInventory().armorInventory[1];
-                this.fakePlayer.inventory.armorInventory[2] = this.getInventory().armorInventory[2];
-                this.fakePlayer.inventory.armorInventory[3] = this.getInventory().armorInventory[3];
-
-                this.fakePlayer.username = this.getPlayer().username;
-                this.fakePlayer.setPositionAndRotation(this.oldX, this.oldY, this.oldZ, this.oldYaw, this.oldPitch);
-                this.fakePlayer.skinUrl = this.getPlayer().skinUrl;
-
-                this.getWorld().entityJoinedWorld(this.fakePlayer);
+                this.loadPlayerCopy();
             }
 
             this.getPlayer().noClip = true;
@@ -259,6 +231,24 @@ public final class HephFreecam extends Hack {
         }
 
         return inX && inY && inZ;
+    }
+
+    public void loadPlayerCopy() {
+        this.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
+
+        this.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
+        this.fakePlayer.inventory.mainInventory[this.getInventory().currentItem] = this.getInventory().getCurrentItem();
+        this.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
+        this.fakePlayer.inventory.armorInventory[0] = this.getInventory().armorInventory[0];
+        this.fakePlayer.inventory.armorInventory[1] = this.getInventory().armorInventory[1];
+        this.fakePlayer.inventory.armorInventory[2] = this.getInventory().armorInventory[2];
+        this.fakePlayer.inventory.armorInventory[3] = this.getInventory().armorInventory[3];
+
+        this.fakePlayer.username = this.getPlayer().username;
+        this.fakePlayer.setPositionAndRotation(this.oldX, this.oldY, this.oldZ, this.oldYaw, this.oldPitch);
+        this.fakePlayer.skinUrl = this.getPlayer().skinUrl;
+
+        this.getWorld().entityJoinedWorld(this.fakePlayer);
     }
 
     private enum Highlight {
