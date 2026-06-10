@@ -42,7 +42,47 @@ public final class HephFreecam extends Hack {
         return true;
     }
 
-    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true);
+    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true) {
+
+        @Override
+        public void setValue(Boolean VALUE) {
+            super.setValue(VALUE);
+
+            if (this.failsNullCheck()) {
+                return;
+            }
+
+            HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+            if (freecam != null && freecam.isEnabled()) {
+
+                if (freecam.fakePlayer != null) {
+                    this.getWorld().setEntityDead(freecam.fakePlayer);
+                }
+
+                if (VALUE) {
+                    freecam.fakePlayer = new dev.tensor.misc.helpers.entity.FakePlayer(this.getWorld());
+
+                    freecam.fakePlayer.inventory.currentItem = this.getInventory().currentItem;
+                    freecam.fakePlayer.inventory.mainInventory[this.getInventory().currentItem] = this.getInventory().getCurrentItem();
+                    freecam.fakePlayer.inventory.mainInventory[9] = this.getInventory().mainInventory[9];
+                    freecam.fakePlayer.inventory.armorInventory[0] = this.getInventory().armorInventory[0];
+                    freecam.fakePlayer.inventory.armorInventory[1] = this.getInventory().armorInventory[1];
+                    freecam.fakePlayer.inventory.armorInventory[2] = this.getInventory().armorInventory[2];
+                    freecam.fakePlayer.inventory.armorInventory[3] = this.getInventory().armorInventory[3];
+
+                    freecam.fakePlayer.username = this.getPlayer().username;
+                    freecam.fakePlayer.setPositionAndRotation(freecam.oldX, freecam.oldY, freecam.oldZ, freecam.oldYaw, freecam.oldPitch);
+                    freecam.fakePlayer.skinUrl = this.getPlayer().skinUrl;
+
+                    this.getWorld().entityJoinedWorld(freecam.fakePlayer);
+
+                } else {
+                    freecam.fakePlayer = null;
+                }
+            }
+        }
+    };
     public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true);
     public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
     public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
@@ -57,7 +97,7 @@ public final class HephFreecam extends Hack {
 
     private boolean isThirdPerson;
 
-    private EntityPlayer fakePlayer = null;
+    public EntityPlayer fakePlayer = null;
 
     @Override
     public void onEnable(boolean isNull) {
@@ -82,6 +122,7 @@ public final class HephFreecam extends Hack {
 
                 this.fakePlayer.username = this.getPlayer().username;
                 this.fakePlayer.setPositionAndRotation(this.oldX, this.oldY, this.oldZ, this.oldYaw, this.oldPitch);
+                this.fakePlayer.skinUrl = this.getPlayer().skinUrl;
 
                 this.getWorld().entityJoinedWorld(this.fakePlayer);
             }
@@ -104,7 +145,7 @@ public final class HephFreecam extends Hack {
             this.getMinecraft().gameSettings.thirdPersonView = this.isThirdPerson;
 
             if (this.fakePlayer != null) {
-                this.getWorld().setEntityDead(fakePlayer);
+                this.getWorld().setEntityDead(this.fakePlayer);
             }
         }
 
