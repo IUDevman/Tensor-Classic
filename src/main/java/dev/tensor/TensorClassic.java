@@ -16,15 +16,17 @@ import java.util.HashMap;
 
 public final class TensorClassic implements ModInitializer, Globals {
 
-    public static String MOD_NAME = "Tensor Classic";
+    public static final String MOD_NAME = "Tensor Classic";
 
-    public static String MOD_NAME_SHORT = "Tensor";
+    public static final String MOD_NAME_SHORT = "Tensor";
 
-    public static String MOD_VERSION = "r1.0.0";
+    public static final String MOD_VERSION = "r1.0.0";
 
     private static TensorClassic INSTANCE;
 
     private static Logger LOGGER;
+
+    public final HashMap<Class<? extends Manager>, Manager> MANAGERS = new HashMap<>();
 
     public TensorClassic() {
         if (INSTANCE == null) {
@@ -49,8 +51,6 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         return LOGGER;
     }
-
-    public HashMap<Class<? extends Manager>, Manager> MANAGERS = new HashMap<>();
 
     @Override
     public void onInitialize() {
@@ -92,7 +92,6 @@ public final class TensorClassic implements ModInitializer, Globals {
     }
 
     public void saveManagers() {
-
         long saveStartTime = System.currentTimeMillis();
 
         this.MANAGERS.values().forEach(manager -> manager.save(LOGGER));
@@ -102,11 +101,10 @@ public final class TensorClassic implements ModInitializer, Globals {
         LOGGER.info("Saved " + MOD_NAME + " Version " + MOD_VERSION + " in " + (saveEndTime - saveStartTime) + " ms!");
     }
 
-    public void restartManagers(boolean save) {
-
+    public void restartManagers(boolean saveOld) {
         long resetStartTime = System.currentTimeMillis();
 
-        if (save) {
+        if (saveOld) {
             this.saveManagers();
         }
 
