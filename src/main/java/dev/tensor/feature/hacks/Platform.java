@@ -50,6 +50,7 @@ public final class Platform extends Render3DHack {
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
+    public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
@@ -124,6 +125,10 @@ public final class Platform extends Render3DHack {
         for (int i = 0; i < blocksToPlace; i++) {
             this.placeBlock(this.blocksToPlace.get(i));
         }
+
+        if (this.mergeFaces.getValue()) {
+            this.blocksToPlace.forEach(blockPos -> blockPos.updateNeighborMapFromArrayList(this.blocksToPlace));
+        }
     }
 
     @Override
@@ -162,7 +167,7 @@ public final class Platform extends Render3DHack {
                     int blockID = this.getWorld().getBlockId(x, y, z);
 
                     if (blockID == 0) {
-                        blockPos.add(new BlockPos(x, y, z));
+                        blockPos.add(new BlockPos(x, y, z, true));
                         continue;
                     }
 
@@ -171,7 +176,7 @@ public final class Platform extends Render3DHack {
                     }
 
                     if (blockID == Block.waterMoving.blockID || blockID == Block.waterStill.blockID || blockID == Block.lavaMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.fire.blockID || blockID == Block.snow.blockID) {
-                        blockPos.add(new BlockPos(x, y, z));
+                        blockPos.add(new BlockPos(x, y, z, true));
                     }
                 }
             }
@@ -336,6 +341,10 @@ public final class Platform extends Render3DHack {
     }
 
     private void renderForBlockPos(BlockPos blockPos) {
+        if (blockPos.hasNoFaces()) {
+            return;
+        }
+
         double rx = blockPos.x - RenderManager.renderPosX;
         double ry = blockPos.y - RenderManager.renderPosY;
         double rz = blockPos.z - RenderManager.renderPosZ;
@@ -346,17 +355,33 @@ public final class Platform extends Render3DHack {
 
         Color color = this.esp_color.getValueRainbow();
 
-        switch ((RenderMode) this.renderMode.getValue()) {
-            case Outline:
-                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
-                break;
-            case Fill:
-                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
-                break;
-            case Both:
-                this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
-                this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
-                break;
+        if (this.mergeFaces.getValue()) {
+            switch ((RenderMode) this.renderMode.getValue()) {
+                case Outline:
+                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockPos.getNeighborMap());
+                    break;
+                case Fill:
+                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockPos.getNeighborMap());
+                    break;
+                case Both:
+                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockPos.getNeighborMap());
+                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockPos.getNeighborMap());
+                    break;
+            }
+
+        } else {
+            switch ((RenderMode) this.renderMode.getValue()) {
+                case Outline:
+                    this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                    break;
+                case Fill:
+                    this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                    break;
+                case Both:
+                    this.drawFillBox(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()));
+                    this.drawOutlineBox(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color);
+                    break;
+            }
         }
     }
 
