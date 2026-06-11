@@ -9,6 +9,7 @@
     "BlockIceMixin",
     "BlockMixin",
     "BlockPortalMixin",
+    "BlockSignMixin",
     "BlockSoulSandMixin",
     "BlockStairsMixin",
     "EntityMixin",

@@ -127,6 +127,7 @@ public final class HackManager implements Manager {
         this.addHack(new SafeWalk());
         this.addHack(new Scaffold());
         this.addHack(new Search());
+        this.addHack(new SignWalker());
         this.addHack(new Slug());
         this.addHack(new Sneak());
         this.addHack(new Speedometer());
