@@ -8,7 +8,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * @since 04-17-2026
  */
 
-public final class BlockPos {
+public final class BoxPos {
 
     public final int x;
     public final int y;
@@ -16,22 +16,30 @@ public final class BlockPos {
 
     private final boolean faces;
 
-    private final AtomicReference<boolean[]> neighborMap = new AtomicReference<>(new boolean[]{true, true, true, true, true, true});
+    private final AtomicReference<boolean[]> neighborMap;
 
-    public BlockPos(int x, int y, int z) {
+    public BoxPos(int x, int y, int z) {
         this.x = x;
         this.y = y;
         this.z = z;
 
         this.faces = false;
+
+        this.neighborMap = null;
     }
 
-    public BlockPos(int x, int y, int z, boolean faces) {
+    public BoxPos(int x, int y, int z, boolean faces) {
         this.x = x;
         this.y = y;
         this.z = z;
 
         this.faces = faces;
+
+        if (faces) {
+            this.neighborMap = new AtomicReference<>(new boolean[]{true, true, true, true, true, true});
+        } else {
+            this.neighborMap = null;
+        }
     }
 
     public boolean hasNoFaces() {
@@ -49,10 +57,14 @@ public final class BlockPos {
     }
 
     public boolean[] getNeighborMap() {
+        if (!this.faces) {
+            return new boolean[]{true, true, true, true, true, true};
+        }
+
         return this.neighborMap.get();
     }
 
-    public void updateNeighborMapFromArrayList(ArrayList<BlockPos> list) {
+    public void updateNeighborMapFromArrayList(ArrayList<BoxPos> list) {
         if (!this.faces) {
             return;
         }
@@ -80,7 +92,7 @@ public final class BlockPos {
         };
     }
 
-    private boolean isNeighbor(int x, int y, int z, ArrayList<BlockPos> list) {
+    private boolean isNeighbor(int x, int y, int z, ArrayList<BoxPos> list) {
         return list.stream().filter(blockPos -> blockPos.x == x && blockPos.y == y && blockPos.z == z).findFirst().orElse(null) != null;
     }
 }

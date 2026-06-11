@@ -1,7 +1,7 @@
 package dev.tensor.misc.helpers.logoutspot;
 
 import dev.tensor.feature.hacks.HephFreecam;
-import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.imp.Globals;
 
 /**
@@ -12,14 +12,14 @@ import dev.tensor.misc.imp.Globals;
 public final class LogoutSpot implements Globals {
 
     public final String username;
-    public final BlockPos coords;
+    public final BoxPos coords;
     private final long timeLogged;
 
     private final LogoutSpotRenderer render;
 
     private long diffTime = 0;
 
-    public LogoutSpot(String username, BlockPos coords, long timeLogged) {
+    public LogoutSpot(String username, BoxPos coords, long timeLogged) {
         this.username = username;
         this.coords = coords;
         this.timeLogged = timeLogged;

@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.MovementClipEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockList;
-import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -46,7 +46,7 @@ public final class Scaffold extends Render3DHack {
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
 
-    private BlockPos blockPlacingAt = null;
+    private BoxPos blockPlacingAt = null;
 
     @Override
     public void onDisable(boolean isNull) {
@@ -80,7 +80,7 @@ public final class Scaffold extends Render3DHack {
             shouldLevitate = true;
         }
 
-        BlockPos coords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
+        BoxPos coords = new BoxPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
 
         int blockID = this.getWorld().getBlockId(coords.x, coords.y, coords.z);
 
@@ -142,7 +142,7 @@ public final class Scaffold extends Render3DHack {
         }
     }));
 
-    private void placeBlock(BlockPos coords, boolean shouldLevitate) {
+    private void placeBlock(BoxPos coords, boolean shouldLevitate) {
         int prevItem = this.getInventory().currentItem;
         int swapSlot = this.getSwapSlot();
         boolean swapped = false;

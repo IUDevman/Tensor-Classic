@@ -4,7 +4,7 @@ import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.ChatReceivedEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventAction;
-import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpot;
 import dev.tensor.misc.helpers.logoutspot.LogoutSpotRenderer;
 import dev.tensor.misc.imp.hack.Category;
@@ -134,7 +134,7 @@ public final class LogoutSpots extends Render3DHack {
             }
 
             if (!this.isQueuedPlayer(username)) {
-                BlockPos coords = new BlockPos((int) otherPlayerMP.posX, (int) otherPlayerMP.posY, (int) otherPlayerMP.posZ);
+                BoxPos coords = new BoxPos((int) otherPlayerMP.posX, (int) otherPlayerMP.posY, (int) otherPlayerMP.posZ);
                 LogoutSpot logoutSpot = new LogoutSpot(username, coords, System.currentTimeMillis());
 
                 this.playersLoggedQueue.add(logoutSpot);

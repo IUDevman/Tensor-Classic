@@ -4,7 +4,7 @@ import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.ChatColor;
-import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -62,7 +62,7 @@ public final class VisualRange extends Hack {
 
         boolean isFriend = this.getFriendManager().isFriend(name);
 
-        BlockPos blockPos = new BlockPos((int) event.otherPlayerMP.posX, (int) event.otherPlayerMP.posY, (int) event.otherPlayerMP.posZ);
+        BoxPos boxPos = new BoxPos((int) event.otherPlayerMP.posX, (int) event.otherPlayerMP.posY, (int) event.otherPlayerMP.posZ);
 
         switch (event.type) {
             case Join:
@@ -70,7 +70,7 @@ public final class VisualRange extends Hack {
                     this.loadedEntityNames.add(name);
 
                     if (this.shouldMessage()) {
-                        this.sendVRMessage(isFriend, name, blockPos, true);
+                        this.sendVRMessage(isFriend, name, boxPos, true);
                     }
                 }
                 break;
@@ -79,7 +79,7 @@ public final class VisualRange extends Hack {
                     this.loadedEntityNames.remove(name);
 
                     if (this.shouldMessage()) {
-                        this.sendVRMessage(isFriend, name, blockPos, false);
+                        this.sendVRMessage(isFriend, name, boxPos, false);
                     }
                 }
                 break;
@@ -94,7 +94,7 @@ public final class VisualRange extends Hack {
         return this.shouldMessage;
     }
 
-    private void sendVRMessage(boolean friend, String name, BlockPos position, boolean firstSeen) {
+    private void sendVRMessage(boolean friend, String name, BoxPos position, boolean firstSeen) {
         String player = (friend ? "Friend" : "Player") + " ";
         String seen = " has " + (firstSeen ? ChatColor.GREEN.text() + "entered" : ChatColor.RED.text() + "left") + ChatColor.DEFAULT.text() + " your visual range ";
 

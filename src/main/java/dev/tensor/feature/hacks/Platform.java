@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.MovementClipEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockList;
-import dev.tensor.misc.helpers.block.BlockPos;
+import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
@@ -57,7 +57,7 @@ public final class Platform extends Render3DHack {
 
     private int delayTicks = 0;
 
-    private final ArrayList<BlockPos> blocksToPlace = new ArrayList<>();
+    private final ArrayList<BoxPos> blocksToPlace = new ArrayList<>();
 
     @Override
     public void onEnable(boolean isNull) {
@@ -94,7 +94,7 @@ public final class Platform extends Render3DHack {
             this.getPlayer().motionY = 0.30D;
         }
 
-        ArrayList<BlockPos> blocksToPlaceQueue = this.getBlocksToPlace(playerX, playerY, playerZ);
+        ArrayList<BoxPos> blocksToPlaceQueue = this.getBlocksToPlace(playerX, playerY, playerZ);
 
         this.blocksToPlace.addAll(blocksToPlaceQueue);
 
@@ -147,10 +147,10 @@ public final class Platform extends Render3DHack {
         }
     }));
 
-    private ArrayList<BlockPos> getBlocksToPlace(double playerX, double playerY, double playerZ) {
-        ArrayList<BlockPos> blockPos = new ArrayList<>();
+    private ArrayList<BoxPos> getBlocksToPlace(double playerX, double playerY, double playerZ) {
+        ArrayList<BoxPos> boxPos = new ArrayList<>();
 
-        BlockPos playerCoords = new BlockPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
+        BoxPos playerCoords = new BoxPos(MathHelper.floor_double(playerX), MathHelper.floor_double(playerY) - 2, MathHelper.floor_double(playerZ));
 
         for (int x = (int) (playerCoords.x - this.range.getValue()); x <= playerCoords.x + this.range.getValue(); x++) {
 
@@ -167,7 +167,7 @@ public final class Platform extends Render3DHack {
                     int blockID = this.getWorld().getBlockId(x, y, z);
 
                     if (blockID == 0) {
-                        blockPos.add(new BlockPos(x, y, z, true));
+                        boxPos.add(new BoxPos(x, y, z, true));
                         continue;
                     }
 
@@ -176,16 +176,16 @@ public final class Platform extends Render3DHack {
                     }
 
                     if (blockID == Block.waterMoving.blockID || blockID == Block.waterStill.blockID || blockID == Block.lavaMoving.blockID || blockID == Block.lavaStill.blockID || blockID == Block.fire.blockID || blockID == Block.snow.blockID) {
-                        blockPos.add(new BlockPos(x, y, z, true));
+                        boxPos.add(new BoxPos(x, y, z, true));
                     }
                 }
             }
         }
 
-        return blockPos;
+        return boxPos;
     }
 
-    private void placeBlock(BlockPos coords) {
+    private void placeBlock(BoxPos coords) {
         int prevItem = this.getInventory().currentItem;
         int swapSlot = this.getSwapSlot();
         boolean swapped = false;
@@ -340,14 +340,14 @@ public final class Platform extends Render3DHack {
         return -1;
     }
 
-    private void renderForBlockPos(BlockPos blockPos) {
-        if (blockPos.hasNoFaces()) {
+    private void renderForBlockPos(BoxPos boxPos) {
+        if (boxPos.hasNoFaces()) {
             return;
         }
 
-        double rx = blockPos.x - RenderManager.renderPosX;
-        double ry = blockPos.y - RenderManager.renderPosY;
-        double rz = blockPos.z - RenderManager.renderPosZ;
+        double rx = boxPos.x - RenderManager.renderPosX;
+        double ry = boxPos.y - RenderManager.renderPosY;
+        double rz = boxPos.z - RenderManager.renderPosZ;
 
         double mx = 1 + rx;
         double my = 1 + ry;
@@ -358,14 +358,14 @@ public final class Platform extends Render3DHack {
         if (this.mergeFaces.getValue()) {
             switch ((RenderMode) this.renderMode.getValue()) {
                 case Outline:
-                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockPos.getNeighborMap());
+                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, boxPos.getNeighborMap());
                     break;
                 case Fill:
-                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockPos.getNeighborMap());
+                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), boxPos.getNeighborMap());
                     break;
                 case Both:
-                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), blockPos.getNeighborMap());
-                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, blockPos.getNeighborMap());
+                    this.drawFillBoxWithFaces(rx, ry, rz, mx, my, mz, new Color(color.getRed(), color.getGreen(), color.getBlue(), this.fillAlpha.getValue()), boxPos.getNeighborMap());
+                    this.drawOutlineBoxWithFaces(rx, ry, rz, mx, my, mz, this.lineWidth.getValue(), color, boxPos.getNeighborMap());
                     break;
             }
 
