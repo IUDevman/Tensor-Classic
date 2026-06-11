@@ -137,7 +137,7 @@ public final class Platform extends Render3DHack {
             return;
         }
 
-        this.blocksToPlace.forEach(this::renderForBlockPos);
+        this.blocksToPlace.forEach(this::renderForBlock);
     }
 
     @SuppressWarnings("unused")
@@ -340,7 +340,7 @@ public final class Platform extends Render3DHack {
         return -1;
     }
 
-    private void renderForBlockPos(BoxPos boxPos) {
+    private void renderForBlock(BoxPos boxPos) {
         if (boxPos.hasNoFaces()) {
             return;
         }
