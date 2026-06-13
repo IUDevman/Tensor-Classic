@@ -6,6 +6,7 @@ import dev.tensor.backend.events.variable.RenderBlockEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
 import dev.tensor.misc.helpers.block.BlockList;
+import dev.tensor.misc.helpers.block.PortalHunter;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -67,6 +68,7 @@ public final class Search extends Render3DHack {
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None);
+    public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true);
     public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()));
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
@@ -81,6 +83,8 @@ public final class Search extends Render3DHack {
 
     private boolean hasTracers = false;
 
+    private PortalHunter portalHunter = null;
+
     @Override
     public void onEnable(boolean isNull) {
         if (!isNull) {
@@ -88,6 +92,7 @@ public final class Search extends Render3DHack {
         } else {
             this.blockCoords.clear();
             this.hasTracers = false;
+            this.portalHunter = null;
         }
     }
 
@@ -98,6 +103,7 @@ public final class Search extends Render3DHack {
         } else {
             this.blockCoords.clear();
             this.hasTracers = false;
+            this.portalHunter = null;
         }
     }
 
@@ -141,6 +147,7 @@ public final class Search extends Render3DHack {
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blockCoords.clear();
         this.hasTracers = false;
+        this.portalHunter = null;
     }));
 
     @Override
@@ -171,6 +178,21 @@ public final class Search extends Render3DHack {
                 }
             });
         }
+
+        if (this.mergerPortalTracers.getValue()) {
+            this.portalHunter = new PortalHunter();
+
+            if (!this.tracers.getValue().equals(TracerMode.None)) {
+
+                if (this.tracers.getValue().equals(TracerMode.Custom) && this.customTracers.containsBlock(Block.portal.blockID) || this.tracers.getValue().equals(TracerMode.Portal) || this.tracers.getValue().equals(TracerMode.All)) {
+                    this.blockCoords.forEach(blockCoords1 -> {
+                        if (blockCoords1.block.blockID == Block.portal.blockID) {
+                            this.portalHunter.addPortalCoords(blockCoords1);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     @Override
@@ -188,20 +210,32 @@ public final class Search extends Render3DHack {
                         }
                     });
                     break;
+
+                case Portal:
+                    if (this.mergerPortalTracers.getValue()) {
+                        this.blockCoords.forEach(blockCoords1 -> {
+                            if (blockCoords1.isInFrustrum()) {
+                                this.renderForBlock(blockCoords1, false);
+                            }
+                        });
+
+                    } else {
+                        this.blockCoords.forEach(blockCoords1 -> {
+                            if (blockCoords1.block.blockID == Block.portal.blockID) {
+                                this.hasTracers = true;
+                                this.renderForBlock(blockCoords1, true);
+                            } else if (blockCoords1.isInFrustrum()) {
+                                this.renderForBlock(blockCoords1, false);
+                            }
+                        });
+                    }
+                    break;
+
                 case All:
                     this.hasTracers = true;
                     this.blockCoords.forEach(blockCoords1 -> this.renderForBlock(blockCoords1, true));
                     break;
-                case Portal:
-                    this.blockCoords.forEach(blockCoords1 -> {
-                        if (blockCoords1.block.blockID == Block.portal.blockID) {
-                            this.hasTracers = true;
-                            this.renderForBlock(blockCoords1, true);
-                        } else if (blockCoords1.isInFrustrum()) {
-                            this.renderForBlock(blockCoords1, false);
-                        }
-                    });
-                    break;
+
                 case Custom:
                     this.blockCoords.forEach(blockCoords1 -> {
                         if (this.customTracers.containsBlock(blockCoords1.block.blockID)) {
@@ -215,6 +249,11 @@ public final class Search extends Render3DHack {
 
         } else {
             this.blockCoords.forEach(blockCoords1 -> this.renderForBlock(blockCoords1, false));
+        }
+
+        if (this.mergerPortalTracers.getValue() && !this.tracers.getValue().equals(TracerMode.None) && this.portalHunter != null && !this.portalHunter.isEmpty()) {
+            this.hasTracers = true;
+            this.portalHunter.renderAll(this.portalColor.getValueRainbow(), this.tracerAlpha.getValue(), this.tracerWidth.getValue());
         }
     }
 
@@ -401,8 +440,7 @@ public final class Search extends Render3DHack {
             color = this.portalColor.getValueRainbow();
         }
 
-        if (!this.tracers.getValue().equals(TracerMode.None)) {
-
+        if (!this.tracers.getValue().equals(TracerMode.None) && (!this.mergerPortalTracers.getValue() || blockCoords.block.blockID != Block.portal.blockID)) {
             if (this.tracers.getValue().equals(TracerMode.Custom) && this.customTracers.containsBlock(blockCoords.block)) {
                 this.drawTracer(rx + (dx / 2), ry + (dy / 2), rz + (dz / 2), this.tracerWidth.getValue(), color, this.tracerAlpha.getValue());
             } else if (this.tracers.getValue().equals(TracerMode.All)) {
@@ -484,6 +522,7 @@ public final class Search extends Render3DHack {
     public void resetSearch() {
         this.blockCoords.clear();
         this.hasTracers = false;
+        this.portalHunter = null;
         this.resetWorld();
     }
 
