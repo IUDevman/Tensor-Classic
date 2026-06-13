@@ -16,6 +16,7 @@ import dev.tensor.misc.imp.setting.settings.*;
 import net.minecraft.src.*;
 
 import java.awt.*;
+import java.util.Comparator;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -185,11 +186,7 @@ public final class Search extends Render3DHack {
             if (!this.tracers.getValue().equals(TracerMode.None)) {
 
                 if (this.tracers.getValue().equals(TracerMode.Custom) && this.customTracers.containsBlock(Block.portal.blockID) || this.tracers.getValue().equals(TracerMode.Portal) || this.tracers.getValue().equals(TracerMode.All)) {
-                    this.blockCoords.forEach(blockCoords1 -> {
-                        if (blockCoords1.block.blockID == Block.portal.blockID) {
-                            this.portalHunter.addPortalCoords(blockCoords1);
-                        }
-                    });
+                    this.blockCoords.stream().filter(blockCoords1 -> blockCoords1.block.blockID == Block.portal.blockID).sorted(Comparator.comparing(blockCoords1 -> ((BlockCoords) blockCoords1).x).thenComparing(blockCoords1 -> ((BlockCoords) blockCoords1).y).thenComparing(blockCoords1 -> ((BlockCoords) blockCoords1).z)).forEach(blockCoords1 -> this.portalHunter.addPortalCoords(blockCoords1));
                 }
             }
         }
