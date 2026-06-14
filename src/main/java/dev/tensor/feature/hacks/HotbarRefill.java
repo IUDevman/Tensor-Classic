@@ -26,7 +26,9 @@ public final class HotbarRefill extends Hack {
     private final Item[] itemsCache = new Item[9];
 
     private boolean needsUpdate = false;
-
+    
+    private int tickTime = 0;
+    
     @Override
     public void onEnable(boolean isNull) {
         if (isNull) {
@@ -37,9 +39,7 @@ public final class HotbarRefill extends Hack {
         this.resetItemCache();
         this.needsUpdate = false;
     }
-
-    private int tickTime = 0;
-
+    
     @Override
     public void onClientTick() {
         if (this.screenStop.getValue() && this.getMinecraft().currentScreen != null) {
