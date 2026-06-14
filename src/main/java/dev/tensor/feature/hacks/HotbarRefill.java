@@ -5,6 +5,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
+import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet102WindowClick;
@@ -20,6 +21,7 @@ import java.util.HashMap;
 public final class HotbarRefill extends Hack {
 
     public final BooleanSetting screenStop = new BooleanSetting("Stop In Screens", true);
+    public final IntegerSetting refreshTime = new IntegerSetting("Refresh Time", 10, 0, 20);
 
     private final Item[] itemsCache = new Item[9];
 
@@ -35,6 +37,8 @@ public final class HotbarRefill extends Hack {
         this.resetItemCache();
         this.needsUpdate = false;
     }
+
+    private int tickTime = 0;
 
     @Override
     public void onClientTick() {
@@ -68,6 +72,8 @@ public final class HotbarRefill extends Hack {
         }
 
         if (!toUpdate.isEmpty()) {
+            this.tickTime = 0;
+
             toUpdate.forEach((integer, item) -> {
 
                 for (int i = 35; i > 8; i--) {
@@ -92,6 +98,12 @@ public final class HotbarRefill extends Hack {
                     }
                 }
             });
+        } else {
+            if (this.tickTime >= this.refreshTime.getValue()) {
+                this.resetItemCache();
+            } else {
+                this.tickTime++;
+            }
         }
     }
 
@@ -99,6 +111,8 @@ public final class HotbarRefill extends Hack {
     EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.resetItemCache()));
 
     private void resetItemCache() {
+        this.tickTime = 0;
+
         for (int i = 0; i < 9; i++) {
             ItemStack currentStack = this.getInventory().mainInventory[i];
 
