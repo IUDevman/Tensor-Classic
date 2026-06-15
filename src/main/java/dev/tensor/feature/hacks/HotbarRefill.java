@@ -76,7 +76,7 @@ public final class HotbarRefill extends Hack {
 
             toUpdate.forEach((integer, item) -> {
 
-                for (int i = 35; i > 8; i--) {
+                for (int i = 9; i < 36; i++) {
                     ItemStack hotbarStack = this.getInventory().mainInventory[integer];
 
                     if (hotbarStack != null) {

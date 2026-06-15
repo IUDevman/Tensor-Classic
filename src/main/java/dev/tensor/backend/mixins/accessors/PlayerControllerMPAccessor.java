@@ -18,4 +18,7 @@ public interface PlayerControllerMPAccessor {
 
     @Accessor(value = "blockHitDelay")
     void tensor_setBlockHitDelay(int blockHitDelay);
+
+    @Accessor(value = "curBlockDamageMP")
+    float tensor_getCurBlockDamageMP();
 }

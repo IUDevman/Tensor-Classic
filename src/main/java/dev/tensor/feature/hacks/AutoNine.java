@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.backend.events.variable.BlockBreakEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
+import dev.tensor.backend.mixins.accessors.PlayerControllerMPAccessor;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.helpers.block.BlockList;
@@ -29,6 +30,7 @@ import net.minecraft.src.*;
 public final class AutoNine extends Hack {
 
     public final BooleanSetting warning = new BooleanSetting("Warning Message", true);
+    public final BooleanSetting doubleCheck = new BooleanSetting("Double Check", true);
     public final BooleanSetting swapBack = new BooleanSetting("Swap Hand Back", false);
     public final BooleanSetting swap = new BooleanSetting("Swap Items To 9", true);
 
@@ -72,6 +74,59 @@ public final class AutoNine extends Hack {
 
             this.getInventory().currentItem = this.prevItem;
             this.prevItem = -1;
+        }
+
+        //The following is kinda a hacky method but this fixes a glitch where the right tool will not
+        //be selected if breaking really fast.
+        //I think this is due to packets being out of order (???) or not sending a packet with status 2.
+        //Essentially this glitch only really happens when breaking lots of blocks that need different tools.
+        //You can test this by breaking a pillar of alternating dirt and cobblestone with fast tools and speedmine(s).
+        if (!this.swap.getValue() || this.swap.getValue() && !this.doubleCheck.getValue()) {
+            return;
+        }
+
+        if (this.getInventory().currentItem != 9) {
+            return;
+        }
+
+        MovingObjectPosition position = this.getMinecraft().objectMouseOver;
+
+        if (position == null) {
+            return;
+        }
+
+        if (position.typeOfHit != EnumMovingObjectType.TILE) {
+            return;
+        }
+
+        int blockID = this.getWorld().getBlockId(position.blockX, position.blockY, position.blockZ);
+
+        if (this.badBlockID(blockID)) {
+            return;
+        }
+
+        Block block = Block.blocksList[blockID];
+
+        if (block == null) {
+            return;
+        }
+
+        if (this.BLOCKED_BLOCKS.containsBlock(block)) {
+            return;
+        }
+
+        if (this.INSTANT_BLOCKS.containsBlock(block)) {
+            return;
+        }
+
+        PlayerController playerController = this.getMinecraft().playerController;
+
+        if (playerController instanceof PlayerControllerMP) {
+            PlayerControllerMP playerControllerMP = (PlayerControllerMP) playerController;
+
+            if (((PlayerControllerMPAccessor) playerControllerMP).tensor_getCurBlockDamageMP() > 0F) {
+                this.swapAndFindBestBlock(block, blockID);
+            }
         }
     }
 
@@ -126,16 +181,8 @@ public final class AutoNine extends Hack {
 
         int blockId = this.getWorld().getBlockId(packet.xPosition, packet.yPosition, packet.zPosition);
 
-        if (blockId == 0) {
+        if (this.badBlockID(blockId)) {
             return;
-        }
-
-        if (blockId == Block.tnt.blockID) {
-            ItemStack currentItem = this.getInventory().getCurrentItem();
-
-            if (currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel) {
-                return;
-            }
         }
 
         Block block = Block.blocksList[blockId];
@@ -156,6 +203,22 @@ public final class AutoNine extends Hack {
 
         this.swapAndFindBestBlock(block, blockId);
     }));
+
+    private boolean badBlockID(int blockID) {
+        if (blockID == 0) {
+            return true;
+        }
+
+        if (blockID == Block.tnt.blockID) {
+            ItemStack currentItem = this.getInventory().getCurrentItem();
+
+            if (currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public void swapAndFindBestBlock(Block block, int blockId) {
         int swapSlot = 9;
