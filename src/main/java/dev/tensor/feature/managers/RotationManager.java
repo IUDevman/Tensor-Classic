@@ -55,6 +55,10 @@ public final class RotationManager implements Manager {
         switch (this.rotationMode) {
             case None:
                 break;
+            case Client:
+                this.getPlayer().rotationPitch = rotation.pitch;
+                this.getPlayer().rotationYaw = rotation.yaw;
+                break;
             case Intercept:
                 this.rotationQueue.put(priority, rotation);
                 break;
@@ -90,6 +94,7 @@ public final class RotationManager implements Manager {
     public enum Mode {
         None,
         Intercept,
-        Packet
+        Packet,
+        Client
     }
 }

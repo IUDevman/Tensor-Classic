@@ -54,11 +54,15 @@ public final class Rotations extends Hack {
             case Intercept:
                 this.getRotationManager().setRotationMode(RotationManager.Mode.Intercept);
                 break;
+            case Client:
+                this.getRotationManager().setRotationMode(RotationManager.Mode.Client);
+                break;
         }
     }
 
     public enum Mode {
         Packet,
-        Intercept
+        Intercept,
+        Client
     }
 }
