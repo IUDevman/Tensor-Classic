@@ -137,6 +137,7 @@ public final class HackManager implements Manager {
         this.addHack(new Suffix());
         this.addHack(new TabGUI());
         this.addHack(new TCPNoDelay());
+        this.addHack(new TextRadar());
         this.addHack(new Time());
         this.addHack(new Timer());
         this.addHack(new TimerMine());

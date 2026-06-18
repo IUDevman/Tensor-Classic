@@ -5,6 +5,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
+import dev.tensor.misc.imp.hack.render.RenderOrder;
 import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -14,6 +15,11 @@ import java.awt.*;
 
 @Hack.Info(name = "GhastWarning", category = Category.HUD)
 public final class GhastWarning extends Hack implements HUDObject {
+
+    @Override
+    public RenderOrder getRenderOrder() {
+        return RenderOrder.HUD_Text;
+    }
 
     public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
