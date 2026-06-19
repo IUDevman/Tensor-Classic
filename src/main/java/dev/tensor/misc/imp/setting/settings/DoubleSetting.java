@@ -5,14 +5,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.NumberSetting;
-import dev.tensor.misc.imp.setting.Setting;
 
 /**
  * @author Hoosiers
  * @since 03-18-2026
  */
 
-public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
+public class DoubleSetting implements NumberSetting<Double> {
 
     private final String NAME;
     private final int DECIMAL;
@@ -32,7 +31,6 @@ public class DoubleSetting implements Setting<Double>, NumberSetting<Double> {
 
         this.DEFAULT_VALUE = this.VALUE;
     }
-
 
     @Override
     public String getName() {

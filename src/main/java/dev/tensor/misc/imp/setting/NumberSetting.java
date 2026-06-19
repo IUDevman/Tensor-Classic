@@ -5,7 +5,7 @@ package dev.tensor.misc.imp.setting;
  * @since 03-18-2026
  */
 
-public interface NumberSetting<T> {
+public interface NumberSetting<T> extends Setting<T> {
 
     T getMin();
 

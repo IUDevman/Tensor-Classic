@@ -5,14 +5,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.setting.NumberSetting;
-import dev.tensor.misc.imp.setting.Setting;
 
 /**
  * @author Hoosiers
  * @since 03-18-2026
  */
 
-public class IntegerSetting implements Setting<Integer>, NumberSetting<Integer> {
+public class IntegerSetting implements NumberSetting<Integer> {
 
     private final String NAME;
     private final int MIN_VALUE;
