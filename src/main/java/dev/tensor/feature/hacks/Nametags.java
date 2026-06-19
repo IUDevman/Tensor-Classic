@@ -39,6 +39,7 @@ public final class Nametags extends Render3DHack {
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting darkenSneak = new BooleanSetting("Darken Sneak", false);
     public final BooleanSetting showHealth = new BooleanSetting("Show Health", false);
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true);
     public final BooleanSetting showItems = new BooleanSetting("Show Items", true);
     public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
     public final BooleanSetting background = new BooleanSetting("Background", false);
@@ -67,13 +68,29 @@ public final class Nametags extends Render3DHack {
 
     @Override
     public void onRender3D(float renderPartialTicks) {
-        this.playersToRender.forEach(entityPlayer -> this.renderNameTagForPlayer(entityPlayer, renderPartialTicks));
+        double x = this.getPlayer().posX;
+        double y = this.getPlayer().posY;
+        double z = this.getPlayer().posZ;
+
+        if (this.showDistance.getValue()) {
+            HephFreecam freecam = this.getHackManager().getHack(HephFreecam.class);
+
+            if (freecam != null && freecam.isEnabled()) {
+                x = freecam.oldX;
+                y = freecam.oldY;
+                z = freecam.oldZ;
+            }
+        }
+
+        final double[] distance = new double[]{x, y, z};
+
+        this.playersToRender.forEach(entityPlayer -> this.renderNameTagForPlayer(entityPlayer, renderPartialTicks, distance));
     }
 
     @SuppressWarnings("unused")
     EventAction<NameTagEvent> nameTagEventAction = this.addEventAction(new EventAction<>(NameTagEvent.class, EventConstantCancellable::cancel));
 
-    private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks) {
+    private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks, double[] playerCoords) {
         String username = entity.username;
 
         Color textColor = this.friends.getValue() && this.getFriendManager().isFriend(username) ? this.friendColor.getValueRainbow() : username.equalsIgnoreCase(this.getPlayer().username) ? this.friendColor.getValueRainbow() : this.textColor.getValueRainbow();
@@ -81,6 +98,13 @@ public final class Nametags extends Render3DHack {
 
         String health = "";
         String healthPost = "";
+
+        boolean showDistanceForEntity = this.showDistance.getValue() && !username.equalsIgnoreCase(this.getPlayer().username);
+        int distanceVal = showDistanceForEntity ? this.getDistanceTo(entity, playerCoords) : 0;
+
+        String distancePre = " [";
+        String distance = showDistanceForEntity ? String.valueOf(distanceVal) : "";
+        String distancePost = "]";
 
         Color healthColor = null;
 
@@ -91,7 +115,7 @@ public final class Nametags extends Render3DHack {
             healthColor = this.getHealthColor(entity);
         }
 
-        String combined = username + health + healthPost;
+        String combined = username + health + healthPost + distance + (showDistanceForEntity ? distancePre + distancePost : "");
 
         if (this.darkenSneak.getValue() && entity.isSneaking()) {
             if (textColor == Color.BLACK) {
@@ -139,9 +163,30 @@ public final class Nametags extends Render3DHack {
 
         this.drawString(username, -this.getFontRenderer().getStringWidth(combined) / 2, 0, textColor.getRGB());
 
+        int healthStartX = -(this.getFontRenderer().getStringWidth(combined) / 2) + this.getFontRenderer().getStringWidth(username);
+        int healthEndX = 0;
+
         if (this.showHealth.getValue() && healthColor != null) {
-            this.drawString(health, -(this.getFontRenderer().getStringWidth(combined) / 2) + this.getFontRenderer().getStringWidth(username), 0, healthColor.getRGB());
-            this.drawString(healthPost, -(this.getFontRenderer().getStringWidth(combined) / 2) + this.getFontRenderer().getStringWidth(username) + this.getFontRenderer().getStringWidth(health), 0, textColor.getRGB());
+            healthEndX = this.getFontRenderer().getStringWidth(health);
+
+            this.drawString(health, healthStartX, 0, healthColor.getRGB());
+            this.drawString(healthPost, healthStartX + healthEndX, 0, textColor.getRGB());
+
+            healthEndX += this.getFontRenderer().getStringWidth(healthPost);
+        }
+
+        if (showDistanceForEntity) {
+            int distanceStart = healthStartX + healthEndX;
+
+            this.drawString(distancePre, distanceStart, 0, textColor.getRGB());
+
+            distanceStart += this.getFontRenderer().getStringWidth(distancePre);
+
+            this.drawString(distance, distanceStart, 0, this.getDistanceColor(distanceVal).getRGB());
+
+            distanceStart += this.getFontRenderer().getStringWidth(distance);
+
+            this.drawString(distancePost, distanceStart, 0, textColor.getRGB());
         }
 
         if (this.showItems.getValue()) {
@@ -204,6 +249,10 @@ public final class Nametags extends Render3DHack {
                 this.renderItemPercentage3D(itemStack, startX + offsetX, startY, 0.6 * scale);
                 break;
         }
+    }
+
+    private int getDistanceTo(EntityPlayer entity, double[] playerCoords) {
+        return (int) this.getDistance(entity.posX - playerCoords[0], entity.posY - playerCoords[1], entity.posZ - playerCoords[2]);
     }
 
     private Color getHealthColor(EntityPlayer entity) {

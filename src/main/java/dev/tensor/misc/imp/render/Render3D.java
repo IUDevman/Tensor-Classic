@@ -265,6 +265,22 @@ public interface Render3D extends Render2D {
         RenderTask.RENDER_TASK.loadStrip(strip);
     }
 
+    default Color getDistanceColor(int distance) {
+        int maxDistance = 64;
+
+        if (distance > maxDistance) {
+            distance = maxDistance;
+
+        } else if (distance < 0) {
+            distance = 0;
+        }
+
+        int dColor = Math.round(255.0F - (maxDistance - distance) * 255.0F / maxDistance);
+        int color = 255 - dColor << 16 | dColor << 8;
+
+        return new Color(color >> 16 & 255, color >> 8 & 255, color & 255);
+    }
+
     default void renderItem3D(ItemStack itemStack, int startX, int startY, double scale) {
         int itemID = itemStack.itemID;
         int itemIcon = itemStack.getIconIndex();
