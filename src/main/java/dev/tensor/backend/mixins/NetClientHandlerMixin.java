@@ -72,11 +72,11 @@ public abstract class NetClientHandlerMixin implements Globals {
         if (packetToSend instanceof Packet14BlockDig) {
             Packet14BlockDig packet = (Packet14BlockDig) packetToSend;
 
-            if (!this.shouldCallEvent(BlockBreakEvent.class)) {
+            if (!this.shouldCallEvent(BlockBreakPacketEvent.class)) {
                 return;
             }
 
-            EventCache.getCachedEvent(BlockBreakEvent.class).withVariables(packet).call(true, event -> {
+            EventCache.getCachedEvent(BlockBreakPacketEvent.class).withVariables(packet).call(true, event -> {
 
                 if (event.isCancelled()) {
                     ci.cancel();

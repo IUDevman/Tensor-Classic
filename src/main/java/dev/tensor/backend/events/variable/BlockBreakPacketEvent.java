@@ -8,12 +8,12 @@ import net.minecraft.src.Packet14BlockDig;
  * @since 03-25-2026
  */
 
-public final class BlockBreakEvent extends EventVariableCancellable<BlockBreakEvent> {
+public final class BlockBreakPacketEvent extends EventVariableCancellable<BlockBreakPacketEvent> {
 
     public Packet14BlockDig packet;
 
     @Override
-    public BlockBreakEvent withVariables(Object... variables) {
+    public BlockBreakPacketEvent withVariables(Object... variables) {
         this.packet = (Packet14BlockDig) variables[0];
 
         return super.withVariables(variables);

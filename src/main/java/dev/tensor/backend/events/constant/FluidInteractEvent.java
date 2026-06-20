@@ -7,5 +7,5 @@ import dev.tensor.misc.event.imp.modifiers.cancellable.EventConstantCancellable;
  * @since 04-05-2026
  */
 
-public final class FluidBlockEvent extends EventConstantCancellable<FluidBlockEvent> {
+public final class FluidInteractEvent extends EventConstantCancellable<FluidInteractEvent> {
 }

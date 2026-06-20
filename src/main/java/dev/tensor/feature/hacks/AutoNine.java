@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.variable.AttackEntityEvent;
-import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.events.variable.BlockBreakPacketEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.backend.mixins.accessors.PlayerControllerMPAccessor;
 import dev.tensor.misc.event.EventAction;
@@ -171,7 +171,7 @@ public final class AutoNine extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, event -> {
+    EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         Packet14BlockDig packet = event.packet;
 
         if (packet.status == 2) {

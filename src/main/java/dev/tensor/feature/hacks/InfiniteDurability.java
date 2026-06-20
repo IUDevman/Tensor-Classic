@@ -1,6 +1,6 @@
 package dev.tensor.feature.hacks;
 
-import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.events.variable.BlockBreakPacketEvent;
 import dev.tensor.backend.events.variable.Packet7UseEntityEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventAction;
@@ -76,7 +76,7 @@ public final class InfiniteDurability extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, EventPriority.Lowest, event -> {
+    EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, EventPriority.Lowest, event -> {
         int blockId = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
 
         if (blockId == 0 || this.BLOCKED_BLOCKS.containsBlock(blockId)) {

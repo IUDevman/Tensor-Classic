@@ -2,7 +2,7 @@ package dev.tensor.backend.mixins;
 
 import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
-import dev.tensor.backend.events.constant.FluidBlockEvent;
+import dev.tensor.backend.events.constant.FluidInteractEvent;
 import dev.tensor.backend.events.variable.FluidCollisionEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.AxisAlignedBB;
@@ -45,11 +45,11 @@ public final class BlockFluidMixin implements Globals {
             return;
         }
 
-        if (!this.shouldCallEvent(FluidBlockEvent.class)) {
+        if (!this.shouldCallEvent(FluidInteractEvent.class)) {
             return;
         }
 
-        EventCache.getCachedEvent(FluidBlockEvent.class).call(true, event -> {
+        EventCache.getCachedEvent(FluidInteractEvent.class).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(true);

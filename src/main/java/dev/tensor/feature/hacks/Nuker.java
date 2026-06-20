@@ -1,7 +1,7 @@
 package dev.tensor.feature.hacks;
 
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
-import dev.tensor.backend.events.variable.BlockBreakEvent;
+import dev.tensor.backend.events.variable.BlockBreakPacketEvent;
 import dev.tensor.backend.mixins.accessors.ItemToolAccessor;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.block.BlockCoords;
@@ -302,7 +302,7 @@ public final class Nuker extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<BlockBreakEvent> blockBreakEventAction = this.addEventAction(new EventAction<>(BlockBreakEvent.class, event -> {
+    EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         if (!this.target.getValue().equals(Target.Click)) {
             return;
         }
