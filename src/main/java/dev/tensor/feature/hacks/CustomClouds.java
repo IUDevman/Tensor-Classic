@@ -23,7 +23,7 @@ public final class CustomClouds extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
-        if (!event.type.equals(RenderSkyEvent.Type.Clouds)) {
+        if (!event.type.equals(RenderSkyEvent.Type.CLOUDS)) {
             return;
         }
 

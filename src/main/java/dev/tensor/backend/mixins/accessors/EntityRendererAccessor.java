@@ -17,5 +17,5 @@ public interface EntityRendererAccessor {
     float tensor_getCameraDistance();
 
     @Accessor(value = "field_22228_r")
-    void tensor_setCameraDistance(float distance);
+    void tensor_setCameraDistance(float cameraDistance);
 }

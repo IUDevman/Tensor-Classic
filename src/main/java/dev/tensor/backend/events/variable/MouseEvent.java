@@ -14,12 +14,12 @@ public final class MouseEvent extends EventVariable<MouseEvent> {
     public int eventButton;
 
     @Override
-    public MouseEvent withVariables(Object... args) {
-        this.dWheel = (int) args[0];
-        this.eventButtonState = (boolean) args[1];
-        this.eventButton = (int) args[2];
+    public MouseEvent withVariables(Object... variables) {
+        this.dWheel = (int) variables[0];
+        this.eventButtonState = (boolean) variables[1];
+        this.eventButton = (int) variables[2];
 
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

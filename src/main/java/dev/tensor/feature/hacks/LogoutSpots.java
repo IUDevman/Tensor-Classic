@@ -116,7 +116,7 @@ public final class LogoutSpots extends Render3DHack {
 
         String username = otherPlayerMP.username;
 
-        if (event.type.equals(PlayerJoinLeaveWorldEvent.Type.Join)) {
+        if (event.type.equals(PlayerJoinLeaveWorldEvent.Type.JOIN)) {
             if (this.isLoggedPlayer(username)) {
                 this.removeLoggedPlayer(username);
             }
@@ -128,7 +128,7 @@ public final class LogoutSpots extends Render3DHack {
             return;
         }
 
-        if (event.type.equals(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave)) {
+        if (event.type.equals(PlayerJoinLeaveWorldEvent.Type.KILL_OR_LEAVE)) {
             if (otherPlayerMP.isDead || otherPlayerMP.health <= 0) {
                 return;
             }

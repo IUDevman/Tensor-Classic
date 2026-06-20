@@ -169,14 +169,14 @@ public final class HephFreecam extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
-        if (event.type.equals(RenderOverlayEvent.Type.blocks) || event.type.equals(RenderOverlayEvent.Type.water)) {
+        if (event.type.equals(RenderOverlayEvent.Type.BLOCK) || event.type.equals(RenderOverlayEvent.Type.WATER)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
     EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
-        if (event.type.equals(VelocityEvent.Type.Block) || event.type.equals(VelocityEvent.Type.Fluid)) {
+        if (event.type.equals(VelocityEvent.Type.BLOCK) || event.type.equals(VelocityEvent.Type.FLUID)) {
             event.cancel();
         }
     }));

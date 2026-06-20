@@ -94,8 +94,8 @@ public final class WaypointRender implements Render3D {
                     break;
             }
 
-            RenderTask.RENDER_TASK.render();
-            RenderTask.RENDER_TASK.clear();
+            RenderTask.getInstance().render();
+            RenderTask.getInstance().clear();
 
             GL11.glDisable(GL11.GL_BLEND);
         }

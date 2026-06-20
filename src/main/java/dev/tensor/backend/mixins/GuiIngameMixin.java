@@ -48,7 +48,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vignette).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.VIGNETTE).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -66,7 +66,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.pumpkin).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.PUMPKIN).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -84,7 +84,7 @@ public abstract class GuiIngameMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.portals).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.PORTAL).call(true, event -> {
             if (event.isCancelled()) {
                 ci.cancel();
             }

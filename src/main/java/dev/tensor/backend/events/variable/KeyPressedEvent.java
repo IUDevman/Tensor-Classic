@@ -12,9 +12,9 @@ public final class KeyPressedEvent extends EventVariable<KeyPressedEvent> {
     public int KEY_CODE;
 
     @Override
-    public KeyPressedEvent withVariables(Object... args) {
-        this.KEY_CODE = (int) args[0];
+    public KeyPressedEvent withVariables(Object... variables) {
+        this.KEY_CODE = (int) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

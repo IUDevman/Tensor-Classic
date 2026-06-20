@@ -138,7 +138,7 @@ public final class Xray extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
-        if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids)) {
+        if (event.type.equals(RenderSkyEvent.Type.FOG_FLUIDS)) {
             event.cancel();
         }
     }));

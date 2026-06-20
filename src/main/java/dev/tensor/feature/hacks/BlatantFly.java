@@ -55,7 +55,7 @@ public final class BlatantFly extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
-        if (event.type.equals(VelocityEvent.Type.Block) || event.type.equals(VelocityEvent.Type.Fluid)) {
+        if (event.type.equals(VelocityEvent.Type.BLOCK) || event.type.equals(VelocityEvent.Type.FLUID)) {
             event.cancel();
         }
     }));

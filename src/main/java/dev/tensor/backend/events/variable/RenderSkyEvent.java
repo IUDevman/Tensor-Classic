@@ -17,13 +17,13 @@ public final class RenderSkyEvent extends EventVariableCancellable<RenderSkyEven
     private boolean updated;
 
     @Override
-    public RenderSkyEvent withVariables(Object... args) {
-        this.type = (Type) args[0];
+    public RenderSkyEvent withVariables(Object... variables) {
+        this.type = (Type) variables[0];
 
         this.newColor = new Color(255, 255, 255, 255);
         this.updated = false;
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 
     public Color getNewColor() {
@@ -40,8 +40,8 @@ public final class RenderSkyEvent extends EventVariableCancellable<RenderSkyEven
     }
 
     public enum Type {
-        Clouds,
-        Fog,
-        Fog_Fluids
+        CLOUDS,
+        FOG_SKY,
+        FOG_FLUIDS
     }
 }

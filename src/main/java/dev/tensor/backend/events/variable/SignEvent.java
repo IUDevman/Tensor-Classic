@@ -13,9 +13,9 @@ public final class SignEvent extends EventVariableCancellable<SignEvent> {
     public TileEntitySign tileEntitySign;
 
     @Override
-    public SignEvent withVariables(Object... args) {
-        this.tileEntitySign = (TileEntitySign) args[0];
+    public SignEvent withVariables(Object... variables) {
+        this.tileEntitySign = (TileEntitySign) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

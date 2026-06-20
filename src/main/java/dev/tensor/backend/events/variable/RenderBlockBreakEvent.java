@@ -13,9 +13,9 @@ public final class RenderBlockBreakEvent extends EventVariableCancellable<Render
     public MovingObjectPosition positionToRender;
 
     @Override
-    public RenderBlockBreakEvent withVariables(Object... args) {
-        this.positionToRender = (MovingObjectPosition) args[0];
+    public RenderBlockBreakEvent withVariables(Object... variables) {
+        this.positionToRender = (MovingObjectPosition) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

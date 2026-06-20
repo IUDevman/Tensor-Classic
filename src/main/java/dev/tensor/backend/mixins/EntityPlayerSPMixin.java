@@ -33,7 +33,7 @@ public abstract class EntityPlayerSPMixin extends Entity implements Globals {
     //Adapted from @author tweska 2023; MIT LICENSE; https://github.com/tweska/BetaFix/blob/master/LICENSE
     @Inject(method = "<init>", at = @At("TAIL"))
     public void betaFix_init(Minecraft minecraft, World world, Session session, int dimension, CallbackInfo ci) {
-        if (session != null && session.username != null && session.username.length() > 0) {
+        if (session != null && session.username != null && !session.username.isEmpty()) {
             this.skinUrl = BetaFix.getSkinURL(session.username);
         }
     }
@@ -48,7 +48,7 @@ public abstract class EntityPlayerSPMixin extends Entity implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Block).call(true, event -> {
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.BLOCK).call(true, event -> {
 
             if (event.isCancelled()) {
                 cir.setReturnValue(false);

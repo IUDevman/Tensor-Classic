@@ -33,7 +33,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.blocks).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.BLOCK).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -51,7 +51,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.fire).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.FIRE).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -69,7 +69,7 @@ public final class ItemRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.water).call(true, event -> {
+        EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.WATER).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();

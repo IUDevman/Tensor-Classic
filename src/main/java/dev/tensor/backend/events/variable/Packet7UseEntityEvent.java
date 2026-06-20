@@ -13,9 +13,9 @@ public final class Packet7UseEntityEvent extends EventVariableCancellable<Packet
     public Packet7UseEntity packet;
 
     @Override
-    public Packet7UseEntityEvent withVariables(Object... args) {
-        this.packet = (Packet7UseEntity) args[0];
+    public Packet7UseEntityEvent withVariables(Object... variables) {
+        this.packet = (Packet7UseEntity) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

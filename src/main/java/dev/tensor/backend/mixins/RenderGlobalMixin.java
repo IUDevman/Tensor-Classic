@@ -44,7 +44,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.CLOUDS).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();
@@ -70,7 +70,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.CLOUDS).call(true, event -> {
 
             if (event.isUpdated()) {
                 Color color = event.getNewColor();
@@ -94,7 +94,7 @@ public final class RenderGlobalMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Clouds).call(true, event -> {
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.CLOUDS).call(true, event -> {
 
             if (event.isUpdated()) {
                 Color color = event.getNewColor();

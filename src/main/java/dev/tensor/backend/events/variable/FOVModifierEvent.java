@@ -12,9 +12,9 @@ public final class FOVModifierEvent extends EventVariableCancellable<FOVModifier
     public float FOV;
 
     @Override
-    public FOVModifierEvent withVariables(Object... args) {
-        this.FOV = (float) args[0];
+    public FOVModifierEvent withVariables(Object... variables) {
+        this.FOV = (float) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

@@ -24,12 +24,12 @@ public final class CustomFog extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
-        if (event.type.equals(RenderSkyEvent.Type.Fog_Fluids) && !this.renderFluidFog.getValue()) {
+        if (event.type.equals(RenderSkyEvent.Type.FOG_FLUIDS) && !this.renderFluidFog.getValue()) {
             event.cancel();
             return;
         }
 
-        if (event.type.equals(RenderSkyEvent.Type.Fog)) {
+        if (event.type.equals(RenderSkyEvent.Type.FOG_SKY)) {
             if (!this.renderSkyFog.getValue()) {
                 event.cancel();
                 return;

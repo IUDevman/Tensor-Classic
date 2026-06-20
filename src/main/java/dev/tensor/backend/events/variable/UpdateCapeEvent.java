@@ -13,10 +13,10 @@ public final class UpdateCapeEvent extends EventVariableCancellable<UpdateCapeEv
     public String playerCloakUrl;
 
     @Override
-    public UpdateCapeEvent withVariables(Object... args) {
-        this.username = (String) args[0];
+    public UpdateCapeEvent withVariables(Object... variables) {
+        this.username = (String) variables[0];
         this.playerCloakUrl = null;
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

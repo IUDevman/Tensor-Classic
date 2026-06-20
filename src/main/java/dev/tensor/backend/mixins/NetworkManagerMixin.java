@@ -70,7 +70,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.Multi, packet).call(false);
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.MULTI, packet).call(false);
             return;
         }
 
@@ -81,7 +81,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.Single, packet).call(false);
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.SINGLE, packet).call(false);
         }
     }
 

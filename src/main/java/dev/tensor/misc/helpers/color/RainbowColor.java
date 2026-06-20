@@ -9,6 +9,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RainbowColor {
 
+    private RainbowColor() {
+
+    }
+
     public static AtomicInteger[] getRainbow() {
         if (FIRST_RUN) {
             FIRST_RUN = false;

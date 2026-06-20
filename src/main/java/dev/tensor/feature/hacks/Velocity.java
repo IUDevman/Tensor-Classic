@@ -28,22 +28,22 @@ public final class Velocity extends Hack {
             return;
         }
 
-        if (this.block.getValue() && event.type.equals(VelocityEvent.Type.Block)) {
+        if (this.block.getValue() && event.type.equals(VelocityEvent.Type.BLOCK)) {
             event.cancel();
             return;
         }
 
-        if (this.entity.getValue() && event.type.equals(VelocityEvent.Type.Entity)) {
+        if (this.entity.getValue() && event.type.equals(VelocityEvent.Type.ENTITY)) {
             event.cancel();
             return;
         }
 
-        if (this.fluid.getValue() && event.type.equals(VelocityEvent.Type.Fluid)) {
+        if (this.fluid.getValue() && event.type.equals(VelocityEvent.Type.FLUID)) {
             event.cancel();
             return;
         }
 
-        if (this.soulSand.getValue() && event.type.equals(VelocityEvent.Type.SoulSand)) {
+        if (this.soulSand.getValue() && event.type.equals(VelocityEvent.Type.SOUL_SAND)) {
             event.cancel();
         }
     }));

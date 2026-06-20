@@ -112,7 +112,7 @@ public final class NewChunks extends Render3DHack {
     @SuppressWarnings("unused")
     EventAction<ChunkChangeEvent> chunkChangeEventAction = this.addEventAction(new EventAction<>(ChunkChangeEvent.class, event -> {
 
-        if (event.type.equals(ChunkChangeEvent.Type.Single)) {
+        if (event.type.equals(ChunkChangeEvent.Type.SINGLE)) {
             Packet53BlockChange packet = event.packet53BlockChange;
 
             int type = packet.type;

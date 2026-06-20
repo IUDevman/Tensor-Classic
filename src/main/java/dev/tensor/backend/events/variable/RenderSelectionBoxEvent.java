@@ -13,9 +13,9 @@ public final class RenderSelectionBoxEvent extends EventVariableCancellable<Rend
     public MovingObjectPosition positionToRender;
 
     @Override
-    public RenderSelectionBoxEvent withVariables(Object... args) {
-        this.positionToRender = (MovingObjectPosition) args[0];
+    public RenderSelectionBoxEvent withVariables(Object... variables) {
+        this.positionToRender = (MovingObjectPosition) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

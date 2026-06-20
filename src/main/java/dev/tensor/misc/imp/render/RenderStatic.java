@@ -12,6 +12,10 @@ import net.minecraft.src.RenderItem;
 
 public final class RenderStatic {
 
+    private RenderStatic() {
+
+    }
+
     public static final int SLUG_TEXTURE_ID = 69001;
     public static final int BACKGROUND_TEXTURE_1_ID = 69002;
     public static final int BACKGROUND_TEXTURE_2_ID = 69003;

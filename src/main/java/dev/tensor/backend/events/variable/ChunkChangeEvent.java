@@ -20,7 +20,7 @@ public final class ChunkChangeEvent extends EventVariable<ChunkChangeEvent> {
     public ChunkChangeEvent withVariables(Object... variables) {
         this.type = (Type) variables[0];
 
-        if (this.type.equals(Type.Single)) {
+        if (this.type.equals(Type.SINGLE)) {
             this.packet53BlockChange = (Packet53BlockChange) variables[1];
             this.packet52MultiBlockChange = null;
 
@@ -33,7 +33,7 @@ public final class ChunkChangeEvent extends EventVariable<ChunkChangeEvent> {
     }
 
     public enum Type {
-        Single,
-        Multi
+        SINGLE,
+        MULTI
     }
 }

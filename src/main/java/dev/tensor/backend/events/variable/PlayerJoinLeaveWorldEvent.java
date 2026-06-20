@@ -14,15 +14,15 @@ public final class PlayerJoinLeaveWorldEvent extends EventVariableCancellable<Pl
     public EntityOtherPlayerMP otherPlayerMP;
 
     @Override
-    public PlayerJoinLeaveWorldEvent withVariables(Object... args) {
-        this.type = (Type) args[0];
-        this.otherPlayerMP = (EntityOtherPlayerMP) args[1];
+    public PlayerJoinLeaveWorldEvent withVariables(Object... variables) {
+        this.type = (Type) variables[0];
+        this.otherPlayerMP = (EntityOtherPlayerMP) variables[1];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 
     public enum Type {
-        Join,
-        Kill_or_Leave
+        JOIN,
+        KILL_OR_LEAVE
     }
 }

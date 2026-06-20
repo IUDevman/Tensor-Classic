@@ -13,9 +13,9 @@ public final class AttackEntityEvent extends EventVariable<AttackEntityEvent> {
     public Entity entityHit;
 
     @Override
-    public AttackEntityEvent withVariables(Object... args) {
-        this.entityHit = (Entity) args[0];
+    public AttackEntityEvent withVariables(Object... variables) {
+        this.entityHit = (Entity) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

@@ -12,9 +12,9 @@ public final class UpdateClientPlayerActionEvent extends EventVariableCancellabl
     public boolean shouldUpdateInventory = false;
 
     @Override
-    public UpdateClientPlayerActionEvent withVariables(Object... args) {
-        this.shouldUpdateInventory = (boolean) args[0];
+    public UpdateClientPlayerActionEvent withVariables(Object... variables) {
+        this.shouldUpdateInventory = (boolean) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

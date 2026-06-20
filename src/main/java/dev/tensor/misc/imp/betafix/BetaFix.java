@@ -18,6 +18,10 @@ import java.util.HashMap;
 
 public final class BetaFix {
 
+    private BetaFix() {
+
+    }
+
     private static final HashMap<String, BetaFixPlayer> players = new HashMap<>();
 
     public static String getSkinURL(String username) {

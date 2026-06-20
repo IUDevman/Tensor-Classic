@@ -106,7 +106,7 @@ public abstract class EntityRendererMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog).call(true, event -> {
+        EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.FOG_SKY).call(true, event -> {
 
             if (event.isCancelled()) {
                 GL11.glFogi(GL11.GL_FOG_END, GL11.GL_LINEAR);
@@ -130,7 +130,7 @@ public abstract class EntityRendererMixin implements Globals {
             return entityLiving.isInsideOfMaterial(material);
         }
 
-        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.Fog_Fluids).call(true);
+        RenderSkyEvent event = EventCache.getCachedEvent(RenderSkyEvent.class).withVariables(RenderSkyEvent.Type.FOG_FLUIDS).call(true);
 
         if (event.isCancelled()) {
             return false;
@@ -150,7 +150,7 @@ public abstract class EntityRendererMixin implements Globals {
             return entityPlayerSP.prevTimeInPortal;
         }
 
-        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.vomit).call(true);
+        RenderOverlayEvent event = EventCache.getCachedEvent(RenderOverlayEvent.class).withVariables(RenderOverlayEvent.Type.VOMIT).call(true);
 
         if (event.isCancelled()) {
             return -100;

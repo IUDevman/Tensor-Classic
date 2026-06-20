@@ -14,7 +14,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class RenderTask {
 
-    public static RenderTask RENDER_TASK = null;
+    private static RenderTask RENDER_TASK = new RenderTask();
+
+    public static RenderTask getInstance() {
+        if (RENDER_TASK == null) {
+            RENDER_TASK = new RenderTask();
+        }
+
+        return RENDER_TASK;
+    }
+
+    private RenderTask() {
+
+    }
 
     private final ArrayList<BasicRenderContext> strips = new ArrayList<>();
     private final ArrayList<BasicRenderContext> lines = new ArrayList<>();

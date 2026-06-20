@@ -7,5 +7,9 @@ package dev.tensor.backend;
 
 public final class MixinPriority {
 
+    private MixinPriority() {
+
+    }
+
     public static final int VALUE = Integer.MAX_VALUE;
 }

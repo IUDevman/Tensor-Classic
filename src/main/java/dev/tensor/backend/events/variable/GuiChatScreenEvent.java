@@ -16,14 +16,13 @@ public final class GuiChatScreenEvent extends EventVariable<GuiChatScreenEvent> 
     public int maxY;
 
     @Override
-    public GuiChatScreenEvent withVariables(Object... args) {
-        this.message = (String) args[0];
-        this.minX = (int) args[1];
-        this.maxX = (int) args[2];
-        this.minY = (int) args[3];
-        this.maxY = (int) args[4];
+    public GuiChatScreenEvent withVariables(Object... variables) {
+        this.message = (String) variables[0];
+        this.minX = (int) variables[1];
+        this.maxX = (int) variables[2];
+        this.minY = (int) variables[3];
+        this.maxY = (int) variables[4];
 
-
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

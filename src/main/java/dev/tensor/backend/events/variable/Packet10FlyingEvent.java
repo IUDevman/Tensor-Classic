@@ -13,9 +13,9 @@ public final class Packet10FlyingEvent extends EventVariableCancellable<Packet10
     public Packet10Flying packet;
 
     @Override
-    public Packet10FlyingEvent withVariables(Object... args) {
-        this.packet = (Packet10Flying) args[0];
+    public Packet10FlyingEvent withVariables(Object... variables) {
+        this.packet = (Packet10Flying) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

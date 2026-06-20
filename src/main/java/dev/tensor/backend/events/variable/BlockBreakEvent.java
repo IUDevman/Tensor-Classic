@@ -13,9 +13,9 @@ public final class BlockBreakEvent extends EventVariableCancellable<BlockBreakEv
     public Packet14BlockDig packet;
 
     @Override
-    public BlockBreakEvent withVariables(Object... args) {
-        this.packet = (Packet14BlockDig) args[0];
+    public BlockBreakEvent withVariables(Object... variables) {
+        this.packet = (Packet14BlockDig) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

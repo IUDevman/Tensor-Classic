@@ -16,12 +16,12 @@ public final class RenderBlockEvent extends EventVariable<RenderBlockEvent> {
     public int z;
 
     @Override
-    public RenderBlockEvent withVariables(Object... args) {
-        this.block = (Block) args[0];
-        this.x = (int) args[1];
-        this.y = (int) args[2];
-        this.z = (int) args[3];
+    public RenderBlockEvent withVariables(Object... variables) {
+        this.block = (Block) variables[0];
+        this.x = (int) variables[1];
+        this.y = (int) variables[2];
+        this.z = (int) variables[3];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

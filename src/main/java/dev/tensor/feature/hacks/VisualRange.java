@@ -65,7 +65,7 @@ public final class VisualRange extends Hack {
         BoxPos boxPos = new BoxPos((int) event.otherPlayerMP.posX, (int) event.otherPlayerMP.posY, (int) event.otherPlayerMP.posZ);
 
         switch (event.type) {
-            case Join:
+            case JOIN:
                 if (!this.loadedEntityNames.contains(name)) {
                     this.loadedEntityNames.add(name);
 
@@ -74,7 +74,7 @@ public final class VisualRange extends Hack {
                     }
                 }
                 break;
-            case Kill_or_Leave:
+            case KILL_OR_LEAVE:
                 if (this.loadedEntityNames.contains(name)) {
                     this.loadedEntityNames.remove(name);
 

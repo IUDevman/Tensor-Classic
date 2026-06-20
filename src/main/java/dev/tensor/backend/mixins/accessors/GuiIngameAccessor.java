@@ -15,6 +15,7 @@ import java.util.List;
 @Mixin(value = GuiIngame.class, priority = MixinPriority.VALUE)
 public interface GuiIngameAccessor {
 
+    @SuppressWarnings("rawtypes")
     @Accessor(value = "chatMessageList")
     List tensor_getChatMessageList();
 }

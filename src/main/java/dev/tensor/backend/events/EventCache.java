@@ -12,12 +12,16 @@ import java.util.HashMap;
 
 public final class EventCache {
 
-    private static final HashMap<Class<? extends Event>, Event> CACHED_EVENT_MAP = new HashMap<>();
+    private EventCache() {
+
+    }
+
+    private static final HashMap<Class<? extends Event<?>>, Event<?>> CACHED_EVENT_MAP = new HashMap<>();
 
     @SuppressWarnings({"unchecked", "DataFlowIssue"})
     @NotNull /* Yes I know it can return null with exceptions but this never happens suck my dick */
-    public static <T extends Event> T getCachedEvent(Class<T> tClass) {
-        Event cached = CACHED_EVENT_MAP.get(tClass);
+    public static <T extends Event<?>> T getCachedEvent(Class<T> tClass) {
+        Event<?> cached = CACHED_EVENT_MAP.get(tClass);
 
         if (cached != null) {
             cached.reset();

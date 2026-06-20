@@ -12,9 +12,9 @@ public final class ChatSentEvent extends EventVariableCancellable<ChatSentEvent>
     public String ARGS;
 
     @Override
-    public ChatSentEvent withVariables(Object... args) {
-        this.ARGS = (String) args[0];
+    public ChatSentEvent withVariables(Object... variables) {
+        this.ARGS = (String) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

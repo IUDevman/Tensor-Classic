@@ -30,7 +30,7 @@ public final class BlockSoulSandMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.SoulSand).call(true, event -> {
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.SOUL_SAND).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();

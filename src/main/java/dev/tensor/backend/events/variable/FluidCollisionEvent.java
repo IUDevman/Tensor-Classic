@@ -14,11 +14,11 @@ public final class FluidCollisionEvent extends EventVariableCancellable<FluidCol
     public int z;
 
     @Override
-    public FluidCollisionEvent withVariables(Object... args) {
-        this.x = (int) args[0];
-        this.y = (int) args[1];
-        this.z = (int) args[2];
+    public FluidCollisionEvent withVariables(Object... variables) {
+        this.x = (int) variables[0];
+        this.y = (int) variables[1];
+        this.z = (int) variables[2];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

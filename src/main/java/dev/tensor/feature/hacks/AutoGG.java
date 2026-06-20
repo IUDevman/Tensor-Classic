@@ -59,7 +59,7 @@ public final class AutoGG extends Hack {
 
     @SuppressWarnings("unused")
     EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
-        if (!event.type.equals(PlayerJoinLeaveWorldEvent.Type.Kill_or_Leave)) {
+        if (!event.type.equals(PlayerJoinLeaveWorldEvent.Type.KILL_OR_LEAVE)) {
             return;
         }
 

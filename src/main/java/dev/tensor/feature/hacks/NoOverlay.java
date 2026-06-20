@@ -31,36 +31,36 @@ public final class NoOverlay extends Hack {
             return;
         }
 
-        if (blocks.getValue() && event.type.equals(RenderOverlayEvent.Type.blocks)) {
+        if (blocks.getValue() && event.type.equals(RenderOverlayEvent.Type.BLOCK)) {
             event.cancel();
             return;
         }
 
-        if (fire.getValue() && event.type.equals(RenderOverlayEvent.Type.fire)) {
+        if (fire.getValue() && event.type.equals(RenderOverlayEvent.Type.FIRE)) {
             event.cancel();
             return;
         }
 
-        if (portals.getValue() && event.type.equals(RenderOverlayEvent.Type.portals)) {
+        if (portals.getValue() && event.type.equals(RenderOverlayEvent.Type.PORTAL)) {
             event.cancel();
             return;
         }
 
-        if (portalVomit.getValue() && event.type.equals(RenderOverlayEvent.Type.vomit)) {
+        if (portalVomit.getValue() && event.type.equals(RenderOverlayEvent.Type.VOMIT)) {
             event.cancel();
             return;
         }
 
-        if (pumpkin.getValue() && event.type.equals(RenderOverlayEvent.Type.pumpkin)) {
+        if (pumpkin.getValue() && event.type.equals(RenderOverlayEvent.Type.PUMPKIN)) {
             event.cancel();
             return;
         }
 
-        if (vignette.getValue() && event.type.equals(RenderOverlayEvent.Type.vignette)) {
+        if (vignette.getValue() && event.type.equals(RenderOverlayEvent.Type.VIGNETTE)) {
             event.cancel();
         }
 
-        if (water.getValue() && event.type.equals(RenderOverlayEvent.Type.water)) {
+        if (water.getValue() && event.type.equals(RenderOverlayEvent.Type.WATER)) {
             event.cancel();
         }
     }));

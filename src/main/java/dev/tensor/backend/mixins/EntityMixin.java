@@ -42,7 +42,7 @@ public final class EntityMixin implements Globals {
             return;
         }
 
-        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.Entity).call(true, event -> {
+        EventCache.getCachedEvent(VelocityEvent.class).withVariables(VelocityEvent.Type.ENTITY).call(true, event -> {
 
             if (event.isCancelled()) {
                 ci.cancel();

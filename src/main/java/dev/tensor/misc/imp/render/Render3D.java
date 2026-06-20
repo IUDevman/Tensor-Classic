@@ -82,7 +82,7 @@ public interface Render3D extends Render2D {
         line.addVertex(minX, minY, maxZ);
         line.addVertex(minX, maxY, maxZ);
 
-        RenderTask.RENDER_TASK.loadLine(line);
+        RenderTask.getInstance().loadLine(line);
     }
 
     default void drawOutlineBoxWithFaces(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, int lineWidth, Color color, boolean[] faces) {
@@ -156,7 +156,7 @@ public interface Render3D extends Render2D {
             }
         }
 
-        RenderTask.RENDER_TASK.loadLine(line);
+        RenderTask.getInstance().loadLine(line);
     }
 
     default void drawFillBox(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color) {
@@ -187,7 +187,7 @@ public interface Render3D extends Render2D {
         quad.addVertex(maxX, minY, maxZ);
         quad.addVertex(minX, minY, maxZ);
 
-        RenderTask.RENDER_TASK.loadQuad(quad);
+        RenderTask.getInstance().loadQuad(quad);
     }
 
     default void drawFillBoxWithFaces(double minX, double minY, double minZ, double maxX, double maxY, double maxZ, Color color, boolean[] faces) {
@@ -235,7 +235,7 @@ public interface Render3D extends Render2D {
             quad.addVertex(minX, minY, maxZ);
         }
 
-        RenderTask.RENDER_TASK.loadQuad(quad);
+        RenderTask.getInstance().loadQuad(quad);
     }
 
     default void drawTracer(double targetX, double targetY, double targetZ, int lineWidth, Color color, int alpha) {
@@ -244,7 +244,7 @@ public interface Render3D extends Render2D {
         line.addVertex(0, 0, 0);
         line.addVertex(targetX, targetY, targetZ);
 
-        RenderTask.RENDER_TASK.loadLine(line);
+        RenderTask.getInstance().loadLine(line);
     }
 
     default void drawBreadCrumbs(ArrayList<double[]> positions, double renderPosX, double renderPosY, double renderPosZ, int lineWidth, Color color) {
@@ -262,7 +262,7 @@ public interface Render3D extends Render2D {
             strip.addVertex(position[0] - renderPosX, position[1] - renderPosY, position[2] - renderPosZ);
         }
 
-        RenderTask.RENDER_TASK.loadStrip(strip);
+        RenderTask.getInstance().loadStrip(strip);
     }
 
     default Color getDistanceColor(int distance) {

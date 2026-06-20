@@ -12,9 +12,9 @@ public final class SignCollisionEvent extends EventVariableCancellable<SignColli
     public int signY;
 
     @Override
-    public SignCollisionEvent withVariables(Object... args) {
-        this.signY = (int) args[0];
+    public SignCollisionEvent withVariables(Object... variables) {
+        this.signY = (int) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 }

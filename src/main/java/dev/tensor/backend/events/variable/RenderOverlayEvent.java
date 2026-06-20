@@ -12,19 +12,19 @@ public final class RenderOverlayEvent extends EventVariableCancellable<RenderOve
     public Type type;
 
     @Override
-    public RenderOverlayEvent withVariables(Object... args) {
-        this.type = (Type) args[0];
+    public RenderOverlayEvent withVariables(Object... variables) {
+        this.type = (Type) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 
     public enum Type {
-        blocks,
-        fire,
-        portals,
-        pumpkin,
-        vignette,
-        water,
-        vomit
+        BLOCK,
+        FIRE,
+        PORTAL,
+        PUMPKIN,
+        VIGNETTE,
+        WATER,
+        VOMIT
     }
 }

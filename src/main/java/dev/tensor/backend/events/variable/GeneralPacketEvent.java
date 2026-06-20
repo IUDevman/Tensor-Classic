@@ -14,11 +14,11 @@ public final class GeneralPacketEvent extends EventVariableCancellable<GeneralPa
     public Packet packet;
 
     @Override
-    public GeneralPacketEvent withVariables(Object... args) {
-        this.type = (Type) args[0];
-        this.packet = (Packet) args[1];
+    public GeneralPacketEvent withVariables(Object... variables) {
+        this.type = (Type) variables[0];
+        this.packet = (Packet) variables[1];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 
     public enum Type {

@@ -12,16 +12,16 @@ public final class VelocityEvent extends EventVariableCancellable<VelocityEvent>
     public Type type;
 
     @Override
-    public VelocityEvent withVariables(Object... args) {
-        this.type = (Type) args[0];
+    public VelocityEvent withVariables(Object... variables) {
+        this.type = (Type) variables[0];
 
-        return super.withVariables(args);
+        return super.withVariables(variables);
     }
 
     public enum Type {
-        Block,
-        Entity,
-        Fluid,
-        SoulSand
+        BLOCK,
+        ENTITY,
+        FLUID,
+        SOUL_SAND
     }
 }
