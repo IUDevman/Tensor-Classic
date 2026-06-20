@@ -131,13 +131,13 @@ public final class Xray extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
         this.fillLightMap(false);
         this.resetWorld();
     }));
 
     @SuppressWarnings("unused")
-    EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
+    private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
         if (event.type.equals(RenderSkyEvent.Type.FOG_FLUIDS)) {
             event.cancel();
         }

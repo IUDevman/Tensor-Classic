@@ -21,7 +21,7 @@ public final class Suffix extends Hack {
 
 
     @SuppressWarnings("unused")
-    EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
+    private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
         String message = event.ARGS;
 
         if (!message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {

@@ -110,7 +110,7 @@ public final class NewChunks extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChunkChangeEvent> chunkChangeEventAction = this.addEventAction(new EventAction<>(ChunkChangeEvent.class, event -> {
+    private final EventAction<ChunkChangeEvent> chunkChangeEventAction = this.addEventAction(new EventAction<>(ChunkChangeEvent.class, event -> {
 
         if (event.type.equals(ChunkChangeEvent.Type.SINGLE)) {
             Packet53BlockChange packet = event.packet53BlockChange;
@@ -165,7 +165,7 @@ public final class NewChunks extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.clearLoggedChunks()));
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.clearLoggedChunks()));
 
     //Ways to tell if a chunk is newly generated: sand/gravel falling and water/lava flowing.
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")

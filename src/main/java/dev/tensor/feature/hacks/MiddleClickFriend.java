@@ -17,7 +17,7 @@ public final class MiddleClickFriend extends Hack {
     public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true);
 
     @SuppressWarnings("unused")
-    EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
+    private final EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
         if (!event.eventButtonState || event.eventButton != 2) {
             return;
         }

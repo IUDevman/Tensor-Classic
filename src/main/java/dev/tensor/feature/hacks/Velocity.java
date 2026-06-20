@@ -22,7 +22,7 @@ public final class Velocity extends Hack {
     public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false);
 
     @SuppressWarnings("unused")
-    EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
+    private final EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
         if (this.mode.getValue().equals(Mode.All)) {
             event.cancel();
             return;

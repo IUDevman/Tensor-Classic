@@ -51,14 +51,14 @@ public final class CameraClip extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<CameraClipEvent> cameraClipEventAction = this.addEventAction(new EventAction<>(CameraClipEvent.class, event -> {
+    private final EventAction<CameraClipEvent> cameraClipEventAction = this.addEventAction(new EventAction<>(CameraClipEvent.class, event -> {
         if (this.clipThroughWalls.getValue()) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
+    private final EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
         if (event.dWheel == 0) {
             return;
         }

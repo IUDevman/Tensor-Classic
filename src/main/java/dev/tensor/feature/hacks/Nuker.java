@@ -290,7 +290,7 @@ public final class Nuker extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blocksToMine.clear();
         this.blocksBreakingVanilla.clear();
         this.queueToRemove.clear();
@@ -302,7 +302,7 @@ public final class Nuker extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
+    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         if (!this.target.getValue().equals(Target.Click)) {
             return;
         }

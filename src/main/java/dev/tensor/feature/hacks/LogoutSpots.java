@@ -102,12 +102,12 @@ public final class LogoutSpots extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.clearLogoutSpots();
     }));
 
     @SuppressWarnings("unused")
-    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
+    private final EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         if (event.otherPlayerMP == null) {
             return;
         }
@@ -143,7 +143,7 @@ public final class LogoutSpots extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
+    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
         String message = event.message;
 
         if (message.toLowerCase().contains("joined the game")) {

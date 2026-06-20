@@ -120,7 +120,7 @@ public final class Tracers extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
+    private final EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
         if (!this.entitiesWithColorToTrace.isEmpty()) {
             event.cancel();
         }

@@ -16,7 +16,7 @@ public final class AutoLogin extends Hack {
     public final BooleanSetting applyAll = new BooleanSetting("Try All Accounts", false);
 
     @SuppressWarnings("unused")
-    EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
+    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
         if (!this.shouldAutoLogin()) {
             return;
         }

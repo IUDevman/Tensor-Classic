@@ -132,7 +132,7 @@ public final class BlockHighlight extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, event -> {
+    private final EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, event -> {
         if (!event.isCancelled()) {
             int x = event.positionToRender.blockX;
             int y = event.positionToRender.blockY;

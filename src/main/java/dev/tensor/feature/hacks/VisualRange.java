@@ -49,10 +49,10 @@ public final class VisualRange extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loadedEntityNames.clear()));
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loadedEntityNames.clear()));
 
     @SuppressWarnings("unused")
-    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
+    private final EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         String name = event.otherPlayerMP.username;
 
         if (event.otherPlayerMP.isDead || event.otherPlayerMP.health <= 0) {

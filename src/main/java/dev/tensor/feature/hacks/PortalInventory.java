@@ -10,5 +10,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class PortalInventory extends Hack {
 
     @SuppressWarnings("unused")
-    EventAction<PortalCloseGUIEvent> portalCloseGUIEventAction = this.addEventAction(new EventAction<>(PortalCloseGUIEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<PortalCloseGUIEvent> portalCloseGUIEventAction = this.addEventAction(new EventAction<>(PortalCloseGUIEvent.class, EventConstantCancellable::cancel));
 }

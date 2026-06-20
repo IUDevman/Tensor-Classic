@@ -69,7 +69,7 @@ public final class RotationManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> {
+    private final EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> {
         if (this.rotationQueue.isEmpty()) {
             return;
         }

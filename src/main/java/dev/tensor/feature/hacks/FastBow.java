@@ -19,7 +19,7 @@ public final class FastBow extends Hack {
     public final IntegerSetting arrowsPerClick = new IntegerSetting("Arrows Per Click", 1, 1, 64);
 
     @SuppressWarnings("unused")
-    EventAction<BlockClickToPlaceEvent> blockClickToPlaceEventAction = this.addEventAction(new EventAction<>(BlockClickToPlaceEvent.class, event -> {
+    private final EventAction<BlockClickToPlaceEvent> blockClickToPlaceEventAction = this.addEventAction(new EventAction<>(BlockClickToPlaceEvent.class, event -> {
         ItemStack currentItem = this.getInventory().getCurrentItem();
 
         if (currentItem == null) {

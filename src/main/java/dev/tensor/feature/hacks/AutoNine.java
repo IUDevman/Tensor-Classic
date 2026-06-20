@@ -131,7 +131,7 @@ public final class AutoNine extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
+    private final EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
         this.swapTo9(true);
 
         if (!this.swap.getValue()) {
@@ -171,7 +171,7 @@ public final class AutoNine extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
+    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         Packet14BlockDig packet = event.packet;
 
         if (packet.status == 2) {

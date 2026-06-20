@@ -98,7 +98,7 @@ public final class CommandManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
         Commands COMMANDS = this.getHackManager().getHack(Commands.class);
 
         if (!COMMANDS.isEnabled()) {

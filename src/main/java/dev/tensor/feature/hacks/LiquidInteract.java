@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class LiquidInteract extends Hack {
 
     @SuppressWarnings("unused")
-    EventAction<FluidInteractEvent> fluidInteractEventAction = this.addEventAction(new EventAction<>(FluidInteractEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<FluidInteractEvent> fluidInteractEventAction = this.addEventAction(new EventAction<>(FluidInteractEvent.class, EventConstantCancellable::cancel));
 }

@@ -18,7 +18,7 @@ public final class SafeWalk extends Hack {
     public final BooleanSetting fluids = new BooleanSetting("Fluids", false);
 
     @SuppressWarnings("unused")
-    EventAction<MovementClipEvent> movementClipEventAction = this.addEventAction(new EventAction<>(MovementClipEvent.class, event -> {
+    private final EventAction<MovementClipEvent> movementClipEventAction = this.addEventAction(new EventAction<>(MovementClipEvent.class, event -> {
         if (!this.fluids.getValue() && this.isPlayerInFluids()) {
             return;
         }

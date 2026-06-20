@@ -37,10 +37,10 @@ public final class EntityListManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> this.FILTERED_LOADED_ENTITIES.clear()));
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> this.FILTERED_LOADED_ENTITIES.clear()));
 
     @SuppressWarnings("unused")
-    EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, EventPriority.Highest, event -> {
         this.FILTERED_LOADED_ENTITIES.clear();
 
         if (this.failsNullCheck()) {

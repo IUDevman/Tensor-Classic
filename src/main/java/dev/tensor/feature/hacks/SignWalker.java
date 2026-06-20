@@ -20,7 +20,7 @@ public final class SignWalker extends Hack {
     public final BooleanSetting sneak = new BooleanSetting("Sneak Down", false);
 
     @SuppressWarnings("unused")
-    EventAction<SignCollisionEvent> signCollisionEventAction = this.addEventAction(new EventAction<>(SignCollisionEvent.class, event -> {
+    private final EventAction<SignCollisionEvent> signCollisionEventAction = this.addEventAction(new EventAction<>(SignCollisionEvent.class, event -> {
 
         if (this.sneak.getValue() && this.getMinecraft().currentScreen == null && Keyboard.isKeyDown(this.getMinecraft().gameSettings.keyBindSneak.keyCode)) {
             return;

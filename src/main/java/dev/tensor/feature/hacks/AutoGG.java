@@ -52,13 +52,13 @@ public final class AutoGG extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.targets.clear();
         this.lastHitName = "";
     }));
 
     @SuppressWarnings("unused")
-    EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
+    private final EventAction<PlayerJoinLeaveWorldEvent> playerJoinLeaveWorldEventAction = this.addEventAction(new EventAction<>(PlayerJoinLeaveWorldEvent.class, event -> {
         if (!event.type.equals(PlayerJoinLeaveWorldEvent.Type.KILL_OR_LEAVE)) {
             return;
         }
@@ -105,7 +105,7 @@ public final class AutoGG extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
+    private final EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
         if (event.entityHit instanceof EntityOtherPlayerMP) {
             EntityOtherPlayerMP otherPlayerMP = (EntityOtherPlayerMP) event.entityHit;
 

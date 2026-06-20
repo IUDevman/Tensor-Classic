@@ -24,7 +24,7 @@ public final class CommandPreview extends Hack {
     private final TensorChatGUI tensorChatGUI = new TensorChatGUI();
 
     @SuppressWarnings("unused")
-    EventAction<GuiChatScreenEvent> guiChatScreenEventAction = this.addEventAction(new EventAction<>(GuiChatScreenEvent.class, event -> {
+    private final EventAction<GuiChatScreenEvent> guiChatScreenEventAction = this.addEventAction(new EventAction<>(GuiChatScreenEvent.class, event -> {
         if (!this.getHackManager().getHack(Commands.class).isEnabled()) {
             return;
         }

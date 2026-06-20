@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoWeather extends Hack {
 
     @SuppressWarnings("unused")
-    EventAction<WeatherEvent> weatherEventAction = this.addEventAction(new EventAction<>(WeatherEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<WeatherEvent> weatherEventAction = this.addEventAction(new EventAction<>(WeatherEvent.class, EventConstantCancellable::cancel));
 }

@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoHurtCam extends Hack {
 
     @SuppressWarnings("unused")
-    EventAction<HurtCameraEvent> hurtCameraEventAction = this.addEventAction(new EventAction<>(HurtCameraEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<HurtCameraEvent> hurtCameraEventAction = this.addEventAction(new EventAction<>(HurtCameraEvent.class, EventConstantCancellable::cancel));
 }

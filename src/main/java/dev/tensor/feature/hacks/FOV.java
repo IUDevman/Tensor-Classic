@@ -17,7 +17,7 @@ public final class FOV extends Hack {
     public final IntegerSetting value = new IntegerSetting("Value", 90, 30, 120);
 
     @SuppressWarnings("unused")
-    EventAction<FOVModifierEvent> fovModifierEventAction = this.addEventAction(new EventAction<>(FOVModifierEvent.class, event -> {
+    private final EventAction<FOVModifierEvent> fovModifierEventAction = this.addEventAction(new EventAction<>(FOVModifierEvent.class, event -> {
 
         event.FOV = this.value.getValue();
         event.cancel();

@@ -20,7 +20,7 @@ import net.minecraft.src.EnumMovingObjectType;
 public final class RoseFastPlace extends Hack {
 
     @SuppressWarnings("unused")
-    EventAction<BlockClickToPlaceEvent> blockClickToPlaceEventAction = this.addEventAction(new EventAction<>(BlockClickToPlaceEvent.class, event -> {
+    private final EventAction<BlockClickToPlaceEvent> blockClickToPlaceEventAction = this.addEventAction(new EventAction<>(BlockClickToPlaceEvent.class, event -> {
         if (this.getMinecraft().objectMouseOver == null) {
             return;
         }

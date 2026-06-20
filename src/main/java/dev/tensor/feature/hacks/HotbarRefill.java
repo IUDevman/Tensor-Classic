@@ -108,7 +108,7 @@ public final class HotbarRefill extends Hack {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.resetItemCache()));
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.resetItemCache()));
 
     private void resetItemCache() {
         this.tickTime = 0;
