@@ -15,7 +15,9 @@ import net.minecraft.src.*;
 /**
  * @author Hoosiers
  * @since 04-29-2026
- * <p>
+ */
+
+/**
  * General notes for running this (on NoCheat servers such as 2bet2t):
  * 1. Slot position 9 is the only position that this exploit works with.
  * 2. This exploit ONLY works with damage from breaking blocks or attacking entities.
@@ -33,6 +35,12 @@ import net.minecraft.src.*;
  * tools). This resets randomly when mining or when moving the item/switching tools.
  */
 
+/**
+ * Replaced by Auto9 Hack.
+ * Depreciated 06/21/2026
+ */
+
+@Deprecated
 @Hack.Info(name = "InfiniteDurability", category = Category.Player)
 public final class InfiniteDurability extends Hack {
 
