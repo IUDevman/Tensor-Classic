@@ -49,7 +49,6 @@ public interface Render3D extends Render2D {
     }
 
     default void finishChamsGL() {
-        GL11.glDepthMask(false);
         GL11.glDisable(GL11.GL_POLYGON_OFFSET_FILL);
         GL11.glDepthRange(0.0, 1);
     }
