@@ -7,6 +7,7 @@ import dev.tensor.misc.gui.imp.Hoverable;
 import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.buttons.SpammerListSettingButton;
 import dev.tensor.misc.helpers.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
@@ -555,6 +556,27 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     public int getScrollSpeed() {
         return this.isButtonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
+    }
+
+    public void resetSpammerImp() {
+        this.categoryElements.forEach(categoryElement -> {
+
+            categoryElement.hackElements.forEach(hackElement -> {
+
+                hackElement.settingElements.forEach(settingElement -> {
+
+                    if (settingElement instanceof ButtonSettingElement) {
+                        ButtonSettingElement element = ((ButtonSettingElement) settingElement);
+
+                        if (element.button instanceof SpammerListSettingButton) {
+                            SpammerListSettingButton button = ((SpammerListSettingButton) element.button);
+
+                            button.loadOrResetSpammerList();
+                        }
+                    }
+                });
+            });
+        });
     }
 
     private enum PanelType {

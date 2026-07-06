@@ -124,6 +124,11 @@ public final class Setting implements Command {
             return;
         }
 
+        if (setting instanceof SpammerListSetting) {
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to modify setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' for hack'" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (can not reset SpammerListSetting with command - use ClickGUI)!");
+            return;
+        }
+
         if (ARGS.length == 2) {
             this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to modify setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' for hack'" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (no setting value inputted)!");
             return;

@@ -107,6 +107,11 @@ public final class Reset implements Command {
             return;
         }
 
+        if (setting instanceof SpammerListSetting) {
+            this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to reset setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' for hack'" + ChatColor.AQUA.text() + hack.NAME + ChatColor.RED.text() + "' (can not reset SpammerListSetting with command - use ClickGUI)!");
+            return;
+        }
+
         setting.reset();
         this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Reset setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.DEFAULT.text() + "' for hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
     }

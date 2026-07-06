@@ -20,7 +20,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
     public static final String MOD_NAME_SHORT = "Tensor";
 
-    public static final String MOD_VERSION = "r1.0.0";
+    public static final String MOD_VERSION = "d1.1.0";
 
     private static TensorClassic INSTANCE;
 

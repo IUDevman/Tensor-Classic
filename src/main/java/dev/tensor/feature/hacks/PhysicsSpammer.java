@@ -1,5 +1,8 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.backend.events.variable.ChatSentEvent;
+import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
@@ -69,6 +72,9 @@ public final class PhysicsSpammer extends Hack {
 
         this.sendPacket(new Packet3Chat(message));
     }
+
+    @SuppressWarnings("unused")
+    private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> this.delay = this.tickDelay.getValue());
 
     private final Thread runChache = new Thread(() -> {
         while (this.cachedPhysicsSpam.size() < 1000) {

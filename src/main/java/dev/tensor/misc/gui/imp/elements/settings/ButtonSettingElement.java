@@ -51,6 +51,8 @@ public final class ButtonSettingElement extends SettingElement {
 
         } else if (this.setting instanceof PacketTypeListSetting) {
             this.button = new PacketTypeListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (PacketTypeListSetting) setting);
+        } else if (this.setting instanceof SpammerListSetting) {
+            this.button = new SpammerListSettingButton(hackElement.categoryElement.tensorGUI, hackElement.categoryElement.tensorGUI.clickGUI, hackElement, (SpammerListSetting) setting);
         } else {
             this.button = new DummySettingButton();
         }
