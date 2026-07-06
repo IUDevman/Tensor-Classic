@@ -74,7 +74,13 @@ public final class PhysicsSpammer extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> this.delay = this.tickDelay.getValue());
+    private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
+        if (!event.isCancelled()) {
+            return;
+        }
+
+        this.delay = this.tickDelay.getValue();
+    });
 
     private final Thread runChache = new Thread(() -> {
         while (this.cachedPhysicsSpam.size() < 1000) {

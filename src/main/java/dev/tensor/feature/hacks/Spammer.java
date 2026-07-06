@@ -98,7 +98,13 @@ public final class Spammer extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> this.delay = this.tickDelay.getValue());
+    private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
+        if (!event.isCancelled()) {
+            return;
+        }
+
+        this.delay = this.tickDelay.getValue();
+    });
 
     public void resetSpammer() {
         this.delay = this.tickDelay.getValue();
