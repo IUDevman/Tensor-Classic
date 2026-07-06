@@ -48,6 +48,7 @@ public final class CommandManager implements Manager {
         this.addCommand(new Prefix());
         this.addCommand(new Reset());
         this.addCommand(new Setting());
+        this.addCommand(new Spammer());
         this.addCommand(new TellRaw());
         this.addCommand(new Toggle());
         this.addCommand(new Waypoints());

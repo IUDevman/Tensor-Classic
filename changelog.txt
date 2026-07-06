@@ -1,0 +1,4 @@
+Release r1.1.0:
+1. Added Spammer Hack -
+    Includes custom GUI panel and command to modify the spammer file list.
+    Drop .txt files containing lines < 100 characters to .minecraft/TensorClassic/Spammer.

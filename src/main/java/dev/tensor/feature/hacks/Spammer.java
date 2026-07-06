@@ -65,6 +65,10 @@ public final class Spammer extends Hack {
 
     @Override
     public void onClientTick() {
+        if (!this.isMultiplayer()) {
+            return;
+        }
+
         if (this.delay < this.tickDelay.getValue()) {
             this.delay++;
             return;

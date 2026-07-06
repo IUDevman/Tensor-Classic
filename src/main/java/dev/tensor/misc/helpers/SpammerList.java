@@ -135,6 +135,10 @@ public final class SpammerList implements Globals {
         return this.currentSpammerFileName.equalsIgnoreCase(name);
     }
 
+    public boolean isSpammerLoaded(String name) {
+        return this.spammerFileNames.stream().filter(string -> string.equalsIgnoreCase(name)).findFirst().orElse(null) != null;
+    }
+
     @SuppressWarnings("UnusedReturnValue")
     public int setCurrentSpammer(String newSpammer, boolean nullByPass) {
 
