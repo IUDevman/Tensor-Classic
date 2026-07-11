@@ -8,6 +8,7 @@ package dev.tensor.misc.imp.hack.render;
 public enum RenderOrder {
     Tracers(10),
     Nametags(20),
+    EpsteinESP(25),
     WolfOwner(30),
     LogoutSpots(40),
     Waypoints(50),
