@@ -70,7 +70,7 @@ public final class GhastWarning extends Hack implements HUDObject {
 
     @Override
     public void onClientTick() {
-        if (!this.isNetherNulLSafe()) {
+        if (!this.isNetherNullSafe()) {
             this.hasFireBall = false;
             return;
         }

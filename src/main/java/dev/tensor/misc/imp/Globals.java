@@ -152,7 +152,7 @@ public interface Globals {
         return this.getWorld().multiplayerWorld;
     }
 
-    default boolean isNetherNulLSafe() {
+    default boolean isNetherNullSafe() {
         if (this.getWorld() == null) {
             return false;
         }

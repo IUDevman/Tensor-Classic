@@ -136,7 +136,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
 
         this.drawString("Waypoint Name : " + (this.alreadyHasWaypointName ? ChatColor.RED.text() : ChatColor.LIGHT_GRAY.text()) + (this.searchingName ? this.nameValue.isEmpty() ? "..." : this.nameValue : this.nameValue.isEmpty() ? "New Waypoint" : this.nameValue), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 5, Color.YELLOW.getRGB());
-        this.drawString("Dimension : " + (this.isNetherNulLSafe() ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());
+        this.drawString("Dimension : " + (this.isNetherNullSafe() ? ChatColor.RED.text() + "Nether" : ChatColor.GREEN.text() + "Overworld"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 17, Color.WHITE.getRGB());
         this.drawString("Server : " + this.getWaypointServerName(), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 29, Color.WHITE.getRGB());
         this.drawString("Enabled : " + (this.enabledValue ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False"), this.getPosX() + 60, this.getPosY() + this.tensorGUI.titleBoxHeight + 41, Color.WHITE.getRGB());
 
@@ -562,7 +562,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
             this.nameValue = "New Waypoint";
         }
 
-        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.isNetherNulLSafe(), this.getWaypointServerName()).stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
+        Waypoint waypointFound = this.waypointListSetting.getValue().getWaypointsFor(!this.isNetherNullSafe(), this.getWaypointServerName()).stream().filter(waypoint1 -> waypoint1.getName().equalsIgnoreCase(this.nameValue)).findFirst().orElse(null);
 
         if (waypointFound != null) {
             this.alreadyHasWaypointName = true;
@@ -574,7 +574,7 @@ public final class WaypointListSettingButton implements ButtonSetting {
         int y = Integer.parseInt(this.yValue);
         int z = Integer.parseInt(this.zValue);
 
-        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.isNetherNulLSafe(), this.getWaypointServerName());
+        Waypoint waypoint = new Waypoint(this.nameValue, x, y, z, !this.isNetherNullSafe(), this.getWaypointServerName());
         waypoint.setEnabled(enabledValue);
 
         int size = this.waypointSettingObjects.size();
