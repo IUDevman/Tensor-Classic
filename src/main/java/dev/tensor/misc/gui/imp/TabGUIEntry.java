@@ -1,4 +1,4 @@
-package dev.tensor.misc.gui;
+package dev.tensor.misc.gui.imp;
 
 import java.awt.*;
 

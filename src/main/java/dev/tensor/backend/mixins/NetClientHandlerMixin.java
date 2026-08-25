@@ -4,7 +4,7 @@ import dev.tensor.backend.MixinPriority;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.CloseInventoryEvent;
 import dev.tensor.backend.events.variable.*;
-import dev.tensor.misc.gui.TensorGuiConnectFailed;
+import dev.tensor.misc.helpers.extensions.TensorGuiConnectFailed;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;

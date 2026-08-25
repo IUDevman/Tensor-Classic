@@ -1,4 +1,4 @@
-package dev.tensor.misc.gui;
+package dev.tensor.misc.helpers.extensions;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.AutoReconnect;

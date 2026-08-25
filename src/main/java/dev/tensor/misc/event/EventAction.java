@@ -29,15 +29,15 @@ public final class EventAction<T extends Event<T>> implements Globals {
         this.action = action;
     }
 
+    public Class<T> getEventClass() {
+        return this.eventClass;
+    }
+
     public byte getPriority() {
         return this.priority.value();
     }
 
     public Consumer<? super T> getAction() {
         return this.action;
-    }
-
-    public Class<T> getEventClass() {
-        return this.eventClass;
     }
 }
