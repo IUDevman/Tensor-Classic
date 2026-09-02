@@ -69,19 +69,19 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             this.categoryElements.add(categoryElement);
             offsetY.getAndAdd(categoryElement.getHeight());
             guiHeight.getAndAdd(categoryElement.getHeight());
-
-            if (this.categoryElements.size() == 1) {
-                categoryElement.setSelected(true);
-            }
         });
+
+        if (!this.categoryElements.isEmpty()) {
+            this.categoryElements.get(0).setSelected(true);
+        }
     }
 
     @Override
-    public void drawScreen(int i, int j, float f) {
+    public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         if (this.mainMenuObject != null) {
             this.mainMenuObject.width = this.width;
             this.mainMenuObject.height = this.height;
-            this.mainMenuObject.drawScreen(0, 0, f);
+            this.mainMenuObject.drawScreen(0, 0, partialTicks);
         }
 
         this.categoryElements.forEach(categoryElement -> {
@@ -121,15 +121,15 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
         if (this.isButtonActive.get()) {
             if (this.activeButton != null && this.activeButton instanceof DraggableButtonSetting) {
-                ((DraggableButtonSetting) this.activeButton).onRenderDrag(i, j);
+                ((DraggableButtonSetting) this.activeButton).onRenderDrag(mouseX, mouseY);
             }
 
             return;
         }
 
         if (this.isDragging) {
-            this.dragXToSet = i + dragOffsetX;
-            this.dragYToSet = j + dragOffsetY;
+            this.dragXToSet = mouseX + dragOffsetX;
+            this.dragYToSet = mouseY + dragOffsetY;
 
             if (this.dragXToSet + this.guiWidth + 2 <= this.getMinecraft().currentScreen.width && this.dragOffsetX != 0) {
                 this.clickGUI.x.setValue(dragXToSet);
@@ -173,16 +173,16 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     @Override
-    public void keyTyped(char c, int i) {
-        if (i == Keyboard.KEY_ESCAPE) {
-            super.keyTyped(c, i);
+    public void keyTyped(char keyChar, int keyCode) {
+        if (keyCode == Keyboard.KEY_ESCAPE) {
+            super.keyTyped(keyChar, keyCode);
             return;
         }
 
         if (this.isButtonActive.get()) {
 
             if (this.activeButton != null) {
-                activeButton.onKeyPressed(c, i);
+                activeButton.onKeyPressed(keyChar, keyCode);
             }
 
             return;
@@ -203,7 +203,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                                 KeyPressElement element = (KeyPressElement) settingElement;
 
                                 if (element.isSearching()) {
-                                    element.onKeyPressed(c, i);
+                                    element.onKeyPressed(keyChar, keyCode);
                                 }
                             }
                         });
@@ -214,29 +214,29 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     @Override
-    public void mouseClicked(int i, int j, int k) {
+    public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
 
         if (this.isButtonActive.get()) {
 
-            if (this.activeButton != null && k == 0) {
+            if (this.activeButton != null && mouseButton == 0) {
                 if (this.activeButton instanceof DraggableButtonSetting) {
-                    ((DraggableButtonSetting) this.activeButton).onClickDrag(i, j);
+                    ((DraggableButtonSetting) this.activeButton).onClickDrag(mouseX, mouseY);
                 }
 
-                this.activeButton.onClick(i, j);
+                this.activeButton.onClick(mouseX, mouseY);
             }
 
             return;
         }
 
-        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, i, j) && k == 0) {
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue(), this.clickGUI.x.getValue() + this.guiWidth, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, mouseX, mouseY) && mouseButton == 0) {
             this.isDragging = true;
 
             this.dragXToSet = this.clickGUI.x.getValue();
             this.dragYToSet = this.clickGUI.y.getValue();
 
-            int newDragOffsetX = this.dragXToSet - i;
-            int newDragOffsetY = this.dragYToSet - j;
+            int newDragOffsetX = this.dragXToSet - mouseX;
+            int newDragOffsetY = this.dragYToSet - mouseY;
 
             if (newDragOffsetX + this.clickGUI.x.getValue() + this.guiWidth + 2 <= 0) {
                 newDragOffsetX = this.dragXToSet;
@@ -253,7 +253,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
             this.isDragging = false;
         }
 
-        if (k != 0) {
+        if (mouseButton != 0) {
             return;
         }
 
@@ -261,8 +261,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
         this.categoryElements.forEach(categoryElement -> {
 
-            if (this.isHovered(categoryElement, i, j) && !categoryElement.isSelected()) {
-                categoryElement.onClick(i, j);
+            if (this.isElementHovered(categoryElement, mouseX, mouseY) && !categoryElement.isSelected()) {
+                categoryElement.onClick(mouseX, mouseY);
                 hasClicked.set(true);
                 return;
             }
@@ -273,8 +273,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
             categoryElement.hackElements.forEach(hackElement -> {
 
-                if (this.isHovered(hackElement, i, j)) {
-                    hackElement.onClick(i, j);
+                if (this.isElementHovered(hackElement, mouseX, mouseY)) {
+                    hackElement.onClick(mouseX, mouseY);
                     hasClicked.set(true);
                     return;
                 }
@@ -283,16 +283,16 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                     return;
                 }
 
-                if (this.isHovered(hackElement.propertyElement, i, j)) {
-                    hackElement.propertyElement.onClick(i, j);
+                if (this.isElementHovered(hackElement.propertyElement, mouseX, mouseY)) {
+                    hackElement.propertyElement.onClick(mouseX, mouseY);
                     hasClicked.set(true);
                     return;
                 }
 
                 hackElement.settingElements.forEach(settingElement -> {
 
-                    if (this.isHovered(settingElement, i, j)) {
-                        settingElement.onClick(i, j);
+                    if (this.isElementHovered(settingElement, mouseX, mouseY)) {
+                        settingElement.onClick(mouseX, mouseY);
                         hasClicked.set(true);
                     }
                 });
@@ -349,21 +349,21 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
     }
 
     @Override
-    protected void mouseMovedOrUp(int i, int j, int k) {
+    protected void mouseMovedOrUp(int mouseX, int mouseY, int mouseButton) {
 
         if (this.isButtonActive.get()) {
 
             if (this.activeButton != null) {
-                this.activeButton.onHovered(i, j);
+                this.activeButton.onHovered(mouseX, mouseY);
                 this.activeButton.handleScroll(this.scrollingSpeed);
             }
 
             return;
         }
 
-        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+        if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + 2, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, mouseX, mouseY)) {
             this.handleScroll(PanelType.Hack);
-        } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, i, j)) {
+        } else if (this.isHovered(this.clickGUI.x.getValue() + CategoryElement.width + HackElement.width + 4, this.clickGUI.y.getValue() + this.titleBoxHeight + 2, this.clickGUI.x.getValue() + this.guiWidth - 2, this.clickGUI.y.getValue() + this.guiHeight.get() - 2, mouseX, mouseY)) {
             this.handleScroll(PanelType.Setting);
         }
     }
@@ -417,7 +417,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         this.activeButton = null;
     }
 
-    private boolean isHovered(Element element, double mouseX, double mouseY) {
+    private boolean isElementHovered(Element element, double mouseX, double mouseY) {
 
         if (!(element instanceof CategoryElement)) {
             if (mouseY < this.clickGUI.y.getValue() + this.titleBoxHeight + 2) {
@@ -518,7 +518,6 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                     });
                 }
             });
-
         }
     }
 
@@ -537,6 +536,10 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                     if (hackElement.isViewed()) {
                         hackElement.settingElements.forEach(settingElement -> {
+
+                            if (isSearching.get()) {
+                                return;
+                            }
 
                             if (settingElement instanceof KeyPressElement) {
                                 KeyPressElement element = (KeyPressElement) settingElement;
@@ -558,7 +561,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         return this.isButtonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
     }
 
-    public void resetSpammerImp() {
+    public void resetGlobalSpammerGUI() {
         this.categoryElements.forEach(categoryElement -> {
 
             categoryElement.hackElements.forEach(hackElement -> {

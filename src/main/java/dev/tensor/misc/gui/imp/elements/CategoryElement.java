@@ -53,11 +53,11 @@ public final class CategoryElement implements Element {
             HackElement hackElement = new HackElement(this, hack, this.x, this.y, this.mScrollY, this.getWidth() + 2, offsetY.get());
             this.hackElements.add(hackElement);
             offsetY.getAndAdd(hackElement.getHeight());
-
-            if (this.hackElements.size() == 1) {
-                hackElement.setViewed(true);
-            }
         });
+
+        if (!this.hackElements.isEmpty()) {
+            this.hackElements.get(0).setViewed(true);
+        }
     }
 
     public boolean isSelected() {

@@ -44,7 +44,7 @@ public final class SpammerList implements Globals {
             TensorGUI tensorGUI = clickGUI.tensorGUI;
 
             if (tensorGUI != null) {
-                tensorGUI.resetSpammerImp();
+                tensorGUI.resetGlobalSpammerGUI();
             }
         }
     }
