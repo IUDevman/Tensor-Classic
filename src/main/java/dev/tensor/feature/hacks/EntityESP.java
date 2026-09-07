@@ -56,6 +56,8 @@ public final class EntityESP extends Render3DHack {
     public void onClientTick() {
         this.entitiesWithColorToRender.clear();
 
+        final boolean shouldItems = !(this.getHackManager().getHack(NoItemRender.class) != null && this.getHackManager().getHack(NoItemRender.class).isEnabled());
+
         this.getFilteredLoadedEntities().parallelStream().forEach(entity -> {
             if (entity instanceof EntityOtherPlayerMP) {
 
@@ -86,7 +88,7 @@ public final class EntityESP extends Render3DHack {
                 return;
             }
 
-            if (this.items.getValue() && entity instanceof EntityItem) {
+            if (shouldItems && this.items.getValue() && entity instanceof EntityItem) {
                 this.entitiesWithColorToRender.put(entity, this.itemColor.getValueRainbow());
                 return;
             }
