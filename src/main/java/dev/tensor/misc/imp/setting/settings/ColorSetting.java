@@ -75,7 +75,7 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public String getValueString(boolean color) {
-        return (color ? ChatColor.AQUA.text() : "") + "[" + this.getValue().getRed() + ", " + this.getValue().getGreen() + ", " + this.getValue().getBlue() + ", " + this.getValue().getAlpha() + "]";
+        return (color ? ChatColor.AQUA.text() : "") + (this.rainbow ? "[Rainbow]" : "[" + this.getValue().getRed() + ", " + this.getValue().getGreen() + ", " + this.getValue().getBlue() + ", " + this.getValue().getAlpha() + "]");
     }
 
     @Override
@@ -98,8 +98,13 @@ public class ColorSetting implements Setting<Color> {
         String[] values = string.split("_");
 
         if (values.length < 5) {
-            if (values.length < 4) {
+            if (values.length == 1 && values[0].equalsIgnoreCase("rainbow")) {
+                this.rainbow = !this.rainbow;
+                return;
+
+            } else if (values.length < 4) {
                 throw new Exception();
+
             } else {
                 this.setValuesFromString(values[0], values[1], values[2], values[3], "false");
                 return;
