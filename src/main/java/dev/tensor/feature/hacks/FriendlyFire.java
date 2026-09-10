@@ -42,7 +42,6 @@ public final class FriendlyFire extends Hack {
         if (event.raytraceHit != null && this.shouldProtectEntity(event.raytraceHit)) {
             event.cancel();
         }
-
     }));
 
     @SuppressWarnings("unused")
