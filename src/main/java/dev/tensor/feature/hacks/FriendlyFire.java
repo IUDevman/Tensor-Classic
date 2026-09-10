@@ -21,7 +21,7 @@ import net.minecraft.src.EntityWolf;
 @Hack.Info(name = "FriendlyFire", category = Category.Combat)
 public final class FriendlyFire extends Hack {
 
-    public final EnumSetting method = new EnumSetting("Ignore Raytrace", Method.Both);
+    public final EnumSetting method = new EnumSetting("Method", Method.Both);
     public final BooleanSetting packetHit = new BooleanSetting("Packet Hit Only", true);
     public final BooleanSetting players = new BooleanSetting("Players", false);
     public final BooleanSetting ignoreFriends = new BooleanSetting("Friends", true);
