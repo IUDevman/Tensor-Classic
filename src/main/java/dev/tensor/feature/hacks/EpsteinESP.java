@@ -31,7 +31,7 @@ public final class EpsteinESP extends Render3DHack {
 
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK);
-    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Fried Color", Color.BLACK);
+    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK);
 
     private final ConcurrentHashMap<EntityPlayer, Integer> playersToRenderWithColor = new ConcurrentHashMap<>();
 
