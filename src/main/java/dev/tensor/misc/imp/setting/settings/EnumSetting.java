@@ -28,6 +28,11 @@ public class EnumSetting implements Setting<Enum<?>> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Enum";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

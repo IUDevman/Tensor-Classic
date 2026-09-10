@@ -26,6 +26,11 @@ public class BlockListSetting implements Setting<BlockList> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "BlockList";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

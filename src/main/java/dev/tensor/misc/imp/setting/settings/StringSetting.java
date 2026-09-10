@@ -26,6 +26,11 @@ public class StringSetting implements Setting<String> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "String";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

@@ -25,6 +25,11 @@ public class SpammerListSetting implements Setting<SpammerList> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "SpamerList";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

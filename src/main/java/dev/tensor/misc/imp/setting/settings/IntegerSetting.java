@@ -31,6 +31,11 @@ public class IntegerSetting implements NumberSetting<Integer> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Integer";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

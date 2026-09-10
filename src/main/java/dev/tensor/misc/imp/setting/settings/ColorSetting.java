@@ -41,6 +41,11 @@ public class ColorSetting implements Setting<Color> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Color";
+    }
+
+    @Override
     public String getName() {
         return this.name;
     }

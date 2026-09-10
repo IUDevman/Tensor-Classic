@@ -33,6 +33,11 @@ public class DoubleSetting implements NumberSetting<Double> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Double";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

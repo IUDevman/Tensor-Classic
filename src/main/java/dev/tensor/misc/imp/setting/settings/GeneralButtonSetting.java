@@ -20,6 +20,11 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Button";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

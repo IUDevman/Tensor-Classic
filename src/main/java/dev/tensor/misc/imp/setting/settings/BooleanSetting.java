@@ -26,6 +26,11 @@ public class BooleanSetting implements Setting<Boolean> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "Boolean";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

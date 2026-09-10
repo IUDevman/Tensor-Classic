@@ -147,9 +147,8 @@ public final class Setting implements Command {
             this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName()
                     + ": Hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text()
                     + "' setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.DEFAULT.text()
-                    + "' " + ChatColor.AQUA.text() + setting.getValue().getClass().getSimpleName()
-                    + ChatColor.DEFAULT.text() + " value set to '" + setting.getValueString(true)
-                    + ChatColor.DEFAULT.text() + "'!");
+                    + "' " + setting.getValueTypeName() + " value set to '" + ChatColor.AQUA.text()
+                    + setting.getValueString(true) + ChatColor.DEFAULT.text() + "'!");
 
         } catch (Exception ignored) {
             this.sendClientMessageWithHeader(ChatColor.RED.text() + this.getName() + ": Failed to set hack '" + ChatColor.AQUA.text() + hack.NAME + "' setting '" + ChatColor.AQUA.text() + setting.getName() + ChatColor.RED.text() + "' (invalid setting value '" + ChatColor.AQUA.text() + thirdEntry + ChatColor.RED.text() + "' inputted)!");

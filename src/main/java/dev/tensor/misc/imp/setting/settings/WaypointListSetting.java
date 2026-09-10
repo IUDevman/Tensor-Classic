@@ -25,6 +25,11 @@ public class WaypointListSetting implements Setting<WaypointList> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "WaypointList";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

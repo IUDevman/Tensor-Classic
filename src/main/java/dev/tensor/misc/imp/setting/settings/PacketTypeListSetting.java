@@ -28,6 +28,11 @@ public class PacketTypeListSetting implements Setting<PacketTypeList> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "PacketTypeList";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

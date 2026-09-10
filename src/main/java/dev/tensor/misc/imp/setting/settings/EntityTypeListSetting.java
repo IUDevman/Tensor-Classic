@@ -28,6 +28,11 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
     }
 
     @Override
+    public String getValueTypeName() {
+        return "EntityTypeList";
+    }
+
+    @Override
     public String getName() {
         return this.NAME;
     }

@@ -11,6 +11,8 @@ import dev.tensor.misc.imp.Globals;
 
 public interface Setting<T> extends Globals {
 
+    String getValueTypeName();
+
     String getName();
 
     T getDefaultValue();
