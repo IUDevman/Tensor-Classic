@@ -7,6 +7,7 @@ import dev.tensor.backend.TensorRedirect;
 import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.*;
 import dev.tensor.backend.events.variable.FOVModifierEvent;
+import dev.tensor.backend.events.variable.RaytraceMOPEvent;
 import dev.tensor.backend.events.variable.RenderOverlayEvent;
 import dev.tensor.backend.events.variable.RenderSkyEvent;
 import dev.tensor.misc.imp.Globals;
@@ -196,6 +197,26 @@ public abstract class EntityRendererMixin implements Globals {
             return true;
         } else {
             return gameSettings.smoothCamera;
+        }
+    }
+
+    @TensorRedirect
+    @WrapOperation(method = "getMouseOver", at = @At(value = "INVOKE", target = "Lnet/minecraft/src/Entity;canBeCollidedWith()Z"))
+    public boolean tensor_onGetMouseOverRaytrace(Entity instance, Operation<Boolean> original) {
+        if (this.failsNullCheck()) {
+            return instance.canBeCollidedWith();
+        }
+
+        if (!this.shouldCallEvent(RaytraceMOPEvent.class)) {
+            return instance.canBeCollidedWith();
+        }
+
+        RaytraceMOPEvent event = EventCache.getCachedEvent(RaytraceMOPEvent.class).withVariables(instance).call(true);
+
+        if (event.isCancelled()) {
+            return false;
+        } else {
+            return instance.canBeCollidedWith();
         }
     }
 }

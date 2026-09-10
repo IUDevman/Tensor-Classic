@@ -90,6 +90,7 @@ public final class HackManager implements Manager {
         this.addHack(new FastBow());
         this.addHack(new FOV());
         this.addHack(new FPS());
+        this.addHack(new FriendlyFire());
         this.addHack(new Fullbright());
         this.addHack(new GhastWarning());
         this.addHack(new GreenText());

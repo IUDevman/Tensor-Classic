@@ -41,6 +41,7 @@ public final class KillAura extends Render3DHack {
     public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
     public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
     public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
+    public final BooleanSetting checkFriendlyFire = new BooleanSetting("Check Friendly Fire", true);
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
@@ -189,6 +190,19 @@ public final class KillAura extends Render3DHack {
     private boolean shouldAttackEntity(Entity entity) {
         if (entity instanceof EntityLiving && !entity.isEntityAlive()) {
             return false;
+        }
+
+        if (this.checkFriendlyFire.getValue()) {
+            FriendlyFire friendlyFire = this.getHackManager().getHack(FriendlyFire.class);
+
+            if (friendlyFire != null && friendlyFire.isEnabled() && !friendlyFire.method.getValue().equals(FriendlyFire.Method.Raytrace)) {
+
+                boolean result = friendlyFire.shouldProtectEntity(entity);
+
+                if (result) {
+                    return false;
+                }
+            }
         }
 
         if (this.players.getValue() && entity instanceof EntityOtherPlayerMP) {
