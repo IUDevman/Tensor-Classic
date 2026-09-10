@@ -1,7 +1,7 @@
 package dev.tensor.feature.commands;
 
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.*;

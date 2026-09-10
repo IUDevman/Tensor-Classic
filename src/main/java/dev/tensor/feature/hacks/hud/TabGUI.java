@@ -5,7 +5,7 @@ import dev.tensor.backend.events.variable.KeyPressedEvent;
 import dev.tensor.feature.hacks.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.gui.imp.TabGUIEntry;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;

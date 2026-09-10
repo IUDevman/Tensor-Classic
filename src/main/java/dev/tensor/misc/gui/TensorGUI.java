@@ -8,7 +8,7 @@ import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.SpammerListSettingButton;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.render.Render2D;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;

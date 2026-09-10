@@ -3,7 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.ButtonSetting;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.setting.settings.StringSetting;
 import net.minecraft.src.ChatAllowedCharacters;
 import org.lwjgl.input.Keyboard;

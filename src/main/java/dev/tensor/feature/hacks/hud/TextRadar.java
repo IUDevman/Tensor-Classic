@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks.hud;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.feature.hacks.HephFreecam;
 import dev.tensor.misc.event.EventAction;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;

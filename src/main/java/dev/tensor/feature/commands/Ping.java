@@ -2,7 +2,7 @@ package dev.tensor.feature.commands;
 
 import dev.tensor.backend.mixins.accessors.NetClientHandlerAccessor;
 import dev.tensor.backend.mixins.accessors.NetworkManagerAccessor;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
 
 import java.net.InetAddress;

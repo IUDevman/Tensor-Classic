@@ -3,7 +3,7 @@ package dev.tensor.feature.commands;
 import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.feature.hacks.Commands;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
 import org.lwjgl.input.Keyboard;
 

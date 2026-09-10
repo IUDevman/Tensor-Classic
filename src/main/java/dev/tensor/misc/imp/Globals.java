@@ -10,7 +10,7 @@ import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;

@@ -1,7 +1,7 @@
 package dev.tensor.feature.commands;
 
 import dev.tensor.feature.hacks.AltAccounts;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.account.Account;
 import dev.tensor.misc.imp.command.Command;
 

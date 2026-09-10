@@ -10,7 +10,7 @@ import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.Al
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.BigColorPickerObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.OtherSettingColorObject;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;

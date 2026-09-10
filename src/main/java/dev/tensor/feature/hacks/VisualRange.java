@@ -3,7 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.PlayerJoinLeaveWorldEvent;
 import dev.tensor.misc.event.EventAction;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.helpers.block.BoxPos;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;

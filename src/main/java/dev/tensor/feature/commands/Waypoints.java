@@ -1,6 +1,6 @@
 package dev.tensor.feature.commands;
 
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.helpers.waypoint.Waypoint;
 import dev.tensor.misc.helpers.waypoint.WaypointList;
 import dev.tensor.misc.imp.command.Command;

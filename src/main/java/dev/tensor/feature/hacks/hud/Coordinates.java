@@ -71,7 +71,6 @@ public final class Coordinates extends Hack implements HUDObject {
         return (int) (this.getHeight() * this.scale.getValue());
     }
 
-
     @Override
     public void render() {
         Vec3D vec3D = this.getPlayerCoordsOverworld();

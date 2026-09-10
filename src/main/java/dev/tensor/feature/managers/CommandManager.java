@@ -5,7 +5,7 @@ import dev.tensor.feature.commands.*;
 import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.command.Command;
 import org.slf4j.Logger;

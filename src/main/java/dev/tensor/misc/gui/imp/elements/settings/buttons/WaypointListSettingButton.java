@@ -5,7 +5,7 @@ import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.ButtonSetting;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.WaypointSettingObject;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.helpers.waypoint.Waypoint;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.WaypointListSetting;

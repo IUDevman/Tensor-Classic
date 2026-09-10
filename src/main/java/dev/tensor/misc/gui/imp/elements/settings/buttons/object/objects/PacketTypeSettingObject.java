@@ -3,7 +3,7 @@ package dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.PacketTypeListSettingButton;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.ButtonSettingObject;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import dev.tensor.misc.imp.setting.settings.PacketTypeListSetting;
 

@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
-import dev.tensor.misc.helpers.ChatColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.setting.Setting;
 import org.lwjgl.input.Keyboard;
