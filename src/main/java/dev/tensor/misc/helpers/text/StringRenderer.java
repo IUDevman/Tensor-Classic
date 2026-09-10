@@ -36,16 +36,16 @@ public final class StringRenderer implements Render2D {
 
     public StringRenderer addText(String text) {
         if (!text.contains(resetToInitial)) {
-            this.processInTextColorAndEnsureUnique(text, this.setColor);
+            this.ensureUniqueAndAdd(text, this.setColor);
         } else {
             String[] split = text.split(resetToInitial);
 
             for (int i = 0; i < split.length; i++) {
                 if (i == 0 && split.length > 1) {
-                    this.processInTextColorAndEnsureUnique(split[i], this.setColor);
+                    this.ensureUniqueAndAdd(split[i], this.setColor);
 
                 } else {
-                    this.processInTextColorAndEnsureUnique(split[i], this.initialColor);
+                    this.ensureUniqueAndAdd(split[i], this.initialColor);
                 }
             }
 
@@ -55,13 +55,13 @@ public final class StringRenderer implements Render2D {
         return this;
     }
 
-    private void processInTextColorAndEnsureUnique(String text, Color color) {
+    private void ensureUniqueAndAdd(String text, Color color) {
         if (this.splitText.containsKey(text)) {
 
             text = resetToInitial + text;
 
             if (this.splitText.containsKey(text)) {
-                this.processInTextColorAndEnsureUnique(text, color);
+                this.ensureUniqueAndAdd(text, color);
 
             } else {
                 this.splitText.put(text, color);
