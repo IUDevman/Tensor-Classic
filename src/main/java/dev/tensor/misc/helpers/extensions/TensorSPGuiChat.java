@@ -1,6 +1,5 @@
 package dev.tensor.misc.helpers.extensions;
 
-import dev.tensor.feature.hacks.Commands;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.GuiChat;
