@@ -100,18 +100,22 @@ public final class CommandManager implements Manager {
 
     @SuppressWarnings("unused")
     private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
-        Commands COMMANDS = this.getHackManager().getHack(Commands.class);
-
-        if (!COMMANDS.isEnabled()) {
-            return;
-        }
-
-        boolean runCommand = this.runCommand(COMMANDS.prefix.getValue(), event.ARGS);
+        boolean runCommand = this.processCommand(event.ARGS);
 
         if (runCommand) {
             event.cancel();
         }
     }));
+
+    public boolean processCommand(String message) {
+        Commands COMMANDS = this.getHackManager().getHack(Commands.class);
+
+        if (!COMMANDS.isEnabled()) {
+            return false;
+        }
+
+        return this.runCommand(COMMANDS.prefix.getValue(), message);
+    }
 
     private boolean runCommand(String PREFIX, String ARGS) {
         if (ARGS == null) {
