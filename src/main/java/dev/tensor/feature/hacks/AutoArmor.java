@@ -32,7 +32,10 @@ public final class AutoArmor extends Hack {
             return;
         }
 
-        this.delayCount = 0;
+        //yes I know we might want to swap if we are in the ClickGUI, but this makes sure we don't swap in containers
+        if (this.getMinecraft().currentScreen != null) {
+            return;
+        }
 
         ItemStack[] armor = this.getPlayer().inventory.armorInventory;
 
@@ -74,9 +77,22 @@ public final class AutoArmor extends Hack {
         }
 
         this.swapArmor(toSwap.location, slotToSwapTo, swappingEmpty);
+
+        this.delayCount = 0;
     }
 
     private void swapArmor(int armorSlot, int inventorySlot, boolean swappingEmpty) {
         //todo: code to swap
+
+        if (swappingEmpty) {
+            //click in main inventory
+            //click in armor inventory
+            //dome!
+        } else {
+            //click in armor inventory
+            //click in main inventory
+            //click in armor inventory
+            //done!
+        }
     }
 }
