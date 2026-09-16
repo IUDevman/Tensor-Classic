@@ -110,6 +110,7 @@ public final class ArmorSlot {
     public int findBestItemForSlot(ItemStack[] mainInventory) {
         int toReturn = -1;
         int currentLevel = this.item == null ? 0 : convert2Value(this.item.getItemName());
+        int damage = 1000;
 
         for (int i = 0; i < 36; i++) {
 
@@ -119,6 +120,8 @@ public final class ArmorSlot {
                 continue;
             }
 
+            int itemDamage = item.isItemStackDamageable() ? item.getItemDamage() : 1000;
+
             String itemName = item.getItemName();
 
             switch (this.location) {
@@ -126,8 +129,9 @@ public final class ArmorSlot {
                     if (BOOTS().contains(itemName)) {
                         int value = convert2Value(itemName);
 
-                        if (value > currentLevel) {
+                        if (value > currentLevel && itemDamage <= damage) {
                             currentLevel = value;
+                            damage = itemDamage;
                             toReturn = i;
                         }
                     }
@@ -137,8 +141,9 @@ public final class ArmorSlot {
                     if (PANTS().contains(itemName)) {
                         int value = convert2Value(itemName);
 
-                        if (value > currentLevel) {
+                        if (value > currentLevel && itemDamage <= damage) {
                             currentLevel = value;
+                            damage = itemDamage;
                             toReturn = i;
                         }
                     }
@@ -147,8 +152,9 @@ public final class ArmorSlot {
                     if (CHESTS().contains(itemName)) {
                         int value = convert2Value(itemName);
 
-                        if (value > currentLevel) {
+                        if (value > currentLevel && itemDamage <= damage) {
                             currentLevel = value;
+                            damage = itemDamage;
                             toReturn = i;
                         }
                     }
@@ -157,8 +163,9 @@ public final class ArmorSlot {
                     if (HELMETS().contains(itemName)) {
                         int value = convert2Value(itemName);
 
-                        if (value > currentLevel) {
+                        if (value > currentLevel && itemDamage <= damage) {
                             currentLevel = value;
+                            damage = itemDamage;
                             toReturn = i;
                         }
                     }
