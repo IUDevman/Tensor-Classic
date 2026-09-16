@@ -4,7 +4,6 @@ import dev.tensor.misc.helpers.inventory.ArmorSlot;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
-import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Packet102WindowClick;
 
