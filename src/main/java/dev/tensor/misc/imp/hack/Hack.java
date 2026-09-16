@@ -64,8 +64,9 @@ public abstract class Hack implements Globals {
 
     private final ArrayList<EventAction<?>> actions = new ArrayList<>();
 
-    @Override
-    public final <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {
+    public final <T extends Event<T>> EventAction<T> addHackEventAction(EventAction<T> action) {
+        action.setDeclaringClass(this.getClass());
+
         this.actions.add(action);
         return action;
     }

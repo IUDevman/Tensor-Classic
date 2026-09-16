@@ -21,7 +21,7 @@ public final class AutoSign extends Hack {
     public final StringSetting lineFour = new StringSetting("Line 4", "Tensor :D");
 
     @SuppressWarnings("unused")
-    private final EventAction<SignEvent> signEventAction = this.addEventAction(new EventAction<>(SignEvent.class, event -> {
+    private final EventAction<SignEvent> signEventAction = this.addHackEventAction(new EventAction<>(SignEvent.class, event -> {
         event.tileEntitySign.signText[0] = this.lineOne.getValue();
         event.tileEntitySign.signText[1] = this.lineTwo.getValue();
         event.tileEntitySign.signText[2] = this.lineThree.getValue();

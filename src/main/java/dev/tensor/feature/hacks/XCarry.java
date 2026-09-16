@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class XCarry extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<CloseInventoryEvent> closeInventoryEventAction = this.addEventAction(new EventAction<>(CloseInventoryEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<CloseInventoryEvent> closeInventoryEventAction = this.addHackEventAction(new EventAction<>(CloseInventoryEvent.class, EventConstantCancellable::cancel));
 }

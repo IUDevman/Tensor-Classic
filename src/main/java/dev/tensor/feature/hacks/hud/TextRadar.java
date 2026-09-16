@@ -144,7 +144,7 @@ public final class TextRadar extends Hack implements HUDObject {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.linesToRender.clear()));
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.linesToRender.clear()));
 
     private int getDirectionOffset(String value) {
         if (this.direction.getValue().equals(Direction.Left)) {

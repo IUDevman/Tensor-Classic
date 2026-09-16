@@ -23,7 +23,7 @@ public final class CustomFog extends Hack {
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 105, 180, 255));
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
+    private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addHackEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
         if (event.type.equals(RenderSkyEvent.Type.FOG_FLUIDS) && !this.renderFluidFog.getValue()) {
             event.cancel();
             return;

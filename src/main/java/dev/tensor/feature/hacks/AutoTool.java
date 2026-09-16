@@ -73,7 +73,7 @@ public final class AutoTool extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
+    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addHackEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         Packet14BlockDig packet = event.packet;
 
         if (packet.status == 2) {

@@ -88,7 +88,7 @@ public final class Nametags extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<NameTagEvent> nameTagEventAction = this.addEventAction(new EventAction<>(NameTagEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<NameTagEvent> nameTagEventAction = this.addHackEventAction(new EventAction<>(NameTagEvent.class, EventConstantCancellable::cancel));
 
     private void renderNameTagForPlayer(EntityPlayer entity, float renderPartialTicks, double[] playerCoords) {
         String username = entity.username;

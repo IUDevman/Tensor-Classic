@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class AntiKnockback extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<KnockbackEvent> knockbackEventAction = this.addEventAction(new EventAction<>(KnockbackEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<KnockbackEvent> knockbackEventAction = this.addHackEventAction(new EventAction<>(KnockbackEvent.class, EventConstantCancellable::cancel));
 }

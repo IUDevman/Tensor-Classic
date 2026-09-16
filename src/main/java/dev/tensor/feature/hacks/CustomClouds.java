@@ -22,7 +22,7 @@ public final class CustomClouds extends Hack {
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255));
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
+    private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addHackEventAction(new EventAction<>(RenderSkyEvent.class, event -> {
         if (!event.type.equals(RenderSkyEvent.Type.CLOUDS)) {
             return;
         }

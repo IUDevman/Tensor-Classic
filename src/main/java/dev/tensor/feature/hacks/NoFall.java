@@ -22,5 +22,5 @@ public final class NoFall extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> event.packet.onGround = true));
+    private final EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addHackEventAction(new EventAction<>(Packet10FlyingEvent.class, event -> event.packet.onGround = true));
 }

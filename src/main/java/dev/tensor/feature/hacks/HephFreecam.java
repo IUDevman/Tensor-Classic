@@ -165,31 +165,31 @@ public final class HephFreecam extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addEventAction(new EventAction<>(Packet10FlyingEvent.class, EventPriority.Highest, EventVariableCancellable::cancel));
+    private final EventAction<Packet10FlyingEvent> packet10FlyingEventAction = this.addHackEventAction(new EventAction<>(Packet10FlyingEvent.class, EventPriority.Highest, EventVariableCancellable::cancel));
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
+    private final EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addHackEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
         if (event.type.equals(RenderOverlayEvent.Type.BLOCK) || event.type.equals(RenderOverlayEvent.Type.WATER)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<VelocityEvent> velocityEventAction = this.addEventAction(new EventAction<>(VelocityEvent.class, event -> {
+    private final EventAction<VelocityEvent> velocityEventAction = this.addHackEventAction(new EventAction<>(VelocityEvent.class, event -> {
         if (event.type.equals(VelocityEvent.Type.BLOCK) || event.type.equals(VelocityEvent.Type.FLUID)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<UpdateClientPlayerActionEvent> updateClientPlayerActionEventAction = this.addEventAction(new EventAction<>(UpdateClientPlayerActionEvent.class, event -> {
+    private final EventAction<UpdateClientPlayerActionEvent> updateClientPlayerActionEventAction = this.addHackEventAction(new EventAction<>(UpdateClientPlayerActionEvent.class, event -> {
         this.sendPacket(new Packet0KeepAlive());
         event.shouldUpdateInventory = this.updateInventory.getValue();
         event.cancel();
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addEventAction(new EventAction<>(RenderSelectionBoxEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<RenderSelectionBoxEvent> renderSelectionBoxEventAction = this.addHackEventAction(new EventAction<>(RenderSelectionBoxEvent.class, EventPriority.Highest, event -> {
         switch ((Highlight) this.highlight.getValue()) {
             case None:
                 event.cancel();
@@ -205,7 +205,7 @@ public final class HephFreecam extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addEventAction(new EventAction<>(RenderBlockBreakEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addHackEventAction(new EventAction<>(RenderBlockBreakEvent.class, EventPriority.Highest, event -> {
         if (!this.showBreakProgress.getValue()) {
             event.cancel();
         }

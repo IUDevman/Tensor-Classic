@@ -120,7 +120,7 @@ public final class BreadCrumbs extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loggedPositions.clear()));
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.loggedPositions.clear()));
 
     private boolean isPlayerMoving3D() {
         boolean motionX = true;

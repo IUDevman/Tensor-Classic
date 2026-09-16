@@ -34,7 +34,7 @@ public final class FriendlyFire extends Hack {
     public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
 
     @SuppressWarnings("unused")
-    private final EventAction<RaytraceMOPEvent> raytraceMOPEventAction = this.addEventAction(new EventAction<>(RaytraceMOPEvent.class, event -> {
+    private final EventAction<RaytraceMOPEvent> raytraceMOPEventAction = this.addHackEventAction(new EventAction<>(RaytraceMOPEvent.class, event -> {
         if (this.method.getValue().equals(Method.Packet)) {
             return;
         }
@@ -45,7 +45,7 @@ public final class FriendlyFire extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<Packet7UseEntityEvent> packet7UseEntityEventAction = this.addEventAction(new EventAction<>(Packet7UseEntityEvent.class, event -> {
+    private final EventAction<Packet7UseEntityEvent> packet7UseEntityEventAction = this.addHackEventAction(new EventAction<>(Packet7UseEntityEvent.class, event -> {
         if (this.method.getValue().equals(Method.Raytrace)) {
             return;
         }

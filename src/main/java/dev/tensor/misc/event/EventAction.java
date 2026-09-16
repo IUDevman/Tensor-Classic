@@ -17,6 +17,8 @@ public final class EventAction<T extends Event<T>> implements Globals {
     private final EventPriority priority;
     private final Consumer<? super T> action;
 
+    private String declaringClass = "Unknown_Class";
+
     public EventAction(Class<T> eventClass, Consumer<? super T> action) {
         this.eventClass = eventClass;
         this.priority = EventPriority.Medium;
@@ -39,5 +41,21 @@ public final class EventAction<T extends Event<T>> implements Globals {
 
     public Consumer<? super T> getAction() {
         return this.action;
+    }
+
+    public String getDeclaringClass() {
+        return this.declaringClass;
+    }
+
+    public void setDeclaringClass(Class<?> declaringClass) {
+        if (declaringClass == null) {
+            return;
+        }
+
+        this.declaringClass = declaringClass.getSimpleName();
+    }
+
+    public void setDeclaringClass(String declaringClass) {
+        this.declaringClass = declaringClass;
     }
 }

@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoParticles extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<ParticleEvent> particleEventAction = this.addEventAction(new EventAction<>(ParticleEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<ParticleEvent> particleEventAction = this.addHackEventAction(new EventAction<>(ParticleEvent.class, EventConstantCancellable::cancel));
 }

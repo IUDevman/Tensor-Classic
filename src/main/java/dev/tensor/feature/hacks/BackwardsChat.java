@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class BackwardsChat extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.High, event -> {
+    private final EventAction<ChatSentEvent> chatSentEventAction = this.addHackEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.High, event -> {
         String message = event.ARGS;
 
         if (!message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {

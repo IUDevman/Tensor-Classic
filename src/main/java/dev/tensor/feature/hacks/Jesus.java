@@ -44,7 +44,7 @@ public final class Jesus extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<FluidCollisionEvent> fluidCollisionEventAction = this.addEventAction(new EventAction<>(FluidCollisionEvent.class, event -> {
+    private final EventAction<FluidCollisionEvent> fluidCollisionEventAction = this.addHackEventAction(new EventAction<>(FluidCollisionEvent.class, event -> {
         boolean inWater = this.getPlayer().isInWater();
         boolean inLava = this.getPlayer().isInsideOfMaterial(Material.lava);
 

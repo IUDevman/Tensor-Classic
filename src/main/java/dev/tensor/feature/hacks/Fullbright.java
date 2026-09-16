@@ -60,7 +60,7 @@ public final class Fullbright extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
         if (!this.isXrayEnabled()) {
             this.fillLightMap(this.ugandaMode.getValue());
             this.resetWorld();

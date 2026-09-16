@@ -42,7 +42,7 @@ public final class MiddleClickZoom extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<MouseEvent> mouseEventAction = this.addEventAction(new EventAction<>(MouseEvent.class, event -> {
+    private final EventAction<MouseEvent> mouseEventAction = this.addHackEventAction(new EventAction<>(MouseEvent.class, event -> {
         if (!this.isZoomed) {
             return;
         }
@@ -60,7 +60,7 @@ public final class MiddleClickZoom extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<FOVModifierEvent> fovModifierEventAction = this.addEventAction(new EventAction<>(FOVModifierEvent.class, EventPriority.Lowest, event -> {
+    private final EventAction<FOVModifierEvent> fovModifierEventAction = this.addHackEventAction(new EventAction<>(FOVModifierEvent.class, EventPriority.Lowest, event -> {
         if (this.isZoomed) {
             float fov = (float) (event.FOV * this.multiplier.getValue());
 
@@ -74,7 +74,7 @@ public final class MiddleClickZoom extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<SmoothCameraEvent> smoothCameraEventAction = this.addEventAction(new EventAction<>(SmoothCameraEvent.class, event -> {
+    private final EventAction<SmoothCameraEvent> smoothCameraEventAction = this.addHackEventAction(new EventAction<>(SmoothCameraEvent.class, event -> {
         if (this.smoothCamera.getValue() && this.isZoomed) {
             event.cancel();
         }
