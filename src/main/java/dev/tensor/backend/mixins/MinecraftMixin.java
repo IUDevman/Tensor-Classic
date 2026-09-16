@@ -11,6 +11,7 @@ import dev.tensor.misc.imp.Globals;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
+import net.minecraft.src.UnexpectedThrowable;
 import net.minecraft.src.World;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -118,6 +119,15 @@ public abstract class MinecraftMixin implements Globals {
                 }
             }
         });
+    }
+
+    @Inject(method = "onMinecraftCrash", at = @At("HEAD"))
+    public void tensor_onMinecraftCrash(UnexpectedThrowable par1, CallbackInfo ci) {
+        if (this.getTensor() == null || this.getConfigManager() == null) {
+            return;
+        }
+
+        this.getTensorLogger().generateLogReport(this.getConfigManager());
     }
 
     @Unique
