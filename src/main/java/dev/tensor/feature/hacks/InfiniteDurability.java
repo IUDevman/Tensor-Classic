@@ -57,7 +57,7 @@ public final class InfiniteDurability extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<Packet7UseEntityEvent> packet7UseEntityEventAction = this.addEventAction(new EventAction<>(Packet7UseEntityEvent.class, event -> {
+    private final EventAction<Packet7UseEntityEvent> packet7UseEntityEventAction = this.addHackEventAction(new EventAction<>(Packet7UseEntityEvent.class, event -> {
         if (event.packet.isLeftClick != 1) {
             ItemStack currentItem = this.getInventory().getCurrentItem();
 
@@ -84,7 +84,7 @@ public final class InfiniteDurability extends Hack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, EventPriority.Lowest, event -> {
+    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addHackEventAction(new EventAction<>(BlockBreakPacketEvent.class, EventPriority.Lowest, event -> {
         int blockId = this.getWorld().getBlockId(event.packet.xPosition, event.packet.yPosition, event.packet.zPosition);
 
         if (blockId == 0 || this.BLOCKED_BLOCKS.containsBlock(blockId)) {

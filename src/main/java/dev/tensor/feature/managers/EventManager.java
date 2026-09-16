@@ -86,7 +86,7 @@ public final class EventManager implements Manager {
                     action.getAction().accept(event);
 
                 } catch (Exception ignored) {
-                    this.getTensorLogger().log("Failed to call event '" + event.getClass().getSimpleName() + "'!", TensorLogger.Level.WARN);
+                    this.getTensorLogger().log("Failed to call event '" + event.getClass().getSimpleName() + "' for action in class '" + action.getDeclaringClass() + "'!", TensorLogger.Level.WARN);
                 }
             });
         }

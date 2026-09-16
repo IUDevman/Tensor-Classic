@@ -99,7 +99,7 @@ public final class CommandManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ChatSentEvent> chatSentEventAction = this.addEventAction(this, new EventAction<>(ChatSentEvent.class, EventPriority.Highest, event -> {
         boolean runCommand = this.processCommand(event.ARGS);
 
         if (runCommand) {

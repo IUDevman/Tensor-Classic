@@ -176,7 +176,7 @@ public final class TabGUI extends Hack implements HUDObject {
     }
 
     @SuppressWarnings("unused")
-    EventAction<KeyPressedEvent> keyPressedAction = this.addEventAction(new EventAction<>(KeyPressedEvent.class, event -> {
+    EventAction<KeyPressedEvent> keyPressedAction = this.addHackEventAction(new EventAction<>(KeyPressedEvent.class, event -> {
         if (event.KEY_CODE == Keyboard.KEY_LEFT) {
             this.setPage(this.getPage() - 1);
         } else if (event.KEY_CODE == Keyboard.KEY_RIGHT) {

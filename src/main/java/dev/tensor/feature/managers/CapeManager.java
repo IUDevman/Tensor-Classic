@@ -52,7 +52,7 @@ public final class CapeManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<UpdateCapeEvent> updateCapeEventAction = this.addEventAction(new EventAction<>(UpdateCapeEvent.class, event -> {
+    private final EventAction<UpdateCapeEvent> updateCapeEventAction = this.addEventAction(this, new EventAction<>(UpdateCapeEvent.class, event -> {
         if (!this.shouldRenderCapes()) {
             return;
         }

@@ -25,7 +25,7 @@ public final class NoOverlay extends Hack {
     public final BooleanSetting water = new BooleanSetting("Water", false);
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
+    private final EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addHackEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {
         if (this.mode.getValue().equals(Mode.All)) {
             event.cancel();
             return;

@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoItemRender extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderItemEvent> renderItemEventAction = this.addEventAction(new EventAction<>(RenderItemEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<RenderItemEvent> renderItemEventAction = this.addHackEventAction(new EventAction<>(RenderItemEvent.class, EventConstantCancellable::cancel));
 }

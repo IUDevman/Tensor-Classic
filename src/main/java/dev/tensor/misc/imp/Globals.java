@@ -135,7 +135,11 @@ public interface Globals {
         return this.getEventManager().shouldCall(eventClass);
     }
 
-    default <T extends Event<T>> EventAction<T> addEventAction(EventAction<T> action) {
+    default <T extends Event<T>> EventAction<T> addEventAction(Object declaring, EventAction<T> action) {
+        if (declaring != null) {
+            action.setDeclaringClass(declaring.getClass());
+        }
+
         this.getEventManager().addAction(action);
         return action;
     }

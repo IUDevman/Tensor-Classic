@@ -63,7 +63,7 @@ public final class AutoSword extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<AttackEntityEvent> attackEntityEventAction = this.addEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
+    private final EventAction<AttackEntityEvent> attackEntityEventAction = this.addHackEventAction(new EventAction<>(AttackEntityEvent.class, event -> {
         int swapSlot = this.getInventory().currentItem;
         float currentDamage = 0;
 

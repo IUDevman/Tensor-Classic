@@ -22,7 +22,7 @@ public final class CancelPackets extends Hack {
     public final PacketTypeListSetting inboundList = new PacketTypeListSetting("Inbound List", new PacketTypeList(PacketTypeList.NONE()), new PacketTypeList(PacketTypeList.INBOUND()));
 
     @SuppressWarnings("unused")
-    private final EventAction<GeneralPacketEvent> generalPacketEventAction = this.addEventAction(new EventAction<>(GeneralPacketEvent.class, event -> {
+    private final EventAction<GeneralPacketEvent> generalPacketEventAction = this.addHackEventAction(new EventAction<>(GeneralPacketEvent.class, event -> {
         if (this.inbound.getValue() && event.type.equals(GeneralPacketEvent.Type.INBOUND)) {
 
             if (this.inboundList.containsPacket(event.packet)) {

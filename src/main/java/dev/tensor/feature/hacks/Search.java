@@ -109,7 +109,7 @@ public final class Search extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderBlockEvent> renderBlockEventAction = this.addEventAction(new EventAction<>(RenderBlockEvent.class, event -> {
+    private final EventAction<RenderBlockEvent> renderBlockEventAction = this.addHackEventAction(new EventAction<>(RenderBlockEvent.class, event -> {
 
         if (this.shouldRenderForBlock(event.block.blockID)) {
 
@@ -138,14 +138,14 @@ public final class Search extends Render3DHack {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, event -> {
+    private final EventAction<ViewBobEvent> viewBobEventAction = this.addHackEventAction(new EventAction<>(ViewBobEvent.class, event -> {
         if (!this.tracers.getValue().equals(TracerMode.None) && this.hasTracers) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.blockCoords.clear();
         this.hasTracers = false;
         this.portalHunter = null;

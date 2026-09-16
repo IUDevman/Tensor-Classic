@@ -30,5 +30,5 @@ public final class TCPNoDelay extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<SocketInitEvent> socketInitEventAction = this.addEventAction(new EventAction<>(SocketInitEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<SocketInitEvent> socketInitEventAction = this.addHackEventAction(new EventAction<>(SocketInitEvent.class, EventConstantCancellable::cancel));
 }

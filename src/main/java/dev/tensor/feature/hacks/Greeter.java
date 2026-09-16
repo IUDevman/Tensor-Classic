@@ -38,7 +38,7 @@ public final class Greeter extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
+    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addHackEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {
         if (this.shouldStopForSpammer()) {
             return;
         }

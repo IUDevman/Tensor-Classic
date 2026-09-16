@@ -15,5 +15,5 @@ import dev.tensor.misc.imp.hack.Hack;
 public final class NoViewBob extends Hack {
 
     @SuppressWarnings("unused")
-    private final EventAction<ViewBobEvent> viewBobEventAction = this.addEventAction(new EventAction<>(ViewBobEvent.class, EventConstantCancellable::cancel));
+    private final EventAction<ViewBobEvent> viewBobEventAction = this.addHackEventAction(new EventAction<>(ViewBobEvent.class, EventConstantCancellable::cancel));
 }

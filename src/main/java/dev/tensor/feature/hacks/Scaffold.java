@@ -136,7 +136,7 @@ public final class Scaffold extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<MovementClipEvent> movementClipEventAction = this.addEventAction(new EventAction<>(MovementClipEvent.class, event -> {
+    private final EventAction<MovementClipEvent> movementClipEventAction = this.addHackEventAction(new EventAction<>(MovementClipEvent.class, event -> {
         if (this.safeWalk.getValue()) {
             event.cancel();
         }

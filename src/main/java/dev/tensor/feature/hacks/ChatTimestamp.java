@@ -61,7 +61,7 @@ public final class ChatTimestamp extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addEventAction(new EventAction<>(ChatReceivedEvent.class, EventPriority.Lowest, event -> {
+    private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addHackEventAction(new EventAction<>(ChatReceivedEvent.class, EventPriority.Lowest, event -> {
         this.prevLength = this.getFontRenderer().getStringWidth(event.message);
 
         if (this.messageCutPrev != "") {

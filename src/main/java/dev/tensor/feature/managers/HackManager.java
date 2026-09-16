@@ -279,7 +279,7 @@ public final class HackManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(new EventAction<>(ClientTickEvent.class, EventPriority.High, event -> {
+    private final EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(this, new EventAction<>(ClientTickEvent.class, EventPriority.High, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -300,7 +300,7 @@ public final class HackManager implements Manager {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<Render2DEvent> render2DEventAction = this.addEventAction(new EventAction<>(Render2DEvent.class, event -> {
+    private final EventAction<Render2DEvent> render2DEventAction = this.addEventAction(this, new EventAction<>(Render2DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -321,7 +321,7 @@ public final class HackManager implements Manager {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<Render3DEvent> render3DEventAction = this.addEventAction(new EventAction<>(Render3DEvent.class, event -> {
+    private final EventAction<Render3DEvent> render3DEventAction = this.addEventAction(this, new EventAction<>(Render3DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -332,7 +332,7 @@ public final class HackManager implements Manager {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<KeyPressedEvent> keyPressedEventAction = this.addEventAction(new EventAction<>(KeyPressedEvent.class, event -> {
+    private final EventAction<KeyPressedEvent> keyPressedEventAction = this.addEventAction(this, new EventAction<>(KeyPressedEvent.class, event -> {
         this.getHacks().forEach(hack -> {
             if (hack.BIND == event.KEY_CODE) {
                 hack.toggle();
@@ -341,7 +341,7 @@ public final class HackManager implements Manager {
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(this, new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> {
         ArrayList<Hack> toDisable = new ArrayList<>();
 
         this.getEnabledHacks().forEach(hack -> {

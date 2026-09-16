@@ -92,5 +92,5 @@ public final class GhastWarning extends Hack implements HUDObject {
     }
 
     @SuppressWarnings("unused")
-    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.hasFireBall = false));
+    EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, event -> this.hasFireBall = false));
 }

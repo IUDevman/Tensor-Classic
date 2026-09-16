@@ -144,7 +144,7 @@ public final class BreakProgress extends Render3DHack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addEventAction(new EventAction<>(RenderBlockBreakEvent.class, event -> {
+    private final EventAction<RenderBlockBreakEvent> renderBlockBreakEventAction = this.addHackEventAction(new EventAction<>(RenderBlockBreakEvent.class, event -> {
         if (this.getMinecraft().renderGlobal.damagePartialTime == 0F) {
             return;
         }

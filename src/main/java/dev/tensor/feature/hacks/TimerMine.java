@@ -41,7 +41,7 @@ public final class TimerMine extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
+    private final EventAction<BlockBreakPacketEvent> blockBreakPacketEventAction = this.addHackEventAction(new EventAction<>(BlockBreakPacketEvent.class, event -> {
         int status = event.packet.status;
 
         if (status == 0) {

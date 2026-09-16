@@ -45,21 +45,21 @@ public final class Chams extends Hack {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<RenderEntityEvent> renderEntityEventAction = this.addEventAction(new EventAction<>(RenderEntityEvent.class, event -> {
+    private final EventAction<RenderEntityEvent> renderEntityEventAction = this.addHackEventAction(new EventAction<>(RenderEntityEvent.class, event -> {
         if (this.shouldRenderChams(event.entity)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<EntityLightValueEvent> entityLightValueEventAction = this.addEventAction(new EventAction<>(EntityLightValueEvent.class, event -> {
+    private final EventAction<EntityLightValueEvent> entityLightValueEventAction = this.addHackEventAction(new EventAction<>(EntityLightValueEvent.class, event -> {
         if (this.cached_Entity_IDs.contains(event.entityID)) {
             event.cancel();
         }
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
+    private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addHackEventAction(new EventAction<>(ChangeWorldEvent.class, event -> {
         this.resetEntityCache();
     }));
 
