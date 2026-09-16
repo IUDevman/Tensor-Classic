@@ -1,5 +1,6 @@
 package dev.tensor.misc.imp.render;
 
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -431,7 +432,7 @@ public interface Render2D extends Globals {
             return id;
 
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load texture: " + name + " (" + id + ")!");
+            this.getTensorLogger().log("Failed to load texture: " + name + " (" + id + ")!", TensorLogger.Level.ERROR);
         }
 
         return -1;

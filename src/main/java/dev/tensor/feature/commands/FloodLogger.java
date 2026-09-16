@@ -1,5 +1,6 @@
 package dev.tensor.feature.commands;
 
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.command.SimpleCallableCommand;
 
 /**
@@ -29,7 +30,7 @@ public final class FloodLogger extends SimpleCallableCommand {
     @Override
     public void onCommandTriggered() {
         for (int i = 0; i < 10; i++) {
-            this.getTensorLogger().info("FloodLogger Active (" + i + ")!");
+            this.getTensorLogger().log("FloodLogger Active (" + i + ")!", TensorLogger.Level.INFO);
         }
     }
 }

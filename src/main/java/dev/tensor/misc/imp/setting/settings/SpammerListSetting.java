@@ -17,7 +17,7 @@ public class SpammerListSetting implements Setting<SpammerList> {
 
     private final SpammerList LIST;
 
-    public SpammerListSetting(String NAME, SpammerList LIST) { //TODO: Make custom gui window and command
+    public SpammerListSetting(String NAME, SpammerList LIST) {
         this.NAME = NAME;
         this.LIST = LIST;
 

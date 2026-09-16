@@ -5,9 +5,9 @@ import com.google.gson.JsonObject;
 import dev.tensor.backend.events.variable.UpdateCapeEvent;
 import dev.tensor.feature.hacks.Capes;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
-import org.slf4j.Logger;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -33,8 +33,8 @@ public final class CapeManager implements Manager {
     private final ArrayList<String> CAPED_PLAYERS = new ArrayList<>();
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
         this.checkCapeURL(LOGGER);
 
@@ -45,8 +45,8 @@ public final class CapeManager implements Manager {
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         this.saveCapes(LOGGER);
     }
@@ -63,7 +63,7 @@ public final class CapeManager implements Manager {
         }
     }));
 
-    private void checkCapeURL(Logger LOGGER) {
+    private void checkCapeURL(TensorLogger LOGGER) {
         try {
             URL link = new URL(this.CAPE_URL);
             HttpURLConnection connection = (HttpURLConnection) link.openConnection();
@@ -75,12 +75,12 @@ public final class CapeManager implements Manager {
             }
 
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load cape (URL is broken)!");
+            LOGGER.log("Failed to load cape (URL is broken)!", TensorLogger.Level.WARN);
             this.CAPE_URL = "broken";
         }
     }
 
-    private void loadCapes(Logger LOGGER) {
+    private void loadCapes(TensorLogger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
 
@@ -93,11 +93,11 @@ public final class CapeManager implements Manager {
             jsonArray.forEach(jsonElement -> this.addCapedPlayer(jsonElement.getAsString()));
 
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 
-    private void saveCapes(Logger LOGGER) {
+    private void saveCapes(TensorLogger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
             this.getConfigManager().registerFile(path);
@@ -110,7 +110,7 @@ public final class CapeManager implements Manager {
 
             this.getConfigManager().createAndWrite(path, jsonObject);
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 

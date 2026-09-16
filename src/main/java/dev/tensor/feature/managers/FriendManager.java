@@ -2,9 +2,9 @@ package dev.tensor.feature.managers;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
-import org.slf4j.Logger;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -26,13 +26,13 @@ public final class FriendManager implements Manager {
     private final ArrayList<String> FRIENDS = new ArrayList<>();
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
         this.loadFriends(LOGGER);
     }
 
-    private void loadFriends(Logger LOGGER) {
+    private void loadFriends(TensorLogger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
 
@@ -45,7 +45,7 @@ public final class FriendManager implements Manager {
             jsonArray.forEach(jsonElement -> this.addFriend(jsonElement.getAsString()));
 
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 
@@ -82,13 +82,13 @@ public final class FriendManager implements Manager {
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         this.saveFriends(LOGGER);
     }
 
-    private void saveFriends(Logger LOGGER) {
+    private void saveFriends(TensorLogger LOGGER) {
         try {
             Path path = Paths.get(this.getConfigManager().getConfigPath() + this.getName() + ".json");
             this.getConfigManager().registerFile(path);
@@ -101,7 +101,7 @@ public final class FriendManager implements Manager {
 
             this.getConfigManager().createAndWrite(path, jsonObject);
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 }

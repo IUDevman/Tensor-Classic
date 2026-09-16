@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.entity.EntityTypeList;
 import dev.tensor.misc.imp.setting.Setting;
 import net.minecraft.src.Entity;
@@ -122,7 +123,7 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
                 this.setValueFromString(value);
             }
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load EntityTypeListSetting: " + this.getName() + "!");
+            this.getTensorLogger().log("Failed to load EntityTypeListSetting: " + this.getName() + " for hack: " + this.getHackNameForSetting() + "!", TensorLogger.Level.ERROR);
         }
     }
 

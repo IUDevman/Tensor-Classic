@@ -10,13 +10,13 @@ import dev.tensor.feature.hacks.*;
 import dev.tensor.feature.hacks.hud.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
 import net.minecraft.src.GuiGameOver;
-import org.slf4j.Logger;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -49,8 +49,8 @@ public final class HackManager implements Manager {
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
         this.addHack(new AltAccounts());
         this.addHack(new AntiKnockback());
@@ -159,12 +159,12 @@ public final class HackManager implements Manager {
     }
 
     @Override
-    public void loadPost(Logger LOGGER) {
+    public void loadPost(TensorLogger LOGGER) {
         this.postLoadHacks(LOGGER);
     }
 
     //Do not run this until after the entire client is loaded
-    public void postLoadHacks(Logger LOGGER) {
+    public void postLoadHacks(TensorLogger LOGGER) {
         try {
             if (!Files.exists(Paths.get(this.hackPath))) {
                 Files.createDirectories(Paths.get(this.hackPath));
@@ -174,18 +174,18 @@ public final class HackManager implements Manager {
                 try {
                     hack.load(this.hackPath);
                 } catch (Exception ignored) {
-                    LOGGER.info("Failed to load hack: " + hack.NAME);
+                    LOGGER.log("Failed to load hack: " + hack.NAME, TensorLogger.Level.WARN);
                 }
             });
 
         } catch (Exception ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         this.getHacks().forEach(hack -> {
             if (hack.shouldDisableOnDisconnect() && hack.isEnabled()) {
@@ -195,7 +195,7 @@ public final class HackManager implements Manager {
             try {
                 hack.save(this.hackPath);
             } catch (Exception ingored) {
-                LOGGER.info("Failed to save hack: " + hack.NAME);
+                LOGGER.log("Failed to save config for hack: " + hack.NAME, TensorLogger.Level.ERROR);
             }
         });
     }

@@ -4,8 +4,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.object.objects.color.SmallColorPickerObject;
-import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.color.RainbowColor;
+import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.setting.Setting;
 
 import java.awt.*;
@@ -134,7 +135,7 @@ public class ColorSetting implements Setting<Color> {
         try {
             this.setValueFromString(jsonElement.getAsString());
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load ColorSetting: " + this.getName() + "!");
+            this.getTensorLogger().log("Failed to load ColorSetting: " + this.getName() + " for hack: " + this.getHackNameForSetting() + "!", TensorLogger.Level.ERROR);
         }
     }
 

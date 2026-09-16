@@ -2,7 +2,11 @@ package dev.tensor.misc.imp.setting;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import dev.tensor.feature.managers.HackManager;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Hoosiers
@@ -35,5 +39,33 @@ public interface Setting<T> extends Globals {
 
     default boolean hasCustomConfig() {
         return false;
+    }
+
+    default String getHackNameForSetting() {
+        try {
+            HackManager hackManager = this.getHackManager();
+
+            if (hackManager == null) {
+                return "Error";
+            }
+
+            AtomicReference<String> value = new AtomicReference<>("Unknown");
+
+            hackManager.getHacks().forEach(hack -> {
+                if (!value.get().equalsIgnoreCase("Unknown")) {
+                    return;
+                }
+
+                if (hack.getSettings().contains(this)) {
+                    value.set(hack.NAME);
+                }
+            });
+
+            return value.get();
+
+        } catch (Exception ignored) {
+            this.getTensorLogger().log("Failed to get hack owner for setting: " + this.getName(), TensorLogger.Level.WARN);
+            return "Error";
+        }
     }
 }

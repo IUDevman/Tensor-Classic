@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 /**
@@ -21,7 +22,7 @@ public class EncryptedStringSetting extends StringSetting {
         try {
             this.setValueFromString(this.decryptValue(jsonElement.getAsString()));
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load StringSetting: " + this.getName() + "!");
+            this.getTensorLogger().log("Failed to load EncryptedStringSetting: " + this.getName() + " for hack: " + this.getHackNameForSetting() + "!", TensorLogger.Level.ERROR);
         }
     }
 

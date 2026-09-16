@@ -2,6 +2,7 @@ package dev.tensor.misc.imp.setting.settings;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.waypoint.WaypointList;
 import dev.tensor.misc.imp.setting.Setting;
 
@@ -68,7 +69,7 @@ public class WaypointListSetting implements Setting<WaypointList> {
         try {
             this.VALUE.loadWaypoints(UNIQUE);
         } catch (Exception e) {
-            this.getTensorLogger().info("Failed to load waypoint list for setting : " + this.getName());
+            this.getTensorLogger().log("Failed to load waypoint list for setting : " + this.getName() + " for hack: " + this.getHackNameForSetting(), TensorLogger.Level.ERROR);
         }
     }
 
@@ -77,7 +78,7 @@ public class WaypointListSetting implements Setting<WaypointList> {
         try {
             this.VALUE.saveWaypoints(UNIQUE);
         } catch (Exception e) {
-            this.getTensorLogger().info("Failed to save waypoint list for setting : " + this.getName());
+            this.getTensorLogger().log("Failed to save waypoint list for setting : " + this.getName() + " for hack: " + this.getHackNameForSetting(), TensorLogger.Level.ERROR);
         }
     }
 

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.setting.Setting;
@@ -85,7 +86,7 @@ public abstract class Hack implements Globals {
                     SETTINGS.add((Setting<?>) field.get(this));
 
                 } catch (Exception ignored) {
-                    this.getTensorLogger().info("Failed to get setting for hack " + this.NAME + "!");
+                    this.getTensorLogger().log("Failed to get setting for hack " + this.NAME + "!", TensorLogger.Level.WARN);
                 }
             }
         });

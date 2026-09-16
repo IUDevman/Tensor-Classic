@@ -6,6 +6,7 @@ import dev.tensor.backend.events.constant.KnockbackEvent;
 import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.backend.events.variable.ChunkChangeEvent;
 import dev.tensor.backend.events.variable.GeneralPacketEvent;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
 import org.spongepowered.asm.mixin.Mixin;
@@ -104,10 +105,10 @@ public final class NetworkManagerMixin implements Globals {
             if (event.isCancelled()) {
                 try {
                     socket.setTcpNoDelay(true);
-                    this.getTensorLogger().info("TCP set to : {}!", socket.getTcpNoDelay());
+                    this.getTensorLogger().log("TCP set to : " + socket.getTcpNoDelay() + "!", TensorLogger.Level.INFO);
 
                 } catch (Exception ignored) {
-                    this.getTensorLogger().info("TCP Failed to set!");
+                    this.getTensorLogger().log("Failed to modify TCP!", TensorLogger.Level.WARN);
                 }
             }
         });

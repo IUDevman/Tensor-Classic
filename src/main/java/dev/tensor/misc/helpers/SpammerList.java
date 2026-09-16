@@ -66,7 +66,7 @@ public final class SpammerList implements Globals {
                 }
             });
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load spammer files!");
+            this.getTensorLogger().log("Failed to load spammer files!", TensorLogger.Level.WARN);
         }
 
         if (this.pathsToSpammerFiles.isEmpty()) {
@@ -98,7 +98,7 @@ public final class SpammerList implements Globals {
                 this.loadSpammerFile(this.pathsToSpammerFiles.get(0));
 
             } catch (Exception ignored) {
-                this.getTensorLogger().info("Failed to load lines for spammer file '" + this.pathsToSpammerFiles.get(0) + "'!");
+                this.getTensorLogger().log("Failed to load lines for spammer file '" + this.pathsToSpammerFiles.get(0) + "'!", TensorLogger.Level.WARN);
             }
         }
     }

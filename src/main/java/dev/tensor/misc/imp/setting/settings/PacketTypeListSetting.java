@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.packet.PacketTypeList;
 import dev.tensor.misc.imp.setting.Setting;
 import net.minecraft.src.Packet;
@@ -123,7 +124,7 @@ public class PacketTypeListSetting implements Setting<PacketTypeList> {
                 this.setValueFromString(value);
             }
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load PacketTypeListSetting: " + this.getName() + "!");
+            this.getTensorLogger().log("Failed to load PacketTypeListSetting: " + this.getName() + " for hack: " + this.getHackNameForSetting() + "!", TensorLogger.Level.ERROR);
         }
     }
 

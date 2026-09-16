@@ -1,6 +1,6 @@
 package dev.tensor.misc.imp;
 
-import org.slf4j.Logger;
+import dev.tensor.misc.helpers.TensorLogger;
 
 /**
  * @author Hoosiers
@@ -11,11 +11,11 @@ public interface Manager extends Globals {
 
     String getName();
 
-    void load(Logger LOGGER);
+    void load(TensorLogger LOGGER);
 
-    void save(Logger LOGGER);
+    void save(TensorLogger LOGGER);
 
-    default void loadPost(Logger LOGGER) {
+    default void loadPost(TensorLogger LOGGER) {
 
     }
 }

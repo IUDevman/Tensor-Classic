@@ -3,6 +3,7 @@ package dev.tensor.misc.helpers.waypoint;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
 
 import java.nio.file.Files;
@@ -59,7 +60,7 @@ public final class WaypointList implements Globals {
         Path path = Paths.get(configPath.replace("{X}", unique));
 
         if (!Files.exists(path)) {
-            this.getTensorLogger().info("Failed to load waypoints!");
+            this.getTensorLogger().log("Failed to load waypoints!", TensorLogger.Level.ERROR);
             return;
         }
 

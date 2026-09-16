@@ -10,12 +10,12 @@ import dev.tensor.feature.hacks.Xray;
 import dev.tensor.feature.managers.*;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
-import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.rotation.Rotation;
+import dev.tensor.misc.helpers.text.ChatColor;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,7 +59,7 @@ public interface Globals {
         return TensorClassic.getInstance();
     }
 
-    default Logger getTensorLogger() {
+    default TensorLogger getTensorLogger() {
         return TensorClassic.getLogger();
     }
 

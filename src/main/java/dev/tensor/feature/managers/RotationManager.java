@@ -2,11 +2,11 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.backend.events.variable.Packet10FlyingEvent;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Packet12PlayerLook;
-import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -28,14 +28,14 @@ public final class RotationManager implements Manager {
     }
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
         this.rotationQueue.clear();
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
         this.rotationQueue.clear();
     }
 

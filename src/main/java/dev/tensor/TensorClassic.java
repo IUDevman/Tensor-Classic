@@ -1,11 +1,10 @@
 package dev.tensor;
 
 import dev.tensor.feature.managers.*;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.Manager;
 import net.fabricmc.api.ModInitializer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 
@@ -24,7 +23,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
     private static TensorClassic INSTANCE;
 
-    private static Logger LOGGER;
+    private static TensorLogger LOGGER;
 
     public final HashMap<Class<? extends Manager>, Manager> MANAGERS = new HashMap<>();
 
@@ -33,7 +32,7 @@ public final class TensorClassic implements ModInitializer, Globals {
             INSTANCE = this;
         }
 
-        LOGGER = LoggerFactory.getLogger(MOD_NAME);
+        LOGGER = TensorLogger.getInstance();
     }
 
     public static TensorClassic getInstance() {
@@ -44,7 +43,7 @@ public final class TensorClassic implements ModInitializer, Globals {
         return INSTANCE;
     }
 
-    public static Logger getLogger() {
+    public static TensorLogger getLogger() {
         if (LOGGER == null) {
             new TensorClassic();
         }
@@ -62,7 +61,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         long bootEndTime = System.currentTimeMillis();
 
-        LOGGER.info("Initialized " + MOD_NAME + " Version " + MOD_VERSION + " in " + (bootEndTime - bootStartTime) + " ms!");
+        this.getTensorLogger().log("Initialized " + MOD_NAME + " Version " + MOD_VERSION + " in " + (bootEndTime - bootStartTime) + " ms!", TensorLogger.Level.INFO);
     }
 
     private void loadManagers() {
@@ -98,7 +97,7 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         long saveEndTime = System.currentTimeMillis();
 
-        LOGGER.info("Saved " + MOD_NAME + " Version " + MOD_VERSION + " in " + (saveEndTime - saveStartTime) + " ms!");
+        this.getTensorLogger().log("Saved " + MOD_NAME + " Version " + MOD_VERSION + " in " + (saveEndTime - saveStartTime) + " ms!", TensorLogger.Level.INFO);
     }
 
     public void restartManagers(boolean saveOld) {
@@ -112,6 +111,6 @@ public final class TensorClassic implements ModInitializer, Globals {
 
         long resetEndTime = System.currentTimeMillis();
 
-        LOGGER.info("Reset " + MOD_NAME + " Version " + MOD_VERSION + " in " + (resetEndTime - resetStartTime) + " ms!");
+        this.getTensorLogger().log("Reset " + MOD_NAME + " Version " + MOD_VERSION + " in " + (resetEndTime - resetStartTime) + " ms!", TensorLogger.Level.INFO);
     }
 }

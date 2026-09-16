@@ -7,10 +7,10 @@ import dev.firstdark.rpc.handlers.RPCEventHandler;
 import dev.firstdark.rpc.models.DiscordRichPresence;
 import dev.firstdark.rpc.models.User;
 import dev.tensor.TensorClassic;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.extensions.TensorRPCEventHandler;
 import dev.tensor.misc.imp.Manager;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.slf4j.Logger;
 
 /**
  * @author Hoosiers
@@ -35,13 +35,13 @@ public final class DiscordManager implements Manager {
     private String icon = "logo_tensor1_upscale";
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         if (this.rpc != null) {
             this.rpc.shutdown();
@@ -68,7 +68,7 @@ public final class DiscordManager implements Manager {
             this.presence.start();
 
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to initialize DiscordRPC instance!");
+            this.getTensorLogger().log("Failed to initialize DiscordRPC instance!", TensorLogger.Level.WARN);
 
             this.stopInstance();
 
@@ -133,12 +133,12 @@ public final class DiscordManager implements Manager {
 
             @Override
             public void disconnected(ErrorCode errorCode, String message) {
-                this.getTensorLogger().info("Disconnected DiscordRPC '" + errorCode + "' - '" + message + "'!");
+                this.getTensorLogger().log("Disconnected DiscordRPC '" + errorCode + "' - '" + message + "'!", TensorLogger.Level.INFO);
             }
 
             @Override
             public void errored(ErrorCode errorCode, String message) {
-                this.getTensorLogger().info("Errored DiscordRPC '" + errorCode + "' - '" + message + "'!");
+                this.getTensorLogger().log("Errored DiscordRPC '" + errorCode + "' - '" + message + "'!", TensorLogger.Level.WARN);
             }
         };
 

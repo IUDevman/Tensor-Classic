@@ -4,10 +4,10 @@ import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ClientTickEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +27,13 @@ public final class EntityListManager implements Manager {
     private final ArrayList<Entity> FILTERED_LOADED_ENTITIES = new ArrayList<>();
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     @SuppressWarnings("unused")

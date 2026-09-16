@@ -2,8 +2,8 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
-import org.slf4j.Logger;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -25,13 +25,13 @@ public final class EventManager implements Manager {
     private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventAction>> ACTION_MAP = new HashMap<>();
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     public void addAction(EventAction eventAction) {
@@ -84,7 +84,7 @@ public final class EventManager implements Manager {
                 actions.forEach(action -> action.getAction().accept(event));
 
             } catch (Exception ignored) {
-                this.getTensorLogger().info("D:< Failed to call event '" + event.getClass().getSimpleName() + "'!");
+                this.getTensorLogger().log("D:< Failed to call event '" + event.getClass().getSimpleName() + "'!", TensorLogger.Level.WARN);
             }
         }
     }

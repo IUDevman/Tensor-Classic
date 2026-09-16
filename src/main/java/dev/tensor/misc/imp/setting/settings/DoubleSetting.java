@@ -3,6 +3,7 @@ package dev.tensor.misc.imp.setting.settings;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.setting.NumberSetting;
 
@@ -102,7 +103,7 @@ public class DoubleSetting implements NumberSetting<Double> {
         try {
             this.setValueFromString(jsonElement.getAsString());
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to load DoubleSetting: " + this.getName() + "!");
+            this.getTensorLogger().log("Failed to load DoubleSetting: " + this.getName() + " for hack: " + this.getHackNameForSetting() + "!", TensorLogger.Level.ERROR);
         }
     }
 

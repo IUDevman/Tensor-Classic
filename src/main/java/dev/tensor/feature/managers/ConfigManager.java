@@ -2,8 +2,8 @@ package dev.tensor.feature.managers;
 
 import com.google.gson.*;
 import dev.tensor.TensorClassic;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
-import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,26 +29,26 @@ public final class ConfigManager implements Manager {
     private final String configPath = TensorClassic.MOD_NAME + "/";
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
         this.setUpClientPath(LOGGER);
     }
 
-    private void setUpClientPath(Logger LOGGER) {
+    private void setUpClientPath(TensorLogger LOGGER) {
         try {
             if (!Files.exists(Paths.get(this.getConfigPath()))) {
                 Files.createDirectories(Paths.get(this.getConfigPath()));
             }
 
         } catch (IOException ignored) {
-            LOGGER.info("Failed to load: " + this.getName());
+            LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     public String getConfigPath() {

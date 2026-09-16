@@ -3,9 +3,9 @@ package dev.tensor.feature.managers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import dev.tensor.misc.imp.account.Account;
-import org.slf4j.Logger;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -35,8 +35,8 @@ public final class AccountManager implements Manager {
     private boolean updated = false;
 
     @Override
-    public void load(Logger LOGGER) {
-        LOGGER.info("Loaded: " + this.getName());
+    public void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
         Thread toLoad = new Thread(() -> {
 
@@ -44,7 +44,7 @@ public final class AccountManager implements Manager {
                 try {
                     Thread.sleep(20);
                 } catch (InterruptedException ignored) {
-                    this.getTensorLogger().info("Error with " + this.getName() + " loading thread!");
+                    LOGGER.log("Error with " + this.getName() + " loading thread!", TensorLogger.Level.ERROR);
                 }
             }
 
@@ -52,7 +52,7 @@ public final class AccountManager implements Manager {
                 this.loadSavedAccounts();
 
             } catch (Exception ignored) {
-                this.getTensorLogger().info("Failed to load accounts!");
+                LOGGER.log("Failed to load config for " + this.getName() + "!", TensorLogger.Level.ERROR);
             }
 
             Account sessionAccount = this.accounts.stream().filter(account -> account.getUsername().equalsIgnoreCase(this.getMinecraft().session.username)).findFirst().orElse(null);
@@ -73,7 +73,7 @@ public final class AccountManager implements Manager {
         Path path = Paths.get(this.configPath);
 
         if (!Files.exists(path)) {
-            this.getTensorLogger().info("Failed to load accounts!");
+            this.getTensorLogger().log("Failed to load config for " + this.getName() + "!", TensorLogger.Level.ERROR);
             return;
         }
 
@@ -125,14 +125,14 @@ public final class AccountManager implements Manager {
     }
 
     @Override
-    public void save(Logger LOGGER) {
-        LOGGER.info("Saved: " + this.getName());
+    public void save(TensorLogger LOGGER) {
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         try {
             this.saveAccounts();
 
         } catch (Exception ignored) {
-            this.getTensorLogger().info("Failed to save accounts!");
+            LOGGER.log("Failed to save config for " + this.getName() + "!", TensorLogger.Level.ERROR);
         }
     }
 
@@ -201,7 +201,7 @@ public final class AccountManager implements Manager {
         this.activeAccount = newActiveAccount;
 
         if (!this.getMinecraft().session.username.equalsIgnoreCase(newActiveAccount.getUsername())) {
-            this.getTensorLogger().info("Session username changed from '" + this.getMinecraft().session.username + "' to '" + newActiveAccount.getUsername() + "'!");
+            this.getTensorLogger().log("Session username changed from '" + this.getMinecraft().session.username + "' to '" + newActiveAccount.getUsername() + "'!", TensorLogger.Level.INFO);
             this.getMinecraft().session.username = newActiveAccount.getUsername();
         }
     }
