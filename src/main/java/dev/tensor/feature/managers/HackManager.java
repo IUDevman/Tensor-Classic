@@ -279,7 +279,7 @@ public final class HackManager implements Manager {
     }
 
     @SuppressWarnings("unused")
-    private final EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(this, new EventAction<>(ClientTickEvent.class, EventPriority.High, event -> {
+    public final EventAction<ClientTickEvent> clientTickEventAction = this.addEventAction(this, new EventAction<>(ClientTickEvent.class, EventPriority.High, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -296,11 +296,16 @@ public final class HackManager implements Manager {
             toDisable.forEach(hack -> hack.setEnabled(false));
         }
 
-        this.getEnabledHacks().forEach(Hack::onClientTick);
+        this.getEnabledHacks().forEach(hack -> {
+            this.clientTickEventAction.setDeclaringClass(hack.NAME);
+            hack.onClientTick();
+        });
+
+        this.clientTickEventAction.setDeclaringClass(this.getClass());
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<Render2DEvent> render2DEventAction = this.addEventAction(this, new EventAction<>(Render2DEvent.class, event -> {
+    public final EventAction<Render2DEvent> render2DEventAction = this.addEventAction(this, new EventAction<>(Render2DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
@@ -317,27 +322,40 @@ public final class HackManager implements Manager {
             return;
         }
 
-        this.getEnabledHudObjects().forEach(hack -> ((HUDObject) hack).render());
+        this.getEnabledHudObjects().forEach(hack -> {
+            this.render2DEventAction.setDeclaringClass(hack.NAME);
+            ((HUDObject) hack).render();
+        });
+
+        this.render2DEventAction.setDeclaringClass(this.getClass());
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<Render3DEvent> render3DEventAction = this.addEventAction(this, new EventAction<>(Render3DEvent.class, event -> {
+    public final EventAction<Render3DEvent> render3DEventAction = this.addEventAction(this, new EventAction<>(Render3DEvent.class, event -> {
         if (this.failsNullCheck()) {
             return;
         }
 
         float renderPartialTicks = ((MinecraftAccessor) this.getMinecraft()).tensor_getTimer().renderPartialTicks;
 
-        this.getEnabledRender3DObjectHacks().forEach(hack -> hack.renderIn3D(renderPartialTicks));
+        this.getEnabledRender3DObjectHacks().forEach(hack -> {
+            this.render3DEventAction.setDeclaringClass(hack.NAME);
+            hack.renderIn3D(renderPartialTicks);
+        });
+
+        this.render3DEventAction.setDeclaringClass(this.getClass());
     }));
 
     @SuppressWarnings("unused")
-    private final EventAction<KeyPressedEvent> keyPressedEventAction = this.addEventAction(this, new EventAction<>(KeyPressedEvent.class, event -> {
+    public final EventAction<KeyPressedEvent> keyPressedEventAction = this.addEventAction(this, new EventAction<>(KeyPressedEvent.class, event -> {
         this.getHacks().forEach(hack -> {
             if (hack.BIND == event.KEY_CODE) {
+                this.keyPressedEventAction.setDeclaringClass(hack.NAME);
                 hack.toggle();
             }
         });
+
+        this.keyPressedEventAction.setDeclaringClass(this.getClass());
     }));
 
     @SuppressWarnings("unused")
