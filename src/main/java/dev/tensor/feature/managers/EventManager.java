@@ -80,12 +80,14 @@ public final class EventManager implements Manager {
         CopyOnWriteArrayList<EventAction> actions = this.ACTION_MAP.get(eventClass);
 
         if (ignoreChecks || (actions != null && !actions.isEmpty())) {
-            try {
-                actions.forEach(action -> action.getAction().accept(event));
+            actions.forEach(action -> {
 
-            } catch (Exception ignored) {
-                this.getTensorLogger().log("D:< Failed to call event '" + event.getClass().getSimpleName() + "'!", TensorLogger.Level.WARN);
-            }
+                try {
+                    action.getAction().accept(event);
+                } catch (Exception ignored) {
+                    this.getTensorLogger().log("Failed to call event '" + event.getClass().getSimpleName() + " in superclass " + action.getClass().getDeclaringClass().getSimpleName() + "'!", TensorLogger.Level.WARN);
+                }
+            });
         }
     }
 
