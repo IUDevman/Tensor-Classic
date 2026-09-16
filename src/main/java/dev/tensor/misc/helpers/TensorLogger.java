@@ -69,6 +69,10 @@ public final class TensorLogger {
         if (!crashed && !OUTPUT_ON_SAVE) {
             return;
         }
+
+        if (!SAVE_LOGS || this.LOGGED_MESSAGES.isEmpty()) {
+            return;
+        }
         
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
