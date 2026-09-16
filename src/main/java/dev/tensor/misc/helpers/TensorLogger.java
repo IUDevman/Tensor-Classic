@@ -32,6 +32,7 @@ public final class TensorLogger {
 
     private static final boolean USE_SYS_OUT = false;
     private static final boolean SAVE_LOGS = true;
+    private static final boolean OUTPUT_ON_SAVE = false;
 
     private final Logger LOGGER;
 
@@ -64,7 +65,11 @@ public final class TensorLogger {
         this.LOGGED_MESSAGES.add(message);
     }
 
-    public void generateLogReport(ConfigManager cm) {
+    public void generateLogReport(ConfigManager cm, boolean crashed) {
+        if (!crashed && !OUTPUT_ON_SAVE) {
+            return;
+        }
+        
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = time.format(formatter).replace(" ", "-").replace(":", "-");

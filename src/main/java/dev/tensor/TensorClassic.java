@@ -98,6 +98,8 @@ public final class TensorClassic implements ModInitializer, Globals {
         long saveEndTime = System.currentTimeMillis();
 
         this.getTensorLogger().log("Saved " + MOD_NAME + " Version " + MOD_VERSION + " in " + (saveEndTime - saveStartTime) + " ms!", TensorLogger.Level.INFO);
+
+        this.getTensorLogger().generateLogReport(this.getConfigManager(), false);
     }
 
     public void restartManagers(boolean saveOld) {

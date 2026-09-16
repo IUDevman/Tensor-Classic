@@ -127,7 +127,7 @@ public abstract class MinecraftMixin implements Globals {
             return;
         }
 
-        this.getTensorLogger().generateLogReport(this.getConfigManager());
+        this.getTensorLogger().generateLogReport(this.getConfigManager(), true);
     }
 
     @Unique
