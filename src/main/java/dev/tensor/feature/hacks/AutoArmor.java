@@ -38,7 +38,7 @@ public final class AutoArmor extends Hack {
             return;
         }
 
-        if (this.getMinecraft().currentScreen instanceof IInventory) {
+        if (this.getMinecraft().currentScreen != null) {
             return;
         }
 
