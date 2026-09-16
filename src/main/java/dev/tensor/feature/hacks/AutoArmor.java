@@ -14,10 +14,11 @@ import java.util.ArrayList;
  * @since 09-15-2026
  */
 
+//todo: Add a system to replace max armor based on durability (toggleable slider, but lets say swap at > 10% diff)
 @Hack.Info(name = "AutoArmor", category = Category.Combat)
 public final class AutoArmor extends Hack {
 
-    public final IntegerSetting delay = new IntegerSetting("Delay Ticks", 2, 0, 10);
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10);
 
     private int delayCount = 0;
 
