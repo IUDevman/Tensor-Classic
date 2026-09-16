@@ -109,9 +109,9 @@ public final class ArmorSlot {
 
     public int findBestItemForSlot(ItemStack[] mainInventory) {
         int toReturn = -1;
-        int currentLevel = item == null ? 0 : convert2Value(item.getItemName());
+        int currentLevel = this.item == null ? 0 : convert2Value(this.item.getItemName());
 
-        for (int i = 0; i <= 36; i++) {
+        for (int i = 0; i < 36; i++) {
 
             ItemStack item = mainInventory[i];
 

@@ -4,7 +4,9 @@ import dev.tensor.misc.helpers.inventory.ArmorSlot;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
+import net.minecraft.src.IInventory;
 import net.minecraft.src.ItemStack;
+import net.minecraft.src.Packet102WindowClick;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 @Hack.Info(name = "AutoArmor", category = Category.Combat)
 public final class AutoArmor extends Hack {
 
-    public final IntegerSetting delay = new IntegerSetting("Delay", 2, 0, 10);
+    public final IntegerSetting delay = new IntegerSetting("Delay Ticks", 2, 0, 10);
 
     private int delayCount = 0;
 
@@ -27,13 +29,20 @@ public final class AutoArmor extends Hack {
 
     @Override
     public void onClientTick() {
+        if (!this.isMultiplayer()) {
+            return;
+        }
+
         if (this.delayCount < this.delay.getValue()) {
             this.delayCount++;
             return;
         }
 
-        //yes I know we might want to swap if we are in the ClickGUI, but this makes sure we don't swap in containers
-        if (this.getMinecraft().currentScreen != null) {
+        if (this.getMinecraft().currentScreen instanceof IInventory) {
+            return;
+        }
+
+        if (this.getPlayer().isDead) {
             return;
         }
 
@@ -91,17 +100,21 @@ public final class AutoArmor extends Hack {
     }
 
     private void swapArmor(int armorSlot, int inventorySlot, boolean swappingEmpty) {
-        //todo: code to swap
+        ItemStack armorStack = this.getPlayer().inventory.armorInventory[armorSlot];
+        ItemStack inventoryStack = this.getPlayer().inventory.mainInventory[inventorySlot];
 
-        if (swappingEmpty) {
-            //click in main inventory
-            //click in armor inventory
-            //dome!
-        } else {
-            //click in armor inventory
-            //click in main inventory
-            //click in armor inventory
-            //done!
+        Packet102WindowClick clickInv = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, inventoryStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+        this.sendPacket(clickInv);
+        this.getPlayer().inventory.mainInventory[inventorySlot] = null;
+
+        Packet102WindowClick clickArm = new Packet102WindowClick(0, 8 - armorSlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+        this.sendPacket(clickArm);
+        this.getPlayer().inventory.armorInventory[armorSlot] = inventoryStack;
+
+        if (!swappingEmpty && armorStack != null) {
+            Packet102WindowClick clickBack = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(clickBack);
+            this.getPlayer().inventory.mainInventory[inventorySlot] = armorStack;
         }
     }
 }
