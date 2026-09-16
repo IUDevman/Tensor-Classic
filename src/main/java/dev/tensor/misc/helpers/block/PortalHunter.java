@@ -43,7 +43,7 @@ public final class PortalHunter implements Globals {
         this.portalGroups.forEach(portalGroup -> portalGroup.render(color, alpha, lineWidth));
     }
 
-    public static class PortalGroup implements Render3D {
+    private static class PortalGroup implements Render3D {
 
         private int minX;
         private int minY;
