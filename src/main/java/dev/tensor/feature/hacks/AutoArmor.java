@@ -37,21 +37,29 @@ public final class AutoArmor extends Hack {
             return;
         }
 
+        this.runAutoArmor(null);
+    }
+
+    private void runAutoArmor(ArrayList<ArmorSlot> slots) {
         ItemStack[] armor = this.getPlayer().inventory.armorInventory;
 
         ArrayList<ArmorSlot> slotsToSwap = new ArrayList<>();
 
-        for (int i = 0; i < 4; i++) {
-            ItemStack piece = armor[i];
+        if (slots == null) {
+            for (int i = 0; i < 4; i++) {
+                ItemStack piece = armor[i];
 
-            if (piece == null || piece.getItem() == null) {
-                slotsToSwap.add(new ArmorSlot(i, null));
-                continue;
-            }
+                if (piece == null || piece.getItem() == null) {
+                    slotsToSwap.add(new ArmorSlot(i, null));
+                    continue;
+                }
 
-            if (!ArmorSlot.MAX_ITEMS().contains(piece.getItemName())) {
-                slotsToSwap.add(new ArmorSlot(i, piece.getItem()));
+                if (!ArmorSlot.MAX_ITEMS().contains(piece.getItemName())) {
+                    slotsToSwap.add(new ArmorSlot(i, piece.getItem()));
+                }
             }
+        } else {
+            slotsToSwap = slots;
         }
 
         if (slotsToSwap.isEmpty()) {
@@ -66,13 +74,14 @@ public final class AutoArmor extends Hack {
             toSwap = slotsToSwap.get(0);
         }
 
-        if (toSwap == null) {
-            return;
-        }
-
         int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory);
 
         if (slotToSwapTo == -1) {
+            if (slotsToSwap.size() > 1) {
+                slotsToSwap.remove(toSwap);
+                this.runAutoArmor(slotsToSwap);
+            }
+
             return;
         }
 
