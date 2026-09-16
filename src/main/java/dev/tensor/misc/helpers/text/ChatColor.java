@@ -8,6 +8,7 @@ import java.awt.*;
  */
 
 public enum ChatColor {
+    
     DARK_RED("§4", new Color(170, 0, 0)),
     RED("§c", new Color(255, 85, 85)),
     GOLD("§6", new Color(255, 170, 0)),
