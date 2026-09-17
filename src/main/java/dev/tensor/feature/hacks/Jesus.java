@@ -100,7 +100,6 @@ public final class Jesus extends Hack {
         Lutheran,
         Spirit,
         Reformed,
-        Episcopal,
-        Iran
+        Episcopal
     }
 }
