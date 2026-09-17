@@ -5,6 +5,7 @@ import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.constant.KnockbackEvent;
 import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.backend.events.variable.ChunkChangeEvent;
+import dev.tensor.backend.events.variable.DamageOrAttackPlayerEvent;
 import dev.tensor.backend.events.variable.GeneralPacketEvent;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
@@ -71,7 +72,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.MULTI, packet).call(false);
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.MULTI, packet).call(true);
             return;
         }
 
@@ -82,7 +83,27 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
 
-            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.SINGLE, packet).call(false);
+            EventCache.getCachedEvent(ChunkChangeEvent.class).withVariables(ChunkChangeEvent.Type.SINGLE, packet).call(true);
+            return;
+        }
+
+        if ((packetToRead instanceof Packet7UseEntity || packetToRead instanceof Packet8UpdateHealth) && this.shouldCallEvent(DamageOrAttackPlayerEvent.class)) {
+            if (packetToRead instanceof Packet7UseEntity) {
+                Packet7UseEntity packet = (Packet7UseEntity) packetToRead;
+
+                if (packet.isLeftClick == 1 && packet.targetEntity == this.getPlayer().entityId) {
+                    EventCache.getCachedEvent(DamageOrAttackPlayerEvent.class).withVariables(DamageOrAttackPlayerEvent.Type.Attack).call(true);
+                }
+
+            } else if (packetToRead instanceof Packet8UpdateHealth) {
+                Packet8UpdateHealth packet = (Packet8UpdateHealth) packetToRead;
+
+                boolean lostHealth = this.getPlayer().health - packet.healthMP > 0;
+
+                if (lostHealth) {
+                    EventCache.getCachedEvent(DamageOrAttackPlayerEvent.class).withVariables(DamageOrAttackPlayerEvent.Type.Damage).call(true);
+                }
+            }
         }
     }
 

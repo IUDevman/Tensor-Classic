@@ -78,6 +78,7 @@ public final class HackManager implements Manager {
         this.addHack(new ChatTimestamp());
         this.addHack(new ClickGUI());
         this.addHack(new ClientMessages());
+        this.addHack(new CombatLog());
         this.addHack(new CommandPreview());
         this.addHack(new Commands());
         this.addHack(new Coordinates());
