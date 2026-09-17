@@ -9,6 +9,11 @@ import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.EncryptedStringSetting;
 import net.minecraft.src.Packet3Chat;
 
+/**
+ * @author Hoosiers
+ * @since 03-24-2026
+ */
+
 @Hack.Info(name = "AutoLogin", category = Category.Misc)
 public final class AutoLogin extends Hack {
 

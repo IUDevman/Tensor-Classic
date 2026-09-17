@@ -11,6 +11,11 @@ import net.minecraft.src.EntityOtherPlayerMP;
 import net.minecraft.src.EnumMovingObjectType;
 import net.minecraft.src.MovingObjectPosition;
 
+/**
+ * @author Hoosiers
+ * @since 04-12-2026
+ */
+
 @Hack.Info(name = "MiddleClickFriend", category = Category.Misc)
 public final class MiddleClickFriend extends Hack {
 

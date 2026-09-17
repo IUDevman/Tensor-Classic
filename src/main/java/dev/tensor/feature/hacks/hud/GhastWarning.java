@@ -13,6 +13,11 @@ import net.minecraft.src.EntityFireball;
 
 import java.awt.*;
 
+/**
+ * @author Hoosiers
+ * @since 06-14-2026
+ */
+
 @Hack.Info(name = "GhastWarning", category = Category.HUD)
 public final class GhastWarning extends Hack implements HUDObject {
 

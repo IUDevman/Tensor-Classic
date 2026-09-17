@@ -17,6 +17,11 @@ import net.minecraft.src.EntityOtherPlayerMP;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * @author Hoosiers
+ * @since 06-17-2026
+ */
+
 @Hack.Info(name = "TextRadar", category = Category.HUD)
 public final class TextRadar extends Hack implements HUDObject {
 

@@ -8,6 +8,11 @@ import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import org.lwjgl.input.Keyboard;
 
+/**
+ * @author Hoosiers
+ * @since 03-20-2026
+ */
+
 @Hack.Info(name = "Fullbright", category = Category.Render, bind = Keyboard.KEY_B)
 public final class Fullbright extends Hack {
 

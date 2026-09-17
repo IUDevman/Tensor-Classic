@@ -10,6 +10,11 @@ import org.lwjgl.input.Keyboard;
 
 import java.awt.*;
 
+/**
+ * @author Hoosiers
+ * @since 03-11-2026
+ */
+
 @Hack.Info(name = "ClickGUI", category = Category.Client, bind = Keyboard.KEY_RSHIFT)
 public final class ClickGUI extends Hack {
 
