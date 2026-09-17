@@ -65,29 +65,25 @@ public final class TensorClassic implements ModInitializer, Globals {
     }
 
     private void loadManagers() {
-        this.addManager(this.returnLoadedManager(new EventManager()));
-        this.addManager(this.returnLoadedManager(new ConfigManager()));
-        this.addManager(this.returnLoadedManager(new FriendManager()));
-        this.addManager(this.returnLoadedManager(new CapeManager()));
-        this.addManager(this.returnLoadedManager(new DiscordManager()));
-        this.addManager(this.returnLoadedManager(new RotationManager()));
-        this.addManager(this.returnLoadedManager(new EntityListManager()));
-        this.addManager(this.returnLoadedManager(new AccountManager()));
-        this.addManager(this.returnLoadedManager(new HackManager()));
-        this.addManager(this.returnLoadedManager(new CommandManager()));
-        this.addManager(this.returnLoadedManager(new PluginManager()));
+        this.loadAndAddManager(new EventManager());
+        this.loadAndAddManager(new ConfigManager());
+        this.loadAndAddManager(new FriendManager());
+        this.loadAndAddManager(new CapeManager());
+        this.loadAndAddManager(new DiscordManager());
+        this.loadAndAddManager(new RotationManager());
+        this.loadAndAddManager(new EntityListManager());
+        this.loadAndAddManager(new AccountManager());
+        this.loadAndAddManager(new HackManager());
+        this.loadAndAddManager(new CommandManager());
+        this.loadAndAddManager(new PluginManager());
 
         this.MANAGERS.values().forEach(manager -> manager.loadPost(LOGGER));
     }
 
-    private <T extends Manager> void addManager(T manager) {
-        this.MANAGERS.put(manager.getClass(), manager);
-    }
-
-    private <T extends Manager> T returnLoadedManager(T manager) {
+    private <T extends Manager> void loadAndAddManager(T manager) {
         manager.load(LOGGER);
 
-        return manager;
+        this.MANAGERS.put(manager.getClass(), manager);
     }
 
     public void saveManagers() {
