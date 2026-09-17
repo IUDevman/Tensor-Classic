@@ -12,18 +12,7 @@ import java.util.ArrayList;
 
 public final class ArmorSlot {
 
-    private static final ArrayList<String> MAX_ITEMS = new ArrayList<>();
-
-    public static ArrayList<String> MAX_ITEMS() {
-        if (MAX_ITEMS.isEmpty()) {
-            MAX_ITEMS.add(Item.bootsDiamond.getItemName());
-            MAX_ITEMS.add(Item.legsDiamond.getItemName());
-            MAX_ITEMS.add(Item.plateDiamond.getItemName());
-            MAX_ITEMS.add(Item.helmetDiamond.getItemName());
-        }
-
-        return MAX_ITEMS;
-    }
+    private static final ArrayList<String> ARMOR_ALL = new ArrayList<>();
 
     private static final ArrayList<String> BOOTS = new ArrayList<>();
 
@@ -81,56 +70,76 @@ public final class ArmorSlot {
         return HELMETS;
     }
 
-    public static int convert2Value(String item) {
-        item = item.toLowerCase();
-
-        if (item.contains("diamond")) {
-            return 5;
-        } else if (item.contains("gold")) {
-            return 4;
-        } else if (item.contains("iron")) {
-            return 3;
-        } else if (item.contains("chain")) {
-            return 2;
-        } else if (item.contains("cloth")) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
     public final int location;
     public final Item item;
 
-    public ArmorSlot(int location, Item item) {
+    public final int damage;
+
+    public ArmorSlot(int location, ItemStack stack) {
         this.location = location;
-        this.item = item;
+
+        if (stack == null) {
+            this.item = null;
+            this.damage = -1;
+            return;
+        }
+
+        this.item = stack.getItem();
+
+        if (!stack.isItemStackDamageable()) {
+            this.damage = -1;
+        } else {
+            this.damage = this.getDamagePercent(stack);
+        }
     }
 
-    public int findBestItemForSlot(ItemStack[] mainInventory) {
+    private int getDamagePercent(ItemStack itemStack) {
+        if (!itemStack.isItemStackDamageable()) {
+            return 100;
+        }
+
+        if (!itemStack.isItemDamaged()) {
+            return 0;
+        }
+
+        double damageFraction = (double) itemStack.getItemDamage() / itemStack.getMaxDamage();
+
+        return (int) Math.min(Math.max(damageFraction * 100, 0), 100);
+    }
+
+    public int findBestItemForSlot(ItemStack[] mainInventory, int damageDiffPercent) {
         int toReturn = -1;
-        int currentLevel = this.item == null ? 0 : convert2Value(this.item.getItemName());
-        int damage = 1000;
+        int damage = 101;
+        boolean shouldCheckDiff = false;
+
+        if (this.damage != -1) {
+            damage = this.damage;
+            shouldCheckDiff = true;
+        }
+
+        boolean hasEmptySpace = false;
 
         for (int i = 0; i < 36; i++) {
 
             ItemStack item = mainInventory[i];
 
             if (item == null || item.getItem() == null) {
+                hasEmptySpace = true;
                 continue;
             }
-
-            int itemDamage = item.isItemStackDamageable() ? item.getItemDamage() : 1000;
 
             String itemName = item.getItemName();
 
             switch (this.location) {
                 case 0:
                     if (BOOTS().contains(itemName)) {
-                        int value = convert2Value(itemName);
+                        int itemDamage = this.getDamagePercent(item);
 
-                        if (value > currentLevel && itemDamage <= damage) {
-                            currentLevel = value;
+                        if (itemDamage < damage) {
+                            if (shouldCheckDiff && this.damage - itemDamage <= damageDiffPercent) {
+                                continue;
+                            }
+
                             damage = itemDamage;
                             toReturn = i;
                         }
@@ -139,10 +148,13 @@ public final class ArmorSlot {
                     break;
                 case 1:
                     if (PANTS().contains(itemName)) {
-                        int value = convert2Value(itemName);
+                        int itemDamage = this.getDamagePercent(item);
 
-                        if (value > currentLevel && itemDamage <= damage) {
-                            currentLevel = value;
+                        if (itemDamage < damage) {
+                            if (shouldCheckDiff && this.damage - itemDamage <= damageDiffPercent) {
+                                continue;
+                            }
+
                             damage = itemDamage;
                             toReturn = i;
                         }
@@ -150,10 +162,13 @@ public final class ArmorSlot {
                     break;
                 case 2:
                     if (CHESTS().contains(itemName)) {
-                        int value = convert2Value(itemName);
+                        int itemDamage = this.getDamagePercent(item);
 
-                        if (value > currentLevel && itemDamage <= damage) {
-                            currentLevel = value;
+                        if (itemDamage < damage) {
+                            if (shouldCheckDiff && this.damage - itemDamage <= damageDiffPercent) {
+                                continue;
+                            }
+
                             damage = itemDamage;
                             toReturn = i;
                         }
@@ -161,10 +176,13 @@ public final class ArmorSlot {
                     break;
                 case 3:
                     if (HELMETS().contains(itemName)) {
-                        int value = convert2Value(itemName);
+                        int itemDamage = this.getDamagePercent(item);
 
-                        if (value > currentLevel && itemDamage <= damage) {
-                            currentLevel = value;
+                        if (itemDamage < damage) {
+                            if (shouldCheckDiff && this.damage - itemDamage <= damageDiffPercent) {
+                                continue;
+                            }
+
                             damage = itemDamage;
                             toReturn = i;
                         }
@@ -172,6 +190,16 @@ public final class ArmorSlot {
                     break;
                 default:
                     return -1;
+            }
+        }
+
+        if (toReturn != -1 && !hasEmptySpace && this.item != null) {
+            ItemStack toReturnItem = mainInventory[toReturn];
+            int returnID = toReturnItem.itemID;
+
+            //we cannot swap same items without having another empty slot
+            if (returnID == this.item.shiftedIndex) {
+                return -1;
             }
         }
 

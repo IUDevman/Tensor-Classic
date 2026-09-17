@@ -14,10 +14,23 @@ import java.util.ArrayList;
  * @since 09-15-2026
  */
 
-//todo: Add a system to replace max armor based on durability (toggleable slider, but lets say swap at > 10% diff)
 @Hack.Info(name = "AutoArmor", category = Category.Combat)
 public final class AutoArmor extends Hack {
 
+    /**
+     * OK, so a bit on how this actually works:
+     * This hack first collects all armor slots that could be filled with better protection (empty or damaged).
+     * This hack will naturally first try to fill empty slots.
+     * If no armor is found, it will then try to fill the damaged (recursively; will not get hung up if no options are found).
+     * Beta 1.7.3 calculates protection based on armor damage %.
+     * So a leather helmet with full durability will give more than a diamond with half durability.
+     * This hack swaps your armor with armor that has a higher % remaining.
+     * This is adjusted with the 'Damage % Diff' setting.
+     * Default is 10% difference, but each % damage will drop your protection.
+     * This value keeps it from swapping too much.
+     */
+
+    public final IntegerSetting diffPercent = new IntegerSetting("Damage % Diff", 10, 1, 50);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10);
 
     private int delayCount = 0;
@@ -63,8 +76,8 @@ public final class AutoArmor extends Hack {
                     continue;
                 }
 
-                if (!ArmorSlot.MAX_ITEMS().contains(piece.getItemName())) {
-                    slotsToSwap.add(new ArmorSlot(i, piece.getItem()));
+                if (this.shouldAddDamaged(piece, i)) {
+                    slotsToSwap.add(new ArmorSlot(i, piece));
                 }
             }
         } else {
@@ -83,7 +96,7 @@ public final class AutoArmor extends Hack {
             toSwap = slotsToSwap.get(0);
         }
 
-        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory);
+        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory, this.diffPercent.getValue());
 
         if (slotToSwapTo == -1) {
             if (slotsToSwap.size() > 1) {
@@ -99,9 +112,58 @@ public final class AutoArmor extends Hack {
         this.delayCount = 0;
     }
 
+    private boolean shouldAddDamaged(ItemStack itemStack, int slot) {
+        if (!itemStack.isItemStackDamageable()) {
+            return false;
+        }
+
+        if (!itemStack.isItemDamaged()) {
+            return false;
+        }
+
+        switch (slot) {
+            case 0:
+                return ArmorSlot.BOOTS().contains(itemStack.getItem().getItemName());
+            case 1:
+                return ArmorSlot.PANTS().contains(itemStack.getItem().getItemName());
+            case 2:
+                return ArmorSlot.CHESTS().contains(itemStack.getItem().getItemName());
+            case 3:
+                return ArmorSlot.HELMETS().contains(itemStack.getItem().getItemName());
+            default:
+                return false;
+        }
+    }
+
     private void swapArmor(int armorSlot, int inventorySlot, boolean swappingEmpty) {
         ItemStack armorStack = this.getPlayer().inventory.armorInventory[armorSlot];
         ItemStack inventoryStack = this.getPlayer().inventory.mainInventory[inventorySlot];
+
+        if (armorStack != null && inventoryStack != null && armorStack.itemID == inventoryStack.itemID) {
+            int freeSlot = this.getFreeSlot();
+
+            if (freeSlot == -1) {
+                return;
+            }
+
+            Packet102WindowClick clickArm = new Packet102WindowClick(0, 8 - armorSlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(clickArm);
+            this.getPlayer().inventory.armorInventory[armorSlot] = null;
+
+            Packet102WindowClick clickFree = new Packet102WindowClick(0, freeSlot < 9 ? freeSlot + 36 : freeSlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(clickFree);
+            this.getPlayer().inventory.mainInventory[freeSlot] = armorStack;
+
+            Packet102WindowClick clickInv = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, inventoryStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(clickInv);
+            this.getPlayer().inventory.mainInventory[inventorySlot] = null;
+
+            Packet102WindowClick clickArm2 = new Packet102WindowClick(0, 8 - armorSlot, 0, false, null, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+            this.sendPacket(clickArm2);
+            this.getPlayer().inventory.armorInventory[armorSlot] = inventoryStack;
+
+            return;
+        }
 
         Packet102WindowClick clickInv = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, inventoryStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
         this.sendPacket(clickInv);
@@ -116,5 +178,25 @@ public final class AutoArmor extends Hack {
             this.sendPacket(clickBack);
             this.getPlayer().inventory.mainInventory[inventorySlot] = armorStack;
         }
+    }
+
+    private int getFreeSlot() {
+        for (int i = 9; i < 36; i++) {
+            ItemStack stack = this.getPlayer().inventory.mainInventory[i];
+
+            if (stack == null) {
+                return i;
+            }
+        }
+
+        for (int i = 8; i >= 0; i--) {
+            ItemStack stack = this.getPlayer().inventory.mainInventory[i];
+
+            if (stack == null) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }
