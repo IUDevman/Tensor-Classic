@@ -88,11 +88,9 @@ public final class AutoArmor extends Hack {
             return;
         }
 
-        boolean swappingEmpty = true;
         ArmorSlot toSwap = slotsToSwap.stream().filter(armorSlot -> armorSlot.item == null).findFirst().orElse(null);
 
         if (toSwap == null) {
-            swappingEmpty = false;
             toSwap = slotsToSwap.get(0);
         }
 
@@ -107,7 +105,7 @@ public final class AutoArmor extends Hack {
             return;
         }
 
-        this.swapArmor(toSwap.location, slotToSwapTo, swappingEmpty);
+        this.swapArmor(toSwap.location, slotToSwapTo);
 
         this.delayCount = 0;
     }
@@ -135,7 +133,7 @@ public final class AutoArmor extends Hack {
         }
     }
 
-    private void swapArmor(int armorSlot, int inventorySlot, boolean swappingEmpty) {
+    private void swapArmor(int armorSlot, int inventorySlot) {
         ItemStack armorStack = this.getPlayer().inventory.armorInventory[armorSlot];
         ItemStack inventoryStack = this.getPlayer().inventory.mainInventory[inventorySlot];
 
@@ -173,7 +171,7 @@ public final class AutoArmor extends Hack {
         this.sendPacket(clickArm);
         this.getPlayer().inventory.armorInventory[armorSlot] = inventoryStack;
 
-        if (!swappingEmpty && armorStack != null) {
+        if (armorStack != null) {
             Packet102WindowClick clickBack = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
             this.sendPacket(clickBack);
             this.getPlayer().inventory.mainInventory[inventorySlot] = armorStack;
