@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public final class ArmorSlot {
 
-    private static final ArrayList<String> ARMOR_ALL = new ArrayList<>();
-
     private static final ArrayList<String> BOOTS = new ArrayList<>();
 
     public static ArrayList<String> BOOTS() {
