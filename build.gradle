@@ -63,6 +63,9 @@ shadowJar {
     from("LICENSE") {
         rename { "${it}_${project.archivesBaseName}.txt" }
     }
+    from("COPYING.md") {
+        rename { "${it}_${project.archivesBaseName}.txt" }
+    }
 }
 
 remapJar {
