@@ -123,13 +123,13 @@ public final class AutoArmor extends Hack {
 
         switch (slot) {
             case 0:
-                return ArmorSlot.BOOTS().contains(itemStack.getItem().getItemName());
+                return ArmorSlot.BOOTS().contains(itemStack.itemID);
             case 1:
-                return ArmorSlot.PANTS().contains(itemStack.getItem().getItemName());
+                return ArmorSlot.PANTS().contains(itemStack.itemID);
             case 2:
-                return ArmorSlot.CHESTS().contains(itemStack.getItem().getItemName());
+                return ArmorSlot.CHESTS().contains(itemStack.itemID);
             case 3:
-                return ArmorSlot.HELMETS().contains(itemStack.getItem().getItemName());
+                return ArmorSlot.HELMETS().contains(itemStack.itemID);
             default:
                 return false;
         }

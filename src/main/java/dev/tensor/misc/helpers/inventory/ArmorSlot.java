@@ -12,57 +12,57 @@ import java.util.ArrayList;
 
 public final class ArmorSlot {
 
-    private static final ArrayList<String> BOOTS = new ArrayList<>();
+    private static final ArrayList<Integer> BOOTS = new ArrayList<>();
 
-    public static ArrayList<String> BOOTS() {
+    public static ArrayList<Integer> BOOTS() {
         if (BOOTS.isEmpty()) {
-            BOOTS.add(Item.bootsDiamond.getItemName());
-            BOOTS.add(Item.bootsSteel.getItemName());
-            BOOTS.add(Item.bootsChain.getItemName());
-            BOOTS.add(Item.bootsGold.getItemName());
-            BOOTS.add(Item.bootsLeather.getItemName());
+            BOOTS.add(Item.bootsDiamond.shiftedIndex);
+            BOOTS.add(Item.bootsSteel.shiftedIndex);
+            BOOTS.add(Item.bootsChain.shiftedIndex);
+            BOOTS.add(Item.bootsGold.shiftedIndex);
+            BOOTS.add(Item.bootsLeather.shiftedIndex);
         }
 
         return BOOTS;
     }
 
-    private static final ArrayList<String> PANTS = new ArrayList<>();
+    private static final ArrayList<Integer> PANTS = new ArrayList<>();
 
-    public static ArrayList<String> PANTS() {
+    public static ArrayList<Integer> PANTS() {
         if (PANTS.isEmpty()) {
-            PANTS.add(Item.legsDiamond.getItemName());
-            PANTS.add(Item.legsSteel.getItemName());
-            PANTS.add(Item.legsChain.getItemName());
-            PANTS.add(Item.legsGold.getItemName());
-            PANTS.add(Item.legsLeather.getItemName());
+            PANTS.add(Item.legsDiamond.shiftedIndex);
+            PANTS.add(Item.legsSteel.shiftedIndex);
+            PANTS.add(Item.legsChain.shiftedIndex);
+            PANTS.add(Item.legsGold.shiftedIndex);
+            PANTS.add(Item.legsLeather.shiftedIndex);
         }
 
         return PANTS;
     }
 
-    private static final ArrayList<String> CHESTS = new ArrayList<>();
+    private static final ArrayList<Integer> CHESTS = new ArrayList<>();
 
-    public static ArrayList<String> CHESTS() {
+    public static ArrayList<Integer> CHESTS() {
         if (CHESTS.isEmpty()) {
-            CHESTS.add(Item.plateDiamond.getItemName());
-            CHESTS.add(Item.plateSteel.getItemName());
-            CHESTS.add(Item.plateChain.getItemName());
-            CHESTS.add(Item.plateGold.getItemName());
-            CHESTS.add(Item.plateLeather.getItemName());
+            CHESTS.add(Item.plateDiamond.shiftedIndex);
+            CHESTS.add(Item.plateSteel.shiftedIndex);
+            CHESTS.add(Item.plateChain.shiftedIndex);
+            CHESTS.add(Item.plateGold.shiftedIndex);
+            CHESTS.add(Item.plateLeather.shiftedIndex);
         }
 
         return CHESTS;
     }
 
-    private static final ArrayList<String> HELMETS = new ArrayList<>();
+    private static final ArrayList<Integer> HELMETS = new ArrayList<>();
 
-    public static ArrayList<String> HELMETS() {
+    public static ArrayList<Integer> HELMETS() {
         if (HELMETS.isEmpty()) {
-            HELMETS.add(Item.helmetDiamond.getItemName());
-            HELMETS.add(Item.helmetSteel.getItemName());
-            HELMETS.add(Item.helmetChain.getItemName());
-            HELMETS.add(Item.helmetGold.getItemName());
-            HELMETS.add(Item.helmetLeather.getItemName());
+            HELMETS.add(Item.helmetDiamond.shiftedIndex);
+            HELMETS.add(Item.helmetSteel.shiftedIndex);
+            HELMETS.add(Item.helmetChain.shiftedIndex);
+            HELMETS.add(Item.helmetGold.shiftedIndex);
+            HELMETS.add(Item.helmetLeather.shiftedIndex);
         }
 
         return HELMETS;
@@ -126,11 +126,9 @@ public final class ArmorSlot {
                 continue;
             }
 
-            String itemName = item.getItemName();
-
             switch (this.location) {
                 case 0:
-                    if (BOOTS().contains(itemName)) {
+                    if (BOOTS().contains(item.itemID)) {
                         int itemDamage = this.getDamagePercent(item);
 
                         if (itemDamage < damage) {
@@ -145,7 +143,7 @@ public final class ArmorSlot {
 
                     break;
                 case 1:
-                    if (PANTS().contains(itemName)) {
+                    if (PANTS().contains(item.itemID)) {
                         int itemDamage = this.getDamagePercent(item);
 
                         if (itemDamage < damage) {
@@ -159,7 +157,7 @@ public final class ArmorSlot {
                     }
                     break;
                 case 2:
-                    if (CHESTS().contains(itemName)) {
+                    if (CHESTS().contains(item.itemID)) {
                         int itemDamage = this.getDamagePercent(item);
 
                         if (itemDamage < damage) {
@@ -173,7 +171,7 @@ public final class ArmorSlot {
                     }
                     break;
                 case 3:
-                    if (HELMETS().contains(itemName)) {
+                    if (HELMETS().contains(item.itemID)) {
                         int itemDamage = this.getDamagePercent(item);
 
                         if (itemDamage < damage) {
