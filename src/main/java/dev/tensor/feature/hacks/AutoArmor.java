@@ -94,7 +94,7 @@ public final class AutoArmor extends Hack {
             toSwap = slotsToSwap.get(0);
         }
 
-        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory, this.diffPercent.getValue());
+        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory, this.diffPercent.getValue(), -1);
 
         if (slotToSwapTo == -1) {
             if (slotsToSwap.size() > 1) {
