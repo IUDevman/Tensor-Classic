@@ -5,6 +5,7 @@ import dev.tensor.backend.events.EventCache;
 import dev.tensor.backend.events.variable.AttackEntityEvent;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityFallingSand;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.PlayerControllerMP;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,7 +31,7 @@ public final class PlayerControllerMPMixin implements Globals {
             return;
         }
 
-        if (target == null) {
+        if (target == null || target instanceof EntityFallingSand) {
             return;
         }
 
