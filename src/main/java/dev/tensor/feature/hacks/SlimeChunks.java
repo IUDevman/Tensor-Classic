@@ -170,6 +170,8 @@ public final class SlimeChunks extends Render3DHack {
      * All beta 1.7.3 servers send the world seed in Packet1Login, but the client doesn't do anything with it.
      * Tensor intercepts the packet to put the seed in STATIC_MULTIPLAYER_WORLD_SEED.
      *
+     * This might actually not be true, I may be the retarded one? - Hoosiers
+     *
      * @see dev.tensor.backend.mixins.NetworkManagerMixin !!!
      */
     private long getWorldSeed() {
