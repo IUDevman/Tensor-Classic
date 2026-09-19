@@ -21,7 +21,7 @@ public final class AutoArmor extends Hack {
      * OK, so a bit on how this actually works:
      * This hack first collects all armor slots that could be filled with better protection (empty or damaged).
      * This hack will naturally first try to fill empty slots.
-     * If no armor is found, it will then try to fill the damaged (recursively; will not get hung up if no options are found).
+     * If no armor is found, it will then try to swap the damaged.
      * Beta 1.7.3 calculates protection based on armor damage %.
      * So a leather helmet with full durability will give more than a diamond with half durability.
      * This hack swaps your armor with armor that has a higher % remaining.
@@ -94,7 +94,7 @@ public final class AutoArmor extends Hack {
             toSwap = slotsToSwap.get(0);
         }
 
-        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory, this.diffPercent.getValue(), -1);
+        int slotToSwapTo = toSwap.findBestItemForSlot(this.getPlayer().inventory.mainInventory, this.diffPercent.getValue());
 
         if (slotToSwapTo == -1) {
             if (slotsToSwap.size() > 1) {
@@ -141,9 +141,35 @@ public final class AutoArmor extends Hack {
             int freeSlot = this.getFreeSlot();
 
             if (freeSlot == -1) {
+                int toSwapSpot = this.getSwappableSlot(armorStack);
+
+                if (toSwapSpot == -1) {
+                    return;
+                }
+
+                ItemStack toSwapStack = this.getPlayer().inventory.mainInventory[toSwapSpot];
+
+                //Swap armor of same ID but without free spaces in the inventory
+                Packet102WindowClick clickArm = new Packet102WindowClick(0, 8 - armorSlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+                this.sendPacket(clickArm);
+                this.getPlayer().inventory.armorInventory[armorSlot] = null;
+
+                Packet102WindowClick clickSwap = new Packet102WindowClick(0, toSwapSpot < 9 ? toSwapSpot + 36 : toSwapSpot, 0, false, toSwapStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+                this.sendPacket(clickSwap);
+                this.getPlayer().inventory.mainInventory[toSwapSpot] = armorStack;
+
+                Packet102WindowClick clickInv = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, inventoryStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+                this.sendPacket(clickInv);
+                this.getPlayer().inventory.mainInventory[inventorySlot] = toSwapStack;
+
+                Packet102WindowClick clickArm2 = new Packet102WindowClick(0, 8 - armorSlot, 0, false, null, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
+                this.sendPacket(clickArm2);
+                this.getPlayer().inventory.armorInventory[armorSlot] = inventoryStack;
+
                 return;
             }
 
+            //Swap armor of same ID but free spaces are in the inventory
             Packet102WindowClick clickArm = new Packet102WindowClick(0, 8 - armorSlot, 0, false, armorStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
             this.sendPacket(clickArm);
             this.getPlayer().inventory.armorInventory[armorSlot] = null;
@@ -163,6 +189,7 @@ public final class AutoArmor extends Hack {
             return;
         }
 
+        //Add armor to empty slot or swap with different ID
         Packet102WindowClick clickInv = new Packet102WindowClick(0, inventorySlot < 9 ? inventorySlot + 36 : inventorySlot, 0, false, inventoryStack, this.getPlayer().inventorySlots.func_20111_a(this.getInventory()));
         this.sendPacket(clickInv);
         this.getPlayer().inventory.mainInventory[inventorySlot] = null;
@@ -191,6 +218,34 @@ public final class AutoArmor extends Hack {
             ItemStack stack = this.getPlayer().inventory.mainInventory[i];
 
             if (stack == null) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private int getSwappableSlot(ItemStack armorSlot) {
+        for (int i = 35; i >= 9; i--) {
+            ItemStack stack = this.getPlayer().inventory.mainInventory[i];
+
+            if (stack == null) {
+                continue;
+            }
+
+            if (stack.itemID != armorSlot.itemID) {
+                return i;
+            }
+        }
+
+        for (int i = 8; i >= 0; i--) {
+            ItemStack stack = this.getPlayer().inventory.mainInventory[i];
+
+            if (stack == null) {
+                continue;
+            }
+
+            if (stack.itemID != armorSlot.itemID) {
                 return i;
             }
         }

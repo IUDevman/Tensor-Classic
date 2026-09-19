@@ -105,29 +105,21 @@ public final class ArmorSlot {
         return (int) Math.min(Math.max(damageFraction * 100, 0), 100);
     }
 
-    public int findBestItemForSlot(ItemStack[] mainInventory, int damageDiffPercent, int excludedItem) {
+    public int findBestItemForSlot(ItemStack[] mainInventory, int damageDiffPercent) {
         int toReturn = -1;
         int damage = 101;
         boolean shouldCheckDiff = false;
-        boolean shouldExclude = excludedItem != -1;
 
         if (this.damage != -1) {
             damage = this.damage;
             shouldCheckDiff = true;
         }
 
-        boolean hasEmptySpace = false;
-
         for (int i = 0; i < 36; i++) {
 
             ItemStack item = mainInventory[i];
 
             if (item == null || item.getItem() == null) {
-                hasEmptySpace = true;
-                continue;
-            }
-
-            if (shouldExclude && item.itemID == excludedItem) {
                 continue;
             }
 
@@ -190,20 +182,6 @@ public final class ArmorSlot {
                     break;
                 default:
                     return -1;
-            }
-        }
-
-        if (toReturn != -1 && !hasEmptySpace && this.item != null) {
-            ItemStack toReturnItem = mainInventory[toReturn];
-            int returnID = toReturnItem.itemID;
-
-            //we cannot swap same items without having another empty slot
-            if (returnID == this.item.shiftedIndex) {
-                if (shouldExclude) {
-                    return -1;
-                } else {
-                    return this.findBestItemForSlot(mainInventory, damageDiffPercent, returnID);
-                }
             }
         }
 
