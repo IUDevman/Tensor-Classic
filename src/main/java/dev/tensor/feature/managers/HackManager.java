@@ -134,6 +134,7 @@ public final class HackManager implements Manager {
         this.addHack(new Scaffold());
         this.addHack(new Search());
         this.addHack(new SignWalker());
+        this.addHack(new SlimeChunks());
         this.addHack(new Slug());
         this.addHack(new Sneak());
         this.addHack(new Spammer());

@@ -7,6 +7,7 @@ import dev.tensor.backend.events.constant.SocketInitEvent;
 import dev.tensor.backend.events.variable.ChunkChangeEvent;
 import dev.tensor.backend.events.variable.DamageOrAttackPlayerEvent;
 import dev.tensor.backend.events.variable.GeneralPacketEvent;
+import dev.tensor.feature.hacks.SlimeChunks;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
 import net.minecraft.src.*;
@@ -29,7 +30,17 @@ public final class NetworkManagerMixin implements Globals {
 
     @Inject(method = "readPacket", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"), locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true)
     public void tensor_onReadPacket(CallbackInfoReturnable<Boolean> cir, int index, Packet packetToRead) {
-        if (this.failsNullCheck() || packetToRead == null) {
+        if (packetToRead == null) {
+            return;
+        }
+
+        if (packetToRead instanceof Packet1Login) {
+            Packet1Login packet = (Packet1Login) packetToRead;
+
+            SlimeChunks.STATIC_MULTIPLAYER_WORLD_SEED = packet.mapSeed;
+        }
+
+        if (this.failsNullCheck()) {
             return;
         }
 

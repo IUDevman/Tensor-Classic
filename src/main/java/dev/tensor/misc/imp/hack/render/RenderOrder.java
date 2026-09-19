@@ -20,9 +20,10 @@ public enum RenderOrder {
     Scaffold_or_Platform(110),
     Nuker(120),
     Search(130),
-    NewChunks(140),
+    SlimeChunks(140),
+    NewChunks(150),
 
-    Default(150),
+    Default(160),
 
     HUD_Shading_and_Images(10),
     HUD_Text(20),
