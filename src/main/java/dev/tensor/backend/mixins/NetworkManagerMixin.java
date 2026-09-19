@@ -40,10 +40,6 @@ public final class NetworkManagerMixin implements Globals {
             SlimeChunks.updateMultiplayerWorldSeed(packet.mapSeed);
         }
 
-        if (this.failsNullCheck()) {
-            return;
-        }
-
         if (this.shouldCallEvent(GeneralPacketEvent.class)) {
             GeneralPacketEvent event = EventCache.getCachedEvent(GeneralPacketEvent.class).withVariables(GeneralPacketEvent.Type.INBOUND, packetToRead).call(true);
 
@@ -52,6 +48,10 @@ public final class NetworkManagerMixin implements Globals {
                 cir.cancel();
                 return;
             }
+        }
+        
+        if (this.failsNullCheck()) {
+            return;
         }
 
         if (packetToRead instanceof Packet28EntityVelocity) {
