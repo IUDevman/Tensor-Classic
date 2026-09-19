@@ -51,9 +51,11 @@ public final class SlimeChunks extends Render3DHack {
             SlimeChunks slimeChunks = this.getHackManager().getHack(SlimeChunks.class);
 
             if (slimeChunks != null) {
-                slimeChunks.clearLoggedChunks(slimeChunks.isEnabled());
+                boolean shouldReset = slimeChunks.isEnabled() && !this.failsNullCheck();
 
-                if (slimeChunks.isEnabled() && !this.failsNullCheck()) {
+                slimeChunks.clearLoggedChunks(shouldReset);
+
+                if (shouldReset) {
                     this.sendClientMessageWithHeader("SlimeChunks: Cleared logged chunks!");
                 }
             }
