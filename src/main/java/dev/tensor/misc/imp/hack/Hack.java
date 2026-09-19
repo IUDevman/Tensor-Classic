@@ -120,14 +120,16 @@ public abstract class Hack implements Globals {
         this.setEnabled(!this.isEnabled());
     }
 
-    public final void reset() {
+    public void reset(boolean toggle) {
         this.BIND = this.getInfo().bind();
 
         this.DRAWN = this.getInfo().drawn();
 
         this.MESSAGES = this.getInfo().messages();
 
-        this.setEnabled(this.getInfo().enabled());
+        if (toggle) {
+            this.setEnabled(this.getInfo().enabled());
+        }
 
         this.getSettings().forEach(Setting::reset);
     }

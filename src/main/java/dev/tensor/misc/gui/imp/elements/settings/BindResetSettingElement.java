@@ -81,9 +81,15 @@ public final class BindResetSettingElement extends SettingElement implements Key
         this.finishFlatGL(false);
 
         String text = "Keybind : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? "[...]" : "[" + Keyboard.getKeyName(hack.BIND) + "]");
-        this.drawCenteredString(text, midX, minY + 3, Color.YELLOW.getRGB());
 
-        this.drawCenteredString(ChatColor.LIGHT_GRAY.text() + "Reset", midX, minY + 18, Color.WHITE.getRGB());
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.YELLOW.getRGB());
+            this.drawString(ChatColor.LIGHT_GRAY.text() + "Reset", minX + 3, minY + 18, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.YELLOW.getRGB());
+            this.drawCenteredString(ChatColor.LIGHT_GRAY.text() + "Reset", midX, minY + 18, Color.WHITE.getRGB());
+        }
     }
 
     @Override
@@ -105,7 +111,7 @@ public final class BindResetSettingElement extends SettingElement implements Key
                 this.setSearching(false);
             }
 
-            this.hack.reset();
+            this.hack.reset(true);
 
             this.hack.getSettings().forEach(Setting::reset);
             return;

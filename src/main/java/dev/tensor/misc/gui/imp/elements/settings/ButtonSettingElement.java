@@ -106,7 +106,13 @@ public final class ButtonSettingElement extends SettingElement {
         }
 
         String text = ChatColor.YELLOW.text() + setting.getName() + "§r : (" + click + ")";
-        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+        }
     }
 
     @Override

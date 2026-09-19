@@ -66,7 +66,13 @@ public final class EnumSettingElement extends SettingElement {
         this.finishFlatGL(false);
 
         String text = this.enumSetting.getName() + " : " + ChatColor.LIGHT_GRAY.text() + this.enumSetting.getValue().name().replace("_", " ").replace("$", this.enumSetting.getValue().name().equals("$now") ? "$" : ":");
-        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+        }
     }
 
     @Override

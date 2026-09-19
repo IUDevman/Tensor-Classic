@@ -78,7 +78,13 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
         this.finishFlatGL(false);
 
         String text = this.integerSetting.getName() + " (" + this.integerSetting.getMin() + " -> " + this.integerSetting.getMax() + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.integerSetting.getValue());
-        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+        }
     }
 
     @Override

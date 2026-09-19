@@ -61,7 +61,7 @@ public final class Reset implements Command {
 
         if (ARGS.length == 1) {
 
-            hack.reset();
+            hack.reset(true);
             this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Reset hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
             return;
         }
@@ -70,7 +70,7 @@ public final class Reset implements Command {
 
         if (secondEntry == null || secondEntry.equalsIgnoreCase(" ")) {
 
-            hack.reset();
+            hack.reset(true);
             this.sendClientMessageWithHeader(ChatColor.DEFAULT.text() + this.getName() + ": Reset hack '" + ChatColor.AQUA.text() + hack.NAME + ChatColor.DEFAULT.text() + "'!");
             return;
         }

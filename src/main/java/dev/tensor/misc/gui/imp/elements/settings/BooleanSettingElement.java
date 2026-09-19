@@ -66,7 +66,13 @@ public final class BooleanSettingElement extends SettingElement {
         this.finishFlatGL(false);
 
         String text = this.booleanSetting.getName() + " (" + (this.booleanSetting.getValue() ? ChatColor.GREEN.text() + "True" : ChatColor.RED.text() + "False") + ChatColor.DEFAULT.text() + ")";
-        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+        }
     }
 
     @Override

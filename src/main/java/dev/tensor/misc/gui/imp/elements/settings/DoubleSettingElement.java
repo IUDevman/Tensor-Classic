@@ -79,7 +79,13 @@ public final class DoubleSettingElement extends SettingElement implements KeyPre
         this.finishFlatGL(false);
 
         String text = this.doubleSetting.getName() + " (" + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMin()) + " -> " + this.doubleSetting.getFormattedFromValue(this.doubleSetting.getMax()) + ") : " + ChatColor.LIGHT_GRAY.text() + (this.isSearching() ? (this.value.equalsIgnoreCase("") ? "..." : this.value) : this.doubleSetting.getValueString(false));
-        this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+
+        if (tensorGUI.clickGUI.shouldRenderOnTheLeft()) {
+            this.drawString(text, minX + 3, minY + 3, Color.WHITE.getRGB());
+
+        } else {
+            this.drawCenteredString(text, midX, minY + 3, Color.WHITE.getRGB());
+        }
     }
 
     @Override
