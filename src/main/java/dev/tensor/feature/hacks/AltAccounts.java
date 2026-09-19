@@ -32,13 +32,16 @@ public final class AltAccounts extends Hack {
 
     @Override
     public void onDisable(boolean isNull) {
-        if (isNull) {
+        if (this.getMinecraft() == null) {
             return;
         }
 
         if (!this.getAccountManager().isActiveAccount(this.getAccountManager().getSessionAccount())) {
             this.getAccountManager().setActiveAccount(this.getAccountManager().getSessionAccount());
-            this.sendClientMessageWithHeader(ChatColor.RED.text() + "AltAccounts: Relog to fully disable hack!");
+
+            if (isNull) {
+                this.sendClientMessageWithHeader(ChatColor.RED.text() + "AltAccounts: Relog to fully disable hack!");
+            }
         }
     }
 
