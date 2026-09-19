@@ -1,10 +1,12 @@
 package dev.tensor.feature.hacks;
 
+import dev.tensor.TensorClassic;
 import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.variable.LoadChunkEvent;
 import dev.tensor.backend.mixins.accessors.ChunkProviderAccessor;
 import dev.tensor.backend.mixins.accessors.ChunkProviderClientAccessor;
 import dev.tensor.misc.event.EventAction;
+import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.Render3DHack;
@@ -26,7 +28,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 @Hack.Info(name = "SlimeChunks", category = Category.Render)
 public final class SlimeChunks extends Render3DHack {
 
-    public static long STATIC_MULTIPLAYER_WORLD_SEED = -1;
+    private static long STATIC_MULTIPLAYER_WORLD_SEED = -1;
+
+    public static void updateMultiplayerWorldSeed(long newSeed) {
+        long oldSeed = STATIC_MULTIPLAYER_WORLD_SEED;
+        STATIC_MULTIPLAYER_WORLD_SEED = newSeed;
+
+        if (TensorClassic.getLogger() != null) {
+            TensorClassic.getLogger().log("Set Tensor multiplayer world seed from '" + (oldSeed == -1 ? "NONE" : oldSeed) + "' to '" + STATIC_MULTIPLAYER_WORLD_SEED + "'!", TensorLogger.Level.INFO);
+        }
+    }
 
     @Override
     public RenderOrder getRenderOrder() {

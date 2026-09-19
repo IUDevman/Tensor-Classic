@@ -37,7 +37,7 @@ public final class NetworkManagerMixin implements Globals {
         if (packetToRead instanceof Packet1Login) {
             Packet1Login packet = (Packet1Login) packetToRead;
 
-            SlimeChunks.STATIC_MULTIPLAYER_WORLD_SEED = packet.mapSeed;
+            SlimeChunks.updateMultiplayerWorldSeed(packet.mapSeed);
         }
 
         if (this.failsNullCheck()) {
