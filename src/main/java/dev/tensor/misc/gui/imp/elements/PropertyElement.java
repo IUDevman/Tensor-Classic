@@ -1,5 +1,6 @@
 package dev.tensor.misc.gui.imp.elements;
 
+import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.imp.hack.Hack;
@@ -94,7 +95,8 @@ public final class PropertyElement implements Element {
             }
         });
 
-        if (mouseY > this.getPosY() && mouseY < this.getPosY() + 15) {
+        //Jank I know
+        if (mouseY > this.getPosY() && mouseY < this.getPosY() + 15 && !(hack instanceof ClickGUI)) {
             hack.toggle();
         } else if (mouseY > this.getPosY() + 15 && mouseY < this.getPosY() + 30) {
             hack.DRAWN = !hack.DRAWN;
