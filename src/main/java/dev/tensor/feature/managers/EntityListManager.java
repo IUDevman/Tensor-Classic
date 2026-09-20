@@ -9,8 +9,8 @@ import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -24,7 +24,7 @@ public final class EntityListManager implements Manager {
         return "EntityListManager";
     }
 
-    private final ArrayList<Entity> FILTERED_LOADED_ENTITIES = new ArrayList<>();
+    private final CopyOnWriteArrayList<Entity> FILTERED_LOADED_ENTITIES = new CopyOnWriteArrayList<>();
 
     @Override
     public void load(TensorLogger LOGGER) {
@@ -70,7 +70,7 @@ public final class EntityListManager implements Manager {
         }
     }));
 
-    public ArrayList<Entity> getFilteredEntities() {
+    public CopyOnWriteArrayList<Entity> getFilteredEntities() {
         return this.FILTERED_LOADED_ENTITIES;
     }
 }

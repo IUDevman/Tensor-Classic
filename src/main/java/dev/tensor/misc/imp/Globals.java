@@ -19,6 +19,7 @@ import net.minecraft.src.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Hoosiers
@@ -144,7 +145,7 @@ public interface Globals {
         return action;
     }
 
-    default ArrayList<Entity> getFilteredLoadedEntities() {
+    default CopyOnWriteArrayList<Entity> getFilteredLoadedEntities() {
         return this.getEntityListManager().getFilteredEntities();
     }
 

@@ -111,9 +111,12 @@ public final class NewChunks extends Render3DHack {
 
     @SuppressWarnings("unused")
     private final EventAction<ChunkChangeEvent> chunkChangeEventAction = this.addHackEventAction(new EventAction<>(ChunkChangeEvent.class, event -> {
-
         if (event.type.equals(ChunkChangeEvent.Type.SINGLE)) {
             Packet53BlockChange packet = event.packet53BlockChange;
+
+            if (packet == null) {
+                return;
+            }
 
             int type = packet.type;
 
@@ -136,6 +139,10 @@ public final class NewChunks extends Render3DHack {
 
         Packet52MultiBlockChange packet = event.packet52MultiBlockChange;
 
+        if (packet == null || packet.typeArray == null || packet.coordinateArray == null) {
+            return;
+        }
+
         if (packet.typeArray.length < 1) {
             return;
         }
@@ -148,6 +155,10 @@ public final class NewChunks extends Render3DHack {
             int type = packet.typeArray[i];
 
             if (!hasAcceptedType(type)) {
+                continue;
+            }
+
+            if (packet.coordinateArray.length < i + 1) {
                 continue;
             }
 
