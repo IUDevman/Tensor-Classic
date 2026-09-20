@@ -24,16 +24,6 @@ public final class EventManager implements Manager {
 
     private final HashMap<Class<? extends Event>, CopyOnWriteArrayList<EventAction>> ACTION_MAP = new HashMap<>();
 
-    @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-    }
-
     public void addAction(EventAction eventAction) {
         Class<? extends Event> eventClass = eventAction.getEventClass();
         boolean hasClass = this.ACTION_MAP.containsKey(eventClass);

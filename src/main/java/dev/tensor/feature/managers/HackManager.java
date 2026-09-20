@@ -49,9 +49,7 @@ public final class HackManager implements Manager {
     private final String hackPath = this.getConfigManager().getConfigPath() + "Hacks/";
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.addHack(new AltAccounts());
         this.addHack(new AntiKnockback());
         this.addHack(new Armor());
@@ -162,8 +160,23 @@ public final class HackManager implements Manager {
     }
 
     @Override
-    public void loadPost(TensorLogger LOGGER) {
+    public void onLoadPost(TensorLogger LOGGER) {
         this.postLoadHacks(LOGGER);
+    }
+
+    @Override
+    public void onSave(TensorLogger LOGGER) {
+        this.getHacks().forEach(hack -> {
+            if (hack.shouldDisableOnDisconnect() && hack.isEnabled()) {
+                hack.toggle();
+            }
+
+            try {
+                hack.save(this.hackPath);
+            } catch (Exception ingored) {
+                LOGGER.log("Failed to save config for hack: " + hack.NAME, TensorLogger.Level.ERROR);
+            }
+        });
     }
 
     //Do not run this until after the entire client is loaded
@@ -184,23 +197,6 @@ public final class HackManager implements Manager {
         } catch (Exception ignored) {
             LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
-        this.getHacks().forEach(hack -> {
-            if (hack.shouldDisableOnDisconnect() && hack.isEnabled()) {
-                hack.toggle();
-            }
-
-            try {
-                hack.save(this.hackPath);
-            } catch (Exception ingored) {
-                LOGGER.log("Failed to save config for hack: " + hack.NAME, TensorLogger.Level.ERROR);
-            }
-        });
     }
 
     public void postSortHacks() {

@@ -31,9 +31,7 @@ public final class CommandManager implements Manager {
     private final ArrayList<Command> COMMANDS = new ArrayList<>();
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.addCommand(new Accounts());
         this.addCommand(new Capes());
         this.addCommand(new ClearChat());
@@ -91,11 +89,6 @@ public final class CommandManager implements Manager {
 
     public void postSortCommands() {
         this.COMMANDS.sort(Comparator.comparing(Command::getName));
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     @SuppressWarnings("unused")

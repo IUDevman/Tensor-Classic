@@ -35,14 +35,7 @@ public final class DiscordManager implements Manager {
     private String icon = "logo_tensor1_upscale";
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onSave(TensorLogger LOGGER) {
         if (this.rpc != null) {
             this.rpc.shutdown();
         }

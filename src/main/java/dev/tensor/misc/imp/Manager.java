@@ -11,11 +11,27 @@ public interface Manager extends Globals {
 
     String getName();
 
-    void load(TensorLogger LOGGER);
+    default void load(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
 
-    void save(TensorLogger LOGGER);
+        this.onLoad(LOGGER);
+    }
 
-    default void loadPost(TensorLogger LOGGER) {
+    default void onLoad(TensorLogger LOGGER) {
+
+    }
+
+    default void save(TensorLogger LOGGER) {
+        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
+
+        this.onSave(LOGGER);
+    }
+
+    default void onSave(TensorLogger LOGGER) {
+
+    }
+
+    default void onLoadPost(TensorLogger LOGGER) {
 
     }
 }

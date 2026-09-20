@@ -35,9 +35,7 @@ public final class AccountManager implements Manager {
     private boolean updated = false;
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         Thread toLoad = new Thread(() -> {
 
             while (this.getMinecraft() == null || this.getMinecraft().session == null || this.getMinecraft().session.username == null) {
@@ -67,6 +65,16 @@ public final class AccountManager implements Manager {
         });
 
         toLoad.start();
+    }
+
+    @Override
+    public void onSave(TensorLogger LOGGER) {
+        try {
+            this.saveAccounts();
+
+        } catch (Exception ignored) {
+            LOGGER.log("Failed to save config for " + this.getName() + "!", TensorLogger.Level.ERROR);
+        }
     }
 
     private void loadSavedAccounts() throws Exception {
@@ -122,18 +130,6 @@ public final class AccountManager implements Manager {
                 }
             }
         });
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
-        try {
-            this.saveAccounts();
-
-        } catch (Exception ignored) {
-            LOGGER.log("Failed to save config for " + this.getName() + "!", TensorLogger.Level.ERROR);
-        }
     }
 
     private void saveAccounts() throws Exception {

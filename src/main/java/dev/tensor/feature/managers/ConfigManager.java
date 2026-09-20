@@ -29,9 +29,7 @@ public final class ConfigManager implements Manager {
     private final String configPath = TensorClassic.MOD_NAME + "/";
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.setUpClientPath(LOGGER);
     }
 
@@ -44,11 +42,6 @@ public final class ConfigManager implements Manager {
         } catch (IOException ignored) {
             LOGGER.log("Failed to load config for: " + this.getName(), TensorLogger.Level.ERROR);
         }
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
     }
 
     public String getConfigPath() {

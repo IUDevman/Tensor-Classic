@@ -26,16 +26,6 @@ public final class EntityListManager implements Manager {
 
     private final CopyOnWriteArrayList<Entity> FILTERED_LOADED_ENTITIES = new CopyOnWriteArrayList<>();
 
-    @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-    }
-
     @SuppressWarnings("unused")
     private final EventAction<ChangeWorldEvent> changeWorldEventAction = this.addEventAction(this, new EventAction<>(ChangeWorldEvent.class, EventPriority.Highest, event -> this.FILTERED_LOADED_ENTITIES.clear()));
 

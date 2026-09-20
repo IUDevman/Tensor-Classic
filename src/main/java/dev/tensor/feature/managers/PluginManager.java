@@ -24,9 +24,7 @@ public final class PluginManager implements Manager {
     private final ArrayList<Plugin> plugins = new ArrayList<>();
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.plugins.addAll(FabricLoader.getInstance().getEntrypoints(TensorClassic.MOD_NAME_SHORT.toLowerCase(Locale.ROOT), Plugin.class));
 
         if (this.plugins.isEmpty()) {
@@ -39,7 +37,7 @@ public final class PluginManager implements Manager {
     }
 
     @Override
-    public void loadPost(TensorLogger LOGGER) {
+    public void onLoadPost(TensorLogger LOGGER) {
         if (this.plugins.isEmpty()) {
             return;
         }
@@ -48,9 +46,7 @@ public final class PluginManager implements Manager {
     }
 
     @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onSave(TensorLogger LOGGER) {
         if (this.plugins.isEmpty()) {
             return;
         }

@@ -28,14 +28,12 @@ public final class RotationManager implements Manager {
     }
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
+    public void onLoad(TensorLogger LOGGER) {
         this.rotationQueue.clear();
     }
 
     @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
+    public void onSave(TensorLogger LOGGER) {
         this.rotationQueue.clear();
     }
 

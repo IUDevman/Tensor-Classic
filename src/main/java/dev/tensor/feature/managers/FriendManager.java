@@ -26,10 +26,13 @@ public final class FriendManager implements Manager {
     private final ArrayList<String> FRIENDS = new ArrayList<>();
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.loadFriends(LOGGER);
+    }
+
+    @Override
+    public void onSave(TensorLogger LOGGER) {
+        this.saveFriends(LOGGER);
     }
 
     private void loadFriends(TensorLogger LOGGER) {
@@ -79,13 +82,6 @@ public final class FriendManager implements Manager {
 
     public boolean isFriend(String name) {
         return this.getFriends().contains(name.toLowerCase());
-    }
-
-    @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
-        this.saveFriends(LOGGER);
     }
 
     private void saveFriends(TensorLogger LOGGER) {

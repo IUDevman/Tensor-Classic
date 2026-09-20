@@ -33,9 +33,7 @@ public final class CapeManager implements Manager {
     private final ArrayList<String> CAPED_PLAYERS = new ArrayList<>();
 
     @Override
-    public void load(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onLoad(TensorLogger LOGGER) {
         this.checkCapeURL(LOGGER);
 
         this.addCapedPlayer("go_hoosiers");
@@ -45,9 +43,7 @@ public final class CapeManager implements Manager {
     }
 
     @Override
-    public void save(TensorLogger LOGGER) {
-        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
-
+    public void onSave(TensorLogger LOGGER) {
         this.saveCapes(LOGGER);
     }
 
