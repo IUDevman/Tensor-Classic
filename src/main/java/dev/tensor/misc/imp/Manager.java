@@ -22,7 +22,7 @@ public interface Manager extends Globals {
     }
 
     default void save(TensorLogger LOGGER) {
-        LOGGER.log("Loaded: " + this.getName(), TensorLogger.Level.INFO);
+        LOGGER.log("Saved: " + this.getName(), TensorLogger.Level.INFO);
 
         this.onSave(LOGGER);
     }
