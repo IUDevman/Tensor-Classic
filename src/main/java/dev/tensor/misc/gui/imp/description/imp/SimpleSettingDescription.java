@@ -23,7 +23,7 @@ public class SimpleSettingDescription implements GUIDescription {
     public SimpleSettingDescription(Setting<?> setting, boolean shouldClickForPanel) {
         this.setting = setting;
 
-        this.combinedDescription = ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getDescription() + (shouldClickForPanel ? ChatColor.YELLOW.text() + " Click to open the setting panel!" : "");
+        this.combinedDescription = ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getDescription() + (shouldClickForPanel ? " " + ChatColor.YELLOW.text() + "Click to open the setting panel!" : "");
 
         if (this.stringWidth(this.combinedDescription) > this.getMaxTextLength()) {
             ArrayList<String> orderedStrings = new ArrayList<>();
