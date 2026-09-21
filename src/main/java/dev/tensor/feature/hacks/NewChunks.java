@@ -28,7 +28,7 @@ public final class NewChunks extends Render3DHack {
         return RenderOrder.NewChunks;
     }
 
-    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Clear rendered new chunks.") {
 
         @Override
         public void onChange() {

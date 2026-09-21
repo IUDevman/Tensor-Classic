@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "Rainbow", category = Category.Client, enabled = true, drawn = false, messages = false, toggleable = false, description = "Global setting to customize how rainbow color works for the client.")
 public final class Rainbow extends Hack {
 
-    public final GeneralButtonSetting reset = new GeneralButtonSetting("Reset Color", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting reset = new GeneralButtonSetting("Reset Color", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Set the color back to the beginning.") {
 
         @Override
         public void onChange() {

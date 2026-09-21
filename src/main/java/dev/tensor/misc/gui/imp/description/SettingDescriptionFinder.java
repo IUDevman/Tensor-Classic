@@ -14,11 +14,15 @@ public final class SettingDescriptionFinder {
     public static GUIDescription getDescriptionForSetting(Setting<?> setting) {
 
         if (setting instanceof BooleanSetting || setting instanceof IntegerSetting || setting instanceof DoubleSetting) {
-            return new SimpleSettingDescription(setting, false);
+            return new SimpleSettingDescription(setting, SimpleSettingDescription.DescriptionModifier.NONE);
         }
 
         if (setting instanceof BlockListSetting || setting instanceof EntityTypeListSetting || setting instanceof PacketTypeListSetting || setting instanceof SpammerListSetting || setting instanceof StringSetting || setting instanceof WaypointListSetting) {
-            return new SimpleSettingDescription(setting, true);
+            return new SimpleSettingDescription(setting, SimpleSettingDescription.DescriptionModifier.OPEN_PANEL);
+        }
+
+        if (setting instanceof GeneralButtonSetting) {
+            return new SimpleSettingDescription(setting, ((GeneralButtonSetting) setting).getValue().equals(GeneralButtonSetting.ButtonType.ACCOUNTS) ? SimpleSettingDescription.DescriptionModifier.OPEN_PANEL : SimpleSettingDescription.DescriptionModifier.CLICK_ACTION);
         }
 
         //todo: custom settings for color and enums

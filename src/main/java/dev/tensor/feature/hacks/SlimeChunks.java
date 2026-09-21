@@ -44,7 +44,7 @@ public final class SlimeChunks extends Render3DHack {
         return RenderOrder.SlimeChunks;
     }
 
-    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting clearLogged = new GeneralButtonSetting("Clear Logged Chunks", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Clear rendered slime chunks.") {
 
         @Override
         public void onChange() {

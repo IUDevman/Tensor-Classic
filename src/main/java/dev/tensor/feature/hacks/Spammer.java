@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @Hack.Info(name = "Spammer", category = Category.Misc, description = "Spams bullshit from a file into chat.")
 public final class Spammer extends Hack {
 
-    public final GeneralButtonSetting refresh = new GeneralButtonSetting("Refresh File List", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting refresh = new GeneralButtonSetting("Refresh File List", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Refresh the loaded files from the '.minecraft/Tensor Classic/Spammer/' folder. Use this if you added/removed files with the game loaded.") {
 
         @Override
         public void onChange() {
@@ -37,7 +37,7 @@ public final class Spammer extends Hack {
             }
         }
     };
-    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath()), "List of files in '.minecraft/Tensor Classic/Spammer/'. Reload the list after adding files with the 'Refresh File List' button.") {
+    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath()), "List of files in '.minecraft/Tensor Classic/Spammer/' folder. Reload the list after adding files with the 'Refresh File List' button.") {
 
         @Override
         public void onChange() {

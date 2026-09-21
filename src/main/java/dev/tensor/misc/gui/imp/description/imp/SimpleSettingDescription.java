@@ -20,10 +20,10 @@ public class SimpleSettingDescription implements GUIDescription {
     private ArrayList<String> descriptionOverflow = null;
     private int maxTextLength = 0;
 
-    public SimpleSettingDescription(Setting<?> setting, boolean shouldClickForPanel) {
+    public SimpleSettingDescription(Setting<?> setting, DescriptionModifier modifier) {
         this.setting = setting;
 
-        this.combinedDescription = ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getDescription() + (shouldClickForPanel ? " " + ChatColor.YELLOW.text() + "Click to open the setting panel!" : "");
+        this.combinedDescription = ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getDescription() + modifier.getModifier();
 
         if (this.stringWidth(this.combinedDescription) > this.getMaxTextLength()) {
             ArrayList<String> orderedStrings = new ArrayList<>();
@@ -73,5 +73,21 @@ public class SimpleSettingDescription implements GUIDescription {
     @Override
     public void render(int posX, int posY, Color fillColor, Color outlineColor) {
         this.renderSimple(posX, posY, fillColor, outlineColor, this.combinedDescription, this.descriptionOverflow, this.maxTextLength);
+    }
+
+    public enum DescriptionModifier {
+        NONE(""),
+        OPEN_PANEL(" " + ChatColor.YELLOW.text() + "Click to open the setting panel!"),
+        CLICK_ACTION(" " + ChatColor.YELLOW.text() + "Click to run the action!");
+
+        private final String modifier;
+
+        DescriptionModifier(String modifier) {
+            this.modifier = modifier;
+        }
+
+        public String getModifier() {
+            return this.modifier;
+        }
     }
 }
