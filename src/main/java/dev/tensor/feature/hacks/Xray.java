@@ -68,7 +68,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM())) {
+    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to render.") {
 
         @Override
         public void hasChanged() {

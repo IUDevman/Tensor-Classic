@@ -21,9 +21,9 @@ public final class Greeter extends Hack {
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", true);
     public final BooleanSetting join = new BooleanSetting("Join", true);
-    public final StringSetting joinMessage = new StringSetting("Join Message", "Welcome {name} to the server! Hope you have a good time! ;)");
+    public final StringSetting joinMessage = new StringSetting("Join Message", "Welcome {name} to the server! Hope you have a good time! ;)", "Message sent when a player joins the game.");
     public final BooleanSetting leave = new BooleanSetting("Leave", true);
-    public final StringSetting leaveMessage = new StringSetting("Leave Message", "Goodbye {name} from the server! Sorry to see you go! ;C");
+    public final StringSetting leaveMessage = new StringSetting("Leave Message", "Goodbye {name} from the server! Sorry to see you go! ;C", "Message sent when a player leaves the game.");
 
     private int messageDelay = 0;
 

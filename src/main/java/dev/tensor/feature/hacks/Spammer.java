@@ -37,7 +37,7 @@ public final class Spammer extends Hack {
             }
         }
     };
-    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath())) {
+    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath()), "List of files in '.minecraft/Tensor Classic/Spammer/'. Reload the list after adding files with the 'Refresh File List' button.") {
 
         @Override
         public void onChange() {

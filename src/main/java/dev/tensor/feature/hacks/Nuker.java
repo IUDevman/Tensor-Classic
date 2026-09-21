@@ -37,7 +37,7 @@ public final class Nuker extends Render3DHack {
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
     public final EnumSetting target = new EnumSetting("Target", Target.Click);
     public final BooleanSetting resetTarget = new BooleanSetting("Disable Resets Target", true);
-    public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()));
+    public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()), "Set types of blocks to break.");
     public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
     public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced);
     public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false);

@@ -19,11 +19,15 @@ public class StringSetting implements Setting<String> {
 
     private String VALUE;
 
-    public StringSetting(String NAME, String VALUE) {
+    private String DESCRIPTION;
+
+    public StringSetting(String NAME, String VALUE, String DESCRIPTION) {
         this.NAME = NAME;
         this.DEFAULT_VALUE = VALUE;
 
         this.VALUE = VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -82,6 +86,6 @@ public class StringSetting implements Setting<String> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return this.DESCRIPTION;
     }
 }

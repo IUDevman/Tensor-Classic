@@ -20,10 +20,14 @@ public class BlockListSetting implements Setting<BlockList> {
 
     private final BlockList VALUE;
 
-    public BlockListSetting(String NAME, BlockList VALUE) {
+    private final String DESCRIPTION;
+
+    public BlockListSetting(String NAME, BlockList VALUE, String DESCRIPTION) {
         this.NAME = NAME;
 
         this.VALUE = VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -128,6 +132,6 @@ public class BlockListSetting implements Setting<BlockList> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return this.DESCRIPTION;
     }
 }

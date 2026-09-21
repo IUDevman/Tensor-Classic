@@ -13,8 +13,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 public class EncryptedStringSetting extends StringSetting {
 
-    public EncryptedStringSetting(String NAME, String VALUE) {
-        super(NAME, VALUE);
+    public EncryptedStringSetting(String NAME, String VALUE, String DESCRIPTION) {
+        super(NAME, VALUE, DESCRIPTION);
     }
 
     @Override

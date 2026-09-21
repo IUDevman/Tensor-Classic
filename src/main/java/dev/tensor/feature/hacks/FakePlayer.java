@@ -63,7 +63,7 @@ public final class FakePlayer extends Hack {
             }
         }
     };
-    public final StringSetting name = new StringSetting("Name", "Go_Hoosiers") {
+    public final StringSetting name = new StringSetting("Name", "Go_Hoosiers", "The name of the fake player that is spawned.") {
 
         @Override
         public void setValue(String VALUE) {

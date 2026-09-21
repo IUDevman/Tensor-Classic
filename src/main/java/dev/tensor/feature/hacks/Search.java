@@ -48,7 +48,7 @@ public final class Search extends Render3DHack {
             }
         }
     };
-    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM())) {
+    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to search for.") {
 
         @Override
         public void hasChanged() {
@@ -64,13 +64,13 @@ public final class Search extends Render3DHack {
     };
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
     public final EnumSetting mergeFaces = new EnumSetting("Merge Faces", MergeFaces.All);
-    public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()));
+    public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to merge faces. Must be in the Custom Block List to render!");
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None);
     public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true);
-    public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()));
+    public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to draw tracers to. Must be in the Custom Block List to render!");
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
     public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);

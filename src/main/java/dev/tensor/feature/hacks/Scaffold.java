@@ -37,8 +37,8 @@ public final class Scaffold extends Render3DHack {
     public final BooleanSetting swing = new BooleanSetting("Swing", true);
     public final EnumSetting swap = new EnumSetting("Swap To", Swap.First);
     public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8);
-    public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()));
-    public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()));
+    public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to place.");
+    public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()), "Set types of blocks to NOT place.");
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true);
     public final BooleanSetting esp = new BooleanSetting("ESP", true);
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);

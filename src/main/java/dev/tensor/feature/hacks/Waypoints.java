@@ -29,7 +29,7 @@ public final class Waypoints extends Render3DHack {
         return true;
     }
 
-    public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "");
+    public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "", "Add, remove, or toggle waypoints.");
     public final BooleanSetting title = new BooleanSetting("Title", true);
     public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true);
     public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);

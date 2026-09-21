@@ -26,7 +26,7 @@ public final class AutoGG extends Hack {
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
     public final BooleanSetting greenText = new BooleanSetting("Greentext", false);
     public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
-    public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!");
+    public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!", "Message to be sent when AutoGG is triggered.");
 
     private final ArrayList<String> targets = new ArrayList<>();
     private String lastHitName = "";

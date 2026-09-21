@@ -19,10 +19,13 @@ public class WaypointListSetting implements Setting<WaypointList> {
 
     private final String UNIQUE;
 
-    public WaypointListSetting(String NAME, WaypointList VALUE, String UNIQUE) {
+    private final String DESCRIPTION;
+
+    public WaypointListSetting(String NAME, WaypointList VALUE, String UNIQUE, String DESCRIPTION) {
         this.NAME = NAME;
         this.VALUE = VALUE;
         this.UNIQUE = UNIQUE;
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -94,6 +97,6 @@ public class WaypointListSetting implements Setting<WaypointList> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return this.DESCRIPTION;
     }
 }
