@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @since 09-20-2026
  */
 
-public class SimpleSettingDescription implements GUIDescription {
+public final class SimpleSettingDescription implements GUIDescription {
 
     private final Setting<?> setting;
     private final String combinedDescription;
