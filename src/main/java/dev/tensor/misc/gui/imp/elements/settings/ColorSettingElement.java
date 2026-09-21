@@ -6,6 +6,7 @@ import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -41,6 +42,11 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         }
 
         this.colorButton = colorButton;
+    }
+
+    @Override
+    public Setting<?> getSetting() {
+        return this.colorSetting;
     }
 
     @Override

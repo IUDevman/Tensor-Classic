@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import org.lwjgl.input.Keyboard;
 
@@ -25,6 +26,11 @@ public final class IntegerSettingElement extends SettingElement implements KeyPr
     public IntegerSettingElement(HackElement hackElement, IntegerSetting integerSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.integerSetting = integerSetting;
+    }
+
+    @Override
+    public Setting<?> getSetting() {
+        return this.integerSetting;
     }
 
     public boolean isSearching() {

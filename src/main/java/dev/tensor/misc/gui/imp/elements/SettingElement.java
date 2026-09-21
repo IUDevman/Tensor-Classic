@@ -1,6 +1,7 @@
 package dev.tensor.misc.gui.imp.elements;
 
 import dev.tensor.misc.gui.imp.Element;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
 /**
@@ -50,5 +51,9 @@ public abstract class SettingElement implements Element {
 
     public final int getYPos() {
         return this.posY;
+    }
+
+    public Setting<?> getSetting() {
+        return null;
     }
 }

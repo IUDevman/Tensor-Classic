@@ -106,4 +106,9 @@ public class SpammerListSetting implements Setting<SpammerList> {
     public void onChange() {
 
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

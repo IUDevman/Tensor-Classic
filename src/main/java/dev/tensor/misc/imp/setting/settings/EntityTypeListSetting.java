@@ -142,4 +142,9 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
     public void reset() {
         /* removed reset 04-08-26 */
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

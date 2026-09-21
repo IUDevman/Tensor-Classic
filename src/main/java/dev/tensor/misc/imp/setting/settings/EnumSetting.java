@@ -95,4 +95,9 @@ public class EnumSetting implements Setting<Enum<?>> {
     public void save(JsonObject jsonObject) {
         jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

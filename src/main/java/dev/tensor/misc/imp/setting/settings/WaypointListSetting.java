@@ -91,4 +91,9 @@ public class WaypointListSetting implements Setting<WaypointList> {
     public boolean hasCustomConfig() {
         return true;
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -22,6 +23,11 @@ public final class BooleanSettingElement extends SettingElement {
     public BooleanSettingElement(HackElement hackElement, BooleanSetting booleanSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.booleanSetting = booleanSetting;
+    }
+
+    @Override
+    public Setting<?> getSetting() {
+        return this.booleanSetting;
     }
 
     @Override

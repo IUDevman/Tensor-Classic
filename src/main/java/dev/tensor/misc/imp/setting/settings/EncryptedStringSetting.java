@@ -34,6 +34,11 @@ public class EncryptedStringSetting extends StringSetting {
         jsonObject.add(this.getName(), new JsonPrimitive(encryptedValue));
     }
 
+    @Override
+    public String getDescription() {
+        return "Penis 1 " + this.getName();
+    }
+
     private String decryptValue(String encryptedValue) {
         StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 

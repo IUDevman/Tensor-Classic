@@ -7,6 +7,11 @@ import dev.tensor.misc.imp.hack.Category;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * @author Hoosiers
+ * @since 09-20-2026
+ */
+
 public final class CategoryDescription implements GUIDescription {
 
     private final Category category;
@@ -67,52 +72,6 @@ public final class CategoryDescription implements GUIDescription {
 
     @Override
     public void render(int posX, int posY, Color fillColor, Color outlineColor) {
-        if (this.descriptionOverflow != null) {
-            int minX = posX;
-            int minY = posY;
-            int width = this.maxTextLength + 6;
-            int height = 4 + (this.descriptionOverflow.size() * 12);
-
-            int maxX = minX + width;
-            int maxY = minY + height;
-
-            if (maxX > this.getMinecraft().currentScreen.width) {
-                minX -= (maxX - this.getMinecraft().currentScreen.width);
-            }
-
-            if (maxY > this.getMinecraft().currentScreen.height) {
-                minY -= (maxY - this.getMinecraft().currentScreen.height);
-            }
-
-            this.drawOutlinedRectangle(minX, minY, width, height, 1, fillColor.getRGB(), outlineColor.getRGB(), true);
-
-            for (int i = 0; i < this.descriptionOverflow.size(); i++) {
-                String toRender = this.descriptionOverflow.get(i);
-
-                this.drawString(toRender, minX + 3, minY + 3 + (12 * i), Color.WHITE.getRGB());
-            }
-
-            return;
-        }
-
-        int minX = posX;
-        int minY = posY;
-        int width = this.stringWidth(this.combinedDescription) + 6;
-        int height = 16;
-
-        int maxX = minX + width;
-        int maxY = minY + height;
-
-        if (maxX > this.getMinecraft().currentScreen.width) {
-            minX -= (maxX - this.getMinecraft().currentScreen.width);
-        }
-
-        if (maxY > this.getMinecraft().currentScreen.height) {
-            minY -= (maxY - this.getMinecraft().currentScreen.height);
-        }
-
-        this.drawOutlinedRectangle(minX, minY, width, height, 1, fillColor.getRGB(), outlineColor.getRGB(), true);
-
-        this.drawString(this.combinedDescription, minX + 3, minY + 3, Color.WHITE.getRGB());
+        this.renderSimple(posX, posY, fillColor, outlineColor, this.combinedDescription, this.descriptionOverflow, this.maxTextLength);
     }
 }

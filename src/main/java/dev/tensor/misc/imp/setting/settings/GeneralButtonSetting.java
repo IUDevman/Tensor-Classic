@@ -76,6 +76,11 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
         return true;
     }
 
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
+
     public void onChange() {
 
     }

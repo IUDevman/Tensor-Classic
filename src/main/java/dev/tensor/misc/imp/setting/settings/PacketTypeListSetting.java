@@ -143,4 +143,9 @@ public class PacketTypeListSetting implements Setting<PacketTypeList> {
     public void reset() {
 
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

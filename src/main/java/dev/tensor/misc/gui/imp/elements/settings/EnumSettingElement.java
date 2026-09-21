@@ -5,6 +5,7 @@ import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 
@@ -22,6 +23,11 @@ public final class EnumSettingElement extends SettingElement {
     public EnumSettingElement(HackElement hackElement, EnumSetting enumSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
         super(hackElement, x, y, scrollY, posX, posY);
         this.enumSetting = enumSetting;
+    }
+
+    @Override
+    public Setting<?> getSetting() {
+        return this.enumSetting;
     }
 
     @Override

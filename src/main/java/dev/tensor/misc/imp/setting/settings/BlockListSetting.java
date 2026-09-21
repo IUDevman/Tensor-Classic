@@ -125,4 +125,9 @@ public class BlockListSetting implements Setting<BlockList> {
     public void reset() {
         /* removed reset 04-08-26 */
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }

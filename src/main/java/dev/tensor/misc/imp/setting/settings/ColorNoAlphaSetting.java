@@ -16,4 +16,9 @@ public class ColorNoAlphaSetting extends ColorSetting {
     public ColorNoAlphaSetting(String NAME, Color VALUE, boolean RAINBOW) {
         super(NAME, VALUE, RAINBOW);
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis 1 " + this.getName();
+    }
 }

@@ -5,8 +5,10 @@ import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.gui.imp.Hoverable;
 import dev.tensor.misc.gui.imp.description.GUIDescription;
+import dev.tensor.misc.gui.imp.description.SettingDescriptionFinder;
 import dev.tensor.misc.gui.imp.description.imp.CategoryDescription;
 import dev.tensor.misc.gui.imp.description.imp.HackDescription;
+import dev.tensor.misc.gui.imp.description.imp.SimpleSettingDescription;
 import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
@@ -15,6 +17,7 @@ import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.render.Render2D;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
@@ -213,7 +216,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                 hasFound.set(true);
             }
 
-            if (!categoryElement.isSelected()) {
+            if (hasFound.get() || !categoryElement.isSelected()) {
                 return;
             }
 
@@ -236,6 +239,31 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
                     hasFound.set(true);
                 }
+
+                if (hasFound.get() || !hackElement.isViewed()) {
+                    return;
+                }
+
+                hackElement.settingElements.forEach(settingElement -> {
+
+                    if (!hasFound.get() && this.isHovered(settingElement.getPosX(), settingElement.getPosY(), settingElement.getPosX() + settingElement.getWidth(), settingElement.getPosY() + settingElement.getHeight(), mouseX, mouseY)) {
+
+                        if (this.description == null || !(this.description instanceof SimpleSettingDescription)) {
+                            this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement.getSetting());
+
+                        } else if (this.description instanceof SimpleSettingDescription) {
+                            SimpleSettingDescription simpleSettingDescription = (SimpleSettingDescription) this.description;
+
+                            Setting<?> setting = (Setting<?>) simpleSettingDescription.getObject();
+
+                            if (setting != settingElement.getSetting()) {
+                                this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement.getSetting());
+                            }
+                        }
+
+                        hasFound.set(true);
+                    }
+                });
             });
         });
 

@@ -151,4 +151,9 @@ public class ColorSetting implements Setting<Color> {
         this.rainbow = false;
         Setting.super.reset();
     }
+
+    @Override
+    public String getDescription() {
+        return "Penis " + this.getName();
+    }
 }
