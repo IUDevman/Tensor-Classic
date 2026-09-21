@@ -17,11 +17,7 @@ public final class SettingDescriptionFinder {
             return new SimpleSettingDescription(setting, false);
         }
 
-        if (setting instanceof BlockListSetting || setting instanceof EncryptedStringSetting || setting instanceof EntityTypeListSetting) {
-            return new SimpleSettingDescription(setting, true);
-        }
-
-        if (setting instanceof PacketTypeListSetting || setting instanceof SpammerListSetting || setting instanceof StringSetting || setting instanceof WaypointListSetting) {
+        if (setting instanceof BlockListSetting || setting instanceof EntityTypeListSetting || setting instanceof PacketTypeListSetting || setting instanceof SpammerListSetting || setting instanceof StringSetting || setting instanceof WaypointListSetting) {
             return new SimpleSettingDescription(setting, true);
         }
 
