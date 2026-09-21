@@ -75,4 +75,16 @@ public interface GUIDescription extends Render2D {
 
         this.drawString(combinedDescription, minX + 3, minY + 3, Color.WHITE.getRGB());
     }
+
+    default String getPreviousChatColor(String previous) {
+        if (!previous.contains("§")) {
+            return "";
+        }
+
+        String[] split = previous.split("§");
+
+        String last = split[split.length - 1];
+
+        return "§" + last.charAt(0);
+    }
 }

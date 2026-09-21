@@ -32,7 +32,6 @@ public final class HackDescription implements GUIDescription {
 
             String toAdd = "";
 
-            //todo: fix chat color not coming through to new line
             for (int i = 0; i < split.length; i++) {
                 String chunk = split[i];
 
@@ -46,7 +45,7 @@ public final class HackDescription implements GUIDescription {
 
                 if (lengthPre + lengthChunk + 1 > this.getMaxTextLength()) {
                     orderedStrings.add(toAdd);
-                    toAdd = chunk;
+                    toAdd = this.getPreviousChatColor(toAdd) + chunk;
                 }
             }
 
