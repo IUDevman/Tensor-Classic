@@ -10,7 +10,7 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 04-22-2026
  */
 
-@Hack.Info(name = "Rotations", category = Category.Client, enabled = true)
+@Hack.Info(name = "Rotations", category = Category.Client, enabled = true, description = "Global setting for how rotations are handled by the client.")
 public final class Rotations extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Packet) {

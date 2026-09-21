@@ -12,7 +12,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 05-06-2026
  */
 
-@Hack.Info(name = "DiscordRPC", category = Category.Client, enabled = true)
+@Hack.Info(name = "DiscordRPC", category = Category.Client, enabled = true, description = "Support Tensor and let your friends on Discord know about us with the RPC!")
 public final class DiscordRPC extends Hack {
 
     public final BooleanSetting showUsername = new BooleanSetting("Show Username", true) {

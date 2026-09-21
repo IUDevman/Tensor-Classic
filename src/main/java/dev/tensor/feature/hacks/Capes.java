@@ -9,7 +9,7 @@ import net.minecraft.src.EntityPlayer;
  * @since 05-02-2026
  */
 
-@Hack.Info(name = "Capes", category = Category.Client, enabled = true)
+@Hack.Info(name = "Capes", category = Category.Client, enabled = true, description = "Gives you and any defined players the custom Tensor cape.")
 public final class Capes extends Hack {
 
     @Override

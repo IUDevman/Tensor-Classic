@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @since 03-15-2026
  */
 
-@Hack.Info(name = "TabGUI", category = Category.HUD)
+@Hack.Info(name = "TabGUI", category = Category.HUD, description = "Displays a miniature GUI to toggle hacks.")
 public final class TabGUI extends Hack implements HUDObject {
 
     @Override

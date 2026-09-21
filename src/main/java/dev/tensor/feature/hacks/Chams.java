@@ -23,7 +23,7 @@ import java.util.ArrayList;
  * @since 05-14-2026
  */
 
-@Hack.Info(name = "Chams", category = Category.Render)
+@Hack.Info(name = "Chams", category = Category.Render, description = "Renders entities through blocks.")
 public final class Chams extends Hack {
 
     public final BooleanSetting players = new BooleanSetting("Players", true);

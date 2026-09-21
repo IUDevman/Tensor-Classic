@@ -16,7 +16,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "ModInfo", category = Category.HUD)
+@Hack.Info(name = "ModInfo", category = Category.HUD, description = "Displays the client name and version.")
 public final class ModInfo extends Hack implements HUDObject {
 
     @Override

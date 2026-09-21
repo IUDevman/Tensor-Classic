@@ -2,12 +2,17 @@ package dev.tensor.misc.gui;
 
 import dev.tensor.feature.hacks.HUDEditor;
 import dev.tensor.misc.gui.imp.Hoverable;
+import dev.tensor.misc.gui.imp.description.GUIDescription;
+import dev.tensor.misc.gui.imp.description.imp.HackDescription;
+import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
 import dev.tensor.misc.imp.render.Render2D;
 import net.minecraft.src.GuiScreen;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Hoosiers
@@ -21,6 +26,8 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
     private final ArrayList<HUDObject> hudObjects = new ArrayList<>();
 
     private HUDObject draggingObject = null;
+
+    private GUIDescription description = null;
 
     private int dragOffsetX;
     private int dragOffsetY;
@@ -75,6 +82,54 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
                     break;
             }
         });
+
+        boolean holdingShift = this.shouldRenderDescription();
+
+        if (!holdingShift) {
+            this.description = null;
+            return;
+        }
+
+        AtomicBoolean hasFound = new AtomicBoolean(false);
+
+        this.hudObjects.forEach(hudObject -> {
+
+            if (hasFound.get()) {
+                return;
+            }
+
+            if (!(hudObject instanceof Hack)) {
+                return;
+            }
+
+            Hack hack = (Hack) hudObject;
+
+            if (this.isObjectHovered(hudObject, mouseX, mouseY)) {
+
+                if (this.description == null || !(this.description instanceof HackDescription)) {
+                    this.description = new HackDescription(hack);
+
+                } else if (this.description instanceof HackDescription) {
+                    HackDescription hackDescription = (HackDescription) this.description;
+
+                    Hack hackDesc = (Hack) hackDescription.getObject();
+
+                    if (hackDesc != hack) {
+                        this.description = new HackDescription(hack);
+                    }
+                }
+
+                hasFound.set(true);
+            }
+        });
+
+        if (!hasFound.get()) {
+            this.description = null;
+        }
+
+        if (this.description != null) {
+            this.description.render(mouseX, mouseY, this.hudEditor.fillColor.getValueRainbow(), this.hudEditor.outlineColor.getValueRainbow());
+        }
     }
 
     private void drawHudObjectOutline(HUDObject hudObject) {
@@ -130,10 +185,6 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
         super.handleMouseInput();
     }
 
-    private boolean isObjectHovered(HUDObject hudObject, double mouseX, double mouseY) {
-        return this.isHovered(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), mouseX, mouseY);
-    }
-
     @Override
     public boolean doesGuiPauseGame() {
         return false;
@@ -142,5 +193,21 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
     @Override
     public void onGuiClosed() {
         this.hudEditor.setEnabled(false);
+    }
+
+    private boolean isObjectHovered(HUDObject hudObject, double mouseX, double mouseY) {
+        return this.isHovered(hudObject.getMinX().getValue(), hudObject.getMinY().getValue(), hudObject.getMinX().getValue() + hudObject.getWidthScaled(), hudObject.getMinY().getValue() + hudObject.getHeightScaled(), mouseX, mouseY);
+    }
+
+    private boolean shouldRenderDescription() {
+        if (!this.hudEditor.showDescriptions.getValue()) {
+            return false;
+        }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            return true;
+        }
+
+        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
     }
 }

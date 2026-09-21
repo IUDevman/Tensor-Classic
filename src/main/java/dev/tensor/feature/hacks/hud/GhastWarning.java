@@ -18,7 +18,7 @@ import java.awt.*;
  * @since 06-14-2026
  */
 
-@Hack.Info(name = "GhastWarning", category = Category.HUD)
+@Hack.Info(name = "GhastWarning", category = Category.HUD, description = "Displays a warning whenever a fireball has been shot by a Ghast.")
 public final class GhastWarning extends Hack implements HUDObject {
 
     @Override

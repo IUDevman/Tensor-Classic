@@ -16,7 +16,7 @@ import org.lwjgl.input.Mouse;
  * @since 05-03-2026
  */
 
-@Hack.Info(name = "MiddleClickZoom", category = Category.Render)
+@Hack.Info(name = "MiddleClickZoom", category = Category.Render, description = "Zooms your view like Optifine when middle click is engaged.")
 public final class MiddleClickZoom extends Hack {
 
     public final BooleanSetting smoothCamera = new BooleanSetting("Smooth Camera", true);

@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-29-2026
  */
 
-@Hack.Info(name = "NoItemRender", category = Category.Render)
+@Hack.Info(name = "NoItemRender", category = Category.Render, description = "Prevents items from rendering their models or in the ESP")
 public final class NoItemRender extends Hack {
 
     @SuppressWarnings("unused")

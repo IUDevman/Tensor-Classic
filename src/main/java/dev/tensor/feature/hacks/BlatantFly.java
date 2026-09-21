@@ -20,7 +20,7 @@ import org.lwjgl.input.Keyboard;
  * @source https://github.com/qe7/Hephaestus
  */
 
-@Hack.Info(name = "BlatantFly", category = Category.Movement)
+@Hack.Info(name = "BlatantFly", category = Category.Movement, description = "Allows the player to fly. Not for servers with anticheat.")
 public final class BlatantFly extends Hack {
 
     public final IntegerSetting speed = new IntegerSetting("Speed", 10, 1, 20);

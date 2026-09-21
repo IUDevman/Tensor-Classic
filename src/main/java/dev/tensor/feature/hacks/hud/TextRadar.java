@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * @since 06-17-2026
  */
 
-@Hack.Info(name = "TextRadar", category = Category.HUD)
+@Hack.Info(name = "TextRadar", category = Category.HUD, description = "Displays a list of nearby players.")
 public final class TextRadar extends Hack implements HUDObject {
 
     @Override

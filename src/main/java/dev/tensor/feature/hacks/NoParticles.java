@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-07-2026
  */
 
-@Hack.Info(name = "NoParticles", category = Category.Render)
+@Hack.Info(name = "NoParticles", category = Category.Render, description = "Prevents the rendering of particles.")
 public final class NoParticles extends Hack {
 
     @SuppressWarnings("unused")

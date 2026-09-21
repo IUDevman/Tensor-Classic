@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 03-28-2026
  */
 
-@Hack.Info(name = "TimerMine", category = Category.Player)
+@Hack.Info(name = "TimerMine", category = Category.Player, description = "Speeds up the client tick rate, but only when you are mining.")
 public final class TimerMine extends Hack {
 
     public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 35, 20, 40);

@@ -19,7 +19,7 @@ import java.util.Optional;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "HackList", category = Category.HUD, drawn = false)
+@Hack.Info(name = "HackList", category = Category.HUD, drawn = false, description = "Displays the currently enabled hacks.")
 public final class HackList extends Hack implements HUDObject {
 
     @Override

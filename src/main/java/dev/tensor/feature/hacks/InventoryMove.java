@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
  * @since 04-04-2026
  */
 
-@Hack.Info(name = "InventoryMove", category = Category.Movement)
+@Hack.Info(name = "InventoryMove", category = Category.Movement, description = "Allows you to move when in GUI screens such as the inventory.")
 public final class InventoryMove extends Hack {
 
     public final BooleanSetting jump = new BooleanSetting("Jump", false);

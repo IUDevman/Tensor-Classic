@@ -12,7 +12,7 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "Velocity", category = Category.Movement)
+@Hack.Info(name = "Velocity", category = Category.Movement, description = "Prevents you from being pushed by a variety of sources.")
 public final class Velocity extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);

@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @since 04-03-2026
  */
 
-@Hack.Info(name = "Inventory", category = Category.HUD)
+@Hack.Info(name = "Inventory", category = Category.HUD, description = "Displays the items in your inventory.")
 public final class Inventory extends Hack implements HUDObject {
 
     @Override

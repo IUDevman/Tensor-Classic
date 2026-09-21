@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 04-19-2026
  */
 
-@Hack.Info(name = "Platform", category = Category.Player)
+@Hack.Info(name = "Platform", category = Category.Player, description = "Like scaffold, but places a BIG platform underneath your feet.")
 public final class Platform extends Render3DHack {
 
     @Override

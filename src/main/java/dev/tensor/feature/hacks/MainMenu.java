@@ -12,7 +12,7 @@ import java.awt.*;
  * @since 06-08-2026
  */
 
-@Hack.Info(name = "MainMenu", category = Category.Client, enabled = true, messages = false, drawn = false)
+@Hack.Info(name = "MainMenu", category = Category.Client, enabled = true, messages = false, drawn = false, description = "Custom Tensor themed main menu for the game.")
 public final class MainMenu extends Hack {
 
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(176, 24, 24, 255));

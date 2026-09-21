@@ -17,7 +17,7 @@ import java.util.Date;
  * @since 04-11-2026
  */
 
-@Hack.Info(name = "ChatTimestamp", category = Category.Misc)
+@Hack.Info(name = "ChatTimestamp", category = Category.Misc, description = "Applies a client-sided timestamp of the time messages were send/received.")
 public final class ChatTimestamp extends Hack {
 
     public final EnumSetting format = new EnumSetting("Format", Format.Hour24$Min$Sec);

@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-04-2026
  */
 
-@Hack.Info(name = "PortalInventory", category = Category.Player)
+@Hack.Info(name = "PortalInventory", category = Category.Player, description = "Allows you to open your inventory in portals.")
 public final class PortalInventory extends Hack {
 
     @SuppressWarnings("unused")

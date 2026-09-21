@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 03-31-2026
  */
 
-@Hack.Info(name = "EntityESP", category = Category.Render)
+@Hack.Info(name = "EntityESP", category = Category.Render, description = "Outlines selected entity bounding boxes.")
 public final class EntityESP extends Render3DHack {
 
     @Override

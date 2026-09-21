@@ -14,7 +14,7 @@ import net.minecraft.src.Packet3Chat;
  * @since 03-21-2026
  */
 
-@Hack.Info(name = "Greeter", category = Category.Misc)
+@Hack.Info(name = "Greeter", category = Category.Misc, description = "Sends a cheeky welcome and goodbye message for players on your server.")
 public final class Greeter extends Hack {
 
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);

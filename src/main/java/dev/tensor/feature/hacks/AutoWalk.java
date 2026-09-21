@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "AutoWalk", category = Category.Movement)
+@Hack.Info(name = "AutoWalk", category = Category.Movement, description = "Moves the player forward without input.")
 public final class AutoWalk extends Hack {
 
     @Override

@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.gui.TensorHUDEditor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import org.lwjgl.input.Keyboard;
@@ -14,7 +15,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE)
+@Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE, description = "Opens custom HUD editor to move around client HUD objects with your mouse.")
 public final class HUDEditor extends Hack {
 
     @Override
@@ -22,7 +23,9 @@ public final class HUDEditor extends Hack {
         return true;
     }
 
+    public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true);
     public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 
     private TensorHUDEditor tensorHUDEditor = null;

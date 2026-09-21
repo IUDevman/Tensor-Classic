@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @since 07-04-2026
  */
 
-@Hack.Info(name = "Spammer", category = Category.Misc)
+@Hack.Info(name = "Spammer", category = Category.Misc, description = "Spams bullshit from a file into chat.")
 public final class Spammer extends Hack {
 
     public final GeneralButtonSetting refresh = new GeneralButtonSetting("Refresh File List", GeneralButtonSetting.ButtonType.CLICK_ACTION) {

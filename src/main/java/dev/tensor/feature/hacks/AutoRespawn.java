@@ -9,7 +9,7 @@ import net.minecraft.src.GuiGameOver;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "AutoRespawn", category = Category.Misc)
+@Hack.Info(name = "AutoRespawn", category = Category.Misc, description = "Automatically respawns the player after death")
 public final class AutoRespawn extends Hack {
 
     @Override

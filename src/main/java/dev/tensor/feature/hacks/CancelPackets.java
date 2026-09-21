@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.PacketTypeListSetting;
  * @since 05-24-2026
  */
 
-@Hack.Info(name = "CancelPackets", category = Category.Misc)
+@Hack.Info(name = "CancelPackets", category = Category.Misc, description = "Selectively block packets shared between the client and the server.")
 public final class CancelPackets extends Hack {
 
     public final BooleanSetting outbound = new BooleanSetting("Filter Outbound", true);

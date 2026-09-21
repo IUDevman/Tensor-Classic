@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 04-07-2026
  */
 
-@Hack.Info(name = "Waypoints", category = Category.Render)
+@Hack.Info(name = "Waypoints", category = Category.Render, description = "Renders defined markers in your world for pathfinding.")
 public final class Waypoints extends Render3DHack {
 
     @Override

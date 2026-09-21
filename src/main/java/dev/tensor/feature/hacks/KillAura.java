@@ -23,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 03-19-2026
  */
 
-@Hack.Info(name = "KillAura", category = Category.Combat, bind = Keyboard.KEY_R)
+@Hack.Info(name = "KillAura", category = Category.Combat, bind = Keyboard.KEY_R, description = "Automatically attacks nearby entities.")
 public final class KillAura extends Render3DHack {
 
     @Override

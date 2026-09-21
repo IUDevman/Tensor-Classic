@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 07-10-2026
  */
 
-@Hack.Info(name = "EpsteinESP", category = Category.Render)
+@Hack.Info(name = "EpsteinESP", category = Category.Render, description = "Joke hack that redacts players from your screen like the Epstein files.")
 public final class EpsteinESP extends Render3DHack {
 
     @Override

@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 04-06-2026
  */
 
-@Hack.Info(name = "WolfOwner", category = Category.Render)
+@Hack.Info(name = "WolfOwner", category = Category.Render, description = "Renders a nametag of the player owner over pet wolves.")
 public final class WolfOwner extends Render3DHack {
 
     @Override

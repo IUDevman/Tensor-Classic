@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 04-15-2026
  */
 
-@Hack.Info(name = "Nuker", category = Category.Player, bind = Keyboard.KEY_N)
+@Hack.Info(name = "Nuker", category = Category.Player, bind = Keyboard.KEY_N, description = "Automatically breaks nearby blocks. Blocks broken can be customized.")
 public final class Nuker extends Render3DHack {
 
     @Override

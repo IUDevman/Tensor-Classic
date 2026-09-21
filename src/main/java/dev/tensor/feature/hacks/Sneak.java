@@ -12,7 +12,7 @@ import org.lwjgl.input.Keyboard;
  * @since 04-01-2026
  */
 
-@Hack.Info(name = "Sneak", category = Category.Movement)
+@Hack.Info(name = "Sneak", category = Category.Movement, description = "Causes the player to sneak server-sided.")
 public final class Sneak extends Hack {
 
     public final BooleanSetting limitSpeed = new BooleanSetting("Limit Speed", true);

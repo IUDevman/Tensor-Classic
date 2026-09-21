@@ -19,7 +19,7 @@ import java.util.ArrayDeque;
  * https://github.com/IUDevman/gamesense-client/commit/0dd0e740a1e75f21de19f7306895fd51127853ad
  */
 
-@Hack.Info(name = "Speedometer", category = Category.HUD)
+@Hack.Info(name = "Speedometer", category = Category.HUD, description = "Displays the current speed of the player.")
 public final class Speedometer extends Hack implements HUDObject {
 
     @Override

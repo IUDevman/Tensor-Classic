@@ -41,7 +41,7 @@ import net.minecraft.src.*;
  */
 
 @Deprecated
-@Hack.Info(name = "InfiniteDurability", category = Category.Player)
+@Hack.Info(name = "InfiniteDurability", category = Category.Player, description = "No longer used.")
 public final class InfiniteDurability extends Hack {
 
     public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);

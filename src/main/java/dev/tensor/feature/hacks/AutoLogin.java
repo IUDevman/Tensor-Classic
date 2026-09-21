@@ -14,7 +14,7 @@ import net.minecraft.src.Packet3Chat;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "AutoLogin", category = Category.Misc)
+@Hack.Info(name = "AutoLogin", category = Category.Misc, description = "Automatically answers server login prompts with your set password. Works with AutoLogin or a set password.")
 public final class AutoLogin extends Hack {
 
     public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!");

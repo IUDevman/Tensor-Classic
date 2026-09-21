@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @since 09-15-2026
  */
 
-@Hack.Info(name = "AutoArmor", category = Category.Combat)
+@Hack.Info(name = "AutoArmor", category = Category.Combat, description = "Automatically sets your armor from the inventory to be the most durable.")
 public final class AutoArmor extends Hack {
 
     /**

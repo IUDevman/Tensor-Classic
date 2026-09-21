@@ -13,7 +13,7 @@ import net.minecraft.src.ItemStack;
  * @since 04-28-2026
  */
 
-@Hack.Info(name = "FastBow", category = Category.Combat)
+@Hack.Info(name = "FastBow", category = Category.Combat, description = "Allows you to shoot the bow really fast or with multiple arrows at once.")
 public final class FastBow extends Hack {
 
     public final IntegerSetting arrowsPerClick = new IntegerSetting("Arrows Per Click", 1, 1, 64);

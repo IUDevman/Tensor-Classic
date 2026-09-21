@@ -10,7 +10,7 @@ import net.minecraft.src.PlayerControllerMP;
  * @since 04-16-2026
  */
 
-@Hack.Info(name = "NoBreakDelay", category = Category.Player)
+@Hack.Info(name = "NoBreakDelay", category = Category.Player, description = "Negates the 5-tick block delay after breaking a block.")
 public final class NoBreakDelay extends Hack {
 
     @Override

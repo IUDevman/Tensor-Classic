@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 09-19-2026
  */
 
-@Hack.Info(name = "SlimeChunks", category = Category.Render)
+@Hack.Info(name = "SlimeChunks", category = Category.Render, description = "Renders a box around chunks that can spawn slimes.")
 public final class SlimeChunks extends Render3DHack {
 
     private static long STATIC_MULTIPLAYER_WORLD_SEED = -1;

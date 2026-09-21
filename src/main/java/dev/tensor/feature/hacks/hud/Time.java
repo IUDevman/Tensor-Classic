@@ -18,7 +18,7 @@ import java.util.Date;
  * @since 04-18-2026
  */
 
-@Hack.Info(name = "Time", category = Category.HUD)
+@Hack.Info(name = "Time", category = Category.HUD, description = "Displays the current IRL time.")
 public final class Time extends Hack implements HUDObject {
 
     @Override

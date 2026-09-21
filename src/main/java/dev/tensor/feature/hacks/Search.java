@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 03-29-2026
  */
 
-@Hack.Info(name = "Search", category = Category.Render)
+@Hack.Info(name = "Search", category = Category.Render, description = "Draws renders and/or tracers to defined blocks. Basically a better Xray.")
 public final class Search extends Render3DHack {
 
     @Override

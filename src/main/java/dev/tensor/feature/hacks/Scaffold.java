@@ -21,7 +21,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 04-17-2026
  */
 
-@Hack.Info(name = "Scaffold", category = Category.Player)
+@Hack.Info(name = "Scaffold", category = Category.Player, description = "Places blocks under the players feet.")
 public final class Scaffold extends Render3DHack {
 
     @Override

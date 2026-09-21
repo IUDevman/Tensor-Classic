@@ -14,7 +14,7 @@ import java.awt.*;
  * @since 04-01-2026
  */
 
-@Hack.Info(name = "CustomFog", category = Category.Render)
+@Hack.Info(name = "CustomFog", category = Category.Render, description = "Modifies fog rendering and color.")
 public final class CustomFog extends Hack {
 
     public final BooleanSetting renderSkyFog = new BooleanSetting("Render Sky Fog", false);

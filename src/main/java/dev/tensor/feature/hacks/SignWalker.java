@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
  * @since 06-09-2026
  */
 
-@Hack.Info(name = "SignWalker", category = Category.Movement)
+@Hack.Info(name = "SignWalker", category = Category.Movement, description = "Allows for you to climb up and stand on signs.")
 public final class SignWalker extends Hack {
 
     public final IntegerSetting offset = new IntegerSetting("Check Offset", -2, -3, -1);

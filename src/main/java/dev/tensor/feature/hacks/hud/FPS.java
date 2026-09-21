@@ -14,7 +14,7 @@ import java.util.ArrayDeque;
  * @since 04-14-2026
  */
 
-@Hack.Info(name = "FPS", category = Category.HUD)
+@Hack.Info(name = "FPS", category = Category.HUD, description = "Displays the client frames per second (FPS).")
 public final class FPS extends Hack implements HUDObject {
 
     @Override

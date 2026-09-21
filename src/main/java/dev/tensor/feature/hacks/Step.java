@@ -9,7 +9,7 @@ import dev.tensor.misc.imp.setting.settings.DoubleSetting;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "Step", category = Category.Movement)
+@Hack.Info(name = "Step", category = Category.Movement, description = "Automatically steps up blocks.")
 public final class Step extends Hack {
 
     //Step height of 1 for full blocks, 1.2 for block + trapdoor, 1.5 for half slab (this and above blocked by NoCheat)

@@ -16,7 +16,7 @@ import net.minecraft.src.EnumMovingObjectType;
  * @source https://github.com/FreeCliff/rose-babric
  */
 
-@Hack.Info(name = "RoseFastPlace", category = Category.Player)
+@Hack.Info(name = "RoseFastPlace", category = Category.Player, description = "Allows you to place blocks fast. From Rose by FreeCliff.")
 public final class RoseFastPlace extends Hack {
 
     @SuppressWarnings("unused")

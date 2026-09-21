@@ -16,7 +16,7 @@ import net.minecraft.src.MovingObjectPosition;
  * @since 04-12-2026
  */
 
-@Hack.Info(name = "MiddleClickFriend", category = Category.Misc)
+@Hack.Info(name = "MiddleClickFriend", category = Category.Misc, description = "Modifies the friend list when middle clicking players.")
 public final class MiddleClickFriend extends Hack {
 
     public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true);

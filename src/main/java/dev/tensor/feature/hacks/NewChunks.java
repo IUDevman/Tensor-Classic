@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 05-17-2026
  */
 
-@Hack.Info(name = "NewChunks", category = Category.Render)
+@Hack.Info(name = "NewChunks", category = Category.Render, description = "Renders a box around chunks that are newly generated.")
 public final class NewChunks extends Render3DHack {
 
     @Override

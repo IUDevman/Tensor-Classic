@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * @since 04-24-2026
  */
 
-@Hack.Info(name = "VisualRange", category = Category.Combat)
+@Hack.Info(name = "VisualRange", category = Category.Combat, description = "Sends a chat message when players enter your visual (render distance) range.")
 public final class VisualRange extends Hack {
 
     public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false);

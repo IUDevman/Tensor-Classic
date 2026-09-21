@@ -14,7 +14,7 @@ import net.minecraft.src.ItemStack;
  * @since 04-06-2026
  */
 
-@Hack.Info(name = "FakePlayer", category = Category.Misc)
+@Hack.Info(name = "FakePlayer", category = Category.Misc, description = "Spawns a fake player. Useful for testing NameTags or other renders.")
 public final class FakePlayer extends Hack {
 
     @Override

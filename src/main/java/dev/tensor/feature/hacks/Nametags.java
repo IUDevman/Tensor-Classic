@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 04-06-2026
  */
 
-@Hack.Info(name = "Nametags", category = Category.Render)
+@Hack.Info(name = "Nametags", category = Category.Render, description = "Displays custom nametags for players displaying useful information.")
 public final class Nametags extends Render3DHack {
 
     @Override

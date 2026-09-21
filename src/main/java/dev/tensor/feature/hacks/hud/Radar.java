@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 05-01-2026
  */
 
-@Hack.Info(name = "Radar", category = Category.HUD)
+@Hack.Info(name = "Radar", category = Category.HUD, description = "Displays a 2D representation of entities, logout spots, and waypoints relative to your position.")
 public final class Radar extends Hack implements HUDObject {
 
     @Override

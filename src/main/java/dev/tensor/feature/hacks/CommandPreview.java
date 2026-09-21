@@ -14,7 +14,7 @@ import java.awt.*;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "CommandPreview", category = Category.Client, drawn = false, enabled = true)
+@Hack.Info(name = "CommandPreview", category = Category.Client, drawn = false, enabled = true, description = "Displays useful tooltips when typing client commands in the chat.")
 public final class CommandPreview extends Hack {
 
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));

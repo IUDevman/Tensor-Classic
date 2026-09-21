@@ -24,7 +24,7 @@ import org.lwjgl.input.Keyboard;
  * @source https://github.com/qe7/Hephaestus
  */
 
-@Hack.Info(name = "HephFreecam", category = Category.Player, bind = Keyboard.KEY_V)
+@Hack.Info(name = "HephFreecam", category = Category.Player, bind = Keyboard.KEY_V, description = "Leave your body and freely move around the map. From Hephaestus by qe7.")
 public final class HephFreecam extends Hack {
 
     @Override

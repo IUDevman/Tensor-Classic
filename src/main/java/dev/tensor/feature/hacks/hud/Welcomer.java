@@ -16,7 +16,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "Welcomer", category = Category.HUD, enabled = true)
+@Hack.Info(name = "Welcomer", category = Category.HUD, enabled = true, description = "Welcome to Tensor Classic!")
 public final class Welcomer extends Hack implements HUDObject {
 
     @Override

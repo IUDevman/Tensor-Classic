@@ -14,7 +14,7 @@ import java.awt.*;
  */
 
 @SuppressWarnings("unused")
-@Hack.Info(name = "DummyHUDHack", category = Category.HUD)
+@Hack.Info(name = "DummyHUDHack", category = Category.HUD, description = "Test")
 public final class DummyHUDHack extends Hack implements HUDObject {
 
     public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX());

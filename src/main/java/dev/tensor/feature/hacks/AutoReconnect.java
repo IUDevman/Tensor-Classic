@@ -12,7 +12,7 @@ import java.awt.*;
  * @since 04-11-2026
  */
 
-@Hack.Info(name = "AutoReconnect", category = Category.Misc)
+@Hack.Info(name = "AutoReconnect", category = Category.Misc, description = "Automatically logs into the server when you get kicked. Note: Is somewhat broken.")
 public final class AutoReconnect extends Hack {
 
     public final IntegerSetting delaySeconds = new IntegerSetting("Delay Seconds", 5, 1, 60);

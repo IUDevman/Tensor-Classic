@@ -18,7 +18,7 @@ import java.awt.*;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "Slug", category = Category.HUD)
+@Hack.Info(name = "Slug", category = Category.HUD, description = "Displays the mod author.")
 public final class Slug extends Hack implements HUDObject {
 
     @Override

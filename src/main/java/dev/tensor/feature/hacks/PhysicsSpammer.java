@@ -18,7 +18,7 @@ import java.util.Scanner;
  * @since 4-18-2026
  */
 
-@Hack.Info(name = "PhysicsSpammer", category = Category.Misc)
+@Hack.Info(name = "PhysicsSpammer", category = Category.Misc, description = "Lets you be a true LUKFLUG and spam random physics stuff into the chat.")
 public final class PhysicsSpammer extends Hack {
 
     public final BooleanSetting greenText = new BooleanSetting("GreenText", true);

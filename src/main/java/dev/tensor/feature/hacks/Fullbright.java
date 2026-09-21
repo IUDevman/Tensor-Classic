@@ -13,7 +13,7 @@ import org.lwjgl.input.Keyboard;
  * @since 03-20-2026
  */
 
-@Hack.Info(name = "Fullbright", category = Category.Render, bind = Keyboard.KEY_B)
+@Hack.Info(name = "Fullbright", category = Category.Render, bind = Keyboard.KEY_B, description = "Makes the world bright.")
 public final class Fullbright extends Hack {
 
     public final BooleanSetting ugandaMode = new BooleanSetting("Uganda Mode", false) {

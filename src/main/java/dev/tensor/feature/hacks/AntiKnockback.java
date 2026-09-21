@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "AntiKnockback", category = Category.Combat)
+@Hack.Info(name = "AntiKnockback", category = Category.Combat, description = "Prevents knockback from being attacked and explosions.")
 public final class AntiKnockback extends Hack {
 
     @SuppressWarnings("unused")

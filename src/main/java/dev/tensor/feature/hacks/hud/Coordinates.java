@@ -15,7 +15,7 @@ import java.text.DecimalFormat;
  * @since 03-30-2026
  */
 
-@Hack.Info(name = "Coordinates", category = Category.HUD)
+@Hack.Info(name = "Coordinates", category = Category.HUD, description = "Displays current coordinates and direction.")
 public final class Coordinates extends Hack implements HUDObject {
 
     @Override

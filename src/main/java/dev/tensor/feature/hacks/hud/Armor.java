@@ -18,7 +18,7 @@ import java.util.HashMap;
  * @since 04-04-2026
  */
 
-@Hack.Info(name = "Armor", category = Category.HUD)
+@Hack.Info(name = "Armor", category = Category.HUD, description = "Displays your current armor and it's percentages.")
 public final class Armor extends Hack implements HUDObject {
 
     @Override

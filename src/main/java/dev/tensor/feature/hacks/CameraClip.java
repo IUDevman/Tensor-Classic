@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.setting.settings.DoubleSetting;
  * @since 04-12-2026
  */
 
-@Hack.Info(name = "CameraClip", category = Category.Render)
+@Hack.Info(name = "CameraClip", category = Category.Render, description = "Customize the third person camera behavior.")
 public final class CameraClip extends Hack {
 
     public final BooleanSetting clipThroughWalls = new BooleanSetting("Clip Through Walls", true);

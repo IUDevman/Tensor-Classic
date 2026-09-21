@@ -12,7 +12,7 @@ import net.minecraft.src.Packet130UpdateSign;
  * @since 04-17-2026
  */
 
-@Hack.Info(name = "AutoSign", category = Category.Misc)
+@Hack.Info(name = "AutoSign", category = Category.Misc, description = "Automatically fills in sign text when placing.")
 public final class AutoSign extends Hack {
 
     public final StringSetting lineOne = new StringSetting("Line 1", "Tensor :)");

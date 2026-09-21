@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
  * @since 09-10-2026
  */
 
-@Hack.Info(name = "SPChat", category = Category.Client, enabled = true, drawn = false)
+@Hack.Info(name = "SPChat", category = Category.Client, enabled = true, drawn = false, description = "Allows for commands to be used in singleplayer.")
 public final class SPChat extends Hack {
 
     @Override

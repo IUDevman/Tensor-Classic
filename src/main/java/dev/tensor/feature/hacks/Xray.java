@@ -19,7 +19,7 @@ import org.lwjgl.input.Keyboard;
  * @since 03-26-2026
  */
 
-@Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X)
+@Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X, description = "Allows you to see defined blocks (such as ores) through the world.")
 public final class Xray extends Hack {
 
     public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);

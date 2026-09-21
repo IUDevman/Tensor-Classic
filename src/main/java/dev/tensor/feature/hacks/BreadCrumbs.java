@@ -22,7 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 04-28-2026
  */
 
-@Hack.Info(name = "BreadCrumbs", category = Category.Render)
+@Hack.Info(name = "BreadCrumbs", category = Category.Render, description = "Draws a line behind you.")
 public final class BreadCrumbs extends Render3DHack {
 
     @Override

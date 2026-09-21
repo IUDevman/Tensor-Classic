@@ -21,7 +21,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 04-26-2026
  */
 
-@Hack.Info(name = "LogoutSpots", category = Category.Combat)
+@Hack.Info(name = "LogoutSpots", category = Category.Combat, description = "Displays a render where nearby players log out.")
 public final class LogoutSpots extends Render3DHack {
 
     @Override

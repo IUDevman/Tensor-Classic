@@ -18,7 +18,7 @@ import net.minecraft.src.EntityWolf;
  * @since 09-09-2026
  */
 
-@Hack.Info(name = "FriendlyFire", category = Category.Combat)
+@Hack.Info(name = "FriendlyFire", category = Category.Combat, description = "Prevents you from attacking designated entities.")
 public final class FriendlyFire extends Hack {
 
     public final EnumSetting method = new EnumSetting("Method", Method.Both);

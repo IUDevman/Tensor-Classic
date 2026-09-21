@@ -12,7 +12,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-18-2026
  */
 
-@Hack.Info(name = "TCPNoDelay", category = Category.Misc)
+@Hack.Info(name = "TCPNoDelay", category = Category.Misc, description = "Turns off Nagle's algorithm. Probably retarded.")
 public final class TCPNoDelay extends Hack {
 
     @Override

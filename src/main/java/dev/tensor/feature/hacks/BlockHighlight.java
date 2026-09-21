@@ -22,7 +22,7 @@ import java.awt.*;
  * @since 04-11-2026
  */
 
-@Hack.Info(name = "BlockHighlight", category = Category.Render)
+@Hack.Info(name = "BlockHighlight", category = Category.Render, description = "Custom render for blocks highlighted by your cursor.")
 public final class BlockHighlight extends Render3DHack {
 
     @Override

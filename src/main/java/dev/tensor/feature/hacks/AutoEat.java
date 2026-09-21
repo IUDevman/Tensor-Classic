@@ -17,7 +17,7 @@ import java.util.Comparator;
  * @since 04-04-2026
  */
 
-@Hack.Info(name = "AutoEat", category = Category.Combat)
+@Hack.Info(name = "AutoEat", category = Category.Combat, description = "Automatically eats for you to restore health.")
 public final class AutoEat extends Hack {
 
     public final IntegerSetting maxHealth = new IntegerSetting("Max Health", 15, 5, 20);

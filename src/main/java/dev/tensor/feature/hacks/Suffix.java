@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "Suffix", category = Category.Misc)
+@Hack.Info(name = "Suffix", category = Category.Misc, description = "Puts the cool Tensor suffix at the end of send chat messages.")
 public final class Suffix extends Hack {
 
     public final EnumSetting separator = new EnumSetting("Separator", Separator.Right_Arrow);

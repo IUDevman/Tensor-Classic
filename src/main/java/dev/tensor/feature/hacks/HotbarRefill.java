@@ -17,7 +17,7 @@ import java.util.HashMap;
  * @since 06-14-2026
  */
 
-@Hack.Info(name = "HotbarRefill", category = Category.Player)
+@Hack.Info(name = "HotbarRefill", category = Category.Player, description = "Automatically replaces items in your hotbar when they run out.")
 public final class HotbarRefill extends Hack {
 
     public final BooleanSetting screenStop = new BooleanSetting("Stop In Screens", true);

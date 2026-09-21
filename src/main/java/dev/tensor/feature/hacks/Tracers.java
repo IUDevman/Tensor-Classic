@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "Tracers", category = Category.Render)
+@Hack.Info(name = "Tracers", category = Category.Render, description = "Draws a line to nearby players or other entities.")
 public final class Tracers extends Render3DHack {
 
     @Override

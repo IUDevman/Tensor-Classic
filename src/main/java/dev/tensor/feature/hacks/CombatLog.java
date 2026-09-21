@@ -16,7 +16,7 @@ import net.minecraft.src.Packet3Chat;
  * @since 09-17-2026
  */
 
-@Hack.Info(name = "CombatLog", category = Category.Combat)
+@Hack.Info(name = "CombatLog", category = Category.Combat, description = "Automatically logs out if you take damage or have low health.")
 public final class CombatLog extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Health);

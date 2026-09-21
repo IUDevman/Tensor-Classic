@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.setting.settings.GeneralButtonSetting;
  * @since 05-20-2026
  */
 
-@Hack.Info(name = "AltAccounts", category = Category.Client)
+@Hack.Info(name = "AltAccounts", category = Category.Client, description = "Manager for alternate accounts and their server passwords: Add, remove or set accounts.")
 public final class AltAccounts extends Hack {
 
     public final GeneralButtonSetting buttonWindow = new GeneralButtonSetting("Accounts List", GeneralButtonSetting.ButtonType.ACCOUNTS) {

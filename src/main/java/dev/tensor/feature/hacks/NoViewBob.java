@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-28-2026
  */
 
-@Hack.Info(name = "NoViewBob", category = Category.Render)
+@Hack.Info(name = "NoViewBob", category = Category.Render, description = "Prevents your hand/held item from bobbing up and down when moving.")
 public final class NoViewBob extends Hack {
 
     @SuppressWarnings("unused")

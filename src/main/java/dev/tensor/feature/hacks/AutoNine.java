@@ -26,7 +26,7 @@ import net.minecraft.src.*;
  * InfiniteDurability
  */
 
-@Hack.Info(name = "AutoNine", category = Category.Player)
+@Hack.Info(name = "AutoNine", category = Category.Player, description = "Automatically moves best items and sets your hand to slot 9 in your inventory when mining or attacking.")
 public final class AutoNine extends Hack {
 
     public final BooleanSetting warning = new BooleanSetting("Warning Message", true);

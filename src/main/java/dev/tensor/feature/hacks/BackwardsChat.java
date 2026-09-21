@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "BackwardsChat", category = Category.Misc)
+@Hack.Info(name = "BackwardsChat", category = Category.Misc, description = "Funny hack that reverses any chats that you send.")
 public final class BackwardsChat extends Hack {
 
     @SuppressWarnings("unused")

@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * @since 04-24-2026
  */
 
-@Hack.Info(name = "AutoGG", category = Category.Combat)
+@Hack.Info(name = "AutoGG", category = Category.Combat, description = "Automatically sends a funny message whenever you kill a player.")
 public final class AutoGG extends Hack {
 
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);

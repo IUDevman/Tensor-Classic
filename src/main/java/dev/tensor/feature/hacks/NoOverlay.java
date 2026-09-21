@@ -12,7 +12,7 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 03-28-2026
  */
 
-@Hack.Info(name = "NoOverlay", category = Category.Render)
+@Hack.Info(name = "NoOverlay", category = Category.Render, description = "Prevents the rendering of certain annoying overlays.")
 public final class NoOverlay extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);

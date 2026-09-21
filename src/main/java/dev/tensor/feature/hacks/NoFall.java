@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-26-2026
  */
 
-@Hack.Info(name = "NoFall", category = Category.Player)
+@Hack.Info(name = "NoFall", category = Category.Player, description = "Prevents the player from taking fall damage.")
 public final class NoFall extends Hack {
 
     @Override

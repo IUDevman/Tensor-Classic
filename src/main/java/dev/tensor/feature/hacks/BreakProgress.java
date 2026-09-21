@@ -23,7 +23,7 @@ import java.awt.*;
  * @since 04-14-2026
  */
 
-@Hack.Info(name = "BreakProgress", category = Category.Render)
+@Hack.Info(name = "BreakProgress", category = Category.Render, description = "Renders custom box depicting your break progress.")
 public final class BreakProgress extends Render3DHack {
 
     @Override

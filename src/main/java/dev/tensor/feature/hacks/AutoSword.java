@@ -12,7 +12,7 @@ import net.minecraft.src.ItemStack;
  * @since 04-23-2026
  */
 
-@Hack.Info(name = "AutoSword", category = Category.Combat)
+@Hack.Info(name = "AutoSword", category = Category.Combat, description = "Sets your current hand to the best sword in your hotbar when attacking.")
 public final class AutoSword extends Hack {
 
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false) {
