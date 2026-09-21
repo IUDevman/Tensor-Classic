@@ -36,7 +36,7 @@ public class EncryptedStringSetting extends StringSetting {
 
     @Override
     public String getDescription() {
-        return "Penis 1 " + this.getName();
+        return super.getDescription() + " This setting is encrypted in the config.";
     }
 
     private String decryptValue(String encryptedValue) {

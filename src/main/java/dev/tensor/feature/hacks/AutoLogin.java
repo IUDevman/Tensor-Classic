@@ -17,7 +17,7 @@ import net.minecraft.src.Packet3Chat;
 @Hack.Info(name = "AutoLogin", category = Category.Misc, description = "Automatically answers server login prompts with your set password. Works with AutoLogin or a set password.")
 public final class AutoLogin extends Hack {
 
-    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!", "Set the password for AutoLogin to use. This is encrypted in the config.");
+    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!", "Set the password for AutoLogin to use.");
     public final BooleanSetting applyAll = new BooleanSetting("Try All Accounts", false);
 
     @SuppressWarnings("unused")
