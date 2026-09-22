@@ -28,12 +28,12 @@ public final class EntityESP extends Render3DHack {
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to render ESP for.");
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to render ESP for.");
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to render ESP for.");
     public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);
     public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN);
     public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN);

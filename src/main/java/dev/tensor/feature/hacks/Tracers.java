@@ -32,12 +32,12 @@ public final class Tracers extends Render3DHack {
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting animals = new BooleanSetting("Animals", false);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to draw tracers to.");
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to draw tracers to.");
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to draw tracers to.");
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final BooleanSetting distanceColor = new BooleanSetting("Color By Distance", false);
     public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);

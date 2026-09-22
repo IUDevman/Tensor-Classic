@@ -27,11 +27,11 @@ public final class FriendlyFire extends Hack {
     public final BooleanSetting ignoreFriends = new BooleanSetting("Friends", true);
     public final BooleanSetting ignorePets = new BooleanSetting("Ignore Pets", true);
     public final EnumSetting animals = new EnumSetting("Animals", Attack.None);
-    public final EntityTypeListSetting animalsCustom = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.ANIMALS()));
+    public final EntityTypeListSetting animalsCustom = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to not attack.");
     public final EnumSetting hostiles = new EnumSetting("Hostiles", Attack.None);
-    public final EntityTypeListSetting hostilesCustom = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EntityTypeListSetting hostilesCustom = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to not attack");
     public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
-    public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()));
+    public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()), "List of miscellaneous entities to not attack");
 
     @SuppressWarnings("unused")
     private final EventAction<RaytraceMOPEvent> raytraceMOPEventAction = this.addHackEventAction(new EventAction<>(RaytraceMOPEvent.class, event -> {

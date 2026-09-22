@@ -29,12 +29,12 @@ public final class Chams extends Hack {
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to render chams for.");
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to render chams for.");
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()),"List of miscellaneous entities to render chams for.");
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Check", true);
 
     private final ArrayList<Integer> cached_Entity_IDs = new ArrayList<>();

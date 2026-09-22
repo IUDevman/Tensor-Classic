@@ -42,12 +42,12 @@ public final class Radar extends Hack implements HUDObject {
     public final BooleanSetting players = new BooleanSetting("Players", true);
     public final BooleanSetting friends = new BooleanSetting("Friends", true);
     public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals that should show up on the radar.");
     public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs that should show up on the radar.");
     public final BooleanSetting items = new BooleanSetting("Items", false);
     public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities that should show up on the radar.");
     public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false);
     public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false);
     public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point);
