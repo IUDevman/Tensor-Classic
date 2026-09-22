@@ -32,7 +32,7 @@ public final class FakePlayer extends Hack {
         return true;
     }
 
-    public final BooleanSetting geared = new BooleanSetting("Geared", true) {
+    public final BooleanSetting geared = new BooleanSetting("Geared", true, "Enable to spawn the fake player with full diamond gear.") {
 
         @Override
         public void setValue(Boolean VALUE) {

@@ -22,7 +22,7 @@ public final class ChatTimestamp extends Hack {
 
     public final EnumSetting format = new EnumSetting("Format", Format.Hour24$Min$Sec);
     public final EnumSetting separator = new EnumSetting("Separator", Separator.Brackets);
-    public final BooleanSetting space = new BooleanSetting("Spaced", true);
+    public final BooleanSetting space = new BooleanSetting("Spaced", true, "Enable to put a space between timestamp and the message.");
     public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.RED);
     public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY);
 

@@ -12,10 +12,10 @@ import net.minecraft.src.ItemStack;
  * @since 04-23-2026
  */
 
-@Hack.Info(name = "AutoSword", category = Category.Combat, description = "Sets your current hand to the best sword in your hotbar when attacking.")
+@Hack.Info(name = "AutoSword", category = Category.Combat, description = "Sets your current hand to the best sword in your hotbar when attacking. Does not support slot 9.")
 public final class AutoSword extends Hack {
 
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false) {
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false, "Enable to swap your hand back to it's previous slot after switching to sword.") {
 
         @Override
         public void setValue(Boolean value) {

@@ -15,7 +15,7 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "Sneak", category = Category.Movement, description = "Causes the player to sneak server-sided.")
 public final class Sneak extends Hack {
 
-    public final BooleanSetting limitSpeed = new BooleanSetting("Limit Speed", true);
+    public final BooleanSetting limitSpeed = new BooleanSetting("Limit Speed", true, "Disable to allow for normal walking speed. Does not work on servers with NoCheat.");
     public final DoubleSetting speedLimiter = new DoubleSetting("Limit Multiplier", 0.5, 0.0, 1.0, 1);
 
     @Override

@@ -22,7 +22,7 @@ public final class AutoEat extends Hack {
 
     public final IntegerSetting maxHealth = new IntegerSetting("Max Health", 15, 5, 20);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 8, 0, 60);
-    public final BooleanSetting moveFromInventory = new BooleanSetting("Fill From Inventory", true);
+    public final BooleanSetting moveFromInventory = new BooleanSetting("Fill From Inventory", true, "Enable to allow the hack to move food from your inventory to the hotbar. Must have an empty slot available.");
 
     private int delayTicks = 0;
 

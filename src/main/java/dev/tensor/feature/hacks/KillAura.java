@@ -31,24 +31,24 @@ public final class KillAura extends Render3DHack {
         return RenderOrder.KillAura;
     }
 
-    public final BooleanSetting players = new BooleanSetting("Players", true);
-    public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true);
+    public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to attack players.");
+    public final BooleanSetting ignoreFriends = new BooleanSetting("Ignore Friends", true, "Enable to not attack friends.");
     public final EnumSetting animals = new EnumSetting("Animals", Attack.None);
     public final EntityTypeListSetting animalsCustom = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to attack.");
-    public final BooleanSetting ignoreOwnPet = new BooleanSetting("Ignore Pets", true);
+    public final BooleanSetting ignoreOwnPet = new BooleanSetting("Ignore Pets", true, "Enable to not attack tamed mobs of friends/self.");
     public final EnumSetting hostiles = new EnumSetting("Hostiles", Attack.All);
     public final EntityTypeListSetting hostilesCustom = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to attack.");
     public final EnumSetting misc = new EnumSetting("Misc", Attack.None);
     public final EntityTypeListSetting miscCustom = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC_KA()), "List of miscellaneous entities to attack.");
-    public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false);
-    public final BooleanSetting checkFriendlyFire = new BooleanSetting("Check Friendly Fire", true);
+    public final BooleanSetting behindWalls = new BooleanSetting("Behind Walls", false, "Prevents attacking entities behind walls, which does not work on NoCheat servers.");
+    public final BooleanSetting checkFriendlyFire = new BooleanSetting("Check Friendly Fire", true, "FriendlyFire hack integration to make sure you are not targeting whitelisted entities, despite KillAura settings.");
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
     public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
-    public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
-    public final BooleanSetting swing = new BooleanSetting("Swing", true);
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", true, "Enable to adjust the players rotation to where you are attacking. Managed by the global Rotation hack.");
+    public final BooleanSetting swing = new BooleanSetting("Swing", true, "Swings the player's hand when attacking entities.");
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance);
-    public final BooleanSetting esp = new BooleanSetting("ESP", true);
+    public final BooleanSetting esp = new BooleanSetting("ESP", true, "Enable to draw a box around targeted entities.");
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);

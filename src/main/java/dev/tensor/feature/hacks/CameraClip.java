@@ -17,10 +17,10 @@ import dev.tensor.misc.imp.setting.settings.DoubleSetting;
 @Hack.Info(name = "CameraClip", category = Category.Render, description = "Customize the third person camera behavior.")
 public final class CameraClip extends Hack {
 
-    public final BooleanSetting clipThroughWalls = new BooleanSetting("Clip Through Walls", true);
-    public final BooleanSetting distance = new BooleanSetting("Custom Distance", true);
+    public final BooleanSetting clipThroughWalls = new BooleanSetting("Clip Through Walls", true, "Allow the camera to render behind walls.");
+    public final BooleanSetting distance = new BooleanSetting("Custom Distance", true, "Enable to be able to det the camera distance in the following setting.");
     public final DoubleSetting distanceValue = new DoubleSetting("Distance Length", 10.0, 1.0, 50.0, 1);
-    public final BooleanSetting scroll = new BooleanSetting("Scroll Distance", true);
+    public final BooleanSetting scroll = new BooleanSetting("Scroll Distance", true, "Allows you to adjust the distance length by scrolling your mouse wheel. Must have Custom Distance enabled.");
     public final DoubleSetting scrollSensitivity = new DoubleSetting("Scroll Sensitivity", 0.4, 0.1, 1.0, 1);
 
     private final float defaultDistance = 4.0F;

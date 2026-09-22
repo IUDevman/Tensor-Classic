@@ -26,7 +26,7 @@ public final class Coordinates extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 13, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final BooleanSetting compass = new BooleanSetting("Compass", true);
+    public final BooleanSetting compass = new BooleanSetting("Compass", true, "Enable to draw a compass on the radar.");
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting type = new EnumSetting("Type", Type.Both);
     public final ColorNoAlphaSetting overworldColor = new ColorNoAlphaSetting("Overworld Color", new Color(255, 255, 255, 255));

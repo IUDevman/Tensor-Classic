@@ -22,10 +22,10 @@ import net.minecraft.src.EntityWolf;
 public final class FriendlyFire extends Hack {
 
     public final EnumSetting method = new EnumSetting("Method", Method.Both);
-    public final BooleanSetting packetHit = new BooleanSetting("Packet Hit Only", true);
-    public final BooleanSetting players = new BooleanSetting("Players", false);
-    public final BooleanSetting ignoreFriends = new BooleanSetting("Friends", true);
-    public final BooleanSetting ignorePets = new BooleanSetting("Ignore Pets", true);
+    public final BooleanSetting packetHit = new BooleanSetting("Packet Hit Only", true, "Enable to only block interact packets if the player is attacking.");
+    public final BooleanSetting players = new BooleanSetting("Players", false, "Enable to block attacks to players.");
+    public final BooleanSetting ignoreFriends = new BooleanSetting("Friends", true, "Enable to block attacks to friends.");
+    public final BooleanSetting ignorePets = new BooleanSetting("Ignore Pets", true, "Enable to block attacks to tamed mobs.");
     public final EnumSetting animals = new EnumSetting("Animals", Attack.None);
     public final EntityTypeListSetting animalsCustom = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to not attack.");
     public final EnumSetting hostiles = new EnumSetting("Hostiles", Attack.None);

@@ -63,12 +63,12 @@ public final class SlimeChunks extends Render3DHack {
     };
     public final IntegerSetting renderY = new IntegerSetting("Render at Y", 0, 0, 128);
     public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 0.1, 0.1, 3.0, 1);
-    public final BooleanSetting limitRenderDistance = new BooleanSetting("Check Render Distance", true);
+    public final BooleanSetting limitRenderDistance = new BooleanSetting("Check Render Distance", true, "Enable to only render slime chunks if within a defined distance to the player");
     public final IntegerSetting renderDistance = new IntegerSetting("Render Distance", 256, 32, 256);
-    public final BooleanSetting deleteFarAway = new BooleanSetting("Delete Far Away", false);
+    public final BooleanSetting deleteFarAway = new BooleanSetting("Delete Far Away", false, "Enable to automatically remove slime chunks that are far away from the player. Define this distance with the Delete Distance setting.");
     public final IntegerSetting deleteDistance = new IntegerSetting("Delete Distance", 512, 256, 1024);
-    public final BooleanSetting deleteOnDisable = new BooleanSetting("Delete On Disable", true);
-    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
+    public final BooleanSetting deleteOnDisable = new BooleanSetting("Delete On Disable", true, "Clears the list of slime chunks when the hack is disabled.");
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Only renders slime chunks if they are seen on screen.");
     public final EnumSetting renderMode = new EnumSetting("Render Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);

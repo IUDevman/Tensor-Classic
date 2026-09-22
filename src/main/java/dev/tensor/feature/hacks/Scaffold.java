@@ -29,18 +29,18 @@ public final class Scaffold extends Render3DHack {
         return RenderOrder.Scaffold_or_Platform;
     }
 
-    public final BooleanSetting levitate = new BooleanSetting("Levitate", false);
-    public final BooleanSetting safeWalk = new BooleanSetting("Safe Walk", true);
+    public final BooleanSetting levitate = new BooleanSetting("Levitate", false, "Allows the player to float up when pressing jump. Makes placing blocks easier.");
+    public final BooleanSetting safeWalk = new BooleanSetting("Safe Walk", true, "Prevents the player from falling off of ledges. Is useful if you run out of blocks.");
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
-    public final BooleanSetting airOnly = new BooleanSetting("Air Only", false);
-    public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
-    public final BooleanSetting swing = new BooleanSetting("Swing", true);
+    public final BooleanSetting airOnly = new BooleanSetting("Air Only", false, "Enable to only place blocks where air is (ignore replaceable and fluids).");
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", true, "Enable to adjust the players rotation to where you are placing. Managed by the global Rotation hack.");
+    public final BooleanSetting swing = new BooleanSetting("Swing", true, "Swings the player's arm whenever a block is placed.");
     public final EnumSetting swap = new EnumSetting("Swap To", Swap.First);
     public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8);
     public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to place.");
     public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()), "Set types of blocks to NOT place.");
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true);
-    public final BooleanSetting esp = new BooleanSetting("ESP", true);
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true, "Enable to swap the current slot back to the previous if swapped to another slot.");
+    public final BooleanSetting esp = new BooleanSetting("ESP", true, "Enable to draw a box around where the hack is placing.");
     public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);

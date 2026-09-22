@@ -42,7 +42,7 @@ public final class HephFreecam extends Hack {
         return true;
     }
 
-    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true) {
+    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true, "Spawns a fake player copy of you when the hack is enabled.") {
 
         @Override
         public void setValue(Boolean VALUE) {
@@ -69,9 +69,9 @@ public final class HephFreecam extends Hack {
             }
         }
     };
-    public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true);
+    public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true, "Allows for your inventory to be modified when in freecam.");
     public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
-    public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
+    public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true, "Render vanilla break progress when in freecam.");
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
 
     public double oldX;

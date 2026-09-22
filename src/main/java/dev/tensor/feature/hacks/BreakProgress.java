@@ -34,7 +34,7 @@ public final class BreakProgress extends Render3DHack {
     public final EnumSetting render = new EnumSetting("Render", Render.Fill);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
-    public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true);
+    public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true, "Enable to have the color of the render be tied to your break progress.");
     public final ColorSetting color = new ColorSetting("Color", Color.GREEN);
 
     private BlockCoords positionToRender = null;

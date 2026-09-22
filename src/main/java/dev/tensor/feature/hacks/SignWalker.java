@@ -17,7 +17,7 @@ import org.lwjgl.input.Keyboard;
 public final class SignWalker extends Hack {
 
     public final IntegerSetting offset = new IntegerSetting("Check Offset", -2, -3, -1);
-    public final BooleanSetting sneak = new BooleanSetting("Sneak Down", false);
+    public final BooleanSetting sneak = new BooleanSetting("Sneak Down", false, "Enable to allow the player to fall through signs only when sneaking.");
 
     @SuppressWarnings("unused")
     private final EventAction<SignCollisionEvent> signCollisionEventAction = this.addHackEventAction(new EventAction<>(SignCollisionEvent.class, event -> {

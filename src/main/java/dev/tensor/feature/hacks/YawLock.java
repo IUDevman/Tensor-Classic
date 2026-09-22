@@ -16,7 +16,7 @@ public final class YawLock extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45);
     public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360);
-    public final BooleanSetting freecam = new BooleanSetting("Freecam", false);
+    public final BooleanSetting freecam = new BooleanSetting("Freecam", false, "Enable to apply yaw lock when in freecam.");
 
     private boolean needsYaw = false;
     private float toYaw = 0;

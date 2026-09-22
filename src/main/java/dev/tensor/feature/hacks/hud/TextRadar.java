@@ -35,9 +35,9 @@ public final class TextRadar extends Hack implements HUDObject {
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
     public final EnumSetting add = new EnumSetting("Add", Add.Down);
-    public final BooleanSetting title = new BooleanSetting("Title", true);
-    public final BooleanSetting showCoords = new BooleanSetting("Show Coords", false);
-    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true);
+    public final BooleanSetting title = new BooleanSetting("Title", true, "Enable to render the HUD object title.");
+    public final BooleanSetting showCoords = new BooleanSetting("Show Coords", false, "Enable to render coordinates for nearby players.");
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true, "Enable to render the distance to nearby players.");
     public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
     public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
     public final EnumSetting textColor = new EnumSetting("Text Color", ChatColor.WHITE);

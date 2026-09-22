@@ -16,9 +16,9 @@ import dev.tensor.misc.imp.setting.settings.PacketTypeListSetting;
 @Hack.Info(name = "CancelPackets", category = Category.Misc, description = "Selectively block packets shared between the client and the server. May break other features of the client, use with caution!")
 public final class CancelPackets extends Hack {
 
-    public final BooleanSetting outbound = new BooleanSetting("Filter Outbound", true);
+    public final BooleanSetting outbound = new BooleanSetting("Filter Outbound", true, "Enable to filter sent packets as defined in the list.");
     public final PacketTypeListSetting outboundList = new PacketTypeListSetting("Outbound List", new PacketTypeList(PacketTypeList.NONE()), new PacketTypeList(PacketTypeList.OUTBOUND()), "Add packets to the list to ignore when sent.");
-    public final BooleanSetting inbound = new BooleanSetting("Filter Inbound", true);
+    public final BooleanSetting inbound = new BooleanSetting("Filter Inbound", true, "Enable to filter received packets as defined in the list.");
     public final PacketTypeListSetting inboundList = new PacketTypeListSetting("Inbound List", new PacketTypeList(PacketTypeList.NONE()), new PacketTypeList(PacketTypeList.INBOUND()), "Add packets to the list to ignore when received.");
 
     @SuppressWarnings("unused")

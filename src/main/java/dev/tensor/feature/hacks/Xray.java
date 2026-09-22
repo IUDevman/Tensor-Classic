@@ -22,8 +22,8 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X, description = "Allows you to see defined blocks (such as ores) through the world.")
 public final class Xray extends Hack {
 
-    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);
-    public final BooleanSetting opacity = new BooleanSetting("Opacity", true) {
+    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true, "Render clouds when Xray is enabled.");
+    public final BooleanSetting opacity = new BooleanSetting("Opacity", true, "Enable to render the world at a lower defined opacity.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -45,7 +45,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final BooleanSetting fluids = new BooleanSetting("Fluids", true) {
+    public final BooleanSetting fluids = new BooleanSetting("Fluids", true, "Enable to render fluids. Is automatically enabled if rendering the world with opacity.") {
 
         @Override
         public void setValue(Boolean value) {

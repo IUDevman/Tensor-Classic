@@ -15,7 +15,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "DiscordRPC", category = Category.Client, enabled = true, description = "Support Tensor and let your friends on Discord know about us with the RPC!")
 public final class DiscordRPC extends Hack {
 
-    public final BooleanSetting showUsername = new BooleanSetting("Show Username", true) {
+    public final BooleanSetting showUsername = new BooleanSetting("Show Username", true, "Show your player username in the RPC.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -34,7 +34,7 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final BooleanSetting showServer = new BooleanSetting("Show Server", true) {
+    public final BooleanSetting showServer = new BooleanSetting("Show Server", true, "Show the server IP you are connected to in the RPC.") {
 
         @Override
         public void setValue(Boolean value) {

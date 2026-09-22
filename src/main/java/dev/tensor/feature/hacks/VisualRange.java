@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @Hack.Info(name = "VisualRange", category = Category.Combat, description = "Sends a chat message when players enter your visual (render distance) range.")
 public final class VisualRange extends Hack {
 
-    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false);
+    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false, "Enable to ensure that your chat isn't flooded if too many players enter your render distance at once.");
     public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
     public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
     public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);

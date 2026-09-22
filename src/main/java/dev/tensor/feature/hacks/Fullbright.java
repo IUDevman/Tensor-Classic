@@ -16,7 +16,7 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "Fullbright", category = Category.Render, bind = Keyboard.KEY_B, description = "Makes the world bright.")
 public final class Fullbright extends Hack {
 
-    public final BooleanSetting ugandaMode = new BooleanSetting("Uganda Mode", false) {
+    public final BooleanSetting ugandaMode = new BooleanSetting("Uganda Mode", false, "Turn your world from Sweden to Africa.") {
 
         @Override
         public void setValue(Boolean VALUE) {

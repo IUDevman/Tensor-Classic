@@ -19,7 +19,7 @@ import net.minecraft.src.MovingObjectPosition;
 @Hack.Info(name = "MiddleClickFriend", category = Category.Misc, description = "Modifies the friend list when middle clicking players.")
 public final class MiddleClickFriend extends Hack {
 
-    public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true);
+    public final BooleanSetting onlyAdd = new BooleanSetting("Only Add", true, "Enable to only add friends on middle click, not remove them.");
 
     @SuppressWarnings("unused")
     private final EventAction<MouseEvent> mouseEventAction = this.addHackEventAction(new EventAction<>(MouseEvent.class, event -> {

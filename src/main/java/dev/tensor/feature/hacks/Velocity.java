@@ -16,10 +16,10 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
 public final class Velocity extends Hack {
 
     public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
-    public final BooleanSetting block = new BooleanSetting("Block", true);
-    public final BooleanSetting entity = new BooleanSetting("Entity", true);
-    public final BooleanSetting fluid = new BooleanSetting("Fluid", false);
-    public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false);
+    public final BooleanSetting block = new BooleanSetting("Block", true, "Enable to prevent pushing from blocks.");
+    public final BooleanSetting entity = new BooleanSetting("Entity", true, "Enable to prevent pushing from other entities.");
+    public final BooleanSetting fluid = new BooleanSetting("Fluid", false, "Enable to prevent being pushed by water.");
+    public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false, "Enable to prevent slowdown when walking on soul sand.");
 
     @SuppressWarnings("unused")
     private final EventAction<VelocityEvent> velocityEventAction = this.addHackEventAction(new EventAction<>(VelocityEvent.class, event -> {

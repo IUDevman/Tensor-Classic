@@ -21,7 +21,7 @@ import java.util.Scanner;
 @Hack.Info(name = "PhysicsSpammer", category = Category.Misc, description = "Lets you be a true LUKFLUG and spam random physics stuff into the chat.")
 public final class PhysicsSpammer extends Hack {
 
-    public final BooleanSetting greenText = new BooleanSetting("GreenText", true);
+    public final BooleanSetting greenText = new BooleanSetting("GreenText", true, "Enable to add a '>' to the start of spam messages, which makes the text green on most servers.");
     public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
 
     private final ArrayList<String> cachedPhysicsSpam = new ArrayList<>();

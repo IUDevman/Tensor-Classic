@@ -29,7 +29,7 @@ public final class EpsteinESP extends Render3DHack {
         return RenderOrder.EpsteinESP;
     }
 
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to redact friends from the Epstein Files.");
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK);
     public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK);
 

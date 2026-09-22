@@ -52,7 +52,7 @@ public final class Spammer extends Hack {
             }
         }
     };
-    public final BooleanSetting greenText = new BooleanSetting("GreenText", true);
+    public final BooleanSetting greenText = new BooleanSetting("GreenText", true, "Enable to add a '>' to the start of spammer messages, which makes the text green on most servers.");
     public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
 
     private int delay = 0;

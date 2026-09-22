@@ -23,7 +23,7 @@ public final class HUDEditor extends Hack {
         return true;
     }
 
-    public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true);
+    public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show HUD Object descriptions when shift is held.");
     public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));

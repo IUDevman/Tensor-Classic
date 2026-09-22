@@ -30,16 +30,16 @@ public final class Waypoints extends Render3DHack {
     }
 
     public final WaypointListSetting waypointList = new WaypointListSetting("List", new WaypointList(WaypointList.EMPTY()), "", "Add, remove, or toggle waypoints.");
-    public final BooleanSetting title = new BooleanSetting("Title", true);
-    public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true);
-    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);
+    public final BooleanSetting title = new BooleanSetting("Title", true, "Render the name of the waypoint.");
+    public final BooleanSetting showCoords = new BooleanSetting("Show Coordinates", true, "Render the coordinates of the waypoint.");
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false, "Render the distance the player is to the waypoint.");
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
-    public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
+    public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Applies a flat background to the waypoint tag render.");
     public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", WaypointRender.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", WaypointRender.defaultBackgroundColor);
     public final EnumSetting renderMode = new EnumSetting("Render Mode", Mode.Monolith);
-    public final BooleanSetting onlyCloseMonoliths = new BooleanSetting("Only Close Monoliths", false);
+    public final BooleanSetting onlyCloseMonoliths = new BooleanSetting("Only Close Monoliths", false, "Only spawns monolith waypoints if within the player's render distance.");
     public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", WaypointRender.defaultBoxLineWidth, 1, 5);
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);

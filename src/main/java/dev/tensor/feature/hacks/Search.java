@@ -62,14 +62,14 @@ public final class Search extends Render3DHack {
             }
         }
     };
-    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Enable to only render blocks if they are seen on the screen.");
     public final EnumSetting mergeFaces = new EnumSetting("Merge Faces", MergeFaces.All);
     public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to merge faces. Must be in the Custom Block List to render!");
     public final EnumSetting render = new EnumSetting("Render", Render.Outline);
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None);
-    public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true);
+    public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true, "Enable to merge together tracers going to portals. Must have tracers enabled with search for portals.");
     public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to draw tracers to. Must be in the Custom Block List to render!");
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);

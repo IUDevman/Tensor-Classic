@@ -29,17 +29,17 @@ public final class Tracers extends Render3DHack {
         return RenderOrder.Tracers;
     }
 
-    public final BooleanSetting players = new BooleanSetting("Players", true);
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
-    public final BooleanSetting animals = new BooleanSetting("Animals", false);
+    public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to draw tracers to players.");
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to draw tracers to friends.");
+    public final BooleanSetting animals = new BooleanSetting("Animals", false, "Enable to draw tracers to animals. Modify what types in the list below.");
     public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to draw tracers to.");
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false);
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", false, "Enable to draw tracers to hostile mobs. Modify what types in the list below.");
     public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to draw tracers to.");
-    public final BooleanSetting items = new BooleanSetting("Items", false);
-    public final BooleanSetting misc = new BooleanSetting("Misc", false);
+    public final BooleanSetting items = new BooleanSetting("Items", false, "Enable to draw tracers to items on the ground.");
+    public final BooleanSetting misc = new BooleanSetting("Misc", false, "Enable to draw tracers to miscellaneous entities. Modify what types in the list below.");
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to draw tracers to.");
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
-    public final BooleanSetting distanceColor = new BooleanSetting("Color By Distance", false);
+    public final BooleanSetting distanceColor = new BooleanSetting("Color By Distance", false, "Enable to color the render by how close the entity is to the player");
     public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);
     public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN);
     public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN);

@@ -18,7 +18,7 @@ public final class AutoWalk extends Hack {
         return this.toggleOnDeath.getValue();
     }
 
-    public final BooleanSetting toggleOnDeath = new BooleanSetting("Toggle On Death", true);
+    public final BooleanSetting toggleOnDeath = new BooleanSetting("Toggle On Death", true, "Disables the hack on death.");
 
     @Override
     public void onDisable(boolean isNull) {

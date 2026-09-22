@@ -22,10 +22,10 @@ import java.util.ArrayList;
 @Hack.Info(name = "AutoGG", category = Category.Combat, description = "Automatically sends a funny message whenever you kill a player.")
 public final class AutoGG extends Hack {
 
-    public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true);
+    public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true, "Enable to prevent this hack from sending messages while the spammer is sending.");
     public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
-    public final BooleanSetting greenText = new BooleanSetting("Greentext", false);
-    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true);
+    public final BooleanSetting greenText = new BooleanSetting("Greentext", false, "Enable to add a '>' to the start of hack messages, making them green on most servers.");
+    public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true, "Enable to only trigger a message if you were the last to hit a player that died.");
     public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!", "Message to be sent when AutoGG is triggered.");
 
     private final ArrayList<String> targets = new ArrayList<>();

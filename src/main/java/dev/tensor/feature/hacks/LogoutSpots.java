@@ -49,13 +49,13 @@ public final class LogoutSpots extends Render3DHack {
             }
         }
     };
-    public final BooleanSetting title = new BooleanSetting("Title", true);
-    public final BooleanSetting showCoords = new BooleanSetting("Show Coords", true);
-    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false);
-    public final BooleanSetting showTime = new BooleanSetting("Time", false);
+    public final BooleanSetting title = new BooleanSetting("Title", true, "Enable to render the players name in the logout spot tag.");
+    public final BooleanSetting showCoords = new BooleanSetting("Show Coords", true, "Shows the coordinates of the logged player.");
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false, "Shows the distance you are to the logout spot.");
+    public final BooleanSetting showTime = new BooleanSetting("Time", false, "Shows how long the player has been logged out (max 100 seconds).");
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
-    public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false);
+    public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Enable to draw a flat background behind the logout spot tag.");
     public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor);
     public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);

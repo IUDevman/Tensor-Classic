@@ -19,9 +19,9 @@ import org.lwjgl.input.Mouse;
 @Hack.Info(name = "MiddleClickZoom", category = Category.Render, description = "Zooms your view like Optifine when middle click is engaged.")
 public final class MiddleClickZoom extends Hack {
 
-    public final BooleanSetting smoothCamera = new BooleanSetting("Smooth Camera", true);
+    public final BooleanSetting smoothCamera = new BooleanSetting("Smooth Camera", true, "Enable to make camera movements smoother. Honestly I can't tell a difference.");
     public final DoubleSetting multiplier = new DoubleSetting("Multiplier", 0.30, 0.01, 0.60, 2);
-    public final BooleanSetting scroll = new BooleanSetting("Scroll Zoom", false);
+    public final BooleanSetting scroll = new BooleanSetting("Scroll Zoom", false, "Allow for the scroll wheel to adjust the Multiplier setting.");
     public final DoubleSetting scrollSensitivity = new DoubleSetting("Scroll Sensitivity", 0.4, 0.1, 1.0, 1);
 
     private boolean isZoomed = false;
