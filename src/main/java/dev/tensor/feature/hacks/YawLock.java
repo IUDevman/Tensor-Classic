@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "YawLock", category = Category.Movement, description = "Sets your rotation to a defined position. Useful in combination with AutoWalk.")
 public final class YawLock extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45, new String[] {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45, new String[]{
             "This sets the direction your rotation will be locked to.",
             "Input® The angle defined in Input Value.",
             "Facing® The angle you are currently looking.",

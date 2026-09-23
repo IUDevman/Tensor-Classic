@@ -212,9 +212,7 @@ public final class AutoNine extends Hack {
         if (blockID == Block.tnt.blockID) {
             ItemStack currentItem = this.getInventory().getCurrentItem();
 
-            if (currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel) {
-                return true;
-            }
+            return currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel;
         }
 
         return false;

@@ -49,7 +49,7 @@ public final class NetworkManagerMixin implements Globals {
                 return;
             }
         }
-        
+
         if (this.failsNullCheck()) {
             return;
         }

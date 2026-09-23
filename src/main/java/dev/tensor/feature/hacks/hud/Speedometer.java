@@ -35,7 +35,7 @@ public final class Speedometer extends Hack implements HUDObject {
             "Left® Align text to the left.",
             "Right® Align text to the right."
     });
-    public final EnumSetting unit = new EnumSetting("Units", Units.BPS, new String[] {
+    public final EnumSetting unit = new EnumSetting("Units", Units.BPS, new String[]{
             "This defines what units the speed should be displayed as.",
             "BPS® Blocks per second (b/s).",
             "MPS® Meters per second (m/s).",

@@ -16,7 +16,7 @@ public final class EnumSettingDescription implements GUIDescription {
 
     private final EnumSetting setting;
 
-    private ArrayList<String> descriptionArray = new ArrayList<>();
+    private final ArrayList<String> descriptionArray = new ArrayList<>();
     private int maxTextLength = 0;
 
     public EnumSettingDescription(EnumSetting setting) {
@@ -26,7 +26,7 @@ public final class EnumSettingDescription implements GUIDescription {
             return;
         }
 
-        String mainDescription =  ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getEnumDescription()[0];
+        String mainDescription = ChatColor.YELLOW.text() + this.setting.getName() + ":" + ChatColor.WHITE.text() + " " + this.setting.getEnumDescription()[0];
         this.addDescription(mainDescription);
 
         for (int i = 1; i < this.setting.getEnumDescription().length; i++) {

@@ -39,9 +39,9 @@ public final class TextRadar extends Hack implements HUDObject {
             "Right® Align text to the right."
     });
     public final EnumSetting add = new EnumSetting("Add", Add.Down, new String[]{
-        "This is how players are added to the radar.",
-                "Up® Shifts the list up.",
-                "Down® Shifts the list down"
+            "This is how players are added to the radar.",
+            "Up® Shifts the list up.",
+            "Down® Shifts the list down"
     });
     public final BooleanSetting title = new BooleanSetting("Title", true, "Enable to render the HUD object title.");
     public final BooleanSetting showCoords = new BooleanSetting("Show Coords", false, "Enable to render coordinates for nearby players.");

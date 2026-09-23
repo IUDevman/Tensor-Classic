@@ -21,7 +21,7 @@ import net.minecraft.src.EntityWolf;
 @Hack.Info(name = "FriendlyFire", category = Category.Combat, description = "Prevents you from attacking designated entities.")
 public final class FriendlyFire extends Hack {
 
-    public final EnumSetting method = new EnumSetting("Method", Method.Both, new String[] {
+    public final EnumSetting method = new EnumSetting("Method", Method.Both, new String[]{
             "This defines the way the hack prevents friendly fire.",
             "Raytrace® Prevents whitelisted entities from being raytraced when attacking.",
             "Packet® Prevents attack packets with whitelisted entities as the target being sent.",

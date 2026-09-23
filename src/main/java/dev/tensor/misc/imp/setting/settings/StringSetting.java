@@ -19,7 +19,7 @@ public class StringSetting implements Setting<String> {
 
     private String VALUE;
 
-    private String DESCRIPTION;
+    private final String DESCRIPTION;
 
     public StringSetting(String NAME, String VALUE, String DESCRIPTION) {
         this.NAME = NAME;
