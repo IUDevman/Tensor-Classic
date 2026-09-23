@@ -21,11 +21,15 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
 
     private final EntityTypeList FULL_VALUE;
 
-    public EntityTypeListSetting(String NAME, EntityTypeList VALUE, EntityTypeList FULL_VALUE) {
+    private final String DESCRIPTION;
+
+    public EntityTypeListSetting(String NAME, EntityTypeList VALUE, EntityTypeList FULL_VALUE, String DESCRIPTION) {
         this.NAME = NAME;
 
         this.VALUE = VALUE;
         this.FULL_VALUE = FULL_VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -141,5 +145,10 @@ public class EntityTypeListSetting implements Setting<EntityTypeList> {
     @Override
     public void reset() {
         /* removed reset 04-08-26 */
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

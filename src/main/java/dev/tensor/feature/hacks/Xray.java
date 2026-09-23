@@ -19,11 +19,11 @@ import org.lwjgl.input.Keyboard;
  * @since 03-26-2026
  */
 
-@Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X)
+@Hack.Info(name = "Xray", category = Category.Render, bind = Keyboard.KEY_X, description = "Allows you to see defined blocks (such as ores) through the world.")
 public final class Xray extends Hack {
 
-    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true);
-    public final BooleanSetting opacity = new BooleanSetting("Opacity", true) {
+    public final BooleanSetting clouds = new BooleanSetting("Render Clouds", true, "Render clouds when Xray is enabled.");
+    public final BooleanSetting opacity = new BooleanSetting("Opacity", true, "Enable to render the world at a lower defined opacity.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -34,7 +34,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 50, 200) {
+    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 50, 200, "None", "How transparent the world would be. Lower = more transparent.") {
 
         @Override
         public void setValue(Integer value) {
@@ -45,7 +45,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final BooleanSetting fluids = new BooleanSetting("Fluids", true) {
+    public final BooleanSetting fluids = new BooleanSetting("Fluids", true, "Enable to render fluids. Is automatically enabled if rendering the world with opacity.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -56,7 +56,15 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Ores) {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Ores, new String[]{
+            "This is where you set the list of blocks to render.",
+            "Ores® List of ore blocks.",
+            "Glowstone® Only glowstone.",
+            "Diamond® Only diamond ore.",
+            "Utility® Common player made blocks and ores.",
+            "Custom® Defined list in the setting below.",
+            "None® Render just a blank world."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {
@@ -68,7 +76,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM())) {
+    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to render.") {
 
         @Override
         public void hasChanged() {

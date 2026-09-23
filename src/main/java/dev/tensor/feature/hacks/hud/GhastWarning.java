@@ -18,7 +18,7 @@ import java.awt.*;
  * @since 06-14-2026
  */
 
-@Hack.Info(name = "GhastWarning", category = Category.HUD)
+@Hack.Info(name = "GhastWarning", category = Category.HUD, description = "Displays a warning whenever a fireball has been shot by a Ghast.")
 public final class GhastWarning extends Hack implements HUDObject {
 
     @Override
@@ -26,10 +26,10 @@ public final class GhastWarning extends Hack implements HUDObject {
         return RenderOrder.HUD_Text;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255));
+    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255), "Sets the color of the warning text.");
 
     @Override
     public IntegerSetting getMinX() {

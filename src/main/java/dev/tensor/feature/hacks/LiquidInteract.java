@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "LiquidInteract", category = Category.Player)
+@Hack.Info(name = "LiquidInteract", category = Category.Player, description = "Allows for you to place blocks on fluids.")
 public final class LiquidInteract extends Hack {
 
     @SuppressWarnings("unused")

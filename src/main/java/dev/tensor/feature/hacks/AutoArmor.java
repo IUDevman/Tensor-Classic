@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @since 09-15-2026
  */
 
-@Hack.Info(name = "AutoArmor", category = Category.Combat)
+@Hack.Info(name = "AutoArmor", category = Category.Combat, description = "Automatically sets your armor from the inventory to be the most durable.")
 public final class AutoArmor extends Hack {
 
     /**
@@ -30,8 +30,8 @@ public final class AutoArmor extends Hack {
      * This value keeps it from swapping too much.
      */
 
-    public final IntegerSetting diffPercent = new IntegerSetting("Damage % Diff", 10, 1, 50);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10);
+    public final IntegerSetting diffPercent = new IntegerSetting("Damage % Diff", 10, 1, 50, "Percentage", "The difference in durability required to swap.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10, "Ticks", "How long the hack should wait between swapping items.");
 
     private int delayCount = 0;
 

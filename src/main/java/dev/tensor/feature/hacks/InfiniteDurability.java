@@ -41,11 +41,11 @@ import net.minecraft.src.*;
  */
 
 @Deprecated
-@Hack.Info(name = "InfiniteDurability", category = Category.Player)
+@Hack.Info(name = "InfiniteDurability", category = Category.Player, description = "No longer used.")
 public final class InfiniteDurability extends Hack {
 
-    public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true);
-    public final BooleanSetting swapTo9 = new BooleanSetting("Swap Slot 9", true);
+    public final BooleanSetting errorMessage = new BooleanSetting("Error Message", true, "Send an error message during block breaking or attacking when a suboptimal tool is in slot 9.");
+    public final BooleanSetting swapTo9 = new BooleanSetting("Swap Slot 9", true, "Automatically move items from your inventory to slot 9 when breaking or attacking.");
 
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
 

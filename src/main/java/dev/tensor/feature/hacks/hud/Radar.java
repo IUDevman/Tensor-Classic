@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 05-01-2026
  */
 
-@Hack.Info(name = "Radar", category = Category.HUD)
+@Hack.Info(name = "Radar", category = Category.HUD, description = "Displays a 2D representation of entities, logout spots, and waypoints relative to your position.")
 public final class Radar extends Hack implements HUDObject {
 
     @Override
@@ -34,33 +34,42 @@ public final class Radar extends Hack implements HUDObject {
         return RenderOrder.HUD_Shading_and_Images;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2);
-    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera);
-    public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100);
-    public final BooleanSetting players = new BooleanSetting("Players", true);
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
-    public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
-    public final BooleanSetting items = new BooleanSetting("Items", false);
-    public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
-    public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false);
-    public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false);
-    public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point);
-    public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE);
-    public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
-    public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN);
-    public final ColorNoAlphaSetting hostilesColor = new ColorNoAlphaSetting("Hostile Color", Color.RED);
-    public final ColorNoAlphaSetting itemColor = new ColorNoAlphaSetting("Item Color", Color.YELLOW);
-    public final ColorNoAlphaSetting miscColor = new ColorNoAlphaSetting("Misc Color", Color.PINK);
-    public final ColorNoAlphaSetting waypointColor = new ColorNoAlphaSetting("Waypoint Color", Color.LIGHT_GRAY);
-    public final ColorNoAlphaSetting markerColors = new ColorNoAlphaSetting("Marker Color", Color.WHITE);
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2, "None", "How big the HUD object should be.");
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera, new String[]{
+            "This is how the hack defines player coords.",
+            "Player® Sets player coordinates independent of camera position.",
+            "Camera® Sets coordinates to the player position even if in Freecam."
+    });
+    public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100, "Blocks", "How far should points show up on the Radar.");
+    public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to show players on the radar.");
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to show friends on the radar.");
+    public final BooleanSetting animals = new BooleanSetting("Animals", true, "Enable to show animals on the radar. Modify what types in the list below.");
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals that should show up on the radar.");
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true, "Enable to show hostile mobs on the radar. Modify what types in the list below.");
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs that should show up on the radar.");
+    public final BooleanSetting items = new BooleanSetting("Items", false, "Enable to show items on the radar.");
+    public final BooleanSetting misc = new BooleanSetting("Misc", false, "Enable to show miscellaneous entities on the radar. Modify what types in the list below.");
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities that should show up on the radar.");
+    public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false, "Enable to show Tensor logout spots on the radar.");
+    public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false, "Enable to show Tensor waypoints on the radar.");
+    public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point, new String[]{
+            "This defines what the marker for players looks like.",
+            "Point® Players appear as the same point used for other entities.",
+            "Big Point® Players appear as a point that is larger than other entities.",
+            "Plus® Players appear as a plus symbol."
+    });
+    public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE, "Sets the color of player markers.");
+    public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN, "Sets the color of friend markers.");
+    public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN, "Sets the color of animal markers.");
+    public final ColorNoAlphaSetting hostilesColor = new ColorNoAlphaSetting("Hostile Color", Color.RED, "Sets the color of hostile mob markers.");
+    public final ColorNoAlphaSetting itemColor = new ColorNoAlphaSetting("Item Color", Color.YELLOW, "Sets the color of item markers.");
+    public final ColorNoAlphaSetting miscColor = new ColorNoAlphaSetting("Misc Color", Color.PINK, "Sets the color of miscellaneous entity markers.");
+    public final ColorNoAlphaSetting waypointColor = new ColorNoAlphaSetting("Waypoint Color", Color.LIGHT_GRAY, "Sets the color of Tensor waypoint markers.");
+    public final ColorNoAlphaSetting markerColors = new ColorNoAlphaSetting("Marker Color", Color.WHITE, "Sets the color of the center compass and direction markers.");
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the HUD object fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of HUD object outlines.");
 
     private final CopyOnWriteArrayList<EntityPoint> pointsToRender = new CopyOnWriteArrayList<>();
 

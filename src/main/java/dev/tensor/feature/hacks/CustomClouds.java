@@ -14,12 +14,12 @@ import java.awt.*;
  * @since 04-01-2026
  */
 
-@Hack.Info(name = "CustomClouds", category = Category.Render)
+@Hack.Info(name = "CustomClouds", category = Category.Render, description = "Modifies cloud rendering and color.")
 public final class CustomClouds extends Hack {
 
-    public final BooleanSetting renderClouds = new BooleanSetting("Render Clouds", true);
-    public final BooleanSetting customColor = new BooleanSetting("Custom Color", true);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255));
+    public final BooleanSetting renderClouds = new BooleanSetting("Render Clouds", true, "Disable to not render clouds.");
+    public final BooleanSetting customColor = new BooleanSetting("Custom Color", true, "Enable to render clouds in a defined color.");
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 0, 0, 255), "Sets the custom color of clouds.");
 
     @SuppressWarnings("unused")
     private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addHackEventAction(new EventAction<>(RenderSkyEvent.class, event -> {

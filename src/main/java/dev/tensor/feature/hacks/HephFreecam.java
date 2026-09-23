@@ -24,7 +24,7 @@ import org.lwjgl.input.Keyboard;
  * @source https://github.com/qe7/Hephaestus
  */
 
-@Hack.Info(name = "HephFreecam", category = Category.Player, bind = Keyboard.KEY_V)
+@Hack.Info(name = "HephFreecam", category = Category.Player, bind = Keyboard.KEY_V, description = "Leave your body and freely move around the map. From Hephaestus by qe7.")
 public final class HephFreecam extends Hack {
 
     @Override
@@ -42,7 +42,7 @@ public final class HephFreecam extends Hack {
         return true;
     }
 
-    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true) {
+    public final BooleanSetting copyPlayer = new BooleanSetting("Copy Player Model", true, "Spawns a fake player copy of you when the hack is enabled.") {
 
         @Override
         public void setValue(Boolean VALUE) {
@@ -69,10 +69,15 @@ public final class HephFreecam extends Hack {
             }
         }
     };
-    public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true);
-    public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
-    public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true);
-    public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
+    public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true, "Allows for your inventory to be modified when in freecam.");
+    public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground, new String[]{
+            "This is the logic uses to block the selection box.",
+            "Normal® No blocking.",
+            "None® Selection box will never show",
+            "Above Ground® Selection box will show for surface blocks."
+    });
+    public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true, "Render vanilla break progress when in freecam.");
+    public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15, "Blocks Per Second", "How fast you should move in Freecam.");
 
     public double oldX;
     public double oldY;

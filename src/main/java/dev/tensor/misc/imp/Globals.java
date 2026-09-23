@@ -17,7 +17,6 @@ import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.CopyOnWriteArrayList;
 

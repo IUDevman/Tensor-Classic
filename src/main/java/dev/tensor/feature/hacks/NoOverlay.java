@@ -12,17 +12,21 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 03-28-2026
  */
 
-@Hack.Info(name = "NoOverlay", category = Category.Render)
+@Hack.Info(name = "NoOverlay", category = Category.Render, description = "Prevents the rendering of certain annoying overlays.")
 public final class NoOverlay extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
-    public final BooleanSetting blocks = new BooleanSetting("Blocks", false);
-    public final BooleanSetting fire = new BooleanSetting("Fire", false);
-    public final BooleanSetting portals = new BooleanSetting("Portals", true);
-    public final BooleanSetting portalVomit = new BooleanSetting("Portal Spin", true);
-    public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", true);
-    public final BooleanSetting vignette = new BooleanSetting("Vignette", false);
-    public final BooleanSetting water = new BooleanSetting("Water", false);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom, new String[]{
+            "This defines how overlay types should be cancelled.",
+            "All® Cancels all overlays.",
+            "Custom® Cancels only the defined types of overlays in the boolean settings."
+    });
+    public final BooleanSetting blocks = new BooleanSetting("Blocks", false, "Prevents you from not seeing anything if inside a block.");
+    public final BooleanSetting fire = new BooleanSetting("Fire", false, "Prevents fire overlay.");
+    public final BooleanSetting portals = new BooleanSetting("Portals", true, "Prevents the image overlay from rendering in a portal.");
+    public final BooleanSetting portalVomit = new BooleanSetting("Portal Spin", true, "Literally best setting. Prevents your screen from looping around in a portal.");
+    public final BooleanSetting pumpkin = new BooleanSetting("Pumpkin", true, "Prevents overlay when wearing a pumpkin.");
+    public final BooleanSetting vignette = new BooleanSetting("Vignette", false, "Enable to not render darkness around the edges of the screen.");
+    public final BooleanSetting water = new BooleanSetting("Water", false, "Prevents your screen from turning blue when in water. See CustomFog for lava overlay.");
 
     @SuppressWarnings("unused")
     private final EventAction<RenderOverlayEvent> renderOverlayEventAction = this.addHackEventAction(new EventAction<>(RenderOverlayEvent.class, event -> {

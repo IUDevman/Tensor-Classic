@@ -16,7 +16,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "ModInfo", category = Category.HUD)
+@Hack.Info(name = "ModInfo", category = Category.HUD, description = "Displays the client name and version.")
 public final class ModInfo extends Hack implements HUDObject {
 
     @Override
@@ -24,10 +24,10 @@ public final class ModInfo extends Hack implements HUDObject {
         return RenderOrder.HUD_Text;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 255, 0, 255));
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 0, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
+    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 255, 0, 255), "Sets the text color.");
 
     private final String modInfo = TensorClassic.MOD_NAME + " " + TensorClassic.MOD_VERSION;
 

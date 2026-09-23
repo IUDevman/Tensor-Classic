@@ -26,13 +26,13 @@ import net.minecraft.src.*;
  * InfiniteDurability
  */
 
-@Hack.Info(name = "AutoNine", category = Category.Player)
+@Hack.Info(name = "AutoNine", category = Category.Player, description = "Automatically moves best items and sets your hand to slot 9 in your inventory when mining or attacking. Basically AutoSword and AutoTool combined but with infinite items.")
 public final class AutoNine extends Hack {
 
-    public final BooleanSetting warning = new BooleanSetting("Warning Message", true);
-    public final BooleanSetting doubleCheck = new BooleanSetting("Double Check", true);
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Hand Back", false);
-    public final BooleanSetting swap = new BooleanSetting("Swap Items To 9", true);
+    public final BooleanSetting warning = new BooleanSetting("Warning Message", true, "Enable to send a warning message if incompatible hacks are enabled.");
+    public final BooleanSetting doubleCheck = new BooleanSetting("Double Check", true, "Enable to allow for the hack to check if you have the best tool at all times while you are breaking.");
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Hand Back", false, "Enable to swap your hand back to it's previous slot after switching to slot 9.");
+    public final BooleanSetting swap = new BooleanSetting("Swap Items To 9", true, "Enable to allow the hack to move the best items from your inventory to slot 9 while breaking.");
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());
@@ -212,9 +212,7 @@ public final class AutoNine extends Hack {
         if (blockID == Block.tnt.blockID) {
             ItemStack currentItem = this.getInventory().getCurrentItem();
 
-            if (currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel) {
-                return true;
-            }
+            return currentItem != null && currentItem.getItem() instanceof ItemFlintAndSteel;
         }
 
         return false;

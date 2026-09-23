@@ -73,7 +73,7 @@ public final class TensorLogger {
         if (!SAVE_LOGS || this.LOGGED_MESSAGES.isEmpty()) {
             return;
         }
-        
+
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = time.format(formatter).replace(" ", "-").replace(":", "-");

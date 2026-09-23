@@ -12,13 +12,13 @@ import net.minecraft.src.Packet130UpdateSign;
  * @since 04-17-2026
  */
 
-@Hack.Info(name = "AutoSign", category = Category.Misc)
+@Hack.Info(name = "AutoSign", category = Category.Misc, description = "Automatically fills in sign text when placing.")
 public final class AutoSign extends Hack {
 
-    public final StringSetting lineOne = new StringSetting("Line 1", "Tensor :)");
-    public final StringSetting lineTwo = new StringSetting("Line 2", "Tensor :D");
-    public final StringSetting lineThree = new StringSetting("Line 3", "Tensor :)");
-    public final StringSetting lineFour = new StringSetting("Line 4", "Tensor :D");
+    public final StringSetting lineOne = new StringSetting("Line 1", "Tensor :)", "Text to be put on line 1.");
+    public final StringSetting lineTwo = new StringSetting("Line 2", "Tensor :D", "Text to be pup on line 2.");
+    public final StringSetting lineThree = new StringSetting("Line 3", "Tensor :)", "Text to be put on line 3.");
+    public final StringSetting lineFour = new StringSetting("Line 4", "Tensor :D", "Text to be put on line 4.");
 
     @SuppressWarnings("unused")
     private final EventAction<SignEvent> signEventAction = this.addHackEventAction(new EventAction<>(SignEvent.class, event -> {

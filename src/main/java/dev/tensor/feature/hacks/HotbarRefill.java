@@ -17,11 +17,11 @@ import java.util.HashMap;
  * @since 06-14-2026
  */
 
-@Hack.Info(name = "HotbarRefill", category = Category.Player)
+@Hack.Info(name = "HotbarRefill", category = Category.Player, description = "Automatically replaces items in your hotbar when they run out.")
 public final class HotbarRefill extends Hack {
 
-    public final BooleanSetting screenStop = new BooleanSetting("Stop In Screens", true);
-    public final IntegerSetting refreshTime = new IntegerSetting("Refresh Time", 10, 0, 20);
+    public final BooleanSetting screenStop = new BooleanSetting("Stop In Screens", true, "Enable to prevent the hack from trying to swap in screens such as the inventory.");
+    public final IntegerSetting refreshTime = new IntegerSetting("Refresh Time", 10, 0, 20, "Ticks", "How much time between refilling hotbar slots.");
 
     private final Item[] itemsCache = new Item[9];
 

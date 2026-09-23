@@ -14,12 +14,12 @@ import java.awt.*;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "CommandPreview", category = Category.Client, drawn = false, enabled = true)
+@Hack.Info(name = "CommandPreview", category = Category.Client, drawn = false, enabled = true, description = "Displays useful tooltips when typing client commands in the chat.")
 public final class CommandPreview extends Hack {
 
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
-    public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 0, 255));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the preview fill shading.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of the preview outline.");
+    public final ColorSetting textColor = new ColorSetting("Text Color", new Color(255, 255, 0, 255), "Sets the color of the preview text.");
 
     private final TensorChatGUI tensorChatGUI = new TensorChatGUI();
 

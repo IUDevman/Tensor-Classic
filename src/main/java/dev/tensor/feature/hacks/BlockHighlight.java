@@ -22,7 +22,7 @@ import java.awt.*;
  * @since 04-11-2026
  */
 
-@Hack.Info(name = "BlockHighlight", category = Category.Render)
+@Hack.Info(name = "BlockHighlight", category = Category.Render, description = "Custom render for blocks highlighted by your cursor.")
 public final class BlockHighlight extends Render3DHack {
 
     @Override
@@ -30,10 +30,15 @@ public final class BlockHighlight extends Render3DHack {
         return RenderOrder.BlockHighlight;
     }
 
-    public final EnumSetting render = new EnumSetting("Render", Render.Outline);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
-    public final ColorSetting color = new ColorSetting("Color", Color.RED);
+    public final EnumSetting render = new EnumSetting("Render", Render.Outline, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
+    public final ColorSetting color = new ColorSetting("Color", Color.RED, "Sets the color of the render.");
 
     private BlockCoords positionToRender = null;
 

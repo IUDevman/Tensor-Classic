@@ -4,7 +4,6 @@ import dev.tensor.backend.events.constant.ChangeWorldEvent;
 import dev.tensor.backend.events.constant.ClientTickEvent;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
-import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityLiving;

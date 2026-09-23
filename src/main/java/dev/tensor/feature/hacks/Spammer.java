@@ -19,10 +19,10 @@ import java.util.ArrayList;
  * @since 07-04-2026
  */
 
-@Hack.Info(name = "Spammer", category = Category.Misc)
+@Hack.Info(name = "Spammer", category = Category.Misc, description = "Spams bullshit from a file into chat.")
 public final class Spammer extends Hack {
 
-    public final GeneralButtonSetting refresh = new GeneralButtonSetting("Refresh File List", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting refresh = new GeneralButtonSetting("Refresh File List", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Refresh the loaded files from the '.minecraft/Tensor Classic/Spammer/' folder. Use this if you added/removed files with the game loaded.") {
 
         @Override
         public void onChange() {
@@ -37,7 +37,7 @@ public final class Spammer extends Hack {
             }
         }
     };
-    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath())) {
+    public final SpammerListSetting spammerList = new SpammerListSetting("File List", new SpammerList(this.getConfigManager().getConfigPath()), "List of files in '.minecraft/Tensor Classic/Spammer/' folder. Reload the list after adding files with the 'Refresh File List' button.") {
 
         @Override
         public void onChange() {
@@ -52,8 +52,8 @@ public final class Spammer extends Hack {
             }
         }
     };
-    public final BooleanSetting greenText = new BooleanSetting("GreenText", true);
-    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
+    public final BooleanSetting greenText = new BooleanSetting("GreenText", true, "Enable to add a '>' to the start of spammer messages, which makes the text green on most servers.");
+    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200, "Ticks", "The time between sending messages. Too low of a delay may cause you to be kicked for spamming.");
 
     private int delay = 0;
     private int index = 0;

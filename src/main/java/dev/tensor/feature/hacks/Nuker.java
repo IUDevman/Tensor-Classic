@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 04-15-2026
  */
 
-@Hack.Info(name = "Nuker", category = Category.Player, bind = Keyboard.KEY_N)
+@Hack.Info(name = "Nuker", category = Category.Player, bind = Keyboard.KEY_N, description = "Automatically breaks nearby blocks. Blocks broken can be customized.")
 public final class Nuker extends Render3DHack {
 
     @Override
@@ -34,29 +34,58 @@ public final class Nuker extends Render3DHack {
         return RenderOrder.Nuker;
     }
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla);
-    public final EnumSetting target = new EnumSetting("Target", Target.Click);
-    public final BooleanSetting resetTarget = new BooleanSetting("Disable Resets Target", true);
-    public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()));
-    public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true);
-    public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced);
-    public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false);
-    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player);
-    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
-    public final DoubleSetting vanillaMultiplier = new DoubleSetting("Vanilla Multiplier", 1.00, 0.60, 1.00, 2);
-    public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single);
-    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
-    public final BooleanSetting rotate = new BooleanSetting("Rotate", true);
-    public final BooleanSetting swing = new BooleanSetting("Swing", true);
-    public final BooleanSetting swap = new BooleanSetting("Swap", true);
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false);
-    public final BooleanSetting esp = new BooleanSetting("ESP", true);
-    public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill);
-    public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
-    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Vanilla, new String[]{
+            "This is how the hack break blocks.",
+            "Vanilla® Emulates vanilla block breaking by sending stages of break packets over the time it would take to break the block manually. Works really good on NoCheat servers.",
+            "Instant® Only sends one break packet. Only recommended for exploits and blocks that can be instantly broken (like flowers)."
+    });
+    public final EnumSetting target = new EnumSetting("Target", Target.Click, new String[]{
+            "Defines what blocks to target.",
+            "All® Targets any breakable blocks within distance.",
+            "Click® Targets one block type defined by left clicking a block.",
+            "Instant® Targets only blocks that can be instantly broken.",
+            "Custom® Targets block types defined in the Custom Targets list setting."
+    });
+    public final BooleanSetting resetTarget = new BooleanSetting("Disable Resets Target", true, "Find a new target when you disable the hack versus continuing where you left off.");
+    public final BlockListSetting customTargets = new BlockListSetting("Custom Targets", new BlockList(BlockList.CUSTOM()), "Set types of blocks to break.");
+    public final BooleanSetting comparePrev = new BooleanSetting("Compare Previous", true, "Keep this enabled to prevent double hits. Basically this causes already mined blocks to be ignored for a bit.");
+    public final EnumSetting comparePrevMode = new EnumSetting("Previous Clearing Mode", ClearingMode.Advanced, new String[]{
+            "This handles how queued break requests are removed. I would not suggest changing this.",
+            "Lazy® Removes attacked blocks after a tick.",
+            "Advanced® Removes attacked blocks after a tick but confirms they are broken."
+    });
+    public final BooleanSetting below = new BooleanSetting("Break Blocks Below", false, "Enable to target blocks below the player's feet.");
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player, new String[]{
+            "This is how the hack defines Freecam logic player coords.",
+            "Player® Sets player coordinates independent of camera position.",
+            "Camera® Sets coordinates to the player position even if in Freecam.",
+            "Stop® Hack pauses if in Freecam."
+    });
+    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1, "Blocks", "How far the hack should find blocks to break.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20, "Ticks", "How much time between breaking batches of targeted blocks.");
+    public final DoubleSetting vanillaMultiplier = new DoubleSetting("Vanilla Multiplier", 1.00, 0.60, 1.00, 2, "None", "Multiplier to increase speed of mining blocks. Lower values are faster.");
+    public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single, new String[]{
+            "Defines the number of blocks to break per tick.",
+            "Single® Recommended in NoCheat servers with blocks that take time to break. Only breaks one at a time.",
+            "All® Breaks all targeted blocks at once. Really only useful for instantly broken blocks like flowers and crops.",
+            "Custom® Breaks the number of blocks at once as defined in the Custom BPT setting."
+    });
+    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50, "Blocks Per Tick", "Defined value for how many blocks to break at a time.");
+    public final BooleanSetting rotate = new BooleanSetting("Rotate", true, "Enable to adjust the players rotation to where you are placing. Managed by the global Rotation hack.");
+    public final BooleanSetting swing = new BooleanSetting("Swing", true, "Swings the player's arm every time a block is hit.");
+    public final BooleanSetting swap = new BooleanSetting("Swap", true, "Enables the hack to swap your held item to the best to mine targeted blocks.");
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false, "Allow the hack to swap your hand back to the previous slot if swapped.");
+    public final BooleanSetting esp = new BooleanSetting("ESP", true, "Renders boxes around targeted blocks.");
+    public final EnumSetting renderMode = new EnumSetting("ESP Mode", RenderMode.Fill, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
+    public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true, "Merges the faces of nearby targeted block ESP into one.");
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the render for targeted blocks.");
 
     private final ArrayList<BlockCoords> blocksToMine = new ArrayList<>();
     private final HashMap<BlockCoords, Thread> blocksBreakingVanilla = new HashMap<>();

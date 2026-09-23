@@ -11,12 +11,18 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 04-30-2026
  */
 
-@Hack.Info(name = "YawLock", category = Category.Movement)
+@Hack.Info(name = "YawLock", category = Category.Movement, description = "Sets your rotation to a defined position. Useful in combination with AutoWalk.")
 public final class YawLock extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45);
-    public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360);
-    public final BooleanSetting freecam = new BooleanSetting("Freecam", false);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Cardinal_45, new String[]{
+            "This sets the direction your rotation will be locked to.",
+            "Input® The angle defined in Input Value.",
+            "Facing® The angle you are currently looking.",
+            "Cardinal 45® The closest 45 degree angle.",
+            "Cardinal 90® The closest 90 degree angle."
+    });
+    public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360, "Degrees", "The defined degree value to lock your rotation at.");
+    public final BooleanSetting freecam = new BooleanSetting("Freecam", false, "Enable to apply yaw lock when in freecam.");
 
     private boolean needsYaw = false;
     private float toYaw = 0;

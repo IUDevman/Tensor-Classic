@@ -59,6 +59,11 @@ public final class ButtonSettingElement extends SettingElement {
     }
 
     @Override
+    public Setting<?> getSetting() {
+        return this.setting;
+    }
+
+    @Override
     public int getWidth() {
         return SettingElement.width;
     }

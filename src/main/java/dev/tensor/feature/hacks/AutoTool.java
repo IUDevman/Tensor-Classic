@@ -14,10 +14,10 @@ import net.minecraft.src.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "AutoTool", category = Category.Player)
+@Hack.Info(name = "AutoTool", category = Category.Player, description = "Sets your current hand to the best tool when mining.")
 public final class AutoTool extends Hack {
 
-    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false) {
+    public final BooleanSetting swapBack = new BooleanSetting("Swap Back", false, "Enable to swap your hand back to it's previous slot after switching to tool.") {
 
         @Override
         public void setValue(Boolean value) {

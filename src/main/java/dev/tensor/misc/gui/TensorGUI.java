@@ -4,13 +4,20 @@ import dev.tensor.TensorClassic;
 import dev.tensor.feature.hacks.ClickGUI;
 import dev.tensor.misc.gui.imp.Element;
 import dev.tensor.misc.gui.imp.Hoverable;
+import dev.tensor.misc.gui.imp.description.GUIDescription;
+import dev.tensor.misc.gui.imp.description.SettingDescriptionFinder;
+import dev.tensor.misc.gui.imp.description.imp.CategoryDescription;
+import dev.tensor.misc.gui.imp.description.imp.HackDescription;
+import dev.tensor.misc.gui.imp.description.imp.SimpleSettingDescription;
 import dev.tensor.misc.gui.imp.elements.*;
 import dev.tensor.misc.gui.imp.elements.settings.ButtonSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.SpammerListSettingButton;
 import dev.tensor.misc.helpers.text.ChatColor;
 import dev.tensor.misc.imp.hack.Category;
+import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.render.Render2D;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
@@ -54,6 +61,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
 
     private int dragXToSet;
     private int dragYToSet;
+
+    private GUIDescription description = null;
 
     private final AtomicBoolean isButtonActive = new AtomicBoolean(false);
     private ButtonSetting activeButton = null;
@@ -170,6 +179,101 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         this.drawCenteredString(name, clickGUI.x.getValue() + CategoryElement.width + 2 + ((this.guiWidth - CategoryElement.width + 2) / 2), clickGUI.y.getValue() + 2 + ((this.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
 
         this.categoryElements.forEach(categoryElement -> categoryElement.render(this, this.clickGUI.fillColor.getValueRainbow(), this.clickGUI.selectedFillColor.getValueRainbow(), this.clickGUI.outlineColor.getValueRainbow()));
+
+        boolean holdingShift = this.shouldRenderDescription();
+
+        if (!holdingShift) {
+            this.description = null;
+            return;
+        }
+
+        if (mouseX <= this.clickGUI.x.getValue() + CategoryElement.width && !this.isHovered(clickGUI.x.getValue(), clickGUI.y.getValue(), clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.guiHeight.get(), mouseX, mouseY)) {
+            return;
+
+        } else if (mouseX > this.clickGUI.x.getValue() + CategoryElement.width && !this.isHovered(clickGUI.x.getValue(), clickGUI.y.getValue() + this.titleBoxHeight + 2, clickGUI.x.getValue() + this.guiWidth, clickGUI.y.getValue() + this.guiHeight.get(), mouseX, mouseY)) {
+            return;
+        }
+
+        AtomicBoolean hasFound = new AtomicBoolean(false);
+
+        this.categoryElements.forEach(categoryElement -> {
+
+            if (!hasFound.get() && this.isHovered(categoryElement.getPosX(), categoryElement.getPosY(), categoryElement.getPosX() + categoryElement.getWidth(), categoryElement.getPosY() + categoryElement.getHeight(), mouseX, mouseY)) {
+
+                if (this.description == null || !(this.description instanceof CategoryDescription)) {
+                    this.description = new CategoryDescription(categoryElement.category);
+
+                } else if (this.description instanceof CategoryDescription) {
+                    CategoryDescription categoryDescription = (CategoryDescription) this.description;
+
+                    Category category = (Category) categoryDescription.getObject();
+
+                    if (categoryElement.category != category) {
+                        this.description = new CategoryDescription(categoryElement.category);
+                    }
+                }
+
+                hasFound.set(true);
+            }
+
+            if (hasFound.get() || !categoryElement.isSelected()) {
+                return;
+            }
+
+            categoryElement.hackElements.forEach(hackElement -> {
+
+                if (!hasFound.get() && this.isHovered(hackElement.getPosX(), hackElement.getPosY(), hackElement.getPosX() + hackElement.getWidth(), hackElement.getPosY() + hackElement.getHeight(), mouseX, mouseY)) {
+
+                    if (this.description == null || !(this.description instanceof HackDescription)) {
+                        this.description = new HackDescription(hackElement.hack);
+
+                    } else if (this.description instanceof HackDescription) {
+                        HackDescription hackDescription = (HackDescription) this.description;
+
+                        Hack hack = (Hack) hackDescription.getObject();
+
+                        if (hack != hackElement.hack) {
+                            this.description = new HackDescription(hackElement.hack);
+                        }
+                    }
+
+                    hasFound.set(true);
+                }
+
+                if (hasFound.get() || !hackElement.isViewed()) {
+                    return;
+                }
+
+                hackElement.settingElements.forEach(settingElement -> {
+
+                    if (!hasFound.get() && this.isHovered(settingElement.getPosX(), settingElement.getPosY(), settingElement.getPosX() + settingElement.getWidth(), settingElement.getPosY() + settingElement.getHeight(), mouseX, mouseY)) {
+
+                        if (this.description == null || !(this.description instanceof SimpleSettingDescription)) {
+                            this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement);
+
+                        } else if (this.description instanceof SimpleSettingDescription) {
+                            SimpleSettingDescription simpleSettingDescription = (SimpleSettingDescription) this.description;
+
+                            Setting<?> setting = (Setting<?>) simpleSettingDescription.getObject();
+
+                            if (setting != settingElement.getSetting()) {
+                                this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement);
+                            }
+                        }
+
+                        hasFound.set(true);
+                    }
+                });
+            });
+        });
+
+        if (!hasFound.get()) {
+            this.description = null;
+        }
+
+        if (this.description != null) {
+            this.description.render(mouseX, mouseY, this.clickGUI.fillColor.getValueRainbow(), this.clickGUI.outlineColor.getValueRainbow());
+        }
     }
 
     @Override
@@ -580,6 +684,18 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                 });
             });
         });
+    }
+
+    private boolean shouldRenderDescription() {
+        if (!this.clickGUI.showDescriptions.getValue()) {
+            return false;
+        }
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) {
+            return true;
+        }
+
+        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT);
     }
 
     private enum PanelType {

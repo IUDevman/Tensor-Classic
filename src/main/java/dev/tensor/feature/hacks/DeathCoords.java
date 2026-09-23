@@ -10,7 +10,7 @@ import net.minecraft.src.GuiGameOver;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "DeathCoords", category = Category.Misc)
+@Hack.Info(name = "DeathCoords", category = Category.Misc, description = "Posts into chat the last known coordinates of your player on death.")
 public final class DeathCoords extends Hack {
 
     private boolean messaged = false;

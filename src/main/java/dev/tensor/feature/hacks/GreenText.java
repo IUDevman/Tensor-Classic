@@ -10,7 +10,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-20-2026
  */
 
-@Hack.Info(name = "GreenText", category = Category.Misc)
+@Hack.Info(name = "GreenText", category = Category.Misc, description = "Puts a '>' in front of sent messages, making them appear green colored on many servers.")
 public final class GreenText extends Hack {
 
     @SuppressWarnings("unused")

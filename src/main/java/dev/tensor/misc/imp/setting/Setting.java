@@ -33,6 +33,8 @@ public interface Setting<T> extends Globals {
 
     void save(JsonObject jsonObject);
 
+    String getDescription();
+
     default void reset() {
         this.setValue(this.getDefaultValue());
     }

@@ -14,7 +14,7 @@ import net.minecraft.src.ItemStack;
  * @since 04-06-2026
  */
 
-@Hack.Info(name = "FakePlayer", category = Category.Misc)
+@Hack.Info(name = "FakePlayer", category = Category.Misc, description = "Spawns a fake player. Useful for testing NameTags or other renders.")
 public final class FakePlayer extends Hack {
 
     @Override
@@ -32,7 +32,7 @@ public final class FakePlayer extends Hack {
         return true;
     }
 
-    public final BooleanSetting geared = new BooleanSetting("Geared", true) {
+    public final BooleanSetting geared = new BooleanSetting("Geared", true, "Enable to spawn the fake player with full diamond gear.") {
 
         @Override
         public void setValue(Boolean VALUE) {
@@ -63,7 +63,7 @@ public final class FakePlayer extends Hack {
             }
         }
     };
-    public final StringSetting name = new StringSetting("Name", "Go_Hoosiers") {
+    public final StringSetting name = new StringSetting("Name", "Go_Hoosiers", "The name of the fake player that is spawned.") {
 
         @Override
         public void setValue(String VALUE) {

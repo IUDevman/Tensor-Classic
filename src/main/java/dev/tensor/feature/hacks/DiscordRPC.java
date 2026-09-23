@@ -12,10 +12,10 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 05-06-2026
  */
 
-@Hack.Info(name = "DiscordRPC", category = Category.Client, enabled = true)
+@Hack.Info(name = "DiscordRPC", category = Category.Client, enabled = true, description = "Support Tensor and let your friends on Discord know about us with the RPC!")
 public final class DiscordRPC extends Hack {
 
-    public final BooleanSetting showUsername = new BooleanSetting("Show Username", true) {
+    public final BooleanSetting showUsername = new BooleanSetting("Show Username", true, "Show your player username in the RPC.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -34,7 +34,7 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final BooleanSetting showServer = new BooleanSetting("Show Server", true) {
+    public final BooleanSetting showServer = new BooleanSetting("Show Server", true, "Show the server IP you are connected to in the RPC.") {
 
         @Override
         public void setValue(Boolean value) {
@@ -53,7 +53,7 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final IntegerSetting refreshTimeMS = new IntegerSetting("Refresh MS", 15000, 10000, 50000) {
+    public final IntegerSetting refreshTimeMS = new IntegerSetting("Refresh MS", 15000, 10000, 50000, "Milliseconds", "How frequent the RPC updates itself. Lower values may not be supported by your bandwith!") {
 
         @Override
         public void setValue(Integer value) {
@@ -72,7 +72,12 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final EnumSetting icon = new EnumSetting("Icon", Icon.Tensor) {
+    public final EnumSetting icon = new EnumSetting("Icon", Icon.Tensor, new String[]{
+            "This is what icon should be shown in the RPC.",
+            "Tensor® Uses the official Tensor logo.",
+            "GameSense® Classic OG GameSense logo from my previous client.",
+            "Lukflug® My prince..."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {

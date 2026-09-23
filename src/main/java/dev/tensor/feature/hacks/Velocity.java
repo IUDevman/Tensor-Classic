@@ -12,14 +12,18 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "Velocity", category = Category.Movement)
+@Hack.Info(name = "Velocity", category = Category.Movement, description = "Prevents you from being pushed by a variety of sources.")
 public final class Velocity extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
-    public final BooleanSetting block = new BooleanSetting("Block", true);
-    public final BooleanSetting entity = new BooleanSetting("Entity", true);
-    public final BooleanSetting fluid = new BooleanSetting("Fluid", false);
-    public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom, new String[]{
+            "This defines how velocity types should be cancelled.",
+            "All® Cancels all types of velocity to the player.",
+            "Custom® Cancels only the defined types of velocity in the boolean settings."
+    });
+    public final BooleanSetting block = new BooleanSetting("Block", true, "Enable to prevent pushing from blocks.");
+    public final BooleanSetting entity = new BooleanSetting("Entity", true, "Enable to prevent pushing from other entities.");
+    public final BooleanSetting fluid = new BooleanSetting("Fluid", false, "Enable to prevent being pushed by water.");
+    public final BooleanSetting soulSand = new BooleanSetting("Soul Sand", false, "Enable to prevent slowdown when walking on soul sand.");
 
     @SuppressWarnings("unused")
     private final EventAction<VelocityEvent> velocityEventAction = this.addHackEventAction(new EventAction<>(VelocityEvent.class, event -> {

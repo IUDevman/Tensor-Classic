@@ -9,11 +9,11 @@ import java.awt.*;
 
 public class ColorNoAlphaSetting extends ColorSetting {
 
-    public ColorNoAlphaSetting(String NAME, Color VALUE) {
-        super(NAME, VALUE);
+    public ColorNoAlphaSetting(String NAME, Color VALUE, String DESCRIPTION) {
+        super(NAME, VALUE, DESCRIPTION);
     }
 
-    public ColorNoAlphaSetting(String NAME, Color VALUE, boolean RAINBOW) {
-        super(NAME, VALUE, RAINBOW);
+    public ColorNoAlphaSetting(String NAME, Color VALUE, boolean RAINBOW, String DESCRIPTION) {
+        super(NAME, VALUE, RAINBOW, DESCRIPTION);
     }
 }

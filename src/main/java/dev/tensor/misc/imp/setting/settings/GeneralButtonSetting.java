@@ -14,9 +14,13 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
     private final String NAME;
     private final ButtonType TYPE;
 
-    public GeneralButtonSetting(String NAME, ButtonType TYPE) {
+    private final String DESCRIPTION;
+
+    public GeneralButtonSetting(String NAME, ButtonType TYPE, String DESCRIPTION) {
         this.NAME = NAME;
         this.TYPE = TYPE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -74,6 +78,11 @@ public class GeneralButtonSetting implements Setting<GeneralButtonSetting.Button
     @Override
     public boolean hasCustomConfig() {
         return true;
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 
     public void onChange() {

@@ -33,6 +33,8 @@ public abstract class Hack implements Globals {
 
         Category category();
 
+        String description();
+
         int bind() default Keyboard.KEY_NONE;
 
         boolean drawn() default true;
@@ -52,13 +54,15 @@ public abstract class Hack implements Globals {
 
     public final Category CATEGORY = this.getInfo().category();
 
+    public final String DESCRIPTION = this.getInfo().description();
+
     public int BIND = this.getInfo().bind();
 
     public boolean DRAWN = this.getInfo().drawn();
 
     public boolean MESSAGES = this.getInfo().messages();
 
-    private boolean TOGGLEABLE = this.getInfo().toggleable();
+    private final boolean TOGGLEABLE = this.getInfo().toggleable();
 
     private boolean ENABLED = this.getInfo().enabled();
 

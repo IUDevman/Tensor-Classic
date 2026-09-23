@@ -9,11 +9,11 @@ import dev.tensor.misc.imp.setting.settings.DoubleSetting;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "Step", category = Category.Movement)
+@Hack.Info(name = "Step", category = Category.Movement, description = "Automatically steps up blocks.")
 public final class Step extends Hack {
 
     //Step height of 1 for full blocks, 1.2 for block + trapdoor, 1.5 for half slab (this and above blocked by NoCheat)
-    public final DoubleSetting height = new DoubleSetting("Height", 1.2, 0.5, 2.0, 1);
+    public final DoubleSetting height = new DoubleSetting("Height", 1.2, 0.5, 2.0, 1, "Blocks", "How high up should you step. Vanilla = 1.0, block + slab = 1.2, any higher triggers NoCheat.");
 
     @Override
     public void onDisable(boolean isNull) {

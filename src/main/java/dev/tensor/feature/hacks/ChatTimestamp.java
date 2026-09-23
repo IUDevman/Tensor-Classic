@@ -17,14 +17,34 @@ import java.util.Date;
  * @since 04-11-2026
  */
 
-@Hack.Info(name = "ChatTimestamp", category = Category.Misc)
+@Hack.Info(name = "ChatTimestamp", category = Category.Misc, description = "Applies a client-sided timestamp of the time messages were send/received.")
 public final class ChatTimestamp extends Hack {
 
-    public final EnumSetting format = new EnumSetting("Format", Format.Hour24$Min$Sec);
-    public final EnumSetting separator = new EnumSetting("Separator", Separator.Brackets);
-    public final BooleanSetting space = new BooleanSetting("Spaced", true);
-    public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.RED);
-    public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY);
+    public final EnumSetting format = new EnumSetting("Format", Format.Hour24$Min$Sec, new String[]{
+            "This sets the format for the time displayed.",
+            "Hour24:Min® Example '15:45'.",
+            "Hour24:Min:Sec® Example '15:45:11'.",
+            "Hour12:Min® Example '8:12'.",
+            "Hour12:Min:Sec® Example '8:12:36'.",
+            "Hour12:Min:XX® Example '2:58 PM'.",
+            "Hour12:Min:Sec:XX® Example '2:58:16 PM'."
+    });
+    public final EnumSetting separator = new EnumSetting("Separator", Separator.Brackets, new String[]{
+            "This sets what characters encapsulate the timestamp.",
+            "Left Arrow® <D/T>.",
+            "Right Arrow® >D/T<.",
+            "Line® |D/T|.",
+            "Brackets® [D/T].",
+            "Curly_Brackets® {D/T}.",
+            "None® No encapsulation."
+    });
+    public final BooleanSetting space = new BooleanSetting("Spaced", true, "Enable to put a space between timestamp and the message.");
+    public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.RED, new String[]{
+            "This sets the text color for the date/time part."
+    });
+    public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.LIGHT_GRAY, new String[]{
+            "This sets the text color for the separator part."
+    });
 
     private String messageCutPrev = "";
     private String colorPrev = "";

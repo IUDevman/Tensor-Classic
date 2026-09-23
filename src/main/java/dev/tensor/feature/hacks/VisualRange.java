@@ -18,13 +18,17 @@ import java.util.ArrayList;
  * @since 04-24-2026
  */
 
-@Hack.Info(name = "VisualRange", category = Category.Combat)
+@Hack.Info(name = "VisualRange", category = Category.Combat, description = "Sends a chat message when players enter your visual (render distance) range.")
 public final class VisualRange extends Hack {
 
-    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false);
-    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
-    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
-    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
+    public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false, "Enable to ensure that your chat isn't flooded if too many players enter your render distance at once.");
+    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20, "Ticks", "The amount of time between adding notifications to the chat. Ones in between are skipped.");
+    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD, new String[]{
+            "This is what the player name color will be in the message."
+    });
+    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA, new String[]{
+            "This is what the friend name color will be in the message."
+    });
 
     private final ArrayList<String> loadedEntityNames = new ArrayList<>();
 

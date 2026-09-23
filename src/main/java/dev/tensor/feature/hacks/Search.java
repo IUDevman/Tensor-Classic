@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @since 03-29-2026
  */
 
-@Hack.Info(name = "Search", category = Category.Render)
+@Hack.Info(name = "Search", category = Category.Render, description = "Draws renders and/or tracers to defined blocks. Basically a better Xray.")
 public final class Search extends Render3DHack {
 
     @Override
@@ -33,7 +33,15 @@ public final class Search extends Render3DHack {
         return RenderOrder.Search;
     }
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Chest) {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Chest, new String[]{
+            "This is what types of blocks should be searched for.",
+            "Glowstone® Glowstone blocks only.",
+            "Portal® Nether portal blocks only.",
+            "Chest® Chests only.",
+            "Diamond® Diamond ore and block.",
+            "Utility® Ores and common player-made blocks.",
+            "Custom® Defined by the Custom Block List."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {
@@ -48,7 +56,7 @@ public final class Search extends Render3DHack {
             }
         }
     };
-    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM())) {
+    public final BlockListSetting custom = new BlockListSetting("Custom Block List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to search for.") {
 
         @Override
         public void hasChanged() {
@@ -62,20 +70,38 @@ public final class Search extends Render3DHack {
             }
         }
     };
-    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
-    public final EnumSetting mergeFaces = new EnumSetting("Merge Faces", MergeFaces.All);
-    public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()));
-    public final EnumSetting render = new EnumSetting("Render", Render.Outline);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
-    public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None);
-    public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true);
-    public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()));
-    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
-    public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
-    public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);
-    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
-    public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255));
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Enable to only render blocks if they are seen on the screen.");
+    public final EnumSetting mergeFaces = new EnumSetting("Merge Faces", MergeFaces.All, new String[]{
+            "This defines logic for renders to merge together.",
+            "None® Does not merge any renders.",
+            "Logical® Merges faces for blocks like beds and portals.",
+            "Custom® Merges faces for blocks defined in the Custom Merge List.",
+            "All® Merges faces for all types of blocks (if able to)."
+    });
+    public final BlockListSetting customMerge = new BlockListSetting("Custom Merge List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to merge faces. Must be in the Custom Block List to render!");
+    public final EnumSetting render = new EnumSetting("Render", Render.Outline, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges.",
+            "None® No box. Useful for tracers."
+    });
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
+    public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None, new String[]{
+            "This defines whether tracers should be drawn to specific blocks.",
+            "None® No tracers rendered.",
+            "All® Draws tracers to all blocks currently searching for.",
+            "Portal® Draws tracers to portals.",
+            "Custom® Draws tracers to defined blocks in the Custom Tracers List.",
+    });
+    public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true, "Enable to merge together tracers going to portals. Must have tracers enabled with search for portals.");
+    public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to draw tracers to. Must be in the Custom Block List to render!");
+    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5, "None", "How thick the tracer lines should be.");
+    public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255, "None", "How transparent the tracer lines should be.");
+    public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN, "Sets the default color of block renders.");
+    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE, "Sets the color of chests renders.");
+    public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255), "Sets the color of portal renders.");
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
     private final BlockList LOGICAL = new BlockList(BlockList.LOGICAL_SEARCH());

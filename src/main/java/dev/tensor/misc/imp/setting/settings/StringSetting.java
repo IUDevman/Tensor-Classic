@@ -19,11 +19,15 @@ public class StringSetting implements Setting<String> {
 
     private String VALUE;
 
-    public StringSetting(String NAME, String VALUE) {
+    private final String DESCRIPTION;
+
+    public StringSetting(String NAME, String VALUE, String DESCRIPTION) {
         this.NAME = NAME;
         this.DEFAULT_VALUE = VALUE;
 
         this.VALUE = VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -78,5 +82,10 @@ public class StringSetting implements Setting<String> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(this.getName(), new JsonPrimitive(this.getValue()));
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

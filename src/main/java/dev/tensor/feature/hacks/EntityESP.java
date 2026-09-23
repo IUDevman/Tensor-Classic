@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 03-31-2026
  */
 
-@Hack.Info(name = "EntityESP", category = Category.Render)
+@Hack.Info(name = "EntityESP", category = Category.Render, description = "Outlines selected entity bounding boxes.")
 public final class EntityESP extends Render3DHack {
 
     @Override
@@ -25,25 +25,30 @@ public final class EntityESP extends Render3DHack {
         return RenderOrder.EntityESP;
     }
 
-    public final BooleanSetting players = new BooleanSetting("Players", true);
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
-    public final BooleanSetting animals = new BooleanSetting("Animals", true);
-    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()));
-    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true);
-    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()));
-    public final BooleanSetting items = new BooleanSetting("Items", false);
-    public final BooleanSetting misc = new BooleanSetting("Misc", false);
-    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()));
-    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);
-    public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN);
-    public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN);
-    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED);
-    public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
-    public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
-    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true);
-    public final EnumSetting mode = new EnumSetting("Render", Mode.Outline);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to draw ESP for players.");
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to draw ESP for friends.");
+    public final BooleanSetting animals = new BooleanSetting("Animals", true, "Enable to draw ESP for animals. Modify what types in the list below.");
+    public final EntityTypeListSetting customAnimals = new EntityTypeListSetting("Animals List", new EntityTypeList(EntityTypeList.ANIMALS()), new EntityTypeList(EntityTypeList.ANIMALS()), "List of animals to render ESP for.");
+    public final BooleanSetting hostiles = new BooleanSetting("Hostiles", true, "Enable to draw ESP for hostile mobs. Modify what types in the list below.");
+    public final EntityTypeListSetting customHostiles = new EntityTypeListSetting("Hostiles List", new EntityTypeList(EntityTypeList.HOSTILES()), new EntityTypeList(EntityTypeList.HOSTILES()), "List of hostile mobs to render ESP for.");
+    public final BooleanSetting items = new BooleanSetting("Items", false, "Enable to draw ESP for items.");
+    public final BooleanSetting misc = new BooleanSetting("Misc", false, "Enable to draw ESP for miscellaneous entities. Modify what types in the list below.");
+    public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to render ESP for.");
+    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE, "Sets the color of renders for players.");
+    public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN, "Sets the color of renders for friends.");
+    public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN, "Sets the color of renders for animals.");
+    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED, "Sets the color of renders for hostile mobs.");
+    public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW, "Sets the color of renders for items.");
+    public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK, "Sets the color of renders for miscellaneous entities.");
+    public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Only render ESP for entities in the player's vision.");
+    public final EnumSetting mode = new EnumSetting("Render", Mode.Outline, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
 
     private final ConcurrentHashMap<Entity, Color> entitiesWithColorToRender = new ConcurrentHashMap<>();
 

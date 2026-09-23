@@ -13,12 +13,12 @@ import org.lwjgl.input.Keyboard;
  * @since 04-04-2026
  */
 
-@Hack.Info(name = "InventoryMove", category = Category.Movement)
+@Hack.Info(name = "InventoryMove", category = Category.Movement, description = "Allows you to move when in GUI screens such as the inventory.")
 public final class InventoryMove extends Hack {
 
-    public final BooleanSetting jump = new BooleanSetting("Jump", false);
-    public final BooleanSetting sneak = new BooleanSetting("Sneak", false);
-    public final BooleanSetting bypass = new BooleanSetting("Bypass for Tensor", true);
+    public final BooleanSetting jump = new BooleanSetting("Jump", false, "Enable to be able to jump in screens when the spacebar is pressed.");
+    public final BooleanSetting sneak = new BooleanSetting("Sneak", false, "Enable to be able to sneak in screens when left shift is pressed.");
+    public final BooleanSetting bypass = new BooleanSetting("Bypass for Tensor", true, "Allows for jumping and sneaking in Tensor gui screens despite other settings.");
 
     @Override
     public void onDisable(boolean isNull) {

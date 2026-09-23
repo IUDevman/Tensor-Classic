@@ -14,11 +14,11 @@ import net.minecraft.src.Packet3Chat;
  * @since 03-24-2026
  */
 
-@Hack.Info(name = "AutoLogin", category = Category.Misc)
+@Hack.Info(name = "AutoLogin", category = Category.Misc, description = "Automatically answers server login prompts with your set password. Works with AutoLogin or a set password.")
 public final class AutoLogin extends Hack {
 
-    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!");
-    public final BooleanSetting applyAll = new BooleanSetting("Try All Accounts", false);
+    public final EncryptedStringSetting password = new EncryptedStringSetting("Password", "Set your password here. Config is encrypted!", "Set the password for AutoLogin to use.");
+    public final BooleanSetting applyAll = new BooleanSetting("Try All Accounts", false, "Enable to send the login message with your set password for all accounts if a password is not defined in AltAccounts.");
 
     @SuppressWarnings("unused")
     private final EventAction<ChatReceivedEvent> chatReceivedEventAction = this.addHackEventAction(new EventAction<>(ChatReceivedEvent.class, event -> {

@@ -11,10 +11,10 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 06-01-2026
  */
 
-@Hack.Info(name = "Rainbow", category = Category.Client, enabled = true, drawn = false, messages = false, toggleable = false)
+@Hack.Info(name = "Rainbow", category = Category.Client, enabled = true, drawn = false, messages = false, toggleable = false, description = "Global setting to customize how rainbow color works for the client.")
 public final class Rainbow extends Hack {
 
-    public final GeneralButtonSetting reset = new GeneralButtonSetting("Reset Color", GeneralButtonSetting.ButtonType.CLICK_ACTION) {
+    public final GeneralButtonSetting reset = new GeneralButtonSetting("Reset Color", GeneralButtonSetting.ButtonType.CLICK_ACTION, "Set the color back to the beginning.") {
 
         @Override
         public void onChange() {
@@ -31,7 +31,7 @@ public final class Rainbow extends Hack {
             }
         }
     };
-    public final IntegerSetting speed = new IntegerSetting("Speed MS", (int) RainbowColor.DEFAULT_SLEEP_TIME, 1, 50) {
+    public final IntegerSetting speed = new IntegerSetting("Speed MS", (int) RainbowColor.DEFAULT_SLEEP_TIME, 1, 50, "MS", "How long should it be until the rainbow shifts colors.") {
 
         @Override
         public void setValue(Integer VALUE) {
@@ -40,7 +40,7 @@ public final class Rainbow extends Hack {
             RainbowColor.setSleepTime(VALUE);
         }
     };
-    public final IntegerSetting increment = new IntegerSetting("Increment Step", RainbowColor.DEFAULT_INCREMENT_STEP, 1, 12) {
+    public final IntegerSetting increment = new IntegerSetting("Increment Step", RainbowColor.DEFAULT_INCREMENT_STEP, 1, 12, "None", "How much should the color change per increment. Higher values = faster color changes.") {
 
         @Override
         public void setValue(Integer VALUE) {

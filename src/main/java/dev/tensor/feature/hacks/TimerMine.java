@@ -13,11 +13,11 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 03-28-2026
  */
 
-@Hack.Info(name = "TimerMine", category = Category.Player)
+@Hack.Info(name = "TimerMine", category = Category.Player, description = "Speeds up the client tick rate, but only when you are mining.")
 public final class TimerMine extends Hack {
 
-    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 35, 20, 40);
-    public final IntegerSetting shutOffAfter = new IntegerSetting("Shutoff Ticks", 20, 1, 80);
+    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 35, 20, 40, "Ticks Per Second", "How fast should the tick rate be. Vanilla is 20 ticks per second.");
+    public final IntegerSetting shutOffAfter = new IntegerSetting("Shutoff Ticks", 20, 1, 80, "Ticks", "Hardcoded time until going back to normal TPS after triggering.");
 
     private final BlockList INSTANT_BLOCKS = new BlockList(BlockList.BREAK_INSTANT());
     private final BlockList BLOCKED_BLOCKS = new BlockList(BlockList.NUKER_BLOCKLIST());

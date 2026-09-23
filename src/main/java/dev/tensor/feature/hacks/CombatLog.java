@@ -16,12 +16,22 @@ import net.minecraft.src.Packet3Chat;
  * @since 09-17-2026
  */
 
-@Hack.Info(name = "CombatLog", category = Category.Combat)
+@Hack.Info(name = "CombatLog", category = Category.Combat, description = "Automatically logs out if you take damage or have low health.")
 public final class CombatLog extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Health);
-    public final DoubleSetting health = new DoubleSetting("Min Health", 4.0, 0.5, 10.0, 1);
-    public final EnumSetting type = new EnumSetting("Type", Type.Disconnect);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Health, new String[]{
+            "This is what triggers the hack to log out.",
+            "Player Attack® Logs out if attacked by a player.",
+            "Damage® Logs out if any damage is taken.",
+            "Health® Logs out if below a defined health.",
+            "Health No Food® Logs out if below a defined health and no food is in the inventory for AutoEat."
+    });
+    public final DoubleSetting health = new DoubleSetting("Min Health", 4.0, 0.5, 10.0, 1, "1/2 Hearts", "The maximum health required to log out.");
+    public final EnumSetting type = new EnumSetting("Type", Type.Disconnect, new String[]{
+            "This is how the player leaves the game.",
+            "Disconnect® Standard disconnect packet. Can sometimes bug relogging.",
+            "Kick® Sends an invalid chat message, causing the server to kick you."
+    });
 
     @Override
     public void onClientTick() {

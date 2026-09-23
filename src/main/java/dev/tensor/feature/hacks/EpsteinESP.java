@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 07-10-2026
  */
 
-@Hack.Info(name = "EpsteinESP", category = Category.Render)
+@Hack.Info(name = "EpsteinESP", category = Category.Render, description = "Joke hack that redacts players from your screen like the Epstein files.")
 public final class EpsteinESP extends Render3DHack {
 
     @Override
@@ -29,9 +29,9 @@ public final class EpsteinESP extends Render3DHack {
         return RenderOrder.EpsteinESP;
     }
 
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK);
-    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK);
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to redact friends from the Epstein Files.");
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK, "Sets the color to redact players with.");
+    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK, "Sets the color to redact friends with.");
 
     private final ConcurrentHashMap<EntityPlayer, Integer> playersToRenderWithColor = new ConcurrentHashMap<>();
 

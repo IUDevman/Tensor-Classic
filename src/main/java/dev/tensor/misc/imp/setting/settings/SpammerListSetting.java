@@ -17,11 +17,15 @@ public class SpammerListSetting implements Setting<SpammerList> {
 
     private final SpammerList LIST;
 
-    public SpammerListSetting(String NAME, SpammerList LIST) {
+    private final String DESCRIPTION;
+
+    public SpammerListSetting(String NAME, SpammerList LIST, String DESCRIPTION) {
         this.NAME = NAME;
         this.LIST = LIST;
 
         this.LIST.setSetting(this);
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -105,5 +109,10 @@ public class SpammerListSetting implements Setting<SpammerList> {
 
     public void onChange() {
 
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

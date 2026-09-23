@@ -21,11 +21,15 @@ public class EnumSetting implements Setting<Enum<?>> {
 
     private Enum<?> VALUE;
 
-    public EnumSetting(String NAME, Enum<?> VALUE) {
+    private final String[] ENUMDESCRIPTION;
+
+    public EnumSetting(String NAME, Enum<?> VALUE, String[] ENUMDESCRIPTION) {
         this.NAME = NAME;
         this.DEFAULT_VALUE = VALUE;
 
         this.VALUE = VALUE;
+
+        this.ENUMDESCRIPTION = ENUMDESCRIPTION;
     }
 
     @Override
@@ -94,5 +98,14 @@ public class EnumSetting implements Setting<Enum<?>> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
+    }
+
+    @Override
+    public String getDescription() {
+        return "";
+    }
+
+    public String[] getEnumDescription() {
+        return this.ENUMDESCRIPTION;
     }
 }

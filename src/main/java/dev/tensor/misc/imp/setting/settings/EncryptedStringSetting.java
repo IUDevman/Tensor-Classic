@@ -13,8 +13,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 public class EncryptedStringSetting extends StringSetting {
 
-    public EncryptedStringSetting(String NAME, String VALUE) {
-        super(NAME, VALUE);
+    public EncryptedStringSetting(String NAME, String VALUE, String DESCRIPTION) {
+        super(NAME, VALUE, DESCRIPTION);
     }
 
     @Override
@@ -32,6 +32,11 @@ public class EncryptedStringSetting extends StringSetting {
         String encryptedValue = this.encryptValue(this.getValue());
 
         jsonObject.add(this.getName(), new JsonPrimitive(encryptedValue));
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription() + " This setting is encrypted in the config.";
     }
 
     private String decryptValue(String encryptedValue) {

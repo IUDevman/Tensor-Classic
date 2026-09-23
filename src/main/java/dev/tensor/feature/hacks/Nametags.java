@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 04-06-2026
  */
 
-@Hack.Info(name = "Nametags", category = Category.Render)
+@Hack.Info(name = "Nametags", category = Category.Render, description = "Displays custom nametags for players displaying useful information.")
 public final class Nametags extends Render3DHack {
 
     @Override
@@ -36,17 +36,22 @@ public final class Nametags extends Render3DHack {
         return true;
     }
 
-    public final BooleanSetting friends = new BooleanSetting("Friends", true);
-    public final BooleanSetting darkenSneak = new BooleanSetting("Darken Sneak", false);
-    public final BooleanSetting showHealth = new BooleanSetting("Show Health", false);
-    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true);
-    public final BooleanSetting showItems = new BooleanSetting("Show Items", true);
-    public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
-    public final BooleanSetting background = new BooleanSetting("Background", false);
-    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
-    public final ColorSetting textColor = new ColorSetting("Text Color", Color.ORANGE);
-    public final ColorSetting friendColor = new ColorSetting("Friend Color", Color.CYAN);
-    public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150));
+    public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to draw nametags for friends.");
+    public final BooleanSetting darkenSneak = new BooleanSetting("Darken Sneak", false, "Darkens the text color when the tagged player is sneaking.");
+    public final BooleanSetting showHealth = new BooleanSetting("Show Health", false, "Enable to show the health of the tagged player. Note: This does not work on multiplayer!");
+    public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true, "Shows how far away the tagged player is from you.");
+    public final BooleanSetting showItems = new BooleanSetting("Show Items", true, "Draws the armor and current item of the tagged player.");
+    public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage, new String[]{
+            "This is how the armor's durability will be displayed.",
+            "None® Durability is hidden.",
+            "Vanilla® Renders the vanilla durability bar.",
+            "Percentage® Renders durability as % remaining."
+    });
+    public final BooleanSetting background = new BooleanSetting("Background", false, "Enable to draw a flat background behind the nametag.");
+    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10, "None", "How big the tag should be from a distance. Higher value = larger tag far away.");
+    public final ColorSetting textColor = new ColorSetting("Text Color", Color.ORANGE, "Sets the color of the nametag text.");
+    public final ColorSetting friendColor = new ColorSetting("Friend Color", Color.CYAN, "Sets the color of nametag text if a friend.");
+    public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150), "Sets the color of the tag background if enabled.");
 
     private final CopyOnWriteArrayList<EntityPlayer> playersToRender = new CopyOnWriteArrayList<>();
 

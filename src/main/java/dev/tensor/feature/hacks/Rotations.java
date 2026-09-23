@@ -10,10 +10,15 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
  * @since 04-22-2026
  */
 
-@Hack.Info(name = "Rotations", category = Category.Client, enabled = true)
+@Hack.Info(name = "Rotations", category = Category.Client, enabled = true, description = "Global setting for how rotations are handled by the client.")
 public final class Rotations extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Packet) {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Packet, new String[]{
+            "This defines global rotation type.",
+            "Packet® Recommended. Sends a packet for every rotation change by the client.",
+            "Intercept® Intercepts rotation packets and sets their rotation to where the client is rotating to.",
+            "Client® Manually sets the client rotation including the camera."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {

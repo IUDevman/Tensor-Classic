@@ -1,11 +1,13 @@
 package dev.tensor.misc.gui.imp.elements.settings;
 
 import dev.tensor.misc.gui.TensorGUI;
+import dev.tensor.misc.gui.imp.description.ColorHoveredOver;
 import dev.tensor.misc.gui.imp.elements.HackElement;
 import dev.tensor.misc.gui.imp.elements.KeyPressElement;
 import dev.tensor.misc.gui.imp.elements.SettingElement;
 import dev.tensor.misc.gui.imp.elements.settings.buttons.ColorSettingButton;
 import dev.tensor.misc.helpers.text.ChatColor;
+import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.ColorNoAlphaSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.IntegerSetting;
@@ -27,7 +29,7 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
     private boolean searchingG = false;
     private boolean searchingB = false;
     private boolean searchingA = false;
-    private boolean disabledAlpha = false;
+    public boolean disabledAlpha = false;
     private String value = "";
 
     public ColorSettingElement(HackElement hackElement, ColorSetting colorSetting, IntegerSetting x, IntegerSetting y, IntegerSetting scrollY, int posX, int posY) {
@@ -41,6 +43,11 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
         }
 
         this.colorButton = colorButton;
+    }
+
+    @Override
+    public Setting<?> getSetting() {
+        return this.colorSetting;
     }
 
     @Override
@@ -286,5 +293,25 @@ public final class ColorSettingElement extends SettingElement implements KeyPres
                 Keyboard.KEY_9,
                 Keyboard.KEY_BACK
         };
+    }
+
+    public ColorHoveredOver getHoveredComponent(int mouseY) {
+        int diffY = mouseY - this.getPosY();
+
+        if (diffY <= 75 && diffY > 60) {
+            return ColorHoveredOver.ALPHA;
+
+        } else if (diffY <= 60 && diffY > 45) {
+            return ColorHoveredOver.BLUE;
+
+        } else if (diffY <= 45 && diffY > 30) {
+            return ColorHoveredOver.GREEN;
+
+        } else if (diffY <= 30 && diffY > 15) {
+            return ColorHoveredOver.RED;
+
+        } else {
+            return ColorHoveredOver.TITLE;
+        }
     }
 }

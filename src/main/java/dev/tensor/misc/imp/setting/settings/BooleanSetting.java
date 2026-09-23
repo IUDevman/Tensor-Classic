@@ -16,13 +16,17 @@ public class BooleanSetting implements Setting<Boolean> {
     private final String NAME;
     private final boolean DEFAULT_VALUE;
 
+    private final String DESCRIPTION;
+
     private boolean VALUE;
 
-    public BooleanSetting(String NAME, boolean VALUE) {
+    public BooleanSetting(String NAME, boolean VALUE, String DESCRIPTION) {
         this.NAME = NAME;
         this.DEFAULT_VALUE = VALUE;
 
         this.VALUE = VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -70,5 +74,10 @@ public class BooleanSetting implements Setting<Boolean> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

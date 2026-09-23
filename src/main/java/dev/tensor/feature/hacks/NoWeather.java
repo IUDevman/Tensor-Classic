@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-20-2026
  */
 
-@Hack.Info(name = "NoWeather", category = Category.Render)
+@Hack.Info(name = "NoWeather", category = Category.Render, description = "Prevents weather rendering. Still does lightning.")
 public final class NoWeather extends Hack {
 
     @SuppressWarnings("unused")

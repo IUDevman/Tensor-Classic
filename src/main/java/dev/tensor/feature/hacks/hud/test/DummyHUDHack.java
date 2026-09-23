@@ -14,12 +14,12 @@ import java.awt.*;
  */
 
 @SuppressWarnings("unused")
-@Hack.Info(name = "DummyHUDHack", category = Category.HUD)
+@Hack.Info(name = "DummyHUDHack", category = Category.HUD, description = "Test")
 public final class DummyHUDHack extends Hack implements HUDObject {
 
-    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
+    public final IntegerSetting x = new IntegerSetting("X", 100, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 100, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
 
     @Override
     public IntegerSetting getMinX() {

@@ -23,7 +23,7 @@ import java.awt.*;
  * @since 04-14-2026
  */
 
-@Hack.Info(name = "BreakProgress", category = Category.Render)
+@Hack.Info(name = "BreakProgress", category = Category.Render, description = "Renders custom box depicting your break progress.")
 public final class BreakProgress extends Render3DHack {
 
     @Override
@@ -31,11 +31,16 @@ public final class BreakProgress extends Render3DHack {
         return RenderOrder.BreakProgress;
     }
 
-    public final EnumSetting render = new EnumSetting("Render", Render.Fill);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
-    public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true);
-    public final ColorSetting color = new ColorSetting("Color", Color.GREEN);
+    public final EnumSetting render = new EnumSetting("Render", Render.Fill, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
+    public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true, "Enable to have the color of the render be tied to your break progress.");
+    public final ColorSetting color = new ColorSetting("Color", Color.GREEN, "Sets the color of the render if Percentage Color is disabled.");
 
     private BlockCoords positionToRender = null;
 

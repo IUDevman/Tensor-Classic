@@ -18,8 +18,23 @@ public class IntegerSetting implements NumberSetting<Integer> {
     private final int MIN_VALUE;
     private final int MAX_VALUE;
     private final int DEFAULT_VALUE;
+    private final String UNITS;
+    private final String DESCRIPTION;
 
     private int VALUE;
+
+    public IntegerSetting(String NAME, int VALUE, int MIN_VALUE, int MAX_VALUE, String UNITS, String DESCRIPTION) {
+        this.NAME = NAME;
+        this.MIN_VALUE = MIN_VALUE;
+        this.MAX_VALUE = MAX_VALUE;
+
+        this.setValue(VALUE);
+
+        this.DEFAULT_VALUE = this.VALUE;
+
+        this.UNITS = UNITS;
+        this.DESCRIPTION = DESCRIPTION;
+    }
 
     public IntegerSetting(String NAME, int VALUE, int MIN_VALUE, int MAX_VALUE) {
         this.NAME = NAME;
@@ -29,6 +44,9 @@ public class IntegerSetting implements NumberSetting<Integer> {
         this.setValue(VALUE);
 
         this.DEFAULT_VALUE = this.VALUE;
+
+        this.UNITS = "None";
+        this.DESCRIPTION = "None";
     }
 
     @Override
@@ -85,6 +103,11 @@ public class IntegerSetting implements NumberSetting<Integer> {
     }
 
     @Override
+    public String getUnits() {
+        return this.UNITS;
+    }
+
+    @Override
     public void load(JsonElement jsonElement) {
         try {
             this.setValueFromString(jsonElement.getAsString());
@@ -96,5 +119,10 @@ public class IntegerSetting implements NumberSetting<Integer> {
     @Override
     public void save(JsonObject jsonObject) {
         jsonObject.add(this.getName(), new JsonPrimitive(this.getValue().toString()));
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

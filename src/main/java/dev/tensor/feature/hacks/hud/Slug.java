@@ -18,7 +18,7 @@ import java.awt.*;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "Slug", category = Category.HUD)
+@Hack.Info(name = "Slug", category = Category.HUD, description = "Displays the mod author.")
 public final class Slug extends Hack implements HUDObject {
 
     @Override
@@ -26,11 +26,17 @@ public final class Slug extends Hack implements HUDObject {
         return RenderOrder.Hud_Images_Only;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2);
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.None);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.WHITE);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2, "None", "How big should funny slug be.");
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.None, new String[]{
+            "This modifies slug behavior.",
+            "None® Slug remains stationary.",
+            "Rotate® Slug spins around.",
+            "Circle® Slug moves around in a circle.",
+            "VibeCoded® Weird thing AI made."
+    });
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.WHITE, "Sets the color the slug should be shaded to.");
 
     private int texture = -1;
 

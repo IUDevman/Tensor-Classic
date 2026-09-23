@@ -9,6 +9,6 @@ import dev.tensor.misc.imp.hack.Hack;
  */
 
 @SuppressWarnings("unused")
-@Hack.Info(name = "Dummy", category = Category.Combat)
+@Hack.Info(name = "Dummy", category = Category.Combat, description = "Test")
 public final class DummyHack extends Hack {
 }

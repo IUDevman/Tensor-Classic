@@ -15,12 +15,14 @@ import org.lwjgl.input.Keyboard;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "Jesus", category = Category.Movement, bind = Keyboard.KEY_J)
+@Hack.Info(name = "Jesus", category = Category.Movement, bind = Keyboard.KEY_J, description = "Allows you to walk on fluids such as water.")
 public final class Jesus extends Hack {
 
-    public final BooleanSetting checkDistance = new BooleanSetting("Check Distance", true);
+    public final BooleanSetting checkDistance = new BooleanSetting("Check Distance", true, "Enable to toggle hack only when near water. This prevents other mobs from being Jesus amd sqids not moving.");
     @SuppressWarnings("unused")
-    public final EnumSetting denomination = new EnumSetting("Denomination", Denomination.Baptist);
+    public final EnumSetting denomination = new EnumSetting("Denomination", Denomination.Baptist, new String[]{
+            "Pick your poison..."
+    });
 
     @Override
     public void onClientTick() {

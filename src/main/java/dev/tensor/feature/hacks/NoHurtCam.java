@@ -11,7 +11,7 @@ import dev.tensor.misc.imp.hack.Hack;
  * @since 03-20-2026
  */
 
-@Hack.Info(name = "NoHurtCam", category = Category.Render)
+@Hack.Info(name = "NoHurtCam", category = Category.Render, description = "Prevents the camera shake when taking damage.")
 public final class NoHurtCam extends Hack {
 
     @SuppressWarnings("unused")

@@ -10,7 +10,7 @@ import org.lwjgl.input.Keyboard;
  * @since 04-02-2026
  */
 
-@Hack.Info(name = "AutoWalk", category = Category.Movement)
+@Hack.Info(name = "AutoWalk", category = Category.Movement, description = "Moves the player forward without input.")
 public final class AutoWalk extends Hack {
 
     @Override
@@ -18,7 +18,7 @@ public final class AutoWalk extends Hack {
         return this.toggleOnDeath.getValue();
     }
 
-    public final BooleanSetting toggleOnDeath = new BooleanSetting("Toggle On Death", true);
+    public final BooleanSetting toggleOnDeath = new BooleanSetting("Toggle On Death", true, "Disables the hack on death.");
 
     @Override
     public void onDisable(boolean isNull) {

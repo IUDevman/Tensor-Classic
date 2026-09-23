@@ -12,10 +12,10 @@ import net.minecraft.src.Material;
  * @since 04-05-2026
  */
 
-@Hack.Info(name = "SafeWalk", category = Category.Movement)
+@Hack.Info(name = "SafeWalk", category = Category.Movement, description = "Keeps you from falling off ledges.")
 public final class SafeWalk extends Hack {
 
-    public final BooleanSetting fluids = new BooleanSetting("Fluids", false);
+    public final BooleanSetting fluids = new BooleanSetting("Fluids", false, "Enable to prevent the player from falling off ledges into water/lava.");
 
     @SuppressWarnings("unused")
     private final EventAction<MovementClipEvent> movementClipEventAction = this.addHackEventAction(new EventAction<>(MovementClipEvent.class, event -> {

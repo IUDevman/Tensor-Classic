@@ -11,10 +11,10 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
  * @since 03-18-2026
  */
 
-@Hack.Info(name = "FOV", category = Category.Render)
+@Hack.Info(name = "FOV", category = Category.Render, description = "Adjusts the client field of view (FOV)")
 public final class FOV extends Hack {
 
-    public final IntegerSetting value = new IntegerSetting("Value", 90, 30, 120);
+    public final IntegerSetting value = new IntegerSetting("Value", 90, 30, 120, "Degrees", "What your field of view should be. Higher values means you see more around you.");
 
     @SuppressWarnings("unused")
     private final EventAction<FOVModifierEvent> fovModifierEventAction = this.addHackEventAction(new EventAction<>(FOVModifierEvent.class, event -> {

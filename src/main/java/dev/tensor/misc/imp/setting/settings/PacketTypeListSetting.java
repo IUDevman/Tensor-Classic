@@ -21,11 +21,15 @@ public class PacketTypeListSetting implements Setting<PacketTypeList> {
 
     private final PacketTypeList FULL_VALUE;
 
-    public PacketTypeListSetting(String NAME, PacketTypeList VALUE, PacketTypeList FULL_VALUE) {
+    private final String DESCRIPTION;
+
+    public PacketTypeListSetting(String NAME, PacketTypeList VALUE, PacketTypeList FULL_VALUE, String DESCRIPTION) {
         this.NAME = NAME;
 
         this.VALUE = VALUE;
         this.FULL_VALUE = FULL_VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -142,5 +146,10 @@ public class PacketTypeListSetting implements Setting<PacketTypeList> {
     @Override
     public void reset() {
 
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }

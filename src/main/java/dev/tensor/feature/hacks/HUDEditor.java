@@ -3,6 +3,7 @@ package dev.tensor.feature.hacks;
 import dev.tensor.misc.gui.TensorHUDEditor;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.BooleanSetting;
 import dev.tensor.misc.imp.setting.settings.ColorSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
 import org.lwjgl.input.Keyboard;
@@ -14,7 +15,7 @@ import java.awt.*;
  * @since 03-25-2026
  */
 
-@Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE)
+@Hack.Info(name = "HUDEditor", category = Category.Client, bind = Keyboard.KEY_GRAVE, description = "Opens custom HUD editor to move around client HUD objects with your mouse.")
 public final class HUDEditor extends Hack {
 
     @Override
@@ -22,8 +23,15 @@ public final class HUDEditor extends Hack {
         return true;
     }
 
-    public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show HUD Object descriptions when shift is held.");
+    public final EnumSetting render = new EnumSetting("Render", RenderType.Both, new String[]{
+            "This is how HUD objects will be rendered in the editor.",
+            "Outline® Renders an outline around HUD object boundaries.",
+            "Object® Renders all of the actual HUD objects.",
+            "Both® Renders both the object and outline."
+    });
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of description box fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of HUD object and description box outlines.");
 
     private TensorHUDEditor tensorHUDEditor = null;
 

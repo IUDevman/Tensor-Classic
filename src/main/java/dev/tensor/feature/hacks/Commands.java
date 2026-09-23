@@ -10,10 +10,10 @@ import dev.tensor.misc.imp.setting.settings.StringSetting;
  * @since 03-18-2026
  */
 
-@Hack.Info(name = "Commands", category = Category.Client, drawn = false, enabled = true)
+@Hack.Info(name = "Commands", category = Category.Client, drawn = false, enabled = true, description = "Allows for client commands to be used in the chat.")
 public final class Commands extends Hack {
 
-    public final StringSetting prefix = new StringSetting("Prefix", "-") {
+    public final StringSetting prefix = new StringSetting("Prefix", "-", "Start your chat message with this to send a command.") {
 
         @Override
         public void setValue(String VALUE) {

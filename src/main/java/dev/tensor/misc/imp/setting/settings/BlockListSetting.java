@@ -20,10 +20,14 @@ public class BlockListSetting implements Setting<BlockList> {
 
     private final BlockList VALUE;
 
-    public BlockListSetting(String NAME, BlockList VALUE) {
+    private final String DESCRIPTION;
+
+    public BlockListSetting(String NAME, BlockList VALUE, String DESCRIPTION) {
         this.NAME = NAME;
 
         this.VALUE = VALUE;
+
+        this.DESCRIPTION = DESCRIPTION;
     }
 
     @Override
@@ -124,5 +128,10 @@ public class BlockListSetting implements Setting<BlockList> {
     @Override
     public void reset() {
         /* removed reset 04-08-26 */
+    }
+
+    @Override
+    public String getDescription() {
+        return this.DESCRIPTION;
     }
 }
