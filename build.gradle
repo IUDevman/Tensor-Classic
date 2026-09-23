@@ -47,6 +47,9 @@ dependencies {
 
     implementation "dev.firstdark.discordrpc:discord-rpc:1.0.4:legacy"
     shadow "dev.firstdark.discordrpc:discord-rpc:1.0.4:legacy"
+
+    implementation "com.deepl.api:deepl-java:1.17.0"
+    shadow "com.deepl.api:deepl-java:1.17.0"
 }
 
 processResources {

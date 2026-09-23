@@ -103,6 +103,10 @@ public interface Globals {
         return (CommandManager) this.getTensor().MANAGERS.get(CommandManager.class);
     }
 
+    default DeepLManager getDeepLManager() {
+        return (DeepLManager) this.getTensor().MANAGERS.get(DeepLManager.class);
+    }
+
     default AutoReconnect getAutoReconnect() {
         return this.getHackManager().getHack(AutoReconnect.class);
     }
