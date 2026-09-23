@@ -57,10 +57,6 @@ public final class ColorSettingDescription implements GUIDescription {
             return;
         }
 
-        if (NEW == null) {
-            return;
-        }
-
         this.CURRENT = NEW;
         this.queuedMessagesToSend.clear();
         this.maxTextLength = 0;
