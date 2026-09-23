@@ -11,6 +11,7 @@ import net.minecraft.src.GuiScreen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -128,7 +129,15 @@ public final class TensorHUDEditor extends GuiScreen implements Render2D, Hovera
         }
 
         if (this.description != null) {
-            this.description.render(mouseX, mouseY, this.hudEditor.fillColor.getValueRainbow(), this.hudEditor.outlineColor.getValueRainbow());
+            Color fill = this.hudEditor.fillColor.getValueRainbow();
+            Color outline = this.hudEditor.outlineColor.getValueRainbow();
+
+            if (this.hudEditor.renderDescriptionsWithNoOpacity.getValue()) {
+                fill = new Color(fill.getRed(), fill.getGreen(), fill.getBlue(), 255);
+                outline = new Color(outline.getRed(), outline.getGreen(), outline.getBlue(), 255);
+            }
+
+            this.description.render(mouseX, mouseY, fill, outline);
         }
     }
 

@@ -24,6 +24,7 @@ public final class HUDEditor extends Hack {
     }
 
     public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show HUD Object descriptions when shift is held.");
+    public final BooleanSetting renderDescriptionsWithNoOpacity = new BooleanSetting("No Opacity Descriptions", false, "Renders descriptions without opacity for better readability.");
     public final EnumSetting render = new EnumSetting("Render", RenderType.Both, new String[]{
             "This is how HUD objects will be rendered in the editor.",
             "Outline® Renders an outline around HUD object boundaries.",

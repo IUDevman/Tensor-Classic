@@ -272,7 +272,15 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         }
 
         if (this.description != null) {
-            this.description.render(mouseX, mouseY, this.clickGUI.fillColor.getValueRainbow(), this.clickGUI.outlineColor.getValueRainbow());
+            Color fill = this.clickGUI.fillColor.getValueRainbow();
+            Color outline = this.clickGUI.outlineColor.getValueRainbow();
+
+            if (this.clickGUI.renderDescriptionsWithNoOpacity.getValue()) {
+                fill = new Color(fill.getRed(), fill.getGreen(), fill.getBlue(), 255);
+                outline = new Color(outline.getRed(), outline.getGreen(), outline.getBlue(), 255);
+            }
+
+            this.description.render(mouseX, mouseY, fill, outline);
         }
     }
 
