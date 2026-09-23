@@ -36,7 +36,7 @@ public final class Slug extends Hack implements HUDObject {
             "Circle® Slug moves around in a circle.",
             "VibeCoded® Weird thing AI made."
     });
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.WHITE);
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.WHITE, "Sets the color the slug should be shaded to.");
 
     private int texture = -1;
 

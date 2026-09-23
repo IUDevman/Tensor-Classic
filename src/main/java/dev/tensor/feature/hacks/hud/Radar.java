@@ -60,16 +60,16 @@ public final class Radar extends Hack implements HUDObject {
             "Big Point® Players appear as a point that is larger than other entities.",
             "Plus® Players appear as a plus symbol."
     });
-    public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE);
-    public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
-    public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN);
-    public final ColorNoAlphaSetting hostilesColor = new ColorNoAlphaSetting("Hostile Color", Color.RED);
-    public final ColorNoAlphaSetting itemColor = new ColorNoAlphaSetting("Item Color", Color.YELLOW);
-    public final ColorNoAlphaSetting miscColor = new ColorNoAlphaSetting("Misc Color", Color.PINK);
-    public final ColorNoAlphaSetting waypointColor = new ColorNoAlphaSetting("Waypoint Color", Color.LIGHT_GRAY);
-    public final ColorNoAlphaSetting markerColors = new ColorNoAlphaSetting("Marker Color", Color.WHITE);
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE, "Sets the color of player markers.");
+    public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN, "Sets the color of friend markers.");
+    public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN, "Sets the color of animal markers.");
+    public final ColorNoAlphaSetting hostilesColor = new ColorNoAlphaSetting("Hostile Color", Color.RED, "Sets the color of hostile mob markers.");
+    public final ColorNoAlphaSetting itemColor = new ColorNoAlphaSetting("Item Color", Color.YELLOW, "Sets the color of item markers.");
+    public final ColorNoAlphaSetting miscColor = new ColorNoAlphaSetting("Misc Color", Color.PINK, "Sets the color of miscellaneous entity markers.");
+    public final ColorNoAlphaSetting waypointColor = new ColorNoAlphaSetting("Waypoint Color", Color.LIGHT_GRAY, "Sets the color of Tensor waypoint markers.");
+    public final ColorNoAlphaSetting markerColors = new ColorNoAlphaSetting("Marker Color", Color.WHITE, "Sets the color of the center compass and direction markers.");
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the HUD object fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of HUD object outlines.");
 
     private final CopyOnWriteArrayList<EntityPoint> pointsToRender = new CopyOnWriteArrayList<>();
 

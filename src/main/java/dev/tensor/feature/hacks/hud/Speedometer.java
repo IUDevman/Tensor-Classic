@@ -57,7 +57,7 @@ public final class Speedometer extends Hack implements HUDObject {
     };
     public final BooleanSetting average = new BooleanSetting("Average Speed", true, "Enable to render the average speed instead of the current.");
     public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 20, 5, 100);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 255, 0, 255));
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 255, 0, 255), "Sets the text color.");
 
     private final DecimalFormat coordinateFormat = new DecimalFormat("#0.00");
 

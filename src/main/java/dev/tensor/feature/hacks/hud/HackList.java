@@ -45,7 +45,7 @@ public final class HackList extends Hack implements HUDObject {
             "All® All hacks are colored to the same defined color from the following setting.",
             "Category® Hacks are colored by what category they belong to."
     });
-    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 0, 0, 255), "Sets the color of hacks if the Color Type is set to 'All'.");
 
     private final ArrayList<Hack> hacksToRender = new ArrayList<>();
 

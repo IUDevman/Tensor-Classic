@@ -99,9 +99,9 @@ public final class Search extends Render3DHack {
     public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to draw tracers to. Must be in the Custom Block List to render!");
     public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
     public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
-    public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN);
-    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE);
-    public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255));
+    public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN, "Sets the default color of block renders.");
+    public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE, "Sets the color of chests renders.");
+    public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255), "Sets the color of portal renders.");
 
     private final BlockList UTILITY = new BlockList(BlockList.UTILITY_SEARCH());
     private final BlockList LOGICAL = new BlockList(BlockList.LOGICAL_SEARCH());

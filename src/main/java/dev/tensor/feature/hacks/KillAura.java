@@ -82,7 +82,7 @@ public final class KillAura extends Render3DHack {
     });
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
-    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the ESP for attacked entities.");
 
     private final ArrayList<Entity> target_Entities = new ArrayList<>();
     private int attackDelay = 0;

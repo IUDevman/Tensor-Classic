@@ -35,8 +35,8 @@ public final class Armor extends Hack implements HUDObject {
             "Vanilla® Renders the vanilla durability bar.",
             "Percentage® Renders durability as % remaining."
     });
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the HUD object fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of the HUD object outline.");
 
     @Override
     public IntegerSetting getMinX() {

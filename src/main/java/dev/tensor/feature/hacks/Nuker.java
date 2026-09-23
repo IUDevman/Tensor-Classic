@@ -85,7 +85,7 @@ public final class Nuker extends Render3DHack {
     public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true, "Merges the faces of nearby targeted block ESP into one.");
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
-    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255));
+    public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the render for targeted blocks.");
 
     private final ArrayList<BlockCoords> blocksToMine = new ArrayList<>();
     private final HashMap<BlockCoords, Thread> blocksBreakingVanilla = new HashMap<>();

@@ -56,8 +56,8 @@ public final class LogoutSpots extends Render3DHack {
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Enable to draw a flat background behind the logout spot tag.");
-    public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor);
-    public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor);
+    public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor, "Sets the color of the tag text.");
+    public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor, "Sets the color of the tag background if enabled.");
     public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both, new String[]{
             "This is how the render will look.",
             "Outline® Draws a box around the edges.",
@@ -67,7 +67,7 @@ public final class LogoutSpots extends Render3DHack {
     });
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", LogoutSpotRenderer.defaultBoxLineWidth, 1, 5);
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255);
-    public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor, "Sets the color of the logout spot render.");
 
     public final CopyOnWriteArrayList<LogoutSpot> playersLogged = new CopyOnWriteArrayList<>();
     private final CopyOnWriteArrayList<LogoutSpot> playersLoggedQueue = new CopyOnWriteArrayList<>();

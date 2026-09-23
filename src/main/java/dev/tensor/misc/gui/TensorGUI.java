@@ -249,7 +249,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                     if (!hasFound.get() && this.isHovered(settingElement.getPosX(), settingElement.getPosY(), settingElement.getPosX() + settingElement.getWidth(), settingElement.getPosY() + settingElement.getHeight(), mouseX, mouseY)) {
 
                         if (this.description == null || !(this.description instanceof SimpleSettingDescription)) {
-                            this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement.getSetting());
+                            this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement);
 
                         } else if (this.description instanceof SimpleSettingDescription) {
                             SimpleSettingDescription simpleSettingDescription = (SimpleSettingDescription) this.description;
@@ -257,7 +257,7 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
                             Setting<?> setting = (Setting<?>) simpleSettingDescription.getObject();
 
                             if (setting != settingElement.getSetting()) {
-                                this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement.getSetting());
+                                this.description = SettingDescriptionFinder.getDescriptionForSetting(settingElement);
                             }
                         }
 

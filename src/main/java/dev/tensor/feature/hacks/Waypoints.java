@@ -36,8 +36,8 @@ public final class Waypoints extends Render3DHack {
     public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Applies a flat background to the waypoint tag render.");
-    public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", WaypointRender.defaultTagTextColor);
-    public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", WaypointRender.defaultBackgroundColor);
+    public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", WaypointRender.defaultTagTextColor, "Sets the color of the waypoint tag text.");
+    public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", WaypointRender.defaultBackgroundColor, "Sets the color of the waypoint tag background if enabled.");
     public final EnumSetting renderMode = new EnumSetting("Render Mode", Mode.Monolith, new String[]{
             "This is how waypoint boxes will be displayed.",
             "Prism® Renders a 1x6 box.",
@@ -53,7 +53,7 @@ public final class Waypoints extends Render3DHack {
     });
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", WaypointRender.defaultBoxLineWidth, 1, 5);
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
-    public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);
+    public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor, "Sets the color of the waypoint render.");
 
     public final CopyOnWriteArrayList<Waypoint> waypointsToRender = new CopyOnWriteArrayList<>();
 

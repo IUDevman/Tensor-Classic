@@ -35,8 +35,8 @@ public final class TabGUI extends Hack implements HUDObject {
     public final IntegerSetting y = new IntegerSetting("Y", 654, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
     public final IntegerSetting page = new IntegerSetting("Page", 1, 1, 1000);
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the render fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of the render outline.");
 
     private final ArrayList<Class<? extends Hack>> BLACKLISTED = new ArrayList<>();
 

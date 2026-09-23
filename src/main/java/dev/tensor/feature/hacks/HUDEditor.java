@@ -30,8 +30,8 @@ public final class HUDEditor extends Hack {
             "Object® Renders all of the actual HUD objects.",
             "Both® Renders both the object and outline."
     });
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of description box fill.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of HUD object and description box outlines.");
 
     private TensorHUDEditor tensorHUDEditor = null;
 

@@ -22,23 +22,30 @@ public class ColorSetting implements Setting<Color> {
 
     private final String name;
     private final Color defaultValue;
+
+    private final String description;
+
     private Color value;
 
     private boolean rainbow = false;
 
     private final ArrayList<SmallColorPickerObject> smallColorPickerObjects = new ArrayList<>();
 
-    public ColorSetting(String name, Color value) {
+    public ColorSetting(String name, Color value, String description) {
         this.name = name;
         this.defaultValue = value;
         this.value = value;
+
+        this.description = description;
     }
 
-    public ColorSetting(String name, Color value, boolean rainbow) {
+    public ColorSetting(String name, Color value, boolean rainbow, String description) {
         this.name = name;
         this.defaultValue = value;
         this.value = value;
         this.rainbow = rainbow;
+
+        this.description = description;
     }
 
     @Override
@@ -154,6 +161,6 @@ public class ColorSetting implements Setting<Color> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return this.description;
     }
 }

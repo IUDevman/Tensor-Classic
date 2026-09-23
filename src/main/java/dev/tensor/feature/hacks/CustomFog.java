@@ -20,7 +20,7 @@ public final class CustomFog extends Hack {
     public final BooleanSetting renderSkyFog = new BooleanSetting("Render Sky Fog", false, "Disable to not render terrain fog.");
     public final BooleanSetting renderFluidFog = new BooleanSetting("Render Fluid Fog", true, "Disable to not render the 'fog' when in fluids.");
     public final BooleanSetting fogColor = new BooleanSetting("Custom Color (Ugly)", true, "Enable to render fog in a custom shitty color.");
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 105, 180, 255));
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", new Color(255, 105, 180, 255), "Sets the custom color of fog.");
 
     @SuppressWarnings("unused")
     private final EventAction<RenderSkyEvent> renderSkyEventAction = this.addHackEventAction(new EventAction<>(RenderSkyEvent.class, event -> {

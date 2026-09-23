@@ -17,7 +17,7 @@ public final class AutoReconnect extends Hack {
 
     public final IntegerSetting delaySeconds = new IntegerSetting("Delay Seconds", 5, 1, 60);
     public final IntegerSetting restartSeconds = new IntegerSetting("Restart Seconds", 60, 1, 180);
-    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", Color.YELLOW);
+    public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", Color.YELLOW, "Sets the color of the message in the disconnect screen.");
 
     private String lastName;
     private int lastPort;

@@ -1,7 +1,10 @@
 package dev.tensor.misc.gui.imp.description;
 
+import dev.tensor.misc.gui.imp.description.imp.ColorSettingDescription;
 import dev.tensor.misc.gui.imp.description.imp.EnumSettingDescription;
 import dev.tensor.misc.gui.imp.description.imp.SimpleSettingDescription;
+import dev.tensor.misc.gui.imp.elements.SettingElement;
+import dev.tensor.misc.gui.imp.elements.settings.ColorSettingElement;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.*;
 
@@ -12,7 +15,9 @@ import dev.tensor.misc.imp.setting.settings.*;
 
 public final class SettingDescriptionFinder {
 
-    public static GUIDescription getDescriptionForSetting(Setting<?> setting) {
+    public static GUIDescription getDescriptionForSetting(SettingElement settingElement) {
+
+        Setting<?> setting = settingElement.getSetting();
 
         if (setting instanceof BooleanSetting || setting instanceof IntegerSetting || setting instanceof DoubleSetting) {
             return new SimpleSettingDescription(setting, SimpleSettingDescription.DescriptionModifier.NONE);
@@ -30,7 +35,9 @@ public final class SettingDescriptionFinder {
             return new EnumSettingDescription((EnumSetting) setting);
         }
 
-        //todo: custom settings for color and enums
+        if (setting instanceof ColorSetting && settingElement instanceof ColorSettingElement) {
+            return new ColorSettingDescription((ColorSettingElement) settingElement);
+        }
 
         return null;
     }

@@ -40,9 +40,9 @@ public final class ClickGUI extends Hack {
             "Original® Draws text on the left like the original Tensor."
     });
     public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show hack/setting descriptions while holding shift.");
-    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
-    public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));
-    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
+    public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150), "Sets the color of the GUI box shading.");
+    public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150), "Sets the color of the GUI box shading when a box is selected or hovered.");
+    public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200), "Sets the color of the GUI outlines.");
 
     public TensorGUI tensorGUI = null;
 

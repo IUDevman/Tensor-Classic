@@ -97,34 +97,6 @@ public final class EnumSettingDescription implements GUIDescription {
 
     @Override
     public void render(int posX, int posY, Color fillColor, Color outlineColor) {
-        this.renderEnumDescription(posX, posY, fillColor, outlineColor, this.descriptionArray, this.maxTextLength);
-    }
-
-    private void renderEnumDescription(int posX, int posY, Color fillColor, Color outlineColor, ArrayList<String> descriptionArray, int maxTextLength) {
-        posY += this.getCursorOffset();
-
-        int minX = posX;
-        int minY = posY;
-        int width = maxTextLength + 6;
-        int height = 4 + (descriptionArray.size() * 12);
-
-        int maxX = minX + width;
-        int maxY = minY + height;
-
-        if (maxX > this.getMinecraft().currentScreen.width) {
-            minX -= (maxX - this.getMinecraft().currentScreen.width);
-        }
-
-        if (maxY > this.getMinecraft().currentScreen.height) {
-            minY -= (maxY - this.getMinecraft().currentScreen.height);
-        }
-
-        this.drawOutlinedRectangle(minX, minY, width, height, 1, fillColor.getRGB(), outlineColor.getRGB(), true);
-
-        for (int i = 0; i < descriptionArray.size(); i++) {
-            String toRender = descriptionArray.get(i);
-
-            this.drawString(toRender, minX + 3, minY + 3 + (12 * i), Color.WHITE.getRGB());
-        }
+        this.renderArray(posX, posY, fillColor, outlineColor, this.descriptionArray, this.maxTextLength);
     }
 }

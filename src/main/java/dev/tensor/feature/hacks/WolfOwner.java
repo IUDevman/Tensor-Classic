@@ -35,8 +35,8 @@ public final class WolfOwner extends Render3DHack {
 
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.RED);
-    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.RED, "Sets the color of text for tags.");
+    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN, "Sets the color of text for tags if the owner is a friend.");
 
     private final ConcurrentHashMap<EntityWolf, Color> wolvesWithColorToRender = new ConcurrentHashMap<>();
 

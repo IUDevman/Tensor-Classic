@@ -77,7 +77,7 @@ public final class SlimeChunks extends Render3DHack {
     });
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
-    public final ColorSetting renderColor = new ColorSetting("Color", Color.GREEN);
+    public final ColorSetting renderColor = new ColorSetting("Color", Color.GREEN, "Sets the color of renders.");
 
     private final CopyOnWriteArrayList<int[]> chunksToRender = new CopyOnWriteArrayList<>();
 

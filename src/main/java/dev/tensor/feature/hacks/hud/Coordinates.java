@@ -39,8 +39,8 @@ public final class Coordinates extends Hack implements HUDObject {
             "Nether® Current coordinates in the nether.",
             "Both® Displays both overworld and nether coordinates."
     });
-    public final ColorNoAlphaSetting overworldColor = new ColorNoAlphaSetting("Overworld Color", new Color(255, 255, 255, 255));
-    public final ColorNoAlphaSetting netherColor = new ColorNoAlphaSetting("Nether Color", new Color(255, 0, 0, 255));
+    public final ColorNoAlphaSetting overworldColor = new ColorNoAlphaSetting("Overworld Color", new Color(255, 255, 255, 255), "Sets the color of text for overworld coordinates.");
+    public final ColorNoAlphaSetting netherColor = new ColorNoAlphaSetting("Nether Color", new Color(255, 0, 0, 255), "Sets the color of text for nether coordinates.");
 
     private final String coordinatesString = "({X}, {Y}, {Z})";
     private final String coordinatesStringWithDirection = this.coordinatesString + "{D}";

@@ -30,8 +30,8 @@ public final class EpsteinESP extends Render3DHack {
     }
 
     public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to redact friends from the Epstein Files.");
-    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK);
-    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK);
+    public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.BLACK, "Sets the color to redact players with.");
+    public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.BLACK, "Sets the color to redact friends with.");
 
     private final ConcurrentHashMap<EntityPlayer, Integer> playersToRenderWithColor = new ConcurrentHashMap<>();
 

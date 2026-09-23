@@ -34,12 +34,12 @@ public final class EntityESP extends Render3DHack {
     public final BooleanSetting items = new BooleanSetting("Items", false, "Enable to draw ESP for items.");
     public final BooleanSetting misc = new BooleanSetting("Misc", false, "Enable to draw ESP for miscellaneous entities. Modify what types in the list below.");
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to render ESP for.");
-    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE);
-    public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN);
-    public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN);
-    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED);
-    public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
-    public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
+    public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE, "Sets the color of renders for players.");
+    public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN, "Sets the color of renders for friends.");
+    public final ColorSetting animalsColor = new ColorSetting("Animal Color", Color.GREEN, "Sets the color of renders for animals.");
+    public final ColorSetting hostilesColor = new ColorSetting("Hostile Color", Color.RED, "Sets the color of renders for hostile mobs.");
+    public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW, "Sets the color of renders for items.");
+    public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK, "Sets the color of renders for miscellaneous entities.");
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Only render ESP for entities in the player's vision.");
     public final EnumSetting mode = new EnumSetting("Render", Mode.Outline, new String[]{
             "This is how the render will look.",

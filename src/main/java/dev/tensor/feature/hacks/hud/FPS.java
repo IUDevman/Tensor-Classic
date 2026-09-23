@@ -60,7 +60,7 @@ public final class FPS extends Hack implements HUDObject {
             }
         }
     };
-    public final ColorSetting color = new ColorSetting("Color", new Color(255, 255, 0, 255));
+    public final ColorSetting color = new ColorSetting("Color", new Color(255, 255, 0, 255), "Sets the color of FPS text.");
 
     private final ArrayDeque<Integer> fpsDeque = new ArrayDeque<>();
     private int currentFPS = 0;
