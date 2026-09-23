@@ -53,7 +53,7 @@ public final class Spammer extends Hack {
         }
     };
     public final BooleanSetting greenText = new BooleanSetting("GreenText", true, "Enable to add a '>' to the start of spammer messages, which makes the text green on most servers.");
-    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
+    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200, "Ticks", "The time between sending messages. Too low of a delay may cause you to be kicked for spamming.");
 
     private int delay = 0;
     private int index = 0;

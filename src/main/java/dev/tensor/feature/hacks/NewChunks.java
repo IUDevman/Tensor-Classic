@@ -43,12 +43,12 @@ public final class NewChunks extends Render3DHack {
             }
         }
     };
-    public final IntegerSetting renderY = new IntegerSetting("Render at Y", 0, 0, 128);
-    public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 0.1, 0.1, 3.0, 1);
+    public final IntegerSetting renderY = new IntegerSetting("Render at Y", 0, 0, 128, "Y Level", "How far up should the render be.");
+    public final DoubleSetting thickness = new DoubleSetting("Y Thickness", 0.1, 0.1, 3.0, 1, "Blocks", "How thick should the render be.");
     public final BooleanSetting limitRenderDistance = new BooleanSetting("Check Render Distance", true, "Enable to only render new chunks within a defined distance from the player. Modify this distance in the setting below.");
-    public final IntegerSetting renderDistance = new IntegerSetting("Render Distance", 256, 32, 256);
+    public final IntegerSetting renderDistance = new IntegerSetting("Render Distance", 256, 32, 256, "Blocks", "Maximum distance to render new chunks.");
     public final BooleanSetting deleteFarAway = new BooleanSetting("Delete Far Away", false, "Deletes new chunks that are far away from the player. Modified by the Delete Distance setting.");
-    public final IntegerSetting deleteDistance = new IntegerSetting("Delete Distance", 512, 256, 1024);
+    public final IntegerSetting deleteDistance = new IntegerSetting("Delete Distance", 512, 256, 1024, "Blocks", "The distance new chunks have to be to be deleted.");
     public final BooleanSetting deleteOnDisable = new BooleanSetting("Delete On Disable", true, "Clear saved new chunks when the hack is disabled.");
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Performance boost. Only renders new chunks if they are visible on the screen.");
     public final EnumSetting renderMode = new EnumSetting("Render Mode", RenderMode.Outline, new String[]{
@@ -57,8 +57,8 @@ public final class NewChunks extends Render3DHack {
             "Fill® Draws a shaded box.",
             "Both® Draws a shaded box with outlined edges."
     });
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting renderColor = new ColorSetting("Color", Color.YELLOW, "Sets the color of the render.");
 
     /**

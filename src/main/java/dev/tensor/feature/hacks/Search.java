@@ -86,8 +86,8 @@ public final class Search extends Render3DHack {
             "Both® Draws a shaded box with outlined edges.",
             "None® No box. Useful for tracers."
     });
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final EnumSetting tracers = new EnumSetting("Tracers", TracerMode.None, new String[]{
             "This defines whether tracers should be drawn to specific blocks.",
             "None® No tracers rendered.",
@@ -97,8 +97,8 @@ public final class Search extends Render3DHack {
     });
     public final BooleanSetting mergerPortalTracers = new BooleanSetting("Merge Portal Tracers", true, "Enable to merge together tracers going to portals. Must have tracers enabled with search for portals.");
     public final BlockListSetting customTracers = new BlockListSetting("Custom Tracers List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to draw tracers to. Must be in the Custom Block List to render!");
-    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
-    public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255);
+    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5, "None", "How thick the tracer lines should be.");
+    public final IntegerSetting tracerAlpha = new IntegerSetting("Tracers Alpha", 255, 0, 255, "None", "How transparent the tracer lines should be.");
     public final ColorSetting searchColor = new ColorSetting("Search Color", Color.CYAN, "Sets the default color of block renders.");
     public final ColorSetting chestColor = new ColorSetting("Chest Color", Color.ORANGE, "Sets the color of chests renders.");
     public final ColorSetting portalColor = new ColorSetting("Portal Color", new Color(203, 109, 227, 255), "Sets the color of portal renders.");

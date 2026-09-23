@@ -33,8 +33,8 @@ public final class WolfOwner extends Render3DHack {
         return true;
     }
 
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2);
-    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.00, 0.10, 2.00, 2, "None", "How big the tag should be.");
+    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10, "None", "How big the tag should be far away. Higher values = larger tag far away.");
     public final ColorNoAlphaSetting color = new ColorNoAlphaSetting("Color", Color.RED, "Sets the color of text for tags.");
     public final ColorNoAlphaSetting friendColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN, "Sets the color of text for tags if the owner is a friend.");
 

@@ -23,9 +23,9 @@ public final class Coordinates extends Hack implements HUDObject {
         return RenderOrder.HUD_Text;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 13, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 13, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
     public final BooleanSetting compass = new BooleanSetting("Compass", true, "Enable to draw a compass on the radar.");
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
             "This sets how the text will be rendered.",

@@ -53,8 +53,8 @@ public final class LogoutSpots extends Render3DHack {
     public final BooleanSetting showCoords = new BooleanSetting("Show Coords", true, "Shows the coordinates of the logged player.");
     public final BooleanSetting showDistance = new BooleanSetting("Show Distance", false, "Shows the distance you are to the logout spot.");
     public final BooleanSetting showTime = new BooleanSetting("Time", false, "Shows how long the player has been logged out (max 100 seconds).");
-    public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2);
-    public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10);
+    public final DoubleSetting tagScale = new DoubleSetting("Tag Scale", 1.00, 0.10, 2.00, 2, "None", "How big the tag should be.");
+    public final IntegerSetting tagDistanceMultiplier = new IntegerSetting("Tag Distance Multiplier", 8, 2, 10, "None", "How big should the tag be from a distance. Larger multiplier = bigger tag far away.");
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Enable to draw a flat background behind the logout spot tag.");
     public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor, "Sets the color of the tag text.");
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor, "Sets the color of the tag background if enabled.");
@@ -65,8 +65,8 @@ public final class LogoutSpots extends Render3DHack {
             "Both® Draws a shaded box with outlined edges.",
             "None® No Box rendered. "
     });
-    public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", LogoutSpotRenderer.defaultBoxLineWidth, 1, 5);
-    public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255);
+    public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", LogoutSpotRenderer.defaultBoxLineWidth, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor, "Sets the color of the logout spot render.");
 
     public final CopyOnWriteArrayList<LogoutSpot> playersLogged = new CopyOnWriteArrayList<>();

@@ -61,16 +61,16 @@ public final class Nuker extends Render3DHack {
             "Camera® Sets coordinates to the player position even if in Freecam.",
             "Stop® Hack pauses if in Freecam."
     });
-    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
-    public final DoubleSetting vanillaMultiplier = new DoubleSetting("Vanilla Multiplier", 1.00, 0.60, 1.00, 2);
+    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1, "Blocks", "How far the hack should find blocks to break.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20, "Ticks", "How much time between breaking batches of targeted blocks.");
+    public final DoubleSetting vanillaMultiplier = new DoubleSetting("Vanilla Multiplier", 1.00, 0.60, 1.00, 2, "None", "Multiplier to increase speed of mining blocks. Lower values are faster.");
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.Single, new String[]{
             "Defines the number of blocks to break per tick.",
             "Single® Recommended in NoCheat servers with blocks that take time to break. Only breaks one at a time.",
             "All® Breaks all targeted blocks at once. Really only useful for instantly broken blocks like flowers and crops.",
             "Custom® Breaks the number of blocks at once as defined in the Custom BPT setting."
     });
-    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
+    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50, "Blocks Per Tick", "Defined value for how many blocks to break at a time.");
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true, "Enable to adjust the players rotation to where you are placing. Managed by the global Rotation hack.");
     public final BooleanSetting swing = new BooleanSetting("Swing", true, "Swings the player's arm every time a block is hit.");
     public final BooleanSetting swap = new BooleanSetting("Swap", true, "Enables the hack to swap your held item to the best to mine targeted blocks.");
@@ -83,8 +83,8 @@ public final class Nuker extends Render3DHack {
             "Both® Draws a shaded box with outlined edges."
     });
     public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true, "Merges the faces of nearby targeted block ESP into one.");
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the render for targeted blocks.");
 
     private final ArrayList<BlockCoords> blocksToMine = new ArrayList<>();

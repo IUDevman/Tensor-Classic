@@ -18,7 +18,7 @@ import net.minecraft.src.Packet3Chat;
 public final class Greeter extends Hack {
 
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true, "Prevents greeter messages from being sent if the spammer is sending.");
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100, "Ticks", "The amount of time between sending messages. Lower values may get you kicked for spamming.");
     public final BooleanSetting greenText = new BooleanSetting("Greentext", true, "Adds a '>' before greeter messages, making them green on most servers.");
     public final BooleanSetting join = new BooleanSetting("Join", true, "Send a message when players join the server.");
     public final StringSetting joinMessage = new StringSetting("Join Message", "Welcome {name} to the server! Hope you have a good time! ;)", "Message sent when a player joins the game.");

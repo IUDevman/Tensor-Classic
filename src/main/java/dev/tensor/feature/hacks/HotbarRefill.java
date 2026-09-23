@@ -21,7 +21,7 @@ import java.util.HashMap;
 public final class HotbarRefill extends Hack {
 
     public final BooleanSetting screenStop = new BooleanSetting("Stop In Screens", true, "Enable to prevent the hack from trying to swap in screens such as the inventory.");
-    public final IntegerSetting refreshTime = new IntegerSetting("Refresh Time", 10, 0, 20);
+    public final IntegerSetting refreshTime = new IntegerSetting("Refresh Time", 10, 0, 20, "Ticks", "How much time between refilling hotbar slots.");
 
     private final Item[] itemsCache = new Item[9];
 

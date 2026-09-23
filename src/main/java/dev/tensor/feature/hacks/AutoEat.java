@@ -20,8 +20,8 @@ import java.util.Comparator;
 @Hack.Info(name = "AutoEat", category = Category.Combat, description = "Automatically eats for you to restore health.")
 public final class AutoEat extends Hack {
 
-    public final IntegerSetting maxHealth = new IntegerSetting("Max Health", 15, 5, 20);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 8, 0, 60);
+    public final IntegerSetting maxHealth = new IntegerSetting("Max Health", 15, 5, 20, "1/2 Hearts", "The amount of health to start eating food at.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 8, 0, 60, "Ticks", "The amount of time between eating food. Decreasing this too much causes overeating.");
     public final BooleanSetting moveFromInventory = new BooleanSetting("Fill From Inventory", true, "Enable to allow the hack to move food from your inventory to the hotbar. Must have an empty slot available.");
 
     private int delayTicks = 0;

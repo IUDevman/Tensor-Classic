@@ -26,7 +26,7 @@ public final class CombatLog extends Hack {
             "Health® Logs out if below a defined health.",
             "Health No Food® Logs out if below a defined health and no food is in the inventory for AutoEat."
     });
-    public final DoubleSetting health = new DoubleSetting("Min Health", 4.0, 0.5, 10.0, 1);
+    public final DoubleSetting health = new DoubleSetting("Min Health", 4.0, 0.5, 10.0, 1, "1/2 Hearts", "The maximum health required to log out.");
     public final EnumSetting type = new EnumSetting("Type", Type.Disconnect, new String[]{
             "This is how the player leaves the game.",
             "Disconnect® Standard disconnect packet. Can sometimes bug relogging.",

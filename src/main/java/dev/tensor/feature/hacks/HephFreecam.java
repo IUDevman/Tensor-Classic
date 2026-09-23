@@ -77,7 +77,7 @@ public final class HephFreecam extends Hack {
             "Above Ground® Selection box will show for surface blocks."
     });
     public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true, "Render vanilla break progress when in freecam.");
-    public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
+    public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15, "Blocks Per Second", "How fast you should move in Freecam.");
 
     public double oldX;
     public double oldY;

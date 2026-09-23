@@ -21,7 +21,7 @@ public final class YawLock extends Hack {
             "Cardinal 45® The closest 45 degree angle.",
             "Cardinal 90® The closest 90 degree angle."
     });
-    public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360);
+    public final IntegerSetting value = new IntegerSetting("Input Value", 45, 0, 360, "Degrees", "The defined degree value to lock your rotation at.");
     public final BooleanSetting freecam = new BooleanSetting("Freecam", false, "Enable to apply yaw lock when in freecam.");
 
     private boolean needsYaw = false;

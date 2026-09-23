@@ -53,7 +53,7 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final IntegerSetting refreshTimeMS = new IntegerSetting("Refresh MS", 15000, 10000, 50000) {
+    public final IntegerSetting refreshTimeMS = new IntegerSetting("Refresh MS", 15000, 10000, 50000, "Milliseconds", "How frequent the RPC updates itself. Lower values may not be supported by your bandwith!") {
 
         @Override
         public void setValue(Integer value) {

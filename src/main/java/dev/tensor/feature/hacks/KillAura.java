@@ -63,8 +63,8 @@ public final class KillAura extends Render3DHack {
             "Camera® Sets coordinates to the player position even if in Freecam.",
             "Stop® Hack pauses if in Freecam."
     });
-    public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20);
+    public final DoubleSetting range = new DoubleSetting("Range", 5.0, 1.0, 10.0, 1, "Blocks", "How far should the hack search for targets.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 4, 0, 20, "Ticks", "The time between attacking batches of targets.");
     public final BooleanSetting rotate = new BooleanSetting("Rotate", true, "Enable to adjust the players rotation to where you are attacking. Managed by the global Rotation hack.");
     public final BooleanSetting swing = new BooleanSetting("Swing", true, "Swings the player's hand when attacking entities.");
     public final EnumSetting sort = new EnumSetting("Sort By", Sort.Distance, new String[]{
@@ -80,8 +80,8 @@ public final class KillAura extends Render3DHack {
             "Fill® Draws a shaded box.",
             "Both® Draws a shaded box with outlined edges."
     });
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the ESP for attacked entities.");
 
     private final ArrayList<Entity> target_Entities = new ArrayList<>();

@@ -22,9 +22,9 @@ public final class FPS extends Hack implements HUDObject {
         return RenderOrder.HUD_Text;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
     public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
             "This sets how the text will be rendered.",
             "Left® Align text to the left.",
@@ -45,7 +45,7 @@ public final class FPS extends Hack implements HUDObject {
             }
         }
     };
-    public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 200, 20, 500) {
+    public final IntegerSetting collectionTicks = new IntegerSetting("Collection Ticks", 200, 20, 500, "Ticks", "How long should the FPS be sampled for to get the average.") {
 
         @Override
         public void setValue(Integer value) {

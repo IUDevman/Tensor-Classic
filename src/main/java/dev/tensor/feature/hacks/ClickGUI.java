@@ -30,10 +30,10 @@ public final class ClickGUI extends Hack {
     }
 
     public final BooleanSetting renderHUD = new BooleanSetting("Render HUD", true, "Allows for HUD Objects to be rendered while the GUI is open.");
-    public final IntegerSetting x = new IntegerSetting("X", 265, 2, 5000);
-    public final IntegerSetting y = new IntegerSetting("Y", 135, 2, 2000);
-    public final IntegerSetting scrollSpeedGUI = new IntegerSetting("Panel Scroll Speed", 15, 5, 30);
-    public final IntegerSetting scrollSpeedWindow = new IntegerSetting("Window Scroll Speed", 20, 5, 30);
+    public final IntegerSetting x = new IntegerSetting("X", 265, 2, 5000, "None", "Where the GUI should start to render on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 135, 2, 2000, "None", "Where the GUI should start to render on the screen Y axis.");
+    public final IntegerSetting scrollSpeedGUI = new IntegerSetting("Panel Scroll Speed", 15, 5, 30, "None", "How fast hacks or settings scroll in the GUI.");
+    public final IntegerSetting scrollSpeedWindow = new IntegerSetting("Window Scroll Speed", 20, 5, 30, "None", "How fast elements scroll in custom windows.");
     public final EnumSetting settingStyle = new EnumSetting("Setting Style", SettingStyle.New, new String[]{
             "This is how the setting text will render.",
             "New® Draws text in the center of the panel.",

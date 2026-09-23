@@ -34,15 +34,15 @@ public final class Radar extends Hack implements HUDObject {
         return RenderOrder.HUD_Shading_and_Images;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2, "None", "How big the HUD object should be.");
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera, new String[]{
             "This is how the hack defines player coords.",
             "Player® Sets player coordinates independent of camera position.",
             "Camera® Sets coordinates to the player position even if in Freecam."
     });
-    public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100);
+    public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100, "Blocks", "How far should points show up on the Radar.");
     public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to show players on the radar.");
     public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to show friends on the radar.");
     public final BooleanSetting animals = new BooleanSetting("Animals", true, "Enable to show animals on the radar. Modify what types in the list below.");

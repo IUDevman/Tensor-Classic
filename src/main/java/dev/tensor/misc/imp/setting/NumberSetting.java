@@ -10,4 +10,6 @@ public interface NumberSetting<T> extends Setting<T> {
     T getMin();
 
     T getMax();
+
+    String getUnits();
 }

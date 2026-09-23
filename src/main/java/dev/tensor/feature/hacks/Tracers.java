@@ -38,7 +38,7 @@ public final class Tracers extends Render3DHack {
     public final BooleanSetting items = new BooleanSetting("Items", false, "Enable to draw tracers to items on the ground.");
     public final BooleanSetting misc = new BooleanSetting("Misc", false, "Enable to draw tracers to miscellaneous entities. Modify what types in the list below.");
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities to draw tracers to.");
-    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5);
+    public final IntegerSetting tracerWidth = new IntegerSetting("Tracers Width", 1, 1, 5, "None", "How thick tracer lines should be.");
     public final BooleanSetting distanceColor = new BooleanSetting("Color By Distance", false, "Enable to color the render by how close the entity is to the player");
     public final ColorSetting playersColor = new ColorSetting("Player Color", Color.ORANGE, "Sets the color of tracers for players.");
     public final ColorSetting friendsColor = new ColorSetting("Friend Color", Color.CYAN, "Sets the color of tracers for friends.");

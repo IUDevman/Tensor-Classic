@@ -30,8 +30,8 @@ public final class AutoArmor extends Hack {
      * This value keeps it from swapping too much.
      */
 
-    public final IntegerSetting diffPercent = new IntegerSetting("Damage % Diff", 10, 1, 50);
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10);
+    public final IntegerSetting diffPercent = new IntegerSetting("Damage % Diff", 10, 1, 50, "Percentage", "The difference in durability required to swap.");
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 0, 10, "Ticks", "How long the hack should wait between swapping items.");
 
     private int delayCount = 0;
 

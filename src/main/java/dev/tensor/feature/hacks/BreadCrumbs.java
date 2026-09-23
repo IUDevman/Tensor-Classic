@@ -45,8 +45,8 @@ public final class BreadCrumbs extends Render3DHack {
             }
         }
     };
-    public final IntegerSetting maxPos = new IntegerSetting("Max Positions", 1200, 600, 12000);
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
+    public final IntegerSetting maxPos = new IntegerSetting("Max Positions", 1200, 600, 12000, "Vectors", "How many points should be saved before removing old ones.");
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the breadcrumb line should be.");
     public final ColorSetting color = new ColorSetting("Color", Color.GREEN, "Sets the color of render.");
 
     private final ArrayList<double[]> loggedPositions = new ArrayList<>();

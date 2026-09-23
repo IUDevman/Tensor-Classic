@@ -36,16 +36,16 @@ public final class Platform extends Render3DHack {
             "Instant® Places blocks as they are detected with no delay.",
             "Delay® Places a round of blocks after the defined Tick Delay."
     });
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 1, 20);
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 2, 1, 20, "Ticks", "How much time between placing batches of blocks.");
     public final EnumSetting bptMode = new EnumSetting("Blocks Per Tick", BPTMode.All, new String[]{
             "This defines how many blocks will be placed at once.",
             "Single® Places only one block per tick. Slow.",
             "All® Places all possible blocks at once.",
             "Custom® Places up to a defined amount (in Custom BPT setting) of blocks per tick."
     });
-    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50);
-    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1);
-    public final IntegerSetting depth = new IntegerSetting("Depth", 1, 1, 3);
+    public final IntegerSetting customBPT = new IntegerSetting("Custom BPT", 5, 2, 50, "Blocks Per Tick", "Defined value for how many blocks to place at once.");
+    public final DoubleSetting range = new DoubleSetting("Range", 4.0, 1.0, 10.0, 1, "Blocks", "The distance for the hack to search for areas to place blocks.");
+    public final IntegerSetting depth = new IntegerSetting("Depth", 1, 1, 3, "Blocks", "How thick the platform should be.");
     public final BooleanSetting levitate = new BooleanSetting("Levitate", false, "Allows the player to float upwards when jumping to make placing blocks easier.");
     public final BooleanSetting safeWalk = new BooleanSetting("Safe Walk", true, "Prevents the player from falling off ledges. Useful for if you run out of blocks.");
     public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Player, new String[]{
@@ -64,7 +64,7 @@ public final class Platform extends Render3DHack {
             "Defined® Hack swaps to the slot defined in the setting below.",
             "Filter® Hack swaps to slots containing blocks defined in the Filter Item List."
     });
-    public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8);
+    public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8, "Slot", "What defined slot should the hack find blocks to place.");
     public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to place.");
     public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()), "Set types of blocks to NOT place.");
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true, "Swaps the player's hand back after swapping to a block.");
@@ -76,8 +76,8 @@ public final class Platform extends Render3DHack {
             "Both® Draws a shaded box with outlined edges."
     });
     public final BooleanSetting mergeFaces = new BooleanSetting("Merge Faces", true, "Enable to merge nearby block ESPs into one big render.");
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the render for place positions.");
 
     private int delayTicks = 0;

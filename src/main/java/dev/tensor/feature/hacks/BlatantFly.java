@@ -23,7 +23,7 @@ import org.lwjgl.input.Keyboard;
 @Hack.Info(name = "BlatantFly", category = Category.Movement, description = "Allows the player to fly. Not for servers with anticheat.")
 public final class BlatantFly extends Hack {
 
-    public final IntegerSetting speed = new IntegerSetting("Speed", 10, 1, 20);
+    public final IntegerSetting speed = new IntegerSetting("Speed", 10, 1, 20, "Blocks Per Second", "How fast you should fly.");
 
     @Override
     public void onClientTick() {

@@ -37,8 +37,8 @@ public final class BreakProgress extends Render3DHack {
             "Fill® Draws a shaded box.",
             "Both® Draws a shaded box with outlined edges."
     });
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true, "Enable to have the color of the render be tied to your break progress.");
     public final ColorSetting color = new ColorSetting("Color", Color.GREEN, "Sets the color of the render if Percentage Color is disabled.");
 

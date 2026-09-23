@@ -34,7 +34,7 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 50, 200) {
+    public final IntegerSetting opacityValue = new IntegerSetting("Opacity Value", 100, 50, 200, "None", "How transparent the world would be. Lower = more transparent.") {
 
         @Override
         public void setValue(Integer value) {

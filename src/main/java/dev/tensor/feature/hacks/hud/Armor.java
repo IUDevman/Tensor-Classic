@@ -26,9 +26,9 @@ public final class Armor extends Hack implements HUDObject {
         return RenderOrder.HUD_Shading_and_Images;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 86, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 2.0, 0.5, 3.0, 1);
+    public final IntegerSetting x = new IntegerSetting("X", 86, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 2.0, 0.5, 3.0, 1, "None", "How big the HUD object should be.");
     public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage, new String[]{
             "This is how the armor's durability will be displayed.",
             "None® Durability is hidden.",

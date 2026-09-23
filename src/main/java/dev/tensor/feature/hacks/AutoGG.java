@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public final class AutoGG extends Hack {
 
     public final BooleanSetting stopForSpammer = new BooleanSetting("Pause For Spammer", true, "Enable to prevent this hack from sending messages while the spammer is sending.");
-    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100);
+    public final IntegerSetting delay = new IntegerSetting("Tick Delay", 20, 0, 100, "Ticks", "The amount of time between sending messages. Too low of a value might get you kicked for spam.");
     public final BooleanSetting greenText = new BooleanSetting("Greentext", false, "Enable to add a '>' to the start of hack messages, making them green on most servers.");
     public final BooleanSetting finalHitOnly = new BooleanSetting("Final Hit Only", true, "Enable to only trigger a message if you were the last to hit a player that died.");
     public final StringSetting message = new StringSetting("Message", "Good and fair fight, {NAME}... Better luck next time!", "Message to be sent when AutoGG is triggered.");

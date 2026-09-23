@@ -13,7 +13,7 @@ import dev.tensor.misc.imp.setting.settings.IntegerSetting;
 @Hack.Info(name = "Timer", category = Category.Movement, description = "Speeds up the client tick rate.")
 public final class Timer extends Hack {
 
-    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 25, 20, 40);
+    public final IntegerSetting ticksPerSecond = new IntegerSetting("Ticks Per Sec.", 25, 20, 40, "Ticks Per Second", "How fast should the tick rate be. Vanilla is 20 ticks per second.");
 
     @Override
     public void onEnable(boolean isNull) {

@@ -19,8 +19,24 @@ public class DoubleSetting implements NumberSetting<Double> {
     private final double MIN_VALUE;
     private final double MAX_VALUE;
     private final double DEFAULT_VALUE;
+    private final String UNITS;
+    private final String DESCRIPTION;
 
     private double VALUE;
+
+    public DoubleSetting(String NAME, double VALUE, double MIN_VALUE, double MAX_VALUE, int DECIMAL, String UNITS, String DESCRIPTION) {
+        this.NAME = NAME;
+        this.DECIMAL = DECIMAL;
+        this.MIN_VALUE = MIN_VALUE;
+        this.MAX_VALUE = MAX_VALUE;
+
+        this.setValue(VALUE);
+
+        this.DEFAULT_VALUE = this.VALUE;
+
+        this.UNITS = UNITS;
+        this.DESCRIPTION = DESCRIPTION;
+    }
 
     public DoubleSetting(String NAME, double VALUE, double MIN_VALUE, double MAX_VALUE, int DECIMAL) {
         this.NAME = NAME;
@@ -31,6 +47,9 @@ public class DoubleSetting implements NumberSetting<Double> {
         this.setValue(VALUE);
 
         this.DEFAULT_VALUE = this.VALUE;
+
+        this.UNITS = "None";
+        this.DESCRIPTION = "None";
     }
 
     @Override
@@ -89,6 +108,11 @@ public class DoubleSetting implements NumberSetting<Double> {
         return this.MAX_VALUE;
     }
 
+    @Override
+    public String getUnits() {
+        return this.UNITS;
+    }
+
     public int getDecimal() {
         return this.DECIMAL;
     }
@@ -114,6 +138,6 @@ public class DoubleSetting implements NumberSetting<Double> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return this.DESCRIPTION;
     }
 }

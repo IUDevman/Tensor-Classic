@@ -16,7 +16,7 @@ import org.lwjgl.input.Keyboard;
 public final class Sneak extends Hack {
 
     public final BooleanSetting limitSpeed = new BooleanSetting("Limit Speed", true, "Disable to allow for normal walking speed. Does not work on servers with NoCheat.");
-    public final DoubleSetting speedLimiter = new DoubleSetting("Limit Multiplier", 0.5, 0.0, 1.0, 1);
+    public final DoubleSetting speedLimiter = new DoubleSetting("Limit Multiplier", 0.5, 0.0, 1.0, 1, "None", "The amount of slowdown you should experience. Lower = slower. Too high of values may cause rubberbanding on NoCheat servers.");
 
     @Override
     public void onDisable(boolean isNull) {

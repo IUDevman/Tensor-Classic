@@ -47,7 +47,7 @@ public final class Scaffold extends Render3DHack {
             "Defined® Hack swaps to the slot defined in the setting below.",
             "Filter® Hack swaps to slots containing blocks defined in the Filter Item List."
     });
-    public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8);
+    public final IntegerSetting swapDefined = new IntegerSetting("Defined Slot", 1, 0, 8, "Slot", "Slot that is defined to where the hack can find blocks to place.");
     public final BlockListSetting swapList = new BlockListSetting("Filter Item List", new BlockList(BlockList.CUSTOM()), "Set types of blocks to place.");
     public final BlockListSetting ignoreList = new BlockListSetting("Ignore Item List", new BlockList(BlockList.SCAFFOLD_BLOCKLIST()), "Set types of blocks to NOT place.");
     public final BooleanSetting swapBack = new BooleanSetting("Swap Back", true, "Enable to swap the current slot back to the previous if swapped to another slot.");
@@ -58,8 +58,8 @@ public final class Scaffold extends Render3DHack {
             "Fill® Draws a shaded box.",
             "Both® Draws a shaded box with outlined edges."
     });
-    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
-    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
+    public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5, "None", "How thick the outline line should be.");
+    public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255, "None", "How transparent the render should be. Lower values = more transparent.");
     public final ColorSetting esp_color = new ColorSetting("ESP Color", new Color(255, 0, 0, 255), "Sets the color of the render for place positions.");
 
     private BoxPos blockPlacingAt = null;

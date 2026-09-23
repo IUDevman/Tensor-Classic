@@ -15,8 +15,8 @@ import java.awt.*;
 @Hack.Info(name = "AutoReconnect", category = Category.Misc, description = "Automatically logs into the server when you get kicked. Note: Is somewhat broken.")
 public final class AutoReconnect extends Hack {
 
-    public final IntegerSetting delaySeconds = new IntegerSetting("Delay Seconds", 5, 1, 60);
-    public final IntegerSetting restartSeconds = new IntegerSetting("Restart Seconds", 60, 1, 180);
+    public final IntegerSetting delaySeconds = new IntegerSetting("Delay Seconds", 5, 1, 60, "Seconds", "Time between getting disconnected and logging back in.");
+    public final IntegerSetting restartSeconds = new IntegerSetting("Restart Seconds", 60, 1, 180, "Seconds", "Time to wait to log in after a server restart.");
     public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", Color.YELLOW, "Sets the color of the message in the disconnect screen.");
 
     private String lastName;

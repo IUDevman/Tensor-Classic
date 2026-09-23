@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public final class VisualRange extends Hack {
 
     public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false, "Enable to ensure that your chat isn't flooded if too many players enter your render distance at once.");
-    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
+    public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20, "Ticks", "The amount of time between adding notifications to the chat. Ones in between are skipped.");
     public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD, new String[]{
             "This is what the player name color will be in the message."
     });

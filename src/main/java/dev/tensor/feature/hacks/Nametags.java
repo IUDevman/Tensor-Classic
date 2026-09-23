@@ -48,7 +48,7 @@ public final class Nametags extends Render3DHack {
             "Percentage® Renders durability as % remaining."
     });
     public final BooleanSetting background = new BooleanSetting("Background", false, "Enable to draw a flat background behind the nametag.");
-    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
+    public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10, "None", "How big the tag should be from a distance. Higher value = larger tag far away.");
     public final ColorSetting textColor = new ColorSetting("Text Color", Color.ORANGE, "Sets the color of the nametag text.");
     public final ColorSetting friendColor = new ColorSetting("Friend Color", Color.CYAN, "Sets the color of nametag text if a friend.");
     public final ColorSetting backgroundColor = new ColorSetting("Background Color", new Color(0, 0, 0, 150), "Sets the color of the tag background if enabled.");

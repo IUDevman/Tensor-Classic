@@ -26,9 +26,9 @@ public final class Slug extends Hack implements HUDObject {
         return RenderOrder.Hud_Images_Only;
     }
 
-    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
-    public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY());
-    public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2);
+    public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX(), "None", "Where the HUD object should begin rendering on the screen X axis.");
+    public final IntegerSetting y = new IntegerSetting("Y", 369, 0, this.getMaxY(), "None", "Where the HUD object should begin rendering on the screen Y axis.");
+    public final DoubleSetting scale = new DoubleSetting("Scale", 0.50, 0.10, 2.00, 2, "None", "How big should funny slug be.");
     public final EnumSetting mode = new EnumSetting("Mode", Mode.None, new String[]{
             "This modifies slug behavior.",
             "None® Slug remains stationary.",

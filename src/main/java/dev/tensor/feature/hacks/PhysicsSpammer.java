@@ -22,7 +22,7 @@ import java.util.Scanner;
 public final class PhysicsSpammer extends Hack {
 
     public final BooleanSetting greenText = new BooleanSetting("GreenText", true, "Enable to add a '>' to the start of spam messages, which makes the text green on most servers.");
-    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200);
+    public final IntegerSetting tickDelay = new IntegerSetting("Tick Delay", 60, 1, 200, "Ticks", "How much time between sending spammer messages. Too low of values may get you kicked for spamming.");
 
     private final ArrayList<String> cachedPhysicsSpam = new ArrayList<>();
 
