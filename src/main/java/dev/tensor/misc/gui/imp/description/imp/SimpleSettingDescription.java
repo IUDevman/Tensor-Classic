@@ -53,9 +53,7 @@ public final class SimpleSettingDescription implements GUIDescription {
     public enum DescriptionModifier {
         NONE(""),
         OPEN_PANEL(" " + ChatColor.YELLOW.text() + "Click to open the setting panel!"),
-        CLICK_ACTION(" " + ChatColor.YELLOW.text() + "Click to run the action!"),
-        COLOR_RGBA(" " + ChatColor.YELLOW.text() + "Click the top to open the color picker or below to modify individual values!"),
-        COLOR_RGB(" " + ChatColor.LIGHT_GRAY.text() + "Changing alpha is not enabled for this setting." + COLOR_RGBA.getModifier());
+        CLICK_ACTION(" " + ChatColor.YELLOW.text() + "Click to run the action!");
 
         private final String modifier;
 
