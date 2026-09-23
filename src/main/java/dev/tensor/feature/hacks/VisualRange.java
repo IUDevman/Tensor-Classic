@@ -23,8 +23,12 @@ public final class VisualRange extends Hack {
 
     public final BooleanSetting antiSpam = new BooleanSetting("Anti Spam", false, "Enable to ensure that your chat isn't flooded if too many players enter your render distance at once.");
     public final IntegerSetting startUpDelayTicks = new IntegerSetting("Anti Spam Ticks", 5, 1, 20);
-    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
-    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
+    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD, new String[]{
+            "This is what the player name color will be in the message."
+    });
+    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA, new String[]{
+            "This is what the friend name color will be in the message."
+    });
 
     private final ArrayList<String> loadedEntityNames = new ArrayList<>();
 

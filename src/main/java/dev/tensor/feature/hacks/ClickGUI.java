@@ -34,7 +34,11 @@ public final class ClickGUI extends Hack {
     public final IntegerSetting y = new IntegerSetting("Y", 135, 2, 2000);
     public final IntegerSetting scrollSpeedGUI = new IntegerSetting("Panel Scroll Speed", 15, 5, 30);
     public final IntegerSetting scrollSpeedWindow = new IntegerSetting("Window Scroll Speed", 20, 5, 30);
-    public final EnumSetting settingStyle = new EnumSetting("Setting Style", SettingStyle.New);
+    public final EnumSetting settingStyle = new EnumSetting("Setting Style", SettingStyle.New, new String[]{
+            "This is how the setting text will render.",
+            "New® Draws text in the center of the panel.",
+            "Original® Draws text on the left like the original Tensor."
+    });
     public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show hack/setting descriptions while holding shift.");
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting selectedFillColor = new ColorSetting("Selected Fill Color", new Color(30, 30, 30, 150));

@@ -29,11 +29,35 @@ public final class Time extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 356, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
-    public final EnumSetting format = new EnumSetting("Format", Format.Hour12$Min$XX);
-    public final EnumSetting separator = new EnumSetting("Separator", Separator.Brackets);
-    public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.WHITE);
-    public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.YELLOW);
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
+            "This sets how the text will be rendered.",
+            "Left® Align text to the left.",
+            "Right® Align text to the right."
+    });
+    public final EnumSetting format = new EnumSetting("Format", Format.Hour12$Min$XX, new String[]{
+            "This sets the format for the time displayed.",
+            "Hour24:Min® Example '15:45'.",
+            "Hour24:Min:Sec® Example '15:45:11'.",
+            "Hour12:Min® Example '8:12'.",
+            "Hour12:Min:Sec® Example '8:12:36'.",
+            "Hour12:Min:XX® Example '2:58 PM'.",
+            "Hour12:Min:Sec:XX® Example '2:58:16 PM'."
+    });
+    public final EnumSetting separator = new EnumSetting("Separator", Separator.Brackets, new String[]{
+            "This sets what characters encapsulate the time displayed.",
+            "Left Arrow® <D/T>.",
+            "Right Arrow® >D/T<.",
+            "Line® |D/T|.",
+            "Brackets® [D/T].",
+            "Curly_Brackets® {D/T}.",
+            "None® No encapsulation."
+    });
+    public final EnumSetting dateColor = new EnumSetting("Date Color", ChatColor.WHITE, new String[]{
+            "This sets the text color for the date/time part."
+    });
+    public final EnumSetting separatorColor = new EnumSetting("Sep Color", ChatColor.YELLOW, new String[]{
+            "This sets the text color for the separator part."
+    });
 
     @Override
     public IntegerSetting getMinX() {

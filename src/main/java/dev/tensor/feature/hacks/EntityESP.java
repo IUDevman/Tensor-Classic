@@ -41,7 +41,12 @@ public final class EntityESP extends Render3DHack {
     public final ColorSetting itemColor = new ColorSetting("Item Color", Color.YELLOW);
     public final ColorSetting miscColor = new ColorSetting("Misc Color", Color.PINK);
     public final BooleanSetting frustrum = new BooleanSetting("Frustrum Renders", true, "Speed boost. Only render ESP for entities in the player's vision.");
-    public final EnumSetting mode = new EnumSetting("Render", Mode.Outline);
+    public final EnumSetting mode = new EnumSetting("Render", Mode.Outline, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 50, 0, 255);
 

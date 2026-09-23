@@ -15,7 +15,11 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
 @Hack.Info(name = "NoOverlay", category = Category.Render, description = "Prevents the rendering of certain annoying overlays.")
 public final class NoOverlay extends Hack {
 
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom);
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Custom, new String[]{
+            "This defines how overlay types should be cancelled.",
+            "All® Cancels all overlays.",
+            "Custom® Cancels only the defined types of overlays in the boolean settings."
+    });
     public final BooleanSetting blocks = new BooleanSetting("Blocks", false, "Prevents you from not seeing anything if inside a block.");
     public final BooleanSetting fire = new BooleanSetting("Fire", false, "Prevents fire overlay.");
     public final BooleanSetting portals = new BooleanSetting("Portals", true, "Prevents the image overlay from rendering in a portal.");

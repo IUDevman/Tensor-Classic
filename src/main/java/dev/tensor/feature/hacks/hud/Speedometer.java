@@ -30,8 +30,18 @@ public final class Speedometer extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 37, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
-    public final EnumSetting unit = new EnumSetting("Units", Units.BPS) {
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
+            "This sets how the text will be rendered.",
+            "Left® Align text to the left.",
+            "Right® Align text to the right."
+    });
+    public final EnumSetting unit = new EnumSetting("Units", Units.BPS, new String[] {
+            "This defines what units the speed should be displayed as.",
+            "BPS® Blocks per second (b/s).",
+            "MPS® Meters per second (m/s).",
+            "KPH® Kilometers per hour (km/h).",
+            "MPH® Miles per hour (mph)."
+    }) {
         @Override
         public void setValue(Enum<?> value) {
             super.setValue(value);

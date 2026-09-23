@@ -72,7 +72,12 @@ public final class DiscordRPC extends Hack {
             }
         }
     };
-    public final EnumSetting icon = new EnumSetting("Icon", Icon.Tensor) {
+    public final EnumSetting icon = new EnumSetting("Icon", Icon.Tensor, new String[]{
+            "This is what icon should be shown in the RPC.",
+            "Tensor® Uses the official Tensor logo.",
+            "GameSense® Classic OG GameSense logo from my previous client.",
+            "Lukflug® My prince..."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {

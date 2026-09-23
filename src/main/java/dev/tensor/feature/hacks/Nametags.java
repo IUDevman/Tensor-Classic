@@ -41,7 +41,12 @@ public final class Nametags extends Render3DHack {
     public final BooleanSetting showHealth = new BooleanSetting("Show Health", false, "Enable to show the health of the tagged player. Note: This does not work on multiplayer!");
     public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true, "Shows how far away the tagged player is from you.");
     public final BooleanSetting showItems = new BooleanSetting("Show Items", true, "Draws the armor and current item of the tagged player.");
-    public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage);
+    public final EnumSetting durability = new EnumSetting("Durability", Durability.Percentage, new String[]{
+            "This is how the armor's durability will be displayed.",
+            "None® Durability is hidden.",
+            "Vanilla® Renders the vanilla durability bar.",
+            "Percentage® Renders durability as % remaining."
+    });
     public final BooleanSetting background = new BooleanSetting("Background", false, "Enable to draw a flat background behind the nametag.");
     public final IntegerSetting distanceMultiplier = new IntegerSetting("Distance Multiplier", 6, 2, 10);
     public final ColorSetting textColor = new ColorSetting("Text Color", Color.ORANGE);

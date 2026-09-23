@@ -37,7 +37,11 @@ public final class Radar extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 498, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 0.75, 0.25, 2.00, 2);
-    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera);
+    public final EnumSetting freecamMode = new EnumSetting("Freecam", Freecam.Camera, new String[]{
+            "This is how the hack defines player coords.",
+            "Player® Sets player coordinates independent of camera position.",
+            "Camera® Sets coordinates to the player position even if in Freecam."
+    });
     public final IntegerSetting radius = new IntegerSetting("Block Radius", 50, 10, 100);
     public final BooleanSetting players = new BooleanSetting("Players", true, "Enable to show players on the radar.");
     public final BooleanSetting friends = new BooleanSetting("Friends", true, "Enable to show friends on the radar.");
@@ -50,7 +54,12 @@ public final class Radar extends Hack implements HUDObject {
     public final EntityTypeListSetting customMisc = new EntityTypeListSetting("Misc List", new EntityTypeList(EntityTypeList.EMPTY()), new EntityTypeList(EntityTypeList.MISC()), "List of miscellaneous entities that should show up on the radar.");
     public final BooleanSetting logoutSpots = new BooleanSetting("Logout Spots", false, "Enable to show Tensor logout spots on the radar.");
     public final BooleanSetting waypoints = new BooleanSetting("Waypoints", false, "Enable to show Tensor waypoints on the radar.");
-    public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point);
+    public final EnumSetting playerMarker = new EnumSetting("Player Marker", PlayerMarker.Big_Point, new String[]{
+            "This defines what the marker for players looks like.",
+            "Point® Players appear as the same point used for other entities.",
+            "Big Point® Players appear as a point that is larger than other entities.",
+            "Plus® Players appear as a plus symbol."
+    });
     public final ColorNoAlphaSetting playersColor = new ColorNoAlphaSetting("Player Color", Color.ORANGE);
     public final ColorNoAlphaSetting friendsColor = new ColorNoAlphaSetting("Friend Color", Color.CYAN);
     public final ColorNoAlphaSetting animalsColor = new ColorNoAlphaSetting("Animal Color", Color.GREEN);

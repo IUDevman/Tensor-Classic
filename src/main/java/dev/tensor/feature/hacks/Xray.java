@@ -56,7 +56,15 @@ public final class Xray extends Hack {
             }
         }
     };
-    public final EnumSetting mode = new EnumSetting("Mode", Mode.Ores) {
+    public final EnumSetting mode = new EnumSetting("Mode", Mode.Ores, new String[] {
+            "This is where you set the list of blocks to render.",
+            "Ores® List of ore blocks.",
+            "Glowstone® Only glowstone.",
+            "Diamond® Only diamond ore.",
+            "Utility® Common player made blocks and ores.",
+            "Custom® Defined list in the setting below.",
+            "None® Render just a blank world."
+    }) {
 
         @Override
         public void setValue(Enum<?> value) {

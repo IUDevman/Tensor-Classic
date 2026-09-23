@@ -24,7 +24,12 @@ public final class HUDEditor extends Hack {
     }
 
     public final BooleanSetting showDescriptions = new BooleanSetting("Show Descriptions", true, "Enable to show HUD Object descriptions when shift is held.");
-    public final EnumSetting render = new EnumSetting("Render", RenderType.Both);
+    public final EnumSetting render = new EnumSetting("Render", RenderType.Both, new String[]{
+            "This is how HUD objects will be rendered in the editor.",
+            "Outline® Renders an outline around HUD object boundaries.",
+            "Object® Renders all of the actual HUD objects.",
+            "Both® Renders both the object and outline."
+    });
     public final ColorSetting fillColor = new ColorSetting("Fill Color", new Color(0, 0, 0, 150));
     public final ColorSetting outlineColor = new ColorSetting("Outline Color", new Color(62, 11, 10, 200));
 

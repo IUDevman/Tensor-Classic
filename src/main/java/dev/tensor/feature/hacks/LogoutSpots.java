@@ -58,7 +58,13 @@ public final class LogoutSpots extends Render3DHack {
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Enable to draw a flat background behind the logout spot tag.");
     public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", LogoutSpotRenderer.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", LogoutSpotRenderer.defaultBackgroundColor);
-    public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);
+    public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges.",
+            "None® No Box rendered. "
+    });
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", LogoutSpotRenderer.defaultBoxLineWidth, 1, 5);
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", LogoutSpotRenderer.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", LogoutSpotRenderer.defaultBoxColor);

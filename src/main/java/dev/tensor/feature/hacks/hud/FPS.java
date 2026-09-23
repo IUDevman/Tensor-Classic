@@ -25,7 +25,11 @@ public final class FPS extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 50, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
+            "This sets how the text will be rendered.",
+            "Left® Align text to the left.",
+            "Right® Align text to the right.",
+    });
     public final BooleanSetting average = new BooleanSetting("Average FPS", true, "Enable to render the average FPS instead of the current.") {
 
         @Override

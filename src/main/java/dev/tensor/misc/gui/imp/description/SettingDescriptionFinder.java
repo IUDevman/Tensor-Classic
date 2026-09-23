@@ -1,5 +1,6 @@
 package dev.tensor.misc.gui.imp.description;
 
+import dev.tensor.misc.gui.imp.description.imp.EnumSettingDescription;
 import dev.tensor.misc.gui.imp.description.imp.SimpleSettingDescription;
 import dev.tensor.misc.imp.setting.Setting;
 import dev.tensor.misc.imp.setting.settings.*;
@@ -23,6 +24,10 @@ public final class SettingDescriptionFinder {
 
         if (setting instanceof GeneralButtonSetting) {
             return new SimpleSettingDescription(setting, ((GeneralButtonSetting) setting).getValue().equals(GeneralButtonSetting.ButtonType.ACCOUNTS) ? SimpleSettingDescription.DescriptionModifier.OPEN_PANEL : SimpleSettingDescription.DescriptionModifier.CLICK_ACTION);
+        }
+
+        if (setting instanceof EnumSetting) {
+            return new EnumSettingDescription((EnumSetting) setting);
         }
 
         //todo: custom settings for color and enums

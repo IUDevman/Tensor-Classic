@@ -31,7 +31,12 @@ public final class BreakProgress extends Render3DHack {
         return RenderOrder.BreakProgress;
     }
 
-    public final EnumSetting render = new EnumSetting("Render", Render.Fill);
+    public final EnumSetting render = new EnumSetting("Render", Render.Fill, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
     public final IntegerSetting lineWidth = new IntegerSetting("Line Width", 2, 1, 5);
     public final IntegerSetting fillAlpha = new IntegerSetting("Fill Alpha", 100, 0, 255);
     public final BooleanSetting usePercentageColor = new BooleanSetting("Percentage Color", true, "Enable to have the color of the render be tied to your break progress.");

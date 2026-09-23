@@ -21,11 +21,15 @@ public class EnumSetting implements Setting<Enum<?>> {
 
     private Enum<?> VALUE;
 
-    public EnumSetting(String NAME, Enum<?> VALUE) {
+    private final String[] ENUMDESCRIPTION;
+
+    public EnumSetting(String NAME, Enum<?> VALUE, String[] ENUMDESCRIPTION) {
         this.NAME = NAME;
         this.DEFAULT_VALUE = VALUE;
 
         this.VALUE = VALUE;
+
+        this.ENUMDESCRIPTION = ENUMDESCRIPTION;
     }
 
     @Override
@@ -98,6 +102,10 @@ public class EnumSetting implements Setting<Enum<?>> {
 
     @Override
     public String getDescription() {
-        return "Penis " + this.getName();
+        return "";
+    }
+
+    public String[] getEnumDescription() {
+        return this.ENUMDESCRIPTION;
     }
 }

@@ -38,9 +38,19 @@ public final class Waypoints extends Render3DHack {
     public final BooleanSetting tagBackground = new BooleanSetting("Tag Background", false, "Applies a flat background to the waypoint tag render.");
     public final ColorNoAlphaSetting tagTextColor = new ColorNoAlphaSetting("Text Color", WaypointRender.defaultTagTextColor);
     public final ColorSetting tagBackgroundColor = new ColorSetting("Background Color", WaypointRender.defaultBackgroundColor);
-    public final EnumSetting renderMode = new EnumSetting("Render Mode", Mode.Monolith);
+    public final EnumSetting renderMode = new EnumSetting("Render Mode", Mode.Monolith, new String[]{
+            "This is how waypoint boxes will be displayed.",
+            "Prism® Renders a 1x6 box.",
+            "Monolith® Tall box that extends from the void to high in the air.",
+            "None® No boxes rendered."
+    });
     public final BooleanSetting onlyCloseMonoliths = new BooleanSetting("Only Close Monoliths", false, "Only spawns monolith waypoints if within the player's render distance.");
-    public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both);
+    public final EnumSetting renderType = new EnumSetting("Render Type", Type.Both, new String[]{
+            "This is how the render will look.",
+            "Outline® Draws a box around the edges.",
+            "Fill® Draws a shaded box.",
+            "Both® Draws a shaded box with outlined edges."
+    });
     public final IntegerSetting boxLineWidth = new IntegerSetting("Box Line Width", WaypointRender.defaultBoxLineWidth, 1, 5);
     public final IntegerSetting boxFillAlpha = new IntegerSetting("Box Fill Alpha", WaypointRender.defaultBoxFillAlpha, 0, 255);
     public final ColorSetting boxColor = new ColorSetting("Box Color", WaypointRender.defaultBoxColor);

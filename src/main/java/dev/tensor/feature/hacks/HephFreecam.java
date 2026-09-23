@@ -70,7 +70,12 @@ public final class HephFreecam extends Hack {
         }
     };
     public final BooleanSetting updateInventory = new BooleanSetting("Update Inventory", true, "Allows for your inventory to be modified when in freecam.");
-    public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground);
+    public final EnumSetting highlight = new EnumSetting("Highlight", Highlight.Above_Ground, new String[]{
+            "This is the logic uses to block the selection box.",
+            "Normal® No blocking.",
+            "None® Selection box will never show",
+            "Above Ground® Selection box will show for surface blocks."
+    });
     public final BooleanSetting showBreakProgress = new BooleanSetting("Break Progress", true, "Render vanilla break progress when in freecam.");
     public final IntegerSetting speed = new IntegerSetting("Speed", 5, 1, 15);
 

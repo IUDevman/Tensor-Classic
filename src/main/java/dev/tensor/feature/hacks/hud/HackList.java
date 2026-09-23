@@ -30,9 +30,21 @@ public final class HackList extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 63, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 2.0, 1);
-    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
-    public final EnumSetting add = new EnumSetting("Add", Add.Down);
-    public final EnumSetting colorType = new EnumSetting("Color Type", ColorType.All);
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
+            "This sets how the text will be rendered.",
+            "Left® Align text to the left.",
+            "Right® Align text to the right."
+    });
+    public final EnumSetting add = new EnumSetting("Add", Add.Down, new String[]{
+            "This is how hacks are added to the list.",
+            "Up® Shifts the list up.",
+            "Down® Shifts the list down"
+    });
+    public final EnumSetting colorType = new EnumSetting("Color Type", ColorType.All, new String[]{
+            "This is how hacks are colored on the list.",
+            "All® All hacks are colored to the same defined color from the following setting.",
+            "Category® Hacks are colored by what category they belong to."
+    });
     public final ColorNoAlphaSetting textColor = new ColorNoAlphaSetting("Text Color", new Color(255, 0, 0, 255));
 
     private final ArrayList<Hack> hacksToRender = new ArrayList<>();

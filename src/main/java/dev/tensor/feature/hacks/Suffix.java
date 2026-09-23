@@ -16,9 +16,17 @@ import dev.tensor.misc.imp.setting.settings.EnumSetting;
 @Hack.Info(name = "Suffix", category = Category.Misc, description = "Puts the cool Tensor suffix at the end of send chat messages.")
 public final class Suffix extends Hack {
 
-    public final EnumSetting separator = new EnumSetting("Separator", Separator.Right_Arrow);
-    public final EnumSetting clientName = new EnumSetting("Client", Clients.Tensor);
-
+    public final EnumSetting separator = new EnumSetting("Separator", Separator.Right_Arrow, new String[]{
+            "This is what will encapsulate the suffix text.",
+            "Left Arrow® <<Tensor.",
+            "Right Arrow® >>Tensor.",
+            "Line® ||Tensor||.",
+            "Brackets® [Tensor].",
+            "None® No separator."
+    });
+    public final EnumSetting clientName = new EnumSetting("Client", Clients.Tensor, new String[]{
+            "This is what client name will be put on the suffix."
+    });
 
     @SuppressWarnings("unused")
     private final EventAction<ChatSentEvent> chatSentEventAction = this.addHackEventAction(new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {

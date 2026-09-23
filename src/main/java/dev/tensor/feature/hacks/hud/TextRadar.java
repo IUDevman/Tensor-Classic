@@ -33,14 +33,28 @@ public final class TextRadar extends Hack implements HUDObject {
     public final IntegerSetting x = new IntegerSetting("X", 0, 0, this.getMaxX());
     public final IntegerSetting y = new IntegerSetting("Y", 300, 0, this.getMaxY());
     public final DoubleSetting scale = new DoubleSetting("Scale", 1.0, 0.5, 3.0, 1);
-    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left);
-    public final EnumSetting add = new EnumSetting("Add", Add.Down);
+    public final EnumSetting direction = new EnumSetting("Direction", Direction.Left, new String[]{
+            "This sets how the text will be rendered.",
+            "Left® Align text to the left.",
+            "Right® Align text to the right."
+    });
+    public final EnumSetting add = new EnumSetting("Add", Add.Down, new String[]{
+        "This is how players are added to the radar.",
+                "Up® Shifts the list up.",
+                "Down® Shifts the list down"
+    });
     public final BooleanSetting title = new BooleanSetting("Title", true, "Enable to render the HUD object title.");
     public final BooleanSetting showCoords = new BooleanSetting("Show Coords", false, "Enable to render coordinates for nearby players.");
     public final BooleanSetting showDistance = new BooleanSetting("Show Distance", true, "Enable to render the distance to nearby players.");
-    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD);
-    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA);
-    public final EnumSetting textColor = new EnumSetting("Text Color", ChatColor.WHITE);
+    public final EnumSetting playerColor = new EnumSetting("Player Color", ChatColor.GOLD, new String[]{
+            "This sets the text color for player usernames."
+    });
+    public final EnumSetting friendColor = new EnumSetting("Friend Color", ChatColor.AQUA, new String[]{
+            "This sets the text color for friend usernames."
+    });
+    public final EnumSetting textColor = new EnumSetting("Text Color", ChatColor.WHITE, new String[]{
+            "This sets the text color for other parts of the list."
+    });
 
     @Override
     public IntegerSetting getMinX() {
