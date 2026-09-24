@@ -6,6 +6,7 @@ import com.deepl.api.TextResult;
 import dev.tensor.feature.hacks.Translate;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.ManagerPostOrder;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.Packet3Chat;
 
@@ -87,7 +88,7 @@ public final class DeepLManager implements Manager {
 
     @Override
     public int getPostOrder() {
-        return 2;
+        return ManagerPostOrder.DEEPL_MANAGER.getValue();
     }
 
     /*

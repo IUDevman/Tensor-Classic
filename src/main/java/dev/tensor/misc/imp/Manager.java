@@ -35,9 +35,7 @@ public interface Manager extends Globals {
 
     }
 
-    //1 = HackManager
-    //2 = DeepLManager
     default int getPostOrder() {
-        return 0;
+        return ManagerPostOrder.DEFAULT.getValue();
     }
 }
