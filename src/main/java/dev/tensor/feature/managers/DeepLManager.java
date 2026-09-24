@@ -214,7 +214,7 @@ public final class DeepLManager implements Manager {
         Finnish("fi"),
         French("fr"),
         German("de"),
-        Greek("el"),
+        //Greek("el"), /* Sorry Cyber */
         //Indonesian("id"),
         Italian("it"),
         //Japanese("ja"),
