@@ -64,7 +64,7 @@ public final class DeepLManager implements Manager {
                                     if (!ChatAllowedCharacters.allowedCharacters.contains(c)) {
                                         scrubbed = scrubbed.replace(c, "X");
                                         //todo: collect the list of common swaps, add other replacements.
-                                        System.out.println(c);
+                                        this.getTensorLogger().log(c, TensorLogger.Level.INFO);
                                     }
                                 }
 
