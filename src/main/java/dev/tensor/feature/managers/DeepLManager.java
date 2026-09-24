@@ -142,7 +142,7 @@ public final class DeepLManager implements Manager {
             return;
         }
 
-        if (!this.API_CODE.equalsIgnoreCase(OLD_API_CODE) && !this.API_CODE.isEmpty() && !this.API_CODE.equalsIgnoreCase(this.translate.deepL_API_Code.getDefaultValue())) {
+        if (!this.API_CODE.isEmpty() && !this.API_CODE.equalsIgnoreCase(this.translate.deepL_API_Code.getDefaultValue())) {
             try {
                 this.client = new DeepLClient(this.API_CODE);
 
