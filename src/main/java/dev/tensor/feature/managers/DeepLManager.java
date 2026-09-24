@@ -135,6 +135,10 @@ public final class DeepLManager implements Manager {
             return;
         }
 
+        if (this.API_CODE.equals(OLD_API_CODE)) {
+            return;
+        }
+
         if (this.translate == null) {
             return;
         }
