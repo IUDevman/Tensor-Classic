@@ -14,7 +14,7 @@ import dev.tensor.misc.imp.setting.settings.StringSetting;
  * @since 09-23-2026
  */
 
-@Hack.Info(name = "Translate", category = Category.Misc, description = "Translate chat messages with DeepL.")
+@Hack.Info(name = "Translate", category = Category.Misc, description = "Translate sent chat messages with DeepL.")
 public final class Translate extends Hack {
 
     public final StringSetting deepL_API_Code = new StringSetting("DeepL API Code", "Input your DeepL API Code here!", "Set the API code for Translate to use.");
