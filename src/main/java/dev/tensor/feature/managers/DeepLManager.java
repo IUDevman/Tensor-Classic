@@ -6,8 +6,12 @@ import com.deepl.api.TextResult;
 import dev.tensor.feature.hacks.Translate;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
+import net.minecraft.src.ChatAllowedCharacters;
+import net.minecraft.src.Packet3Chat;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -17,21 +21,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public final class DeepLManager implements Manager {
 
-    private final Translate translate;
-
-    private final AtomicInteger billedCharacters = new AtomicInteger(0);
-
     /**
      * This is to try to cheapen the translation costs since a free account only allows for a small amount of translations.
-     *
      * HashMap 1: Key - Language code of translated object; Object - HashMap2
-     *
      * HashMap 2: Key - String before translation; Object - String after translation.
      */
     private final HashMap<String, HashMap<String, String>> BIG_LANGUAGE_MAP = new HashMap<>();
+    private final ConcurrentHashMap<String, String> MESSAGE_QUEUE = new ConcurrentHashMap<>();
+    private final AtomicInteger billedCharacters = new AtomicInteger(0);
 
+    private Translate translate;
     private DeepLClient client;
-
     private String API_CODE;
 
     @Override
@@ -39,11 +39,56 @@ public final class DeepLManager implements Manager {
         return "DeepLManager";
     }
 
-    public DeepLManager() {
+    @Override
+    public void onLoadPost(TensorLogger LOGGER) {
         this.translate = this.getHackManager().getHack(Translate.class);
 
-        this.setAPICode(this.API_CODE);
+        this.setAPICode(this.translate.deepL_API_Code.getValue());
         this.loadSavedLanguageMap();
+
+        Thread sendQueueThread = new Thread(() -> {
+            while (true) {
+                if (!this.MESSAGE_QUEUE.isEmpty()) {
+
+                    if (!this.failsNullCheck() && this.isMultiplayer()) {
+                        Map.Entry<String, String> firstEntry = this.MESSAGE_QUEUE.entrySet().iterator().next();
+
+                        if (firstEntry != null) {
+                            String translated = this.getDeepLManager().translate(firstEntry.getKey(), firstEntry.getValue());
+
+                            if (translated != null && !translated.isEmpty() && !translated.contains("®")) {
+                                String scrubbed = translated;
+
+                                for (int i = 0; i < translated.length(); i++) {
+                                    String c = String.valueOf(translated.charAt(i));
+
+                                    if (!ChatAllowedCharacters.allowedCharacters.contains(c)) {
+                                        scrubbed = scrubbed.replace(c, "X");
+                                        //todo: collect the list of common swaps, add other replacements.
+                                        System.out.println(c);
+                                    }
+                                }
+
+                                if (scrubbed.length() > 100) {
+                                    scrubbed = scrubbed.substring(0, 99);
+                                }
+
+                                this.sendPacket(new Packet3Chat("®" + scrubbed));
+                            }
+
+                            this.MESSAGE_QUEUE.remove(firstEntry.getKey());
+                        }
+                    }
+                }
+            }
+        });
+
+        sendQueueThread.start();
+    }
+
+    @Override
+    public int getPostOrder() {
+        return 2;
     }
 
     /*
@@ -86,6 +131,14 @@ public final class DeepLManager implements Manager {
 
         this.API_CODE = NEW_API_CODE;
 
+        if (this.API_CODE == null) {
+            return;
+        }
+
+        if (this.translate == null) {
+            return;
+        }
+
         if (!this.API_CODE.equalsIgnoreCase(OLD_API_CODE) && !this.API_CODE.isEmpty() && !this.API_CODE.equalsIgnoreCase(this.translate.deepL_API_Code.getDefaultValue())) {
             try {
                 this.client = new DeepLClient(this.API_CODE);
@@ -97,8 +150,8 @@ public final class DeepLManager implements Manager {
         }
     }
 
-    public String translate(String toTranslate, Language languageToTranslateTo) {
-        HashMap<String, String> MAP_OF_TRANSLATIONS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo.getCode());
+    private String translate(String toTranslate, String languageToTranslateTo) {
+        HashMap<String, String> MAP_OF_TRANSLATIONS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
 
         if (MAP_OF_TRANSLATIONS_FOR_LANGUAGE != null && !MAP_OF_TRANSLATIONS_FOR_LANGUAGE.isEmpty()) {
             String translatedString = MAP_OF_TRANSLATIONS_FOR_LANGUAGE.get(toTranslate);
@@ -114,23 +167,24 @@ public final class DeepLManager implements Manager {
         }
 
         try {
-            TextResult result = this.client.translateText(toTranslate, null, languageToTranslateTo.getCode());
+            TextResult result = this.client.translateText(toTranslate, null, languageToTranslateTo);
             this.billedCharacters.addAndGet(result.getBilledCharacters());
 
-            if (this.BIG_LANGUAGE_MAP.get(languageToTranslateTo.getCode()) == null) {
+            if (this.BIG_LANGUAGE_MAP.get(languageToTranslateTo) == null) {
                 HashMap<String, String> RESULTS_FOR_LANGUAGE = new HashMap<>();
                 RESULTS_FOR_LANGUAGE.put(toTranslate, result.getText());
 
-                this.BIG_LANGUAGE_MAP.put(languageToTranslateTo.getCode(), RESULTS_FOR_LANGUAGE);
+                this.BIG_LANGUAGE_MAP.put(languageToTranslateTo, RESULTS_FOR_LANGUAGE);
 
             } else {
-                HashMap<String, String> RESULTS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo.getCode());
+                HashMap<String, String> RESULTS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
 
                 if (!RESULTS_FOR_LANGUAGE.containsKey(toTranslate)) {
                     RESULTS_FOR_LANGUAGE.put(toTranslate, result.getText());
                 }
             }
 
+            this.getTensorLogger().log("Total DeepL API billable characters (for this session): " + this.billedCharacters.get() + "!", TensorLogger.Level.INFO);
             return result.getText();
 
         } catch (DeepLException ignored) {
@@ -143,14 +197,15 @@ public final class DeepLManager implements Manager {
         }
     }
 
-    public int getBilledCharacters() {
-        return this.billedCharacters.get();
+    public void addMessageToQueue(String message, Language languageToTranslateTo) {
+        this.MESSAGE_QUEUE.put(message, languageToTranslateTo.getCode());
     }
 
+    //Some of these are supported by DeepL but not by minecraft chat... May work for future game versions.
     public enum Language {
-        Arabic("ar"),
+        //Arabic("ar"),
         Bulgarian("bg"),
-        Chinese("zh"),
+        //Chinese("zh"),
         Czech("cs"),
         Danish("da"),
         Dutch("n1"),
@@ -160,17 +215,17 @@ public final class DeepLManager implements Manager {
         French("fr"),
         German("de"),
         Greek("el"),
-        Indonesian("id"),
+        //Indonesian("id"),
         Italian("it"),
-        Japanese("ja"),
-        Korean("ko"),
+        //Japanese("ja"),
+        //Korean("ko"),
         Polish("pl"),
         Portuguese("pt"),
-        Russian("ru"),
+        //Russian("ru"),
         Spanish("es"),
-        Turkish("tr"),
-        Ukrainian("uk"),
-        Vietnamese("vi");
+        Turkish("tr");
+        //Ukrainian("uk"),
+        //Vietnamese("vi");
 
         private final String code;
 

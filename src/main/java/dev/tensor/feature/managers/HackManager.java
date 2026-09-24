@@ -166,6 +166,11 @@ public final class HackManager implements Manager {
     }
 
     @Override
+    public int getPostOrder() {
+        return 1;
+    }
+
+    @Override
     public void onSave(TensorLogger LOGGER) {
         this.getHacks().forEach(hack -> {
             if (hack.shouldDisableOnDisconnect() && hack.isEnabled()) {

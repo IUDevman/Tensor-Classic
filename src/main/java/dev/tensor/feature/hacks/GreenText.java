@@ -15,6 +15,10 @@ public final class GreenText extends Hack {
 
     @SuppressWarnings("unused")
     private final EventAction<ChatSentEvent> chatSentEventAction = this.addHackEventAction(new EventAction<>(ChatSentEvent.class, event -> {
+        if (event.isCancelled()) {
+            return;
+        }
+
         String message = event.ARGS;
 
         if (!message.startsWith(">") && !message.startsWith("/") && !message.startsWith(this.getHackManager().getHack(Commands.class).prefix.getValue())) {

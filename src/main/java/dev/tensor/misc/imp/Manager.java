@@ -34,4 +34,10 @@ public interface Manager extends Globals {
     default void onLoadPost(TensorLogger LOGGER) {
 
     }
+
+    //1 = HackManager
+    //2 = DeepLManager
+    default int getPostOrder() {
+        return 0;
+    }
 }
