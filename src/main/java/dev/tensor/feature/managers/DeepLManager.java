@@ -9,7 +9,6 @@ import dev.tensor.misc.imp.Manager;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.Packet3Chat;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -26,7 +25,7 @@ public final class DeepLManager implements Manager {
      * HashMap 1: Key - Language code of translated object; Object - HashMap2
      * HashMap 2: Key - String before translation; Object - String after translation.
      */
-    private final HashMap<String, HashMap<String, String>> BIG_LANGUAGE_MAP = new HashMap<>();
+    private final ConcurrentHashMap<String, ConcurrentHashMap<String, String>> BIG_LANGUAGE_MAP = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, String> MESSAGE_QUEUE = new ConcurrentHashMap<>();
     private final AtomicInteger billedCharacters = new AtomicInteger(0);
 
@@ -155,7 +154,7 @@ public final class DeepLManager implements Manager {
     }
 
     private String translate(String toTranslate, String languageToTranslateTo) {
-        HashMap<String, String> MAP_OF_TRANSLATIONS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
+        ConcurrentHashMap<String, String> MAP_OF_TRANSLATIONS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
 
         if (MAP_OF_TRANSLATIONS_FOR_LANGUAGE != null && !MAP_OF_TRANSLATIONS_FOR_LANGUAGE.isEmpty()) {
             String translatedString = MAP_OF_TRANSLATIONS_FOR_LANGUAGE.get(toTranslate);
@@ -175,13 +174,13 @@ public final class DeepLManager implements Manager {
             this.billedCharacters.addAndGet(result.getBilledCharacters());
 
             if (this.BIG_LANGUAGE_MAP.get(languageToTranslateTo) == null) {
-                HashMap<String, String> RESULTS_FOR_LANGUAGE = new HashMap<>();
+                ConcurrentHashMap<String, String> RESULTS_FOR_LANGUAGE = new ConcurrentHashMap<>();
                 RESULTS_FOR_LANGUAGE.put(toTranslate, result.getText());
 
                 this.BIG_LANGUAGE_MAP.put(languageToTranslateTo, RESULTS_FOR_LANGUAGE);
 
             } else {
-                HashMap<String, String> RESULTS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
+                ConcurrentHashMap<String, String> RESULTS_FOR_LANGUAGE = this.BIG_LANGUAGE_MAP.get(languageToTranslateTo);
 
                 if (!RESULTS_FOR_LANGUAGE.containsKey(toTranslate)) {
                     RESULTS_FOR_LANGUAGE.put(toTranslate, result.getText());
