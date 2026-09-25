@@ -7,8 +7,8 @@ import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.gui.TensorGUI;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
+import dev.tensor.misc.imp.setting.settings.EncryptedStringSetting;
 import dev.tensor.misc.imp.setting.settings.EnumSetting;
-import dev.tensor.misc.imp.setting.settings.StringSetting;
 
 /**
  * @author Hoosiers
@@ -18,7 +18,7 @@ import dev.tensor.misc.imp.setting.settings.StringSetting;
 @Hack.Info(name = "Translate", category = Category.Misc, description = "Translate sent chat messages with DeepL.")
 public final class Translate extends Hack {
 
-    public final StringSetting deepL_API_Code = new StringSetting("DeepL API Code", "Input your DeepL API Code here!", "Set the API code for Translate to use.") {
+    public final EncryptedStringSetting deepL_API_Code = new EncryptedStringSetting("DeepL API Code", "Input your DeepL API Code here!", "Set the API code for Translate to use.") {
 
         @Override
         public void setValue(String VALUE) {
