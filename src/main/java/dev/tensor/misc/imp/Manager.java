@@ -34,4 +34,8 @@ public interface Manager extends Globals {
     default void onLoadPost(TensorLogger LOGGER) {
 
     }
+
+    default int getPostOrder() {
+        return ManagerPostOrder.DEFAULT.getValue();
+    }
 }

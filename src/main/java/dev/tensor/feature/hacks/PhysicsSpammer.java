@@ -75,7 +75,7 @@ public final class PhysicsSpammer extends Hack {
 
     @SuppressWarnings("unused")
     private final EventAction<ChatSentEvent> chatSentEventAction = new EventAction<>(ChatSentEvent.class, EventPriority.Lowest, event -> {
-        if (!event.isCancelled()) {
+        if (event.isCancelled()) {
             return;
         }
 

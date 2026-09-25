@@ -6,6 +6,7 @@ import dev.tensor.misc.imp.Globals;
 import dev.tensor.misc.imp.Manager;
 import net.fabricmc.api.ModInitializer;
 
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -76,8 +77,9 @@ public final class TensorClassic implements ModInitializer, Globals {
         this.loadAndAddManager(new HackManager());
         this.loadAndAddManager(new CommandManager());
         this.loadAndAddManager(new PluginManager());
+        this.loadAndAddManager(new DeepLManager());
 
-        this.MANAGERS.values().forEach(manager -> manager.onLoadPost(LOGGER));
+        this.MANAGERS.values().stream().sorted(Comparator.comparing(Manager::getPostOrder)).forEach(manager -> manager.onLoadPost(LOGGER));
     }
 
     private <T extends Manager> void loadAndAddManager(T manager) {

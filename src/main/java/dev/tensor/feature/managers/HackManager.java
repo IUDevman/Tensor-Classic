@@ -12,6 +12,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.ManagerPostOrder;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
@@ -147,6 +148,7 @@ public final class HackManager implements Manager {
         this.addHack(new Timer());
         this.addHack(new TimerMine());
         this.addHack(new Tracers());
+        this.addHack(new Translate());
         this.addHack(new Velocity());
         this.addHack(new VisualRange());
         this.addHack(new Waypoints());
@@ -162,6 +164,11 @@ public final class HackManager implements Manager {
     @Override
     public void onLoadPost(TensorLogger LOGGER) {
         this.postLoadHacks(LOGGER);
+    }
+
+    @Override
+    public int getPostOrder() {
+        return ManagerPostOrder.HACK_MANAGER.getValue();
     }
 
     @Override
