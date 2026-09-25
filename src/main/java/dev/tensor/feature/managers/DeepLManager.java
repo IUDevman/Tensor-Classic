@@ -10,6 +10,11 @@ import dev.tensor.misc.imp.ManagerPostOrder;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.Packet3Chat;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -40,11 +45,16 @@ public final class DeepLManager implements Manager {
     }
 
     @Override
+    public void onSave(TensorLogger LOGGER) {
+        this.saveCachedLanguageMap(LOGGER);
+    }
+
+    @Override
     public void onLoadPost(TensorLogger LOGGER) {
         this.translate = this.getHackManager().getHack(Translate.class);
 
         this.setAPICode(this.translate.deepL_API_Code.getValue());
-        this.loadSavedLanguageMap();
+        this.loadCachedLanguageMap(LOGGER);
 
         Thread sendQueueThread = new Thread(() -> {
             while (true) {
@@ -91,39 +101,41 @@ public final class DeepLManager implements Manager {
         return ManagerPostOrder.DEEPL_MANAGER.getValue();
     }
 
-    /*
-        import java.io.*;
-        import java.util.HashMap;
+    @SuppressWarnings("unchecked")
+    private void loadCachedLanguageMap(TensorLogger LOGGER) {
+        Path path = Paths.get(this.getConfigManager().getConfigPath() + "DeepLCache.txt");
 
-        public class MapSerializer {
+        if (!Files.exists(path)) return;
 
-        // Save the nested HashMap to a file
-        public static void saveMap(HashMap<String, HashMap<String, String>> map, String filePath) {
-            try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filePath))) {
-                oos.writeObject(map);
-                System.out.println("Map saved successfully.");
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            ObjectInputStream stream = new ObjectInputStream(Files.newInputStream(path));
+
+            ConcurrentHashMap<String, ConcurrentHashMap<String, String>> cached = (ConcurrentHashMap<String, ConcurrentHashMap<String, String>>) stream.readObject();
+
+            if (cached != null && !cached.isEmpty()) {
+                this.BIG_LANGUAGE_MAP.putAll(cached);
+                LOGGER.log("Loaded cached language map for " + this.getName() + "!", TensorLogger.Level.INFO);
             }
-        }
 
-        // Load the nested HashMap from a file
-        @SuppressWarnings("unchecked")
-        public static HashMap<String, HashMap<String, String>> loadMap(String filePath) {
-            HashMap<String, HashMap<String, String>> map = null;
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
-                map = (HashMap<String, HashMap<String, String>>) ois.readObject();
-                System.out.println("Map loaded successfully.");
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            return map;
+        } catch (Exception ignored) {
+            LOGGER.log("Failed to load cached language map for " + this.getName() + "!", TensorLogger.Level.WARN);
         }
     }
-     */
 
-    private void loadSavedLanguageMap() {
-        //todo; save already translated messages to language map
+    private void saveCachedLanguageMap(TensorLogger LOGGER) {
+        Path path = Paths.get(this.getConfigManager().getConfigPath() + "DeepLCache.txt");
+
+        try {
+            this.getConfigManager().registerFile(path);
+
+            ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(path));
+
+            stream.writeObject(this.BIG_LANGUAGE_MAP);
+            LOGGER.log("Saved cached language map for " + this.getName() + "!", TensorLogger.Level.INFO);
+
+        } catch (Exception ignored) {
+            LOGGER.log("Failed to save cached language map for " + this.getName() + "!", TensorLogger.Level.WARN);
+        }
     }
 
     public void setAPICode(String NEW_API_CODE) {
