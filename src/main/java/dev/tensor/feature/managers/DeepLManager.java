@@ -114,7 +114,7 @@ public final class DeepLManager implements Manager {
 
             if (cached != null && !cached.isEmpty()) {
                 this.BIG_LANGUAGE_MAP.putAll(cached);
-                LOGGER.log("Loaded cached language map for " + this.getName() + "!", TensorLogger.Level.INFO);
+                LOGGER.log(this.getName() + ": Loaded cached language map!", TensorLogger.Level.INFO);
             }
 
         } catch (Exception ignored) {
@@ -131,7 +131,7 @@ public final class DeepLManager implements Manager {
             ObjectOutputStream stream = new ObjectOutputStream(Files.newOutputStream(path));
 
             stream.writeObject(this.BIG_LANGUAGE_MAP);
-            LOGGER.log("Saved cached language map for " + this.getName() + "!", TensorLogger.Level.INFO);
+            LOGGER.log(this.getName() + ": Saved cached language map!", TensorLogger.Level.INFO);
 
         } catch (Exception ignored) {
             LOGGER.log("Failed to save cached language map for " + this.getName() + "!", TensorLogger.Level.WARN);
