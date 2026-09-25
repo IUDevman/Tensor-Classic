@@ -12,6 +12,7 @@ import org.lwjgl.input.Keyboard;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
 import java.util.Arrays;
 
 /**
@@ -60,6 +61,7 @@ public final class StringSettingButton implements ButtonSetting {
 
     private boolean hoveredOnBack = false;
     private boolean hoveredOnClear = false;
+    private boolean hoveredOnCopy = false;
     private boolean hoveredOnPaste = false;
 
     private long prevStrobe = System.currentTimeMillis();
@@ -70,6 +72,7 @@ public final class StringSettingButton implements ButtonSetting {
         this.prepRectangle(fillColor.getRGB());
 
         this.genRectangleVertices(this.getPosX(), this.getPosY(), this.getPosX() + this.getWidth() - 102, this.getPosY() + this.tensorGUI.titleBoxHeight);
+        this.genRectangleVertices(this.getPosX() + 306, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + this.getWidth(), this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
 
         this.swapRectangleColor(outLineColor.getRGB());
 
@@ -84,13 +87,18 @@ public final class StringSettingButton implements ButtonSetting {
         this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX(), this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
         this.genRectangleVertices(this.getPosX() + 100, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 102, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
         this.genRectangleVertices(this.getPosX() + 202, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 204, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
-        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 204, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 8);
+        this.genRectangleVertices(this.getPosX() + 304, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 306, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
+        this.genRectangleVertices(this.getPosX() + this.getWidth(), this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + this.getWidth() + 2, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
+        this.genRectangleVertices(this.getPosX() - 2, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + this.getWidth() + 2, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 8);
 
         this.swapRectangleColor(this.hoveredOnClear ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.genRectangleVertices(this.getPosX(), this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 100, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
 
-        this.swapRectangleColor(this.hoveredOnPaste ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.swapRectangleColor(this.hoveredOnCopy ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.genRectangleVertices(this.getPosX() + 102, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 202, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
+
+        this.swapRectangleColor(this.hoveredOnPaste ? selectedFillColor.getRGB() : fillColor.getRGB());
+        this.genRectangleVertices(this.getPosX() + 204, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 304, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6);
 
         this.swapRectangleColor(this.hoveredOnBack ? selectedFillColor.getRGB() : fillColor.getRGB());
         this.genRectangleVertices(this.getPosX() + this.getWidth() - 100, this.getPosY(), this.getPosX() + this.getWidth(), this.getPosY() + this.tensorGUI.titleBoxHeight);
@@ -104,7 +112,8 @@ public final class StringSettingButton implements ButtonSetting {
         this.drawCenteredString("Setting (String) : " + this.stringSetting.getName(), this.getPosX() + ((this.getWidth() - 102) / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.WHITE.getRGB());
         this.drawCenteredString(">> Go Back <<", this.getPosX() + this.getWidth() - (100 / 2), this.getPosY() + 2 + ((this.tensorGUI.titleBoxHeight - 12) / 2), Color.YELLOW.getRGB());
         this.drawCenteredString(">> Clear <<", this.getPosX() + 50, (this.getPosY() + (3 * this.tensorGUI.titleBoxHeight)) - 8, Color.YELLOW.getRGB());
-        this.drawCenteredString(">> Paste <<", this.getPosX() + 152, (this.getPosY() + (3 * this.tensorGUI.titleBoxHeight)) - 8, Color.YELLOW.getRGB());
+        this.drawCenteredString(">> Copy <<", this.getPosX() + 152, (this.getPosY() + (3 * this.tensorGUI.titleBoxHeight)) - 8, Color.YELLOW.getRGB());
+        this.drawCenteredString(">> Paste <<", this.getPosX() + 254, (this.getPosY() + (3 * this.tensorGUI.titleBoxHeight)) - 8, Color.YELLOW.getRGB());
 
         int maxWidth = this.getWidth() - 20;
 
@@ -158,6 +167,12 @@ public final class StringSettingButton implements ButtonSetting {
                     this.getTensorLogger().log("Failed to get clipboard message!", TensorLogger.Level.WARN);
                 }
             }
+        } else if (this.hoveredOnCopy && !this.value.isEmpty()) {
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+            if (clipboard != null) {
+                clipboard.setContents(new StringSelection(this.value), null);
+            }
         }
 
         if (this.isHovered(this.getPosX(), this.getPosY() + this.tensorGUI.titleBoxHeight + 2, this.getPosX() + this.getWidth(), this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 4, mouseX, mouseY)) {
@@ -187,15 +202,23 @@ public final class StringSettingButton implements ButtonSetting {
             this.hoveredOnClear = this.isHovered(this.getPosX(), this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 100, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, mouseX, mouseY);
 
             if (!this.hoveredOnClear) {
-                this.hoveredOnPaste = this.isHovered(this.getPosX() + 102, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 202, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, mouseX, mouseY);
+                this.hoveredOnCopy = this.isHovered(this.getPosX() + 102, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 202, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, mouseX, mouseY);
+
+                if (!this.hoveredOnCopy) {
+                    this.hoveredOnPaste = this.isHovered(this.getPosX() + 204, this.getPosY() + (2 * this.tensorGUI.titleBoxHeight) + 6, this.getPosX() + 304, this.getPosY() + (3 * this.tensorGUI.titleBoxHeight) + 6, mouseX, mouseY);
+                } else {
+                    this.hoveredOnPaste = false;
+                }
 
             } else {
+                this.hoveredOnCopy = false;
                 this.hoveredOnPaste = false;
             }
 
         } else {
             this.hoveredOnClear = false;
             this.hoveredOnPaste = false;
+            this.hoveredOnCopy = false;
         }
     }
 
@@ -281,6 +304,7 @@ public final class StringSettingButton implements ButtonSetting {
         this.setSearching(false);
         this.hoveredOnBack = false;
         this.hoveredOnClear = false;
+        this.hoveredOnCopy = false;
         this.hoveredOnPaste = false;
         this.tensorGUI.closeButton();
     }
