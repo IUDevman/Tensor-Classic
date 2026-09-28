@@ -9,6 +9,7 @@ public enum RotationPriority {
     Platform(10),
     Scaffold(20),
     Nuker(30),
+    AntiFireball(35),
     KillAura(40);
 
     public static final int PLUGIN_PRIORITY_DEFAULT = 25;

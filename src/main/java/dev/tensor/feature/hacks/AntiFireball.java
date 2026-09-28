@@ -58,19 +58,7 @@ public final class AntiFireball extends Hack {
             return;
         }
 
-        fireballsToTarget.forEach(this::attackFireball);
-    }
-
-    private void attackFireball(Entity entity) {
-        if (this.rotate.getValue()) {
-            this.getRotationManager().addToRotationQueue(this.getRotationTo(entity), RotationPriority.KillAura);
-        }
-
-        if (this.swing.getValue()) {
-            this.getPlayer().swingItem();
-        }
-
-        this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
+        fireballsToTarget.forEach(entity -> this.attackEntity(entity, this.rotate.getValue(), RotationPriority.AntiFireball, this.swing.getValue()));
     }
 
     public enum Swap {

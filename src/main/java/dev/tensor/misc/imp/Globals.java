@@ -12,6 +12,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.rotation.Rotation;
+import dev.tensor.misc.helpers.rotation.RotationPriority;
 import dev.tensor.misc.helpers.text.ChatColor;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.client.Minecraft;
@@ -444,5 +445,17 @@ public interface Globals {
 
             this.getWorld().worldProvider.lightBrightnessTable[i] = (1.0F - brightness) / (brightness * 3.0F + 1.0F) * 0.95F + 0.05F;
         }
+    }
+
+    default void attackEntity(Entity entity, boolean rotate, RotationPriority priority, boolean swing) {
+        if (rotate) {
+            this.getRotationManager().addToRotationQueue(this.getRotationTo(entity), priority);
+        }
+
+        if (swing) {
+            this.getPlayer().swingItem();
+        }
+
+        this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
     }
 }

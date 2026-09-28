@@ -193,7 +193,7 @@ public final class KillAura extends Render3DHack {
 
             entryList.forEach(entityDoubleEntry -> {
                 this.target_Entities.add(entityDoubleEntry.getKey());
-                this.attackEntity(entityDoubleEntry.getKey());
+                this.attackEntity(entityDoubleEntry.getKey(), this.rotate.getValue(), RotationPriority.KillAura, this.swing.getValue());
             });
 
         } else {
@@ -203,7 +203,7 @@ public final class KillAura extends Render3DHack {
 
                 this.target_Entities.add(result.getKey());
 
-                this.attackEntity(result.getKey());
+                this.attackEntity(result.getKey(), this.rotate.getValue(), RotationPriority.KillAura, this.swing.getValue());
             }
         }
     }
@@ -304,19 +304,6 @@ public final class KillAura extends Render3DHack {
         }
 
         return false;
-    }
-
-    private void attackEntity(Entity entity) {
-
-        if (this.rotate.getValue()) {
-            this.getRotationManager().addToRotationQueue(this.getRotationTo(entity), RotationPriority.KillAura);
-        }
-
-        if (this.swing.getValue()) {
-            this.getPlayer().swingItem();
-        }
-
-        this.getMinecraft().playerController.attackEntity(this.getPlayer(), entity);
     }
 
     //Method is not thread safe, so cannot be run in parallel.
