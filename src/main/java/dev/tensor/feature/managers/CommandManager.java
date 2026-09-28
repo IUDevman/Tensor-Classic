@@ -7,7 +7,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.text.ChatColor;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import dev.tensor.misc.imp.command.Command;
 
 import java.util.ArrayList;

@@ -9,7 +9,7 @@ import dev.firstdark.rpc.models.User;
 import dev.tensor.TensorClassic;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.extensions.TensorRPCEventHandler;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 
 /**

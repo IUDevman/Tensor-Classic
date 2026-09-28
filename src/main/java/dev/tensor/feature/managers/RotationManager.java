@@ -5,7 +5,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import dev.tensor.misc.helpers.rotation.RotationPriority;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import net.minecraft.src.Packet12PlayerLook;
 
 import java.util.Comparator;

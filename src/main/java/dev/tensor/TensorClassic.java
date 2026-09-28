@@ -3,7 +3,7 @@ package dev.tensor;
 import dev.tensor.feature.managers.*;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.Globals;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import net.fabricmc.api.ModInitializer;
 
 import java.util.Comparator;

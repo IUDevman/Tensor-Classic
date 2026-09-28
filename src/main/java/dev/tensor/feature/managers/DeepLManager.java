@@ -5,8 +5,8 @@ import com.deepl.api.DeepLException;
 import com.deepl.api.TextResult;
 import dev.tensor.feature.hacks.Translate;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
-import dev.tensor.misc.imp.ManagerPostOrder;
+import dev.tensor.misc.imp.manager.Manager;
+import dev.tensor.misc.imp.manager.ManagerPostOrder;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.Packet3Chat;
 

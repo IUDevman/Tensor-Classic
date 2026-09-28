@@ -6,7 +6,7 @@ import dev.tensor.backend.events.variable.UpdateCapeEvent;
 import dev.tensor.feature.hacks.Capes;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
 
 import java.net.HttpURLConnection;

@@ -1,6 +1,7 @@
-package dev.tensor.misc.imp;
+package dev.tensor.misc.imp.manager;
 
 import dev.tensor.misc.helpers.TensorLogger;
+import dev.tensor.misc.imp.Globals;
 
 /**
  * @author Hoosiers

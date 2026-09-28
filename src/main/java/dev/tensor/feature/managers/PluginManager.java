@@ -2,7 +2,7 @@ package dev.tensor.feature.managers;
 
 import dev.tensor.TensorClassic;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import dev.tensor.misc.imp.plugin.Plugin;
 import net.fabricmc.loader.api.FabricLoader;
 

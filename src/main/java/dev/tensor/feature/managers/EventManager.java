@@ -3,7 +3,7 @@ package dev.tensor.feature.managers;
 import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.Event;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 
 import java.util.Comparator;
 import java.util.HashMap;

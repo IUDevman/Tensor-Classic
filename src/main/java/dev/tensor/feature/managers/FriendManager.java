@@ -3,7 +3,7 @@ package dev.tensor.feature.managers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import net.minecraft.src.EntityOtherPlayerMP;
 
 import java.nio.file.Files;

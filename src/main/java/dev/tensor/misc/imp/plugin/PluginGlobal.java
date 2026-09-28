@@ -3,7 +3,7 @@ package dev.tensor.misc.imp.plugin;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.helpers.rotation.Rotation;
 import dev.tensor.misc.imp.Globals;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 import dev.tensor.misc.imp.command.Command;
 import dev.tensor.misc.imp.hack.Hack;
 

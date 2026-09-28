@@ -1,4 +1,4 @@
-package dev.tensor.misc.imp;
+package dev.tensor.misc.imp.manager;
 
 /**
  * @author Hoosiers

@@ -3,7 +3,7 @@ package dev.tensor.feature.managers;
 import com.google.gson.*;
 import dev.tensor.TensorClassic;
 import dev.tensor.misc.helpers.TensorLogger;
-import dev.tensor.misc.imp.Manager;
+import dev.tensor.misc.imp.manager.Manager;
 
 import java.io.IOException;
 import java.io.InputStream;
