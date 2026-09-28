@@ -52,6 +52,7 @@ public final class HackManager implements Manager {
     @Override
     public void onLoad(TensorLogger LOGGER) {
         this.addHack(new AltAccounts());
+        this.addHack(new AntiFireball());
         this.addHack(new AntiKnockback());
         this.addHack(new Armor());
         this.addHack(new AutoArmor());
