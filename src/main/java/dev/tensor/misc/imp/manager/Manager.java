@@ -37,6 +37,6 @@ public interface Manager extends Globals {
     }
 
     default int getPostOrder() {
-        return ManagerPostOrder.DEFAULT.getValue();
+        return PostLoadOrder.DEFAULT.getValue();
     }
 }

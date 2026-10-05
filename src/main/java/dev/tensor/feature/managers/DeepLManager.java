@@ -6,7 +6,7 @@ import com.deepl.api.TextResult;
 import dev.tensor.feature.hacks.Translate;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.manager.Manager;
-import dev.tensor.misc.imp.manager.ManagerPostOrder;
+import dev.tensor.misc.imp.manager.PostLoadOrder;
 import net.minecraft.src.ChatAllowedCharacters;
 import net.minecraft.src.Packet3Chat;
 
@@ -96,7 +96,7 @@ public final class DeepLManager implements Manager {
 
     @Override
     public int getPostOrder() {
-        return ManagerPostOrder.DEEPL_MANAGER.getValue();
+        return PostLoadOrder.DEEPL_MANAGER.getValue();
     }
 
     @SuppressWarnings("unchecked")

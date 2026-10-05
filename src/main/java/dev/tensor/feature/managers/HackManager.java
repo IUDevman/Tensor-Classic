@@ -12,7 +12,7 @@ import dev.tensor.misc.event.EventAction;
 import dev.tensor.misc.event.imp.EventPriority;
 import dev.tensor.misc.helpers.TensorLogger;
 import dev.tensor.misc.imp.manager.Manager;
-import dev.tensor.misc.imp.manager.ManagerPostOrder;
+import dev.tensor.misc.imp.manager.PostLoadOrder;
 import dev.tensor.misc.imp.hack.Category;
 import dev.tensor.misc.imp.hack.Hack;
 import dev.tensor.misc.imp.hack.render.HUDObject;
@@ -169,7 +169,7 @@ public final class HackManager implements Manager {
 
     @Override
     public int getPostOrder() {
-        return ManagerPostOrder.HACK_MANAGER.getValue();
+        return PostLoadOrder.HACK_MANAGER.getValue();
     }
 
     @Override

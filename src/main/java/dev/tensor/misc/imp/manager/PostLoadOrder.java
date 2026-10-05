@@ -5,7 +5,7 @@ package dev.tensor.misc.imp.manager;
  * @since 09-23-2026
  */
 
-public enum ManagerPostOrder {
+public enum PostLoadOrder {
 
     DEFAULT(0),
     HACK_MANAGER(1),
@@ -13,7 +13,7 @@ public enum ManagerPostOrder {
 
     private final int value;
 
-    ManagerPostOrder(int value) {
+    PostLoadOrder(int value) {
         this.value = value;
     }
 
