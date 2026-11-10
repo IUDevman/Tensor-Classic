@@ -673,6 +673,8 @@ public final class TensorGUI extends GuiScreen implements Render2D, Hoverable {
         return this.isButtonActive.get() ? this.clickGUI.scrollSpeedWindow.getValue() : this.clickGUI.scrollSpeedGUI.getValue();
     }
 
+    //this resets the list of spammer files when the file list is updated outside the GUI.
+    //Probably better ways to do this, but I'm lazy...
     public void resetGlobalSpammerGUI() {
         this.categoryElements.forEach(categoryElement -> {
 
